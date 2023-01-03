@@ -17,9 +17,8 @@ options {
 
 
 //IDENTIFICATEURS
-LETTER : 'a'..'z' + 'A'..'Z';
-DIGIT : '0'..'9';
-IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
+fragment LETTER : 'a'..'z' + 'A'..'Z';
+fragment DIGIT : '0'..'9';
 
 //les mots réservés ne sont pas des identificateurs
 RESERVED_WORDS : 'asm' + 'class' + 'extends' + 'else' + 'false' +
@@ -27,39 +26,40 @@ RESERVED_WORDS : 'asm' + 'class' + 'extends' + 'else' + 'false' +
 +  'println' + 'printlnx' + 'printx' + 'protected' + 'return' + 'this'
 +  'true' + 'while';
 
+// On met IDENT après RESERVED_WORDS pour que RESERVED_WORDS soit prioritaire
+IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
+
+
 //SYMBOLES SPÉCIAUX
 LESSER_THAN : '<';
 GREATER_THAN : '>';
 ASSIGN : '=';
 PLUS : '+';
 MINUS : '-';
-
 AND : '&&';
-
 
 //les symboles spéciaux en question
 
 //LITTERAUX ENTIERS
-POSITIVE_DIGIT : '1'..'9';
-INT_ANY_VALUE : '0' + POSITIVE_DIGIT DIGIT*;
-INT : INT_ANY_VALUE {
-    if(INT_ANY_VALUE.int > 2147483647){
-    throw new IllegalArgumentException("Valeur d'un entier ne peut pas excéder 2³¹-1");
+fragment POSITIVE_DIGIT : '1'..'9';
+INT : '0' + POSITIVE_DIGIT DIGIT* {
+    if (Integer.parseInt(getText()) > 2e31-1) {
+        throw new IllegalArgumentException("Integer overflow");
     }
 };
-
+// TODO : changer l'erreur en erreur de compilation
 //erreur de compilation levée si littéral entier pas codable comme un entier signé positif sur 32 bits
 
 //LITTERAUX FLOTTANTS
 
-NUM : DIGIT+;
-SIGN : '+' + '-' + ;
-EXP : ('E' + 'e') SIGN NUM;
-DEC : NUM '.' NUM;
-FLOATDEC : (DEC + DEC EXP)('F' + 'f' + );
-DIGITHEX : '0'..'9' + 'A'..'F' + 'a'..'f';
-NUMHEX : DIGITHEX+;
-FLOATHEX : ('0x' + '0X')NUMHEX '.' NUMHEX ('P' + 'p') SIGN NUM ('F' + 'f' +);
+fragment NUM : DIGIT+;
+fragment SIGN : '+' + '-' + ;
+fragment EXP : ('E' + 'e') SIGN NUM;
+fragment DEC : NUM '.' NUM;
+fragment FLOATDEC : (DEC + DEC EXP)('F' + 'f' + );
+fragment DIGITHEX : '0'..'9' + 'A'..'F' + 'a'..'f';
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX : ('0x' + '0X') NUMHEX '.' NUMHEX ('P' + 'p') SIGN NUM ('F' + 'f' +);
 FLOAT : FLOATDEC + FLOATHEX;
 
 //Les littéraux flottants sont convertis en arrondissant si besoin au flottant IEEE-754 simple précision
@@ -72,6 +72,20 @@ FLOAT : FLOATDEC + FLOATHEX;
 //CHAÎNE DE CARACTÈRES
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
+fragment STRING_CAR: (. ~('"') ~('\\'))+ ;
+fragment EOL : '\n';
+STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"';
+MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"';
 
-//STRING : '"'(STRING_CAR + '\\"' + '\\\\')* '"';
-//MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"';
+// Gestion de l'inclusion de fichiers
+fragment FILENAME : (LETTER + DIGIT + '_' + '-' + '.')+;
+DOINCLUDE: 'include' (' ')* '"' FILENAME '"' {doInclude(getText());};
+
+// COMMENTAIRES
+COMMENT : '//' (~('\n')*) {skip();};
+BLOCK_COMMENT : '/*' .*? '*/' {skip();};
+
+// ESPACES
+SEPARATEUR : (' ' + '\t' + '\r' + '\n') {skip();};
+
+DEFAULT: . ;

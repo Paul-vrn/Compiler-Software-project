@@ -1,1 +1,1 @@
-BLOCK_COMMENTARY /*un *\commentaire */
+commentaire */

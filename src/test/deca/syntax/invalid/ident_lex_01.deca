@@ -1,0 +1,11 @@
+// Description:
+//    tests de programme incorrect lexicalement
+//
+// Resultats:
+//    Ligne 11: Erreur, identificateur incorrect (chiffre en tête)
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+12ab

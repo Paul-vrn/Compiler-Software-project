@@ -17,7 +17,7 @@ options {
 
 
 //IDENTIFICATEURS
-fragment LETTER : 'a'..'z' + 'A'..'Z';
+fragment LETTER : 'a'..'z' | 'A'..'Z';
 fragment DIGIT : '0'..'9';
 OBRACE : '{';
 CBRACE : '}';
@@ -50,7 +50,7 @@ TRUE : 'true';
 WHILE : 'while';
 
 // On met IDENT après RESERVED_WORDS pour que RESERVED_WORDS soit prioritaire
-IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
+IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 
 
 //SYMBOLES SPÉCIAUX
@@ -75,19 +75,25 @@ PERCENT : '%';
 
 //LITTERAUX ENTIERS
 fragment POSITIVE_DIGIT : '1'..'9';
-INT : '0' + POSITIVE_DIGIT DIGIT*;
+INT : '0' | POSITIVE_DIGIT DIGIT* {
+    if (Integer.parseInt(getText()) > 2e31-1) {
+        throw new IllegalArgumentException("Integer overflow");
+    }
+};
+// TODO : changer l'erreur en erreur de compilation
+//erreur de compilation levée si littéral entier pas codable comme un entier signé positif sur 32 bits
 
 //LITTERAUX FLOTTANTS
 
 fragment NUM : DIGIT+;
-fragment SIGN : '+' + '-' + ;
-fragment EXP : ('E' + 'e') SIGN NUM;
+fragment SIGN : '+' | '-' | ;
+fragment EXP : ('E' | 'e') SIGN NUM;
 fragment DEC : NUM '.' NUM;
-fragment FLOATDEC : (DEC + DEC EXP)('F' + 'f' + );
-fragment DIGITHEX : '0'..'9' + 'A'..'F' + 'a'..'f';
+fragment FLOATDEC : (DEC | DEC EXP)('F' | 'f' | );
+fragment DIGITHEX : '0'..'9' | 'A'..'F' | 'a'..'f';
 fragment NUMHEX : DIGITHEX+;
-fragment FLOATHEX : ('0x' + '0X') NUMHEX '.' NUMHEX ('P' + 'p') SIGN NUM ('F' + 'f' +);
-FLOAT : FLOATDEC + FLOATHEX;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' |);
+FLOAT : FLOATDEC | FLOATHEX;
 
 //Les littéraux flottants sont convertis en arrondissant si besoin au flottant IEEE-754 simple précision
 //le plus proche. Une erreur de compilation est levée si un littéral est trop grand et que l’arrondi se fait
@@ -100,12 +106,12 @@ FLOAT : FLOATDEC + FLOATHEX;
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
 fragment STRING_CAR: ~('"' | '\\')+ ;
-fragment EOL : '\n';
-STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"';
-MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"';
+EOL : '\n';
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
+MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 
 // Gestion de l'inclusion de fichiers
-fragment FILENAME : (LETTER + DIGIT + '_' + '-' + '.')+;
+fragment FILENAME : (LETTER | DIGIT | '_' | '-' | '.')+;
 DOINCLUDE: 'include' (' ')* '"' FILENAME '"' {doInclude(getText());};
 
 // COMMENTAIRES
@@ -113,6 +119,6 @@ COMMENT : '//' (~('\n')*) {skip();};
 BLOCK_COMMENT : '/*' .*? '*/' {skip();};
 
 // ESPACES
-SEPARATEUR : (' ' + '\t' + '\r' + '\n') {skip();};
+SEPARATEUR : (' ' | '\t' | '\r' | '\n') {skip();};
 
 DEFAULT: . ;

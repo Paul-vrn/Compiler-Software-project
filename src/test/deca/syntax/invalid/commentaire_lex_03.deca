@@ -2,10 +2,10 @@
 //    tests de programme correct lexicalement
 //
 // Resultats:
-//    Ligne 11 : Erreur de syntaxe.
-//    test_lex ne doit pas donner d'erreur.
+//    Ligne 11 : Erreur, commentaire non terminé
+//
 //
 // Historique:
 //    cree le 03/01/2023
 
-/*un */commentaire */
+/*un commentaire

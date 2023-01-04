@@ -82,25 +82,34 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
     : dv1=decl_var[$t] {
         $l.add($dv1.tree);
         } (COMMA dv2=decl_var[$t] {
+          $l.add($dv2.tree);
         }
       )*
     ;
 
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
+        AbstractIdentifier varName = null;
+        AbstractInitialization initialization = null;
+        $tree = new DeclVar($t, varName, initialization);
         }
     : i=ident {
+        varName = $i.tree;
+        initialization = new NoInitialization();
         }
       (EQUALS e=expr {
         }
       )? {
+        initialization = new Initialization($e.tree);
         }
     ;
 
 list_inst returns[ListInst tree]
 @init {
+    $tree = new ListInst();
 }
     : (inst {
+        $tree.add($inst.tree);
         }
       )*
     ;
@@ -111,7 +120,7 @@ inst returns[AbstractInst tree]
             $tree = $e1.tree;
         }
     | SEMI {
-
+            $tree = null;
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);

@@ -75,13 +75,7 @@ PERCENT : '%';
 
 //LITTERAUX ENTIERS
 fragment POSITIVE_DIGIT : '1'..'9';
-INT : '0' + POSITIVE_DIGIT DIGIT* {
-    if (Integer.parseInt(getText()) > 2e31-1) {
-        throw new IllegalArgumentException("Integer overflow");
-    }
-};
-// TODO : changer l'erreur en erreur de compilation
-//erreur de compilation levée si littéral entier pas codable comme un entier signé positif sur 32 bits
+INT : '0' + POSITIVE_DIGIT DIGIT*;
 
 //LITTERAUX FLOTTANTS
 

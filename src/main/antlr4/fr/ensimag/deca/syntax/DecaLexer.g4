@@ -17,47 +17,65 @@ options {
 
 
 //IDENTIFICATEURS
-fragment LETTER : 'a'..'z' + 'A'..'Z';
+fragment LETTER : 'a'..'z' | 'A'..'Z';
 fragment DIGIT : '0'..'9';
-
+OBRACE : '{';
+CBRACE : '}';
+COMMA : ',';
+DOT : '.';
+SEMI : ';';
+COLON : ':';
+OPARENT : '(';
+CPARENT : ')';
 //les mots réservés ne sont pas des identificateurs
-RESERVED_WORDS : 'asm' + 'class' + 'extends' + 'else' + 'false' +
-'if' + 'instanceof' + 'new' + 'null' + 'readInt' + 'readFloat' + 'print'
-+  'println' + 'printlnx' + 'printx' + 'protected' + 'return' + 'this'
-+  'true' + 'while';
+ASM : 'asm';
+CLASS : 'class';
+EXTENDS : 'extends';
+ELSE : 'else';
+FALSE : 'false';
+IF : 'if';
+INSTANCEOF : 'instanceof';
+NEW : 'new';
+NULL : 'null';
+READINT : 'readInt';
+READFLOAT : 'readFloat';
+PRINT : 'print';
+PRINTLN : 'println';
+PRINTLNX : 'printlnx';
+PRINTX : 'printx';
+PROTECTED : 'protected';
+RETURN : 'return';
+THIS : 'this';
+TRUE : 'true';
+WHILE : 'while';
 
 // On met IDENT après RESERVED_WORDS pour que RESERVED_WORDS soit prioritaire
-IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
+IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 
 
 //SYMBOLES SPÉCIAUX
-LESSER : '<';
-GREATER : '>';
-ASSIGN : '='; //à voir dans sujet page 17 = est appelé EQUALS...
+EQUALS : '=';
+EXCLAM : '!';
+AND : '&&';
+OR : '||';
+EQEQ : '==';
+NEQ : '!=';
+LEQ : '<=';
+GEQ : '>=';
+GT : '>';
+LT : '<';
+
+//OPERATEURS
 PLUS : '+';
 MINUS : '-';
 TIMES : '*';
-DIV : '/';
-MOD : '%';
-DOT : '.';
-COMMA : ',';
-OPARENT : '(';
-CPARENT : ')';
-OBRACE : '{';
-CBRACE : '}';
-NOT : '!';
-SEMI : ';';
-EQUALS : '==';
-NOT_EQUALS : '!=';
-GREATER_OR_EQUAL : '>=';
-LESSER_OR_EQUAL : '<=';
-AND : '&&';
-OR : '||';
+SLASH : '/';
+PERCENT : '%';
 //les symboles spéciaux en question
 
 //LITTERAUX ENTIERS
 fragment POSITIVE_DIGIT : '1'..'9';
-INT : '0' + POSITIVE_DIGIT DIGIT* {
+INT : '0' | POSITIVE_DIGIT DIGIT* {
     if (Integer.parseInt(getText()) > 2e31-1) {
         throw new IllegalArgumentException("Integer overflow");
     }
@@ -68,14 +86,14 @@ INT : '0' + POSITIVE_DIGIT DIGIT* {
 //LITTERAUX FLOTTANTS
 
 fragment NUM : DIGIT+;
-fragment SIGN : '+' + '-' + ;
-fragment EXP : ('E' + 'e') SIGN NUM;
+fragment SIGN : '+' | '-' | ;
+fragment EXP : ('E' | 'e') SIGN NUM;
 fragment DEC : NUM '.' NUM;
-fragment FLOATDEC : (DEC + DEC EXP)('F' + 'f' + );
-fragment DIGITHEX : '0'..'9' + 'A'..'F' + 'a'..'f';
+fragment FLOATDEC : (DEC | DEC EXP)('F' | 'f' | );
+fragment DIGITHEX : '0'..'9' | 'A'..'F' | 'a'..'f';
 fragment NUMHEX : DIGITHEX+;
-fragment FLOATHEX : ('0x' + '0X') NUMHEX '.' NUMHEX ('P' + 'p') SIGN NUM ('F' + 'f' +);
-FLOAT : FLOATDEC + FLOATHEX;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' |);
+FLOAT : FLOATDEC | FLOATHEX;
 
 //Les littéraux flottants sont convertis en arrondissant si besoin au flottant IEEE-754 simple précision
 //le plus proche. Une erreur de compilation est levée si un littéral est trop grand et que l’arrondi se fait
@@ -87,13 +105,13 @@ FLOAT : FLOATDEC + FLOATHEX;
 //CHAÎNE DE CARACTÈRES
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
-fragment STRING_CAR: (. ~('"') ~('\\'))+ ;
-fragment EOL : '\n';
-STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"';
-MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"';
+fragment STRING_CAR: ~('"' | '\\')+ ;
+EOL : '\n';
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
+MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 
 // Gestion de l'inclusion de fichiers
-fragment FILENAME : (LETTER + DIGIT + '_' + '-' + '.')+;
+fragment FILENAME : (LETTER | DIGIT | '_' | '-' | '.')+;
 DOINCLUDE: 'include' (' ')* '"' FILENAME '"' {doInclude(getText());};
 
 // COMMENTAIRES
@@ -101,6 +119,6 @@ COMMENT : '//' (~('\n')*) {skip();};
 BLOCK_COMMENT : '/*' .*? '*/' {skip();};
 
 // ESPACES
-SEPARATEUR : (' ' + '\t' + '\r' + '\n') {skip();};
+SEPARATEUR : (' ' | '\t' | '\r' | '\n') {skip();};
 
 DEFAULT: . ;

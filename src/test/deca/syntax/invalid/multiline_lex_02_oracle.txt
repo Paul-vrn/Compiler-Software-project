@@ -1,1 +1,3 @@
-MULTI_LINE_STRING " ceci est un multi-line "
+" ceci est
+un multi
+line "

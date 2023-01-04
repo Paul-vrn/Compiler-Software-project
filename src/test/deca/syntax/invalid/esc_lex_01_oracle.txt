@@ -1,1 +1,2 @@
-MULTI_LINE_STRING "\\\\\n\\\\"
+\
+\

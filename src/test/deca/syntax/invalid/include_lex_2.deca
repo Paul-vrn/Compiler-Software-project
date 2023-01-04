@@ -2,8 +2,7 @@
 //    tests de programme incorrect lexicalement (INCLUDE non terminé)
 //
 // Resultats:
-//    Ligne 10 : Erreur de syntaxe.
-//    test_lex ne doit pas donner d'erreur.
+//    Ligne 9: Include non terminé
 //
 // Historique:
 //    cree le 03/01/2023

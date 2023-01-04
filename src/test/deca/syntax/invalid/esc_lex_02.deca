@@ -2,7 +2,8 @@
 //    tests de programme incorrect lexicalement
 //
 // Resultats:
-//    Ligne 10: Erreur, caractère de formatage non existant
+//    Ligne 11: Erreur, caractère de formatage non existant
+//
 //
 // Historique:
 //    cree le 03/01/2023

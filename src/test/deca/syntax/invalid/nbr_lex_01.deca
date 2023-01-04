@@ -2,7 +2,8 @@
 //    tests de programme incorrect lexicalement (décimal incorrect)
 //
 // Resultats:
-//    Ligne 10: Erreur, décimal incorrect (point en trop)
+//    Ligne 11: Erreur, décimal incorrect (point en trop)
+//
 //
 // Historique:
 //    cree le 04/01/2023

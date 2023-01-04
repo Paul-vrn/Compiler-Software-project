@@ -2,8 +2,10 @@
 //    tests de programme incorrect lexicalement (include non terminé)
 //
 // Resultats:
-//    Ligne 9 : Erreur, include incorrect
+//    Ligne 11 : Erreur, include incorrect
+//
 //
 // Historique:
 //    cree le 03/01/2023
+
 include

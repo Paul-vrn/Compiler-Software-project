@@ -31,6 +31,8 @@ else
 fi
 
 # Ligne 10 codée en dur. Il faudrait stocker ça quelque part ...
+test_lex src/test/deca/syntax/invalid/provided/chaine_incomplete.deca | echo
+echo "je suis là"
 if test_lex src/test/deca/syntax/invalid/provided/chaine_incomplete.deca 2>&1 \
     | grep -q -e 'chaine_incomplete.deca:10:'
 then

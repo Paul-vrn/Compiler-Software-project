@@ -31,13 +31,28 @@ IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
 
 
 //SYMBOLES SPÉCIAUX
-LESSER_THAN : '<';
-GREATER_THAN : '>';
-ASSIGN : '=';
+LESSER : '<';
+GREATER : '>';
+ASSIGN : '='; //à voir dans sujet page 17 = est appelé EQUALS...
 PLUS : '+';
 MINUS : '-';
+TIMES : '*';
+DIV : '/';
+MOD : '%';
+DOT : '.';
+COMMA : ',';
+OPARENT : '(';
+CPARENT : ')';
+OBRACE : '{';
+CBRACE : '}';
+NOT : '!';
+SEMI : ';';
+EQUALS : '==';
+NOT_EQUALS : '!=';
+GREATER_OR_EQUAL : '>=';
+LESSER_OR_EQUAL : '<=';
 AND : '&&';
-
+OR : '||';
 //les symboles spéciaux en question
 
 //LITTERAUX ENTIERS

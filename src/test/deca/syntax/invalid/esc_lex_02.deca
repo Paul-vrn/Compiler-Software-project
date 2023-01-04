@@ -1,0 +1,11 @@
+// Description:
+//    tests de programme incorrect lexicalement
+//
+// Resultats:
+//    Ligne 11: Erreur, caractère de formatage non existant
+//
+//
+// Historique:
+//    cree le 03/01/2023
+
+"ceci est incorrect \z"

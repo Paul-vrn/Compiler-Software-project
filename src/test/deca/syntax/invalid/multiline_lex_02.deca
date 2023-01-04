@@ -1,0 +1,13 @@
+// Description:
+//    tests de programme correct lexicalement
+//
+// Resultats:
+//    Ligne 11 : Erreur de syntaxe.
+//    test_lex ne doit pas donner d'erreur.
+//
+// Historique:
+//    cree le 03/01/2023
+
+" ceci est
+un multi
+line "

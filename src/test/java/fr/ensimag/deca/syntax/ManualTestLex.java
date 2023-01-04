@@ -16,6 +16,7 @@ public class ManualTestLex {
     public static void main(String[] args) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
+        System.out.println(lex.getAllTokens());
         System.exit(lex.debugTokenStream() ? 1 : 0);
     }
 }

@@ -105,7 +105,7 @@ FLOAT : FLOATDEC | FLOATHEX;
 //CHAÎNE DE CARACTÈRES
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
-fragment STRING_CAR: ~('"' | '\\')+ ;
+fragment STRING_CAR: ~('"' | '\\' | '\n')+;
 EOL : '\n';
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
@@ -115,8 +115,10 @@ fragment FILENAME : (LETTER | DIGIT | '_' | '-' | '.')+;
 DOINCLUDE: 'include' (' ')* '"' FILENAME '"' {doInclude(getText());};
 
 // COMMENTAIRES
+fragment COMMENT_OPENING : '/*';
+fragment COMMENT_CLOSING : '*/';
 COMMENT : '//' (~('\n')*) {skip();};
-BLOCK_COMMENT : '/*' .*? '*/' {skip();};
+BLOCK_COMMENT : COMMENT_OPENING .*? COMMENT_CLOSING {skip();};
 
 // ESPACES
 SEPARATEUR : (' ' | '\t' | '\r' | '\n') {skip();};

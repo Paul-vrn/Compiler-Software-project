@@ -19,25 +19,58 @@ options {
 //IDENTIFICATEURS
 fragment LETTER : 'a'..'z' + 'A'..'Z';
 fragment DIGIT : '0'..'9';
-
+OBRACE : '{';
+CBRACE : '}';
+COMMA : ',';
+DOT : '.';
+SEMI : ';';
+COLON : ':';
+OPARENT : '(';
+CPARENT : ')';
 //les mots réservés ne sont pas des identificateurs
-RESERVED_WORDS : 'asm' + 'class' + 'extends' + 'else' + 'false' +
-'if' + 'instanceof' + 'new' + 'null' + 'readInt' + 'readFloat' + 'print'
-+  'println' + 'printlnx' + 'printx' + 'protected' + 'return' + 'this'
-+  'true' + 'while';
+ASM : 'asm';
+CLASS : 'class';
+EXTENDS : 'extends';
+ELSE : 'else';
+FALSE : 'false';
+IF : 'if';
+INSTANCEOF : 'instanceof';
+NEW : 'new';
+NULL : 'null';
+READINT : 'readInt';
+READFLOAT : 'readFloat';
+PRINT : 'print';
+PRINTLN : 'println';
+PRINTLNX : 'printlnx';
+PRINTX : 'printx';
+PROTECTED : 'protected';
+RETURN : 'return';
+THIS : 'this';
+TRUE : 'true';
+WHILE : 'while';
 
 // On met IDENT après RESERVED_WORDS pour que RESERVED_WORDS soit prioritaire
 IDENT : (LETTER + '$' + '_')(LETTER + DIGIT + '$' + '_')*;
 
 
 //SYMBOLES SPÉCIAUX
-LESSER_THAN : '<';
-GREATER_THAN : '>';
-ASSIGN : '=';
+EQUALS : '=';
+EXCLAM : '!';
+AND : '&&';
+OR : '||';
+EQEQ : '==';
+NEQ : '!=';
+LEQ : '<=';
+GEQ : '>=';
+GT : '>';
+LT : '<';
+
+//OPERATEURS
 PLUS : '+';
 MINUS : '-';
-AND : '&&';
-
+TIMES : '*';
+SLASH : '/';
+PERCENT : '%';
 //les symboles spéciaux en question
 
 //LITTERAUX ENTIERS
@@ -72,7 +105,7 @@ FLOAT : FLOATDEC + FLOATHEX;
 //CHAÎNE DE CARACTÈRES
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
-fragment STRING_CAR: (. ~('"') ~('\\'))+ ;
+fragment STRING_CAR: ~('"' | '\\')+ ;
 fragment EOL : '\n';
 STRING : '"' (STRING_CAR + '\\"' + '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR + EOL + '\\"' + '\\\\')* '"';

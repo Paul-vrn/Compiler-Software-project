@@ -106,7 +106,7 @@ FLOAT : FLOATDEC | FLOATHEX;
 
 //STRING_CAR est l'ensemble de tous les caractères sauf ' " ', '\' et de EOL (fin de ligne)
 fragment STRING_CAR: ~('"' | '\\' | '\n')+;
-EOL : '\n';
+fragment EOL : '\n';
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 

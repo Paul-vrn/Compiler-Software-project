@@ -165,20 +165,26 @@ if_then_else returns[IfThenElse tree]
         thenBranch = $li_if.tree;
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-        }
+            elseBranch = $elsif_li.tree;
+        } // pas sûr
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
-        elseBranch = $li_else.tree;
+        if ($li_else.tree != null) {
+            elseBranch = $li_else.tree;
+        }
         }
       )?
     ;
 
 list_expr returns[ListExpr tree]
 @init   {
+            $tree = new ListExpr();
         }
     : (e1=expr {
+        $tree.add($e1.tree);
         }
        (COMMA e2=expr {
+        $tree.add($e2.tree);
         }
        )* )?
     ;
@@ -204,7 +210,8 @@ assign_expr returns[AbstractExpr tree]
         }
       | /* epsilon */ {
             assert($e.tree != null);
-        } // TODO pas sûr
+            $tree = $e.tree;
+        }
       )
     ;
 
@@ -443,14 +450,19 @@ ident returns[AbstractIdentifier tree]
 /****     Class related rules     ****/
 
 list_classes returns[ListDeclClass tree]
+@init   {
+            $tree = new ListDeclClass();
+}
     :
       (c1=class_decl {
+            $tree.add($c1.tree);
         }
       )*
     ;
 
-class_decl
+class_decl returns[DeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
+        $tree = null;
         }
     ;
 

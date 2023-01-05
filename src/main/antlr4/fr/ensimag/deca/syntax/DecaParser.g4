@@ -62,8 +62,6 @@ block returns[ListDeclVar decls, ListInst insts]
             assert($list_inst.tree != null);
             $decls = $list_decl.tree;
             $insts = $list_inst.tree;
-            setLocation($decls, $list_decl.start);
-            setLocation($insts, $list_inst.start);
         }
     ;
 
@@ -90,17 +88,19 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
         AbstractIdentifier varName = null;
-        AbstractInitialization initialization = null;
-        $tree = new DeclVar($t, varName, initialization);
+        AbstractInitialization initialization = new NoInitialization();
         }
     : i=ident {
+        assert($i.tree != null);
         varName = $i.tree;
-        initialization = new NoInitialization();
         }
       (EQUALS e=expr {
+        assert($e.tree != null);
+        initialization = new Initialization($e.tree);
         }
       )? {
-        initialization = new Initialization($e.tree);
+        $tree = new DeclVar($t, varName, initialization);
+        setLocation($tree, $i.start);
         }
     ;
 
@@ -193,6 +193,7 @@ expr returns[AbstractExpr tree]
     : assign_expr {
             assert($assign_expr.tree != null);
             $tree = $assign_expr.tree;
+            setLocation($tree, $assign_expr.start);
         }
     ;
 
@@ -293,16 +294,19 @@ sum_expr returns[AbstractExpr tree]
     : e=mult_expr {
             assert($e.tree != null);
             $tree = $e.tree;
+            setLocation($tree, $e.start);
         }
     | e1=sum_expr PLUS e2=mult_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new Plus($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     | e1=sum_expr MINUS e2=mult_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new Minus($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -310,21 +314,25 @@ mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
             assert($e.tree != null);
             $tree = $e.tree;
+            setLocation($tree, $e.start);
         }
     | e1=mult_expr TIMES e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree = new Multiply($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     | e1=mult_expr SLASH e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree = new Divide($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     | e1=mult_expr PERCENT e2=unary_expr {
             assert($e1.tree != null);                                                                          
             assert($e2.tree != null);
             $tree = new Modulo($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -340,6 +348,7 @@ unary_expr returns[AbstractExpr tree]
     | select_expr {
             assert($select_expr.tree != null);
             $tree = $select_expr.tree;
+            setLocation($tree, $select_expr.start);
         }
     ;
 
@@ -366,6 +375,7 @@ select_expr returns[AbstractExpr tree]
 primary_expr returns[AbstractExpr tree]
     : ident {
             assert($ident.tree != null);
+            $tree = $ident.tree;
         }
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
@@ -443,7 +453,9 @@ literal returns[AbstractExpr tree]
 
 ident returns[AbstractIdentifier tree]
     : IDENT {
-        $tree = new Identifier($tree.getName());
+        $tree = new Identifier(
+            getSymbolTable().create($IDENT.text)
+        );
         }
     ;
 

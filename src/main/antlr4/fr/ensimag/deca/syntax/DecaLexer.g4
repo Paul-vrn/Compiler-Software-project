@@ -112,7 +112,7 @@ MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 
 // Gestion de l'inclusion de fichiers
 fragment FILENAME : (LETTER | DIGIT | '_' | '-' | '.')+;
-DOINCLUDE: 'include' (' ')* '"' FILENAME '"' {doInclude(getText());};
+DOINCLUDE: '#include' (' ')* '"' FILENAME '"' {doInclude(getText());};
 
 // COMMENTAIRES
 fragment COMMENT_OPENING : '/*';

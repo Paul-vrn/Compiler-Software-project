@@ -8,5 +8,7 @@
 //    cree le 01/01/2023
 
 {
-        println("Hello");
+        int i;
+        i = 3 + 1;
+        println(i);
 }

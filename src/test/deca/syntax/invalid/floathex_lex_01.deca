@@ -1,0 +1,11 @@
+// Description:
+//    tests de programme correct lexicalement
+//
+// Resultats:
+//    Ligne 11 : Erreur de syntaxe.
+//    test_lex ne doit pas donner d'erreur.
+//
+// Historique:
+//    cree le 03/01/2023
+
+0x1.8p-12

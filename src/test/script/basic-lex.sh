@@ -21,6 +21,7 @@ PATH=./src/test/script/launchers:"$PATH"
 # test_lex peut au choix afficher les messages sur la sortie standard
 # (1) ou sortie d'erreur (2). On redirige la sortie d'erreur sur la
 # sortie standard pour accepter les deux (2>&1)
+
 if test_lex src/test/deca/syntax/invalid/provided/simple_lex.deca 2>&1 \
     | head -n 1 | grep -q 'simple_lex.deca:[0-9]'
 then

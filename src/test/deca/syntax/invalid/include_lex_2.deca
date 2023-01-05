@@ -1,0 +1,11 @@
+// Description:
+//    tests de programme incorrect lexicalement (INCLUDE non terminé)
+//
+// Resultats:
+//    Ligne 11: Include non terminé
+//
+//
+// Historique:
+//    cree le 03/01/2023
+
+#include "fichier

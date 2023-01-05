@@ -12,9 +12,8 @@ options {
 }
 
 // Deca lexer rules.
-//DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
-                // A FAIRE : Il faut la supprimer et la remplacer par les vraies règles.
-
+//DUMMY_TOKEN: .; // TO DO : Not very important rule that recognises all the caracteres.
+                // TO DO : We have to delete It and replace It by a real rule.
 
 //IDENTIFICATEURS
 fragment LETTER : 'a'..'z' | 'A'..'Z';
@@ -100,7 +99,6 @@ FLOAT : FLOATDEC | FLOATHEX;
 //vers l’infini, ou bien qu’un littéral non nul est trop petit et que l’arrondi se fait vers zéro.
 
 //Le suffixe f est autorisé mais ignoré, pour permettre une meilleure compatibilité de Deca avec Java.
-
 
 //CHAÎNE DE CARACTÈRES
 

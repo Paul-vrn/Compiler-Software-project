@@ -22,6 +22,9 @@ PATH=./src/test/script/launchers:"$PATH"
 # exemple de définition d'une fonction
 test_synt_invalide () {
     # $1 = premier argument.
+    echo toto
+    test_synt "$1" 2>&1 | echo
+    echo tata
     if test_synt "$1" 2>&1 | grep -q -e "$1:[0-9][0-9]*:"
     then
         echo "Echec attendu pour test_synt sur $1."

@@ -125,7 +125,6 @@ public class DecacCompiler {
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public Symbol createSymbol(String name) {
-        System.out.println(this.symbolTable);
         return this.symbolTable.create(name);
     }
 
@@ -138,13 +137,10 @@ public class DecacCompiler {
         String sourceFile = source.getAbsolutePath();
         //the output file name is the source file with "Decompiled" added before the deca extension
 
-
         String outputFileName = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
         String fileAss = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
 
         String destFile = fileAss;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
 
         PrintStream err = System.err;
         //PrintStream out = new PrintStream(ByteArrayOutputStream, true, outputFileName);
@@ -189,9 +185,7 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        DecaParser parser = null;
-        AbstractProgram prog = doLexingAndParsing(sourceName, err, parser);
-        System.out.println(parser.toString());
+        AbstractProgram prog = doLexingAndParsing(sourceName, err);
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
@@ -240,7 +234,7 @@ public class DecacCompiler {
      * @throws LocationException When a compilation error (incorrect program)
      * occurs.
      */
-    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err, DecaParser parser)
+    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err)
             throws DecacFatalError, DecacInternalError {
         DecaLexer lex;
         try {
@@ -250,7 +244,7 @@ public class DecacCompiler {
         }
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        parser = new DecaParser(tokens);
+        DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }

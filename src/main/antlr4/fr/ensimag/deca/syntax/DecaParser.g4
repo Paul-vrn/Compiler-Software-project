@@ -468,7 +468,7 @@ literal returns[AbstractExpr tree]
 ident returns[AbstractIdentifier tree]
     : IDENT {
         $tree = new Identifier(
-            getDecacCompiler().create($IDENT.text)
+            getDecacCompiler().createSymbol($IDENT.text)
         );
         }
     ;

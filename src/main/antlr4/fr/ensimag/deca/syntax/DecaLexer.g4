@@ -12,8 +12,6 @@ options {
 }
 
 // Deca lexer rules.
-//DUMMY_TOKEN: .; // TO DO : Not very important rule that recognises all the caracteres.
-                // TO DO : We have to delete It and replace It by a real rule.
 
 //IDENTIFICATEURS
 fragment LETTER : 'a'..'z' | 'A'..'Z';

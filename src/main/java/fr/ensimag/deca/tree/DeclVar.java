@@ -45,7 +45,6 @@ public class DeclVar extends AbstractDeclVar {
         s.print(" ");
         this.varName.decompile(s);
         if (!(this.initialization instanceof NoInitialization)){
-            s.print(" = ");
             this.initialization.decompile(s);
         }
         s.print(";");

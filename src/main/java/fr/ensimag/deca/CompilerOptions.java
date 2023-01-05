@@ -33,6 +33,8 @@ public class CompilerOptions {
         return printBanner;
     }
 
+    public void enablePrintBanner(){this.printBanner = true;}
+
     public boolean getDecompilation(){
         return decompilation;
     }
@@ -40,17 +42,25 @@ public class CompilerOptions {
     public void enableDecompilation(){
         this.decompilation = true;
     }
+
+    public boolean getVerification(){return verificationEnabled;}
+
+    public void enableVerification(){this.verificationEnabled = true;}
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
 
     private int debug = 0;
-    private boolean parallel = false;
+
+
+    private boolean verificationEnabled = false;
     private boolean printBanner = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     private boolean decompilation = false;
+
+    private boolean parallel = false;
     
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
@@ -78,13 +88,21 @@ public class CompilerOptions {
         }
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
-
+        //TODO option implementation page 103
         if(argsArrayList.contains("-p")){
             enableDecompilation();
         }
-        if(argsArrayList.contains("-b")){
-        throw new UnsupportedOperationException("-b not yet implemented");
+        if(argsArrayList.contains("-v")){
+            enableVerification();
         }
+        // Check if incompatible options -p and -v are both checked
+        if(getDecompilation() && getVerification()){
+            throw new UnsupportedOperationException("Incompatible options -p and -v");
+        }
+        if(argsArrayList.contains("-b")){
+            enablePrintBanner();
+        }
+
         File file = new File(argsArrayList.get(argsArrayList.size()-1));
         if(!file.exists()){
             throw new UnsupportedOperationException("File not found");

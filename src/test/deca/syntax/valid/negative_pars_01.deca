@@ -1,0 +1,15 @@
+// Description:
+//    Programme minimaliste utilisant println.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+
+        int a = 1;
+        println(-a);
+
+}

@@ -1,4 +1,12 @@
-// affichage en flottant de la moitié du carré d'un entier
+// Description:
+//    Programme pour l'affichage en flottant de la moitié du carré d'un entier
+//
+// Resultats:
+//      0,5*x²
+//
+//
+// Historique:
+//    cree le 04/01/2023
 {
     int x ;
     x=readInt() ;

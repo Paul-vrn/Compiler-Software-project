@@ -1,0 +1,17 @@
+// Description:
+//    Programme minimaliste utilisant println.
+//
+// Resultats:
+//    Hello
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+        int a = 2;
+        if (a==2) {
+            println("Hello");
+        }
+
+}
+

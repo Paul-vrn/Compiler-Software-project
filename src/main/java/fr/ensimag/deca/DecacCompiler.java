@@ -182,8 +182,9 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        AbstractProgram prog = doLexingAndParsing(sourceName, err);
-
+        DecaParser parser = null;
+        AbstractProgram prog = doLexingAndParsing(sourceName, err, parser);
+        System.out.println(parser.toString());
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
@@ -219,6 +220,7 @@ public class DecacCompiler {
      *
      * @param sourceName Name of the file to parse
      * @param err Stream to send error messages to
+     * @param parser Parser to use
      * @return the abstract syntax tree
      * @throws DecacFatalError When an error prevented opening the source file
      * @throws DecacInternalError When an inconsistency was detected in the
@@ -226,7 +228,7 @@ public class DecacCompiler {
      * @throws LocationException When a compilation error (incorrect program)
      * occurs.
      */
-    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err)
+    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err, DecaParser parser)
             throws DecacFatalError, DecacInternalError {
         DecaLexer lex;
         try {
@@ -236,7 +238,7 @@ public class DecacCompiler {
         }
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        DecaParser parser = new DecaParser(tokens);
+        parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }

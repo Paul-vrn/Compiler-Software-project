@@ -26,6 +26,8 @@ options {
 @header {
     import fr.ensimag.deca.tree.*;
     import java.io.PrintStream;
+    import java.util.Collections;
+
 }
 
 @members {
@@ -156,24 +158,36 @@ inst returns[AbstractInst tree]
 if_then_else returns[IfThenElse tree]
 @init {
     AbstractExpr condition = null;
+    List<AbstractExpr> elsifConditions = new ArrayList<AbstractExpr>();
+    List<ListInst> elsifBodies = new ArrayList<ListInst>();
     ListInst thenBranch = null;
     ListInst elseBranch = null;
-    $tree = new IfThenElse(condition, thenBranch, elseBranch);
+    IfThenElse tempTree = null;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
         condition = $condition.tree;
         thenBranch = $li_if.tree;
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-            elseBranch = $elsif_li.tree;
+            elsifConditions.add($elsif_cond.tree);
+            elsifBodies.add($elsif_li.tree);
         } // pas sûr
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
-        if ($li_else.tree != null) {
-            elseBranch = $li_else.tree;
+        elseBranch = $li_else.tree;
         }
+      )? {
+        for (int i = elsifConditions.size(); i > 0; i--) {
+            tempTree = new IfThenElse(
+                            elsifConditions.get(i-1),
+                            elsifBodies.get(i-1),
+                            elseBranch
+            );
+            elseBranch = new ListInst();
+            elseBranch.add(tempTree);
         }
-      )?
+        $tree = new IfThenElse(condition, thenBranch, elseBranch);
+      }
     ;
 
 list_expr returns[ListExpr tree]

@@ -38,6 +38,7 @@ public class Program extends AbstractProgram {
 //        throw new UnsupportedOperationException("not yet implemented");
         // LOG.debug("verify program: end");
 
+        //this.classes.verifyListClass(compiler);
         this.main.verifyMain(compiler);
     }
 

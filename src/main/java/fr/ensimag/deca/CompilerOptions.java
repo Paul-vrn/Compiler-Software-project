@@ -3,6 +3,7 @@ package fr.ensimag.deca;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,6 +32,14 @@ public class CompilerOptions {
     public boolean getPrintBanner() {
         return printBanner;
     }
+
+    public boolean getDecompilation(){
+        return decompilation;
+    }
+
+    public void enableDecompilation(){
+        this.decompilation = true;
+    }
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -41,6 +50,7 @@ public class CompilerOptions {
     private boolean printBanner = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
+    private boolean decompilation = false;
     
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
@@ -67,7 +77,19 @@ public class CompilerOptions {
             logger.info("Java assertions disabled");
         }
 
-        throw new UnsupportedOperationException("not yet implemented");
+        ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
+
+        if(argsArrayList.contains("-p")){
+            enableDecompilation();
+        }
+        if(argsArrayList.contains("-b")){
+        throw new UnsupportedOperationException("-b not yet implemented");
+        }
+        File file = new File(argsArrayList.get(argsArrayList.size()-1));
+        if(!file.exists()){
+            throw new UnsupportedOperationException("File not found");
+        }
+        sourceFiles.add(file);
     }
 
     protected void displayUsage() {

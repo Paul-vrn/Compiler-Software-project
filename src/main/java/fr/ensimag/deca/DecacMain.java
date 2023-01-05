@@ -31,6 +31,12 @@ public class DecacMain {
         if (options.getSourceFiles().isEmpty()) {
             throw new UnsupportedOperationException("decac without argument not yet implemented");
         }
+        if (options.getDecompilation()) {
+            System.out.println("The decompilation option is enabled");
+
+            //Récursifivité sur les .decompile
+
+        }
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à
             // compiler, et lancer l'exécution des méthodes compile() de chaque

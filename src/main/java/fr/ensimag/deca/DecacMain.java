@@ -28,9 +28,6 @@ public class DecacMain {
         if (options.getPrintBanner()) {
             System.out.println("\033[1;95m" + "Ratio Systems" + "\u001B[0m"); //print Banner in purple
         }
-        if(options.getVerification()){
-            throw new UnsupportedOperationException("-v not yet implemented");
-        }
         if (options.getSourceFiles().isEmpty()) {
             throw new UnsupportedOperationException("decac without argument not yet implemented");
         }

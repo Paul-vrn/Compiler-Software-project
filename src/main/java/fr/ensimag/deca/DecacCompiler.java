@@ -191,12 +191,13 @@ public class DecacCompiler {
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
         AbstractProgram prog = doLexingAndParsing(sourceName, err);
-
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
         }
-        // TODO je crois que c'est ici qu'il faut mettre le code qui fait l'option -p
+        if(compilerOptions.getVerification()){
+            return false;
+        }
         if(compilerOptions.getDecompilation()){
             prog.decompile(out);
         }

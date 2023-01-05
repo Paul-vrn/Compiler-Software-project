@@ -88,7 +88,7 @@ public class CompilerOptions {
         }
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
-
+        //TODO option implementation page 103
         if(argsArrayList.contains("-p")){
             enableDecompilation();
         }
@@ -99,7 +99,7 @@ public class CompilerOptions {
         if(getDecompilation() && getVerification()){
             throw new UnsupportedOperationException("Incompatible options -p and -v");
         }
-        if(argsArrayList.contains("-b")){ //TODO must be implemented specifications for options cab be found on page 103 of the subject
+        if(argsArrayList.contains("-b")){
             enablePrintBanner();
         }
 

@@ -7,5 +7,10 @@
 // Historique:
 //    cree le 04/01/2023
 
+{
+    int i = 1;
+    if ( (i == 1 && i > 2) || (i <= 1) {
+        print("Hello");
+    }
 
-/* un commentaire */
+}

@@ -7,5 +7,7 @@
 // Historique:
 //    cree le 04/01/2023
 
-
-/* un commentaire */
+{
+    Object obj = 1;
+    int obj_ent = (int) 1;
+}

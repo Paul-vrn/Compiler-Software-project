@@ -151,12 +151,6 @@ public class LexerTest {
         System.out.println("------------------------------------");
         System.out.println("TEST : " + name + "\n");
 
-        //On skip les 10 lignes de commentaire du test
-        for(int i = 0; i < 10; i++)
-        {
-            lex.nextToken();
-        }
-
         String concatenatedString = "";
         //On parcourt les tokens qui nous interessent
         while(true)

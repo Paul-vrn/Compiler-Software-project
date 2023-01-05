@@ -127,6 +127,7 @@ inst returns[AbstractInst tree]
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Print(false, $list_expr.tree);
+            setLocation($tree, $PRINT);
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -189,6 +190,7 @@ if_then_else returns[IfThenElse tree]
                             elsifBodies.get(i-1),
                             elseBranch
             );
+
             elseBranch = new ListInst();
             elseBranch.add(tempTree);
         }
@@ -348,9 +350,6 @@ mult_expr returns[AbstractExpr tree]
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree = new Multiply($e1.tree, $e2.tree);
-            System.out.println($e1.start);
-            System.out.println($TIMES);
-            System.out.println($e2.start);
             setLocation($tree, $TIMES);
         }
     | e1=mult_expr SLASH e2=unary_expr {

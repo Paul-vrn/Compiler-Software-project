@@ -25,7 +25,6 @@ public abstract class AbstractDecaParser extends Parser {
     Logger LOG = Logger.getLogger(AbstractDecaParser.class);
 
     private DecacCompiler decacCompiler;
-    private SymbolTable symbolTable;
     protected DecacCompiler getDecacCompiler() {
         return decacCompiler;
     }
@@ -73,13 +72,6 @@ public abstract class AbstractDecaParser extends Parser {
         tree.setLocation(tokenLocation(token));
     }
 
-    /**
-     * Get the symbol table.
-     * @return the symbol table.
-     */
-    protected SymbolTable getSymbolTable() {
-        return symbolTable;
-    }
 
     /**
      * Create a new parser instance, pre-supplying the input token stream.
@@ -88,7 +80,6 @@ public abstract class AbstractDecaParser extends Parser {
      */
     protected AbstractDecaParser(TokenStream input) {
         super(input);
-        symbolTable = new SymbolTable();
         setErrorHandler(new DefaultErrorStrategy() {
             @Override
             public void reportError(Parser recognizer,

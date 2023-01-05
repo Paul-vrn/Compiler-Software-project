@@ -3,6 +3,7 @@ package fr.ensimag.deca;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,16 +32,35 @@ public class CompilerOptions {
     public boolean getPrintBanner() {
         return printBanner;
     }
+
+    public void enablePrintBanner(){this.printBanner = true;}
+
+    public boolean getDecompilation(){
+        return decompilation;
+    }
+
+    public void enableDecompilation(){
+        this.decompilation = true;
+    }
+
+    public boolean getVerification(){return verificationEnabled;}
+
+    public void enableVerification(){this.verificationEnabled = true;}
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
 
     private int debug = 0;
-    private boolean parallel = false;
+
+
+    private boolean verificationEnabled = false;
     private boolean printBanner = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
+    private boolean decompilation = false;
+
+    private boolean parallel = false;
     
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
@@ -67,7 +87,27 @@ public class CompilerOptions {
             logger.info("Java assertions disabled");
         }
 
-        throw new UnsupportedOperationException("not yet implemented");
+        ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
+        //TODO option implementation page 103
+        if(argsArrayList.contains("-p")){
+            enableDecompilation();
+        }
+        if(argsArrayList.contains("-v")){
+            enableVerification();
+        }
+        // Check if incompatible options -p and -v are both checked
+        if(getDecompilation() && getVerification()){
+            throw new UnsupportedOperationException("Incompatible options -p and -v");
+        }
+        if(argsArrayList.contains("-b")){
+            enablePrintBanner();
+        }
+
+        File file = new File(argsArrayList.get(argsArrayList.size()-1));
+        if(!file.exists()){
+            throw new UnsupportedOperationException("File not found");
+        }
+        sourceFiles.add(file);
     }
 
     protected void displayUsage() {

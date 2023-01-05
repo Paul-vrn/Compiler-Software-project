@@ -119,15 +119,13 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
 
     /** The global environment for types (and the symbolTable) */
-    public final EnvironmentType environmentType = new EnvironmentType(this);
     public final SymbolTable symbolTable = new SymbolTable();
+    public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public Symbol createSymbol(String name) {
-        return null; // A FAIRE: remplacer par la ligne en commentaire ci-dessous
-        // return symbolTable.create(name);
+        return this.symbolTable.create(name);
     }
 
     /**
@@ -137,10 +135,15 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+        //the output file name is the source file with "Decompiled" added before the deca extension
+
+        String outputFileName = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
+        String fileAss = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
+
+        String destFile = fileAss;
+
         PrintStream err = System.err;
+        //PrintStream out = new PrintStream(ByteArrayOutputStream, true, outputFileName);
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
@@ -182,15 +185,18 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        DecaParser parser = null;
-        AbstractProgram prog = doLexingAndParsing(sourceName, err, parser);
-        System.out.println(parser.toString());
+        AbstractProgram prog = doLexingAndParsing(sourceName, err);
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
         }
+        if(compilerOptions.getVerification()){
+            return false;
+        }
+        if(compilerOptions.getDecompilation()){
+            prog.decompile(out);
+        }
         assert(prog.checkAllLocations());
-
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
@@ -221,7 +227,6 @@ public class DecacCompiler {
      *
      * @param sourceName Name of the file to parse
      * @param err Stream to send error messages to
-     * @param parser Parser to use
      * @return the abstract syntax tree
      * @throws DecacFatalError When an error prevented opening the source file
      * @throws DecacInternalError When an inconsistency was detected in the
@@ -229,7 +234,7 @@ public class DecacCompiler {
      * @throws LocationException When a compilation error (incorrect program)
      * occurs.
      */
-    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err, DecaParser parser)
+    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err)
             throws DecacFatalError, DecacInternalError {
         DecaLexer lex;
         try {
@@ -239,7 +244,7 @@ public class DecacCompiler {
         }
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        parser = new DecaParser(tokens);
+        DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }

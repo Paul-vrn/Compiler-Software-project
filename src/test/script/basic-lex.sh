@@ -22,8 +22,6 @@ PATH=./src/test/script/launchers:"$PATH"
 # (1) ou sortie d'erreur (2). On redirige la sortie d'erreur sur la
 # sortie standard pour accepter les deux (2>&1)
 
-test_lex src/test/deca/syntax/invalid/provided/chaine_incomplete.deca | echo
-echo "je suis là"
 if test_lex src/test/deca/syntax/invalid/provided/simple_lex.deca 2>&1 \
     | head -n 1 | grep -q 'simple_lex.deca:[0-9]'
 then

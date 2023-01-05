@@ -492,7 +492,7 @@ literal returns[AbstractExpr tree]
 ident returns[AbstractIdentifier tree]
     : IDENT {
         $tree = new Identifier(
-            getSymbolTable().create($IDENT.text)
+            getDecacCompiler().createSymbol($IDENT.text)
         );
         setLocation($tree, $IDENT);
         }

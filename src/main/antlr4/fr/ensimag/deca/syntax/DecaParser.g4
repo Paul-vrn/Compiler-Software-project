@@ -158,7 +158,6 @@ inst returns[AbstractInst tree]
             assert($expr.tree != null);
             $tree = $expr.tree;
             setLocation($tree, $RETURN);
-
         }
     ;
 
@@ -343,11 +342,15 @@ mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
             assert($e.tree != null);
             $tree = $e.tree;
+            setLocation($tree, $e.start);
         }
     | e1=mult_expr TIMES e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree = new Multiply($e1.tree, $e2.tree);
+            System.out.println($e1.start);
+            System.out.println($TIMES);
+            System.out.println($e2.start);
             setLocation($tree, $TIMES);
         }
     | e1=mult_expr SLASH e2=unary_expr {
@@ -369,7 +372,7 @@ unary_expr returns[AbstractExpr tree]
             assert($e.tree != null);
             $tree = new UnaryMinus($e.tree);
             setLocation($tree, $op);
-        } // todo pas sûr
+        }
     | op=EXCLAM e=unary_expr {
             assert($e.tree != null);
             $tree = new Not($e.tree);
@@ -416,7 +419,6 @@ primary_expr returns[AbstractExpr tree]
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
             $tree = $expr.tree;
-            setLocation($tree, $expr.start);
         }
     | READINT OPARENT CPARENT {
             $tree = new ReadInt();

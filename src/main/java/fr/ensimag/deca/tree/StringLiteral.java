@@ -60,8 +60,6 @@ public class StringLiteral extends AbstractStringLiteral {
     }
     
     @Override
-    String prettyPrintNode() {
-        return "StringLiteral (" + value + ")";
-    }
+    String prettyPrintNode() {return "StringLiteral (" + value + ")";}
 
 }

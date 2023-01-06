@@ -25,7 +25,6 @@ public abstract class AbstractDecaParser extends Parser {
     Logger LOG = Logger.getLogger(AbstractDecaParser.class);
 
     private DecacCompiler decacCompiler;
-    private SymbolTable symbolTable;
     protected DecacCompiler getDecacCompiler() {
         return decacCompiler;
     }
@@ -35,7 +34,7 @@ public abstract class AbstractDecaParser extends Parser {
     }
 
     protected abstract AbstractProgram parseProgram();
-    
+
     public AbstractProgram parseProgramAndManageErrors(PrintStream err) {
         try {
             AbstractProgram result = parseProgram();
@@ -63,7 +62,7 @@ public abstract class AbstractDecaParser extends Parser {
                 token.getCharPositionInLine(),
                 token.getInputStream().getSourceName());
     }
-    
+
     /**
      * Sets the location of Tree to the one in Token.
      *
@@ -78,7 +77,7 @@ public abstract class AbstractDecaParser extends Parser {
      * @return the symbol table.
      */
     protected SymbolTable getSymbolTable() {
-        return symbolTable;
+        return this.decacCompiler.symbolTable;
     }
 
     /**
@@ -88,7 +87,6 @@ public abstract class AbstractDecaParser extends Parser {
      */
     protected AbstractDecaParser(TokenStream input) {
         super(input);
-        symbolTable = new SymbolTable();
         setErrorHandler(new DefaultErrorStrategy() {
             @Override
             public void reportError(Parser recognizer,
@@ -97,7 +95,7 @@ public abstract class AbstractDecaParser extends Parser {
                 if (e instanceof DecaRecognitionException) {
                     Token offendingToken = e.getOffendingToken();
                     if (offendingToken == null) {
-                        offendingToken = recognizer.getCurrentToken();                        
+                        offendingToken = recognizer.getCurrentToken();
                     }
                     recognizer.notifyErrorListeners(offendingToken, e.getMessage(), e);
                 } else {

@@ -1,0 +1,18 @@
+// Description:
+//    Programme testant la concaténation implicite de string.
+//
+// Resultats:
+//    Hello World
+//    Hello World
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+
+        String str = "Hello" " World";
+        String str2 = "Hello" + " World";
+        println(str);
+        println(str2);
+
+}

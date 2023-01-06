@@ -17,4 +17,3 @@
                     `> [12, 17] Multiply
                        +> [12, 16] Identifier (x)
                        `> [12, 18] Identifier (x)
-

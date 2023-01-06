@@ -10,7 +10,7 @@
 
 {
 
-        String str = "Hello" " World";
+        String str = "Hello";
         String str2 = "Hello" + " World";
         println(str);
         println(str2);

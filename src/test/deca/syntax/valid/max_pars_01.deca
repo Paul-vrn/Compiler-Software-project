@@ -2,11 +2,13 @@
 //    Programme minimaliste utilisant println.
 //
 // Resultats:
-//    Hello
+//    Erreur, integer overflow
 //
 // Historique:
-//    cree le 01/01/2023
+//    cree le 04/01/2023
 
 {
-        println("Hello");
+
+        int a = 99999999999999999999;
+
 }

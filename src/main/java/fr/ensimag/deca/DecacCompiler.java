@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -119,13 +122,15 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
+ 
 
     /** The global environment for types (and the symbolTable) */
-    public final SymbolTable symbolTable = new SymbolTable();
     public final EnvironmentType environmentType = new EnvironmentType(this);
+    public final SymbolTable symbolTable = new SymbolTable();
 
     public Symbol createSymbol(String name) {
-        return this.symbolTable.create(name);
+        return null; // A FAIRE: remplacer par la ligne en commentaire ci-dessous
+        // return symbolTable.create(name);
     }
 
     /**
@@ -133,18 +138,56 @@ public class DecacCompiler {
      *
      * @return true on error
      */
-    public boolean compile() {
+    public boolean compile() throws DecacFatalError {
         String sourceFile = source.getAbsolutePath();
-        //the output file name is the source file with "Decompiled" added before the deca extension
 
-        String outputFileName = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
-        String fileAss = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
+        // The decompiled filed name is in projet-GL/outputFiles/decompiled
 
+
+        String[] temp1 = sourceFile.split("/");
+        String[] temp2 = temp1[temp1.length-1].split(".deca");
+        String[] temp3 = sourceFile.split("projet-GL/");
+
+
+        String path1 = temp3[0] + "projet-GL/outputFiles/";
+        File pathAsFile1 = new File(path1);
+
+        if (!Files.exists(Paths.get(path1))) {
+            pathAsFile1.mkdir();
+        }
+
+        String path2 = temp3[0] + "projet-GL/outputFiles/assembly/";
+        File pathAsFile2 = new File(path2);
+
+        if (!Files.exists(Paths.get(path2))) {
+            pathAsFile2.mkdir();
+        }
+
+
+        String path3 = temp3[0] + "projet-GL/outputFiles/decompiled";
+        File pathAsFile3 = new File(path3);
+
+        if (!Files.exists(Paths.get(path3))) {
+            pathAsFile3.mkdir();
+        }
+
+
+        String outputDecompiled = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + "Decompiled.deca";
+
+        //String outputDecompiled = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
+        String fileAss = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + ".ass";
         String destFile = fileAss;
 
+        FileOutputStream intermediate = null;
+        try {
+            intermediate = new FileOutputStream(outputDecompiled);
+        } catch (FileNotFoundException e) {
+            throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
+        }
+
         PrintStream err = System.err;
-        //PrintStream out = new PrintStream(ByteArrayOutputStream, true, outputFileName);
-        PrintStream out = System.out;
+        PrintStream out = new PrintStream(intermediate);
+        //PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
             return doCompile(sourceFile, destFile, out, err);
@@ -197,6 +240,7 @@ public class DecacCompiler {
             prog.decompile(out);
         }
         assert(prog.checkAllLocations());
+
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());

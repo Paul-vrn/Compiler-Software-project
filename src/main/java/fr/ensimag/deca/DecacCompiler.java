@@ -122,15 +122,14 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /** The global environment for types (and the symbolTable) */
-    public final EnvironmentType environmentType = new EnvironmentType(this);
     public final SymbolTable symbolTable = new SymbolTable();
+    public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public Symbol createSymbol(String name) {
-        return null; // A FAIRE: remplacer par la ligne en commentaire ci-dessous
-        // return symbolTable.create(name);
+        return this.symbolTable.create(name);
     }
 
     /**
@@ -175,7 +174,7 @@ public class DecacCompiler {
         String outputDecompiled = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + "Decompiled.deca";
 
         //String outputDecompiled = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
-        String fileAss = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + ".ass";
+        String fileAss = temp3[0] + "projet-GL/outputFiles/assembly/" + temp2[0] + ".ass";
         String destFile = fileAss;
 
         FileOutputStream intermediate = null;
@@ -240,7 +239,6 @@ public class DecacCompiler {
             prog.decompile(out);
         }
         assert(prog.checkAllLocations());
-
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());

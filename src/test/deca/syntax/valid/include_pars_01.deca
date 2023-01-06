@@ -2,8 +2,9 @@
 //    Programme minimaliste include.
 //
 // Resultats:
-//    Hello
+//
 //
 // Historique:
 //    cree le 01/01/2023
+
 #include "fichier.h"

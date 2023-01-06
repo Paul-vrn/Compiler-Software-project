@@ -39,7 +39,7 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(Integer.toString(value));
+        s.print(Integer.toString(getValue()));
     }
 
     @Override

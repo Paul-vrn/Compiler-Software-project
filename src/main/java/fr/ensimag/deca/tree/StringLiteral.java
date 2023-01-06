@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
@@ -34,7 +31,11 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.setType(new StringType(compiler.createSymbol("String")));
+        if (this.getType().isString()){
+            return this.getType();
+        }
+        throw new ContextualError("Type problem", this.getLocation());
     }
 
     @Override
@@ -44,10 +45,9 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        //s.print("h".replace('h','"'));
-        s.print("'");
+        s.print("\"");
         s.print(getValue());
-        s.print("'");
+        s.print("\"");
     }
 
     @Override
@@ -61,8 +61,6 @@ public class StringLiteral extends AbstractStringLiteral {
     }
     
     @Override
-    String prettyPrintNode() {
-        return "StringLiteral (" + value + ")";
-    }
+    String prettyPrintNode() {return "StringLiteral (" + value + ")";}
 
 }

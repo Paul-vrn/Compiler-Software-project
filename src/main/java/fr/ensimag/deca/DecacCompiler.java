@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -119,15 +122,14 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /** The global environment for types (and the symbolTable) */
-    public final EnvironmentType environmentType = new EnvironmentType(this);
     public final SymbolTable symbolTable = new SymbolTable();
+    public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public Symbol createSymbol(String name) {
-        return null; // A FAIRE: remplacer par la ligne en commentaire ci-dessous
-        // return symbolTable.create(name);
+        return this.symbolTable.create(name);
     }
 
     /**
@@ -135,13 +137,56 @@ public class DecacCompiler {
      *
      * @return true on error
      */
-    public boolean compile() {
+    public boolean compile() throws DecacFatalError {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+
+        // The decompiled filed name is in projet-GL/outputFiles/decompiled
+
+
+        String[] temp1 = sourceFile.split("/");
+        String[] temp2 = temp1[temp1.length-1].split(".deca");
+        String[] temp3 = sourceFile.split("projet-GL/");
+
+
+        String path1 = temp3[0] + "projet-GL/outputFiles/";
+        File pathAsFile1 = new File(path1);
+
+        if (!Files.exists(Paths.get(path1))) {
+            pathAsFile1.mkdir();
+        }
+
+        String path2 = temp3[0] + "projet-GL/outputFiles/assembly/";
+        File pathAsFile2 = new File(path2);
+
+        if (!Files.exists(Paths.get(path2))) {
+            pathAsFile2.mkdir();
+        }
+
+
+        String path3 = temp3[0] + "projet-GL/outputFiles/decompiled";
+        File pathAsFile3 = new File(path3);
+
+        if (!Files.exists(Paths.get(path3))) {
+            pathAsFile3.mkdir();
+        }
+
+
+        String outputDecompiled = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + "Decompiled.deca";
+
+        //String outputDecompiled = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
+        String fileAss = temp3[0] + "projet-GL/outputFiles/assembly/" + temp2[0] + ".ass";
+        String destFile = fileAss;
+
+        FileOutputStream intermediate = null;
+        try {
+            intermediate = new FileOutputStream(outputDecompiled);
+        } catch (FileNotFoundException e) {
+            throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
+        }
+
         PrintStream err = System.err;
-        PrintStream out = System.out;
+        PrintStream out = new PrintStream(intermediate);
+        //PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
             return doCompile(sourceFile, destFile, out, err);
@@ -182,14 +227,14 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        DecaParser parser = null;
-        AbstractProgram prog = doLexingAndParsing(sourceName, err, parser);
-        System.out.println(parser.toString());
+        AbstractProgram prog = doLexingAndParsing(sourceName, err);
         if (prog == null) {
             LOG.info("Parsing failed");
             return true;
         }
-        // TODO je crois que c'est ici qu'il faut mettre le code qui fait l'option -p
+        if(compilerOptions.getVerification()){
+            return false;
+        }
         if(compilerOptions.getDecompilation()){
             prog.decompile(out);
         }
@@ -224,7 +269,6 @@ public class DecacCompiler {
      *
      * @param sourceName Name of the file to parse
      * @param err Stream to send error messages to
-     * @param parser Parser to use
      * @return the abstract syntax tree
      * @throws DecacFatalError When an error prevented opening the source file
      * @throws DecacInternalError When an inconsistency was detected in the
@@ -232,7 +276,7 @@ public class DecacCompiler {
      * @throws LocationException When a compilation error (incorrect program)
      * occurs.
      */
-    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err, DecaParser parser)
+    protected AbstractProgram doLexingAndParsing(String sourceName, PrintStream err)
             throws DecacFatalError, DecacInternalError {
         DecaLexer lex;
         try {
@@ -242,7 +286,7 @@ public class DecacCompiler {
         }
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        parser = new DecaParser(tokens);
+        DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }

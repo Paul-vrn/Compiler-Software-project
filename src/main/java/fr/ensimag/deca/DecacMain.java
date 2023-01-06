@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DecacFatalError {
         // example log4j message.
         LOG.info("Decac compiler started");
         boolean error = false;
@@ -26,7 +26,7 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            System.out.println("\033[1;95m" + "Ratio Systems" + "\u001B[0m"); //print Banner in purple
         }
         if (options.getSourceFiles().isEmpty()) {
             throw new UnsupportedOperationException("decac without argument not yet implemented");

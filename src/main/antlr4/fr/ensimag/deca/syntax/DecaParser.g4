@@ -344,7 +344,6 @@ mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
             assert($e.tree != null);
             $tree = $e.tree;
-            setLocation($tree, $e.start);
         }
     | e1=mult_expr TIMES e2=unary_expr {
             assert($e1.tree != null);                                         
@@ -380,7 +379,6 @@ unary_expr returns[AbstractExpr tree]
     | select_expr {
             assert($select_expr.tree != null);
             $tree = $select_expr.tree;
-            setLocation($tree, $select_expr.start);
         }
     ;
 
@@ -460,6 +458,7 @@ literal returns[AbstractExpr tree]
     : INT {
         try {
             $tree = new IntLiteral(Integer.parseInt($INT.text));
+            setLocation($tree, $INT);
         } catch (NumberFormatException e) {
             $tree = null;
         }
@@ -467,24 +466,30 @@ literal returns[AbstractExpr tree]
     | fd=FLOAT {
         try {
             $tree = new FloatLiteral(Float.parseFloat($fd.text));
+            setLocation($tree, $fd);
         } catch (NumberFormatException e) {
             $tree = null;
         }
         }
     | STRING {
         $tree = new StringLiteral($STRING.text);
+        setLocation($tree, $STRING);
         }
     | TRUE {
         $tree = new BooleanLiteral(true);
+        setLocation($tree, $TRUE);
         }
     | FALSE {
         $tree = new BooleanLiteral(false);
+        setLocation($tree, $FALSE);
         }
     | THIS {
         $tree = $tree;
+        setLocation($tree, $THIS);
         }
     | NULL {
         $tree = null;
+        setLocation($tree, $NULL);
         }
     ;
 

@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.Memory;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -130,6 +131,15 @@ public class DecacCompiler {
 
     public Symbol createSymbol(String name) {
         return this.symbolTable.create(name);
+    }
+
+    private final Memory memory = new Memory();
+
+    public Memory getMemory() {
+        return memory;
+    }
+    public int getNbIf(){
+        return memory.getNbIfThenElse();
     }
 
     /**

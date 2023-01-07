@@ -3,6 +3,7 @@ package fr.ensimag.deca.context;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Dictionary associating identifier's ExpDefinition to their names.
@@ -38,6 +39,15 @@ public class EnvironmentExp {
         private static final long serialVersionUID = -2733379901827316441L;
     }
 
+    public void printEnvironmentContent(){
+        for(Map.Entry m : this.dictionary.entrySet()){
+            System.out.println(m.getKey() + " " + m.getValue());
+        }
+        if(this.parentEnvironment != null) {
+            this.parentEnvironment.printEnvironmentContent();
+        }
+    }
+
     /**
      * Return the definition of the symbol in the environment, or null if the
      * symbol is undefined.
@@ -68,7 +78,13 @@ public class EnvironmentExp {
      *
      */
     public void declare(Symbol name, ExpDefinition def) throws DoubleDefException {
-        this.dictionary.put(name, def);
+        if(this.dictionary.containsKey(name))
+        {
+            throw new DoubleDefException();
+        }
+        else{
+            this.dictionary.put(name, def);
+        }
     }
 
 }

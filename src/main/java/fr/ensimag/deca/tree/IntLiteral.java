@@ -25,7 +25,8 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        this.setType(new StringType(compiler.createSymbol("int")));
+        this.setType(new IntType(compiler.createSymbol("int")));
+        System.out.println("TYPE : " + this.getType());
         if (this.getType().isInt()){
             return this.getType();
         }

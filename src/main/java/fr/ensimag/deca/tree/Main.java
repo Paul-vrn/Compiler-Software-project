@@ -18,7 +18,9 @@ import org.apache.log4j.Logger;
  */
 public class Main extends AbstractMain {
     private static final Logger LOG = Logger.getLogger(Main.class);
-    
+
+    private EnvironmentExp mainEnvironment;
+
     private ListDeclVar declVariables;
     private ListInst insts;
     public Main(ListDeclVar declVariables,
@@ -38,12 +40,15 @@ public class Main extends AbstractMain {
 //        LOG.debug("verify Main: end");
 //        throw new UnsupportedOperationException("not yet implemented");
 
-        EnvironmentExp env_exp_object = new EnvironmentExp(null);
+        this.mainEnvironment = new EnvironmentExp(null);
 
         // TO DO : Don't forget to add "equals" in the env_exp_object
 
-        this.declVariables.verifyListDeclVariable(compiler, env_exp_object, null);
-        this.insts.verifyListInst(compiler, env_exp_object, null, new VoidType(compiler.createSymbol("void")));
+        this.declVariables.verifyListDeclVariable(compiler, this.mainEnvironment, null);
+        System.out.println("-------------------------------------------------------");
+        this.mainEnvironment.printEnvironmentContent();
+        System.out.println("-------------------------------------------------------");
+        this.insts.verifyListInst(compiler, this.mainEnvironment, null, new VoidType(compiler.createSymbol("void")));
     }
 
     @Override

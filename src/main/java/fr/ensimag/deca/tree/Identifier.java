@@ -15,6 +15,9 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -25,7 +28,13 @@ import org.apache.log4j.Logger;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
-    
+
+    public void codeGenDeclVar(DecacCompiler compiler) {
+        super.codeGenInst(compiler);
+        ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
+        exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+    }
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -159,10 +168,13 @@ public class Identifier extends AbstractIdentifier {
 
     private Symbol name;
 
+
     public Identifier(Symbol name) {
         Validate.notNull(name);
         this.name = name;
     }
+
+
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,

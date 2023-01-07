@@ -26,6 +26,12 @@ public class Initialization extends AbstractInitialization {
         this.expression = expression;
     }
 
+    @Override
+    protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
     public Initialization(AbstractExpr expression) {
         Validate.notNull(expression);
         this.expression = expression;

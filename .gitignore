@@ -25,4 +25,5 @@ hs_err_pid*
 
 target/
 .idea/
-gen/
+outputFiles/assembly/*.ass
+outputFiles/assembly/*.deca

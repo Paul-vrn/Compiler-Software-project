@@ -71,4 +71,7 @@ public class EnvironmentExp {
         this.dictionary.put(name, def);
     }
 
+    public int size() {
+        return this.dictionary.size();
+    }
 }

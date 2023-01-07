@@ -6,6 +6,13 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Operand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 import java.io.PrintStream;
 
 /**
@@ -24,6 +31,12 @@ public class NoInitialization extends AbstractInitialization {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    @Override
+    protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
+        DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(0), op));
+    }
 
     /**
      * Node contains no real information, nothing to check.

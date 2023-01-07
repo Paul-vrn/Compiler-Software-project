@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        super.codeGenInst(compiler);
         ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
         exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
     }

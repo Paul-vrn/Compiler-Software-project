@@ -11,7 +11,7 @@ public class Memory {
     public Memory(int nbRegister) {
         this.nbRegister = nbRegister;
         this.nbIfThenElse = 0;
-        this.offset = 0;
+        this.offset = 1;
     }
     public Memory(){
         this(15);

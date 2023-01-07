@@ -41,7 +41,7 @@ public class Main extends AbstractMain {
 //        throw new UnsupportedOperationException("not yet implemented");
 
         this.mainEnvironment = new EnvironmentExp(null);
-
+        compiler.envExpCurrent = this.mainEnvironment;
         // TO DO : Don't forget to add "equals" in the env_exp_object
 
         this.declVariables.verifyListDeclVariable(compiler, this.mainEnvironment, null);

@@ -29,6 +29,7 @@ public class Register extends DVal {
      * Stack Pointer
      */
     public static final Register SP = new Register("SP");
+
     /**
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.

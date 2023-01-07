@@ -1,0 +1,13 @@
+// Description:
+//    Programme definissant la variable entière x puis l'assigne.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    int x;
+    x = 0;
+}

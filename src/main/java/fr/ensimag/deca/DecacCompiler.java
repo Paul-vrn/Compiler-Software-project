@@ -215,7 +215,6 @@ public class DecacCompiler {
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
 
-        Register.initRegisters();
         addComment("start main program");
         prog.codeGenProgram(this);
         addComment("end main program");

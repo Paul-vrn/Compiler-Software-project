@@ -32,10 +32,9 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-        // TODO Auto-generated method stub
-        expression.codeGenInst(compiler);
+        expression.codeGenExpr(compiler, 2);
         DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
-        compiler.addInstruction(new STORE(Register.getR(compiler.getMemory().getLastGRegister()), op));
+        compiler.addInstruction(new STORE(Register.getR(2), op));
 
     }
 

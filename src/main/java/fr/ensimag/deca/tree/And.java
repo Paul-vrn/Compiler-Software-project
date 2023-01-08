@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 
@@ -23,13 +25,17 @@ public class And extends AbstractOpBool {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        getLeftOperand().codeGenInst(compiler); // le CMP dedans
-        compiler.addInstruction(new BEQ(null)); // remplacer null par le label de fin de l'expression
-        getRightOperand().codeGenInst(compiler); // le compare se fait dedans
-        compiler.addInstruction(new BEQ(null)); // remplacer null par le label de fin de l'expression
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
 
+        Label labelEnd = new Label("AND_END_" + LabelIdentification.nbAnd);
+
+        getLeftOperand().codeGenExpr(compiler, n);
+
+        compiler.addInstruction(new CMP(0, Register.getR(n)));
+        compiler.addInstruction(new BEQ(labelEnd)); // si expr1 est faux on va à la fin
+        getRightOperand().codeGenExpr(compiler, n);
+
+        compiler.addLabel(labelEnd);
+        LabelIdentification.nbAnd++;
     }
-
-
 }

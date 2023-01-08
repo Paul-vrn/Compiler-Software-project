@@ -34,7 +34,7 @@ public class Register extends DVal {
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
      */
-    private static final GPRegister[] R = initRegisters();
+    private static GPRegister[] R;
     /**
      * General Purpose Registers
      */
@@ -49,11 +49,15 @@ public class Register extends DVal {
      * Convenience shortcut for R[1]
      */
     public static final GPRegister R1 = R[1];
-    static private GPRegister[] initRegisters() {
-        GPRegister [] res = new GPRegister[16];
-        for (int i = 0; i <= 15; i++) {
+
+    public static int RMAX;
+
+    static private GPRegister[] initRegisters(int n) {
+        GPRegister [] res = new GPRegister[n];
+        for (int i = 0; i <= n-1; i++) {
             res[i] = new GPRegister("R" + i, i);
         }
+        RMAX = n-1;
         return res;
     }
 }

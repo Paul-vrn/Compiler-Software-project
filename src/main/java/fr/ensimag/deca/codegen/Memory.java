@@ -9,6 +9,7 @@ public class Memory {
     private int nbRegister;
     private int nbIfThenElse;
     private int lastGRegister;
+    private int nbNot;
     public Memory(int nbRegister) {
         this.nbRegister = nbRegister;
         this.nbIfThenElse = 0;

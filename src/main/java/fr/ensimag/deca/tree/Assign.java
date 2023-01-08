@@ -30,20 +30,28 @@ public class Assign extends AbstractBinaryExpr {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
                               ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        this.setType(this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass));
-        System.out.println(this.getType());
-        this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        System.out.println(this.getType());
-        System.out.println(this.getRightOperand().getType());
-        if(!this.getType().sameType(this.getRightOperand().getType())){
-            throw new ContextualError("Type problem here", this.getLocation());
+        Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        this.setType(type1);
+        Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if(!(type1.sameType(type2) || type1.isFloat() && type2.isInt())){
+            throw new ContextualError("Assign Type problem here", this.getLocation());
         }
     }
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //TODO : understand and modify this function
+
+        this.setType(this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass));
+        this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if(!this.getType().sameType(this.getRightOperand().getType())){
+            throw new ContextualError("Assign Type problem here", this.getLocation());
+        }
+
+        return this.getType();
     }
 
 

@@ -41,6 +41,12 @@ public class ListInst extends TreeList<AbstractInst> {
         }
     }
 
+    public void codeGenIf(DecacCompiler compiler,int p){
+        for (AbstractInst i : getList()) {
+            ((IfThenElse)i).codeGenIf(compiler,p);
+        }
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractInst i : getList()) {

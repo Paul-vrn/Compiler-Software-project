@@ -1,0 +1,24 @@
+`> [11, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [11, 0] Main
+      +> ListDeclVar [List with 2 elements]
+      |  []> [12, 12] DeclVar
+      |  ||  +> [12, 4] Identifier (boolean)
+      |  ||  +> [12, 12] Identifier (bool)
+      |  ||  `> Initialization
+      |  ||     `> [12, 19] BooleanLiteral (true)
+      |  []> [13, 12] DeclVar
+      |      +> [13, 4] Identifier (boolean)
+      |      +> [13, 12] Identifier (bool2)
+      |      `> Initialization
+      |         `> [13, 20] BooleanLiteral (false)
+      `> ListInst [List with 1 elements]
+         []> IfThenElse
+             +> [14, 13] Equals
+             |  +> [14, 8] Identifier (bool)
+             |  `> [14, 16] Identifier (bool2)
+             +> ListInst [List with 0 elements]
+             `> ListInst [List with 1 elements]
+                []> [16, 8] Println
+                    `> ListExpr [List with 1 elements]
+                       []> [16, 16] StringLiteral ("Hello")

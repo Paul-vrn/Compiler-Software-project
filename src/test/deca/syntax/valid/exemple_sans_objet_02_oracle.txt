@@ -1,0 +1,23 @@
+`> [8, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [8, 0] Main
+      +> ListDeclVar [List with 1 elements]
+      |  []> [9, 7] DeclVar
+      |      +> [9, 3] Identifier (int)
+      |      +> [9, 7] Identifier (x)
+      |      `> NoInitialization
+      `> ListInst [List with 2 elements]
+         []> [10, 4] Assign
+         ||  +> [10, 3] Identifier (x)
+         ||  `> [10, 5] ReadInt
+         []> [11, 3] Println
+             `> ListExpr [List with 1 elements]
+                []> [11, 14] Multiply
+                    +> [11, 11] Float (0.5)
+                    `> [11, 19] Multiply
+                       +> [11, 17] Multiply
+                       |  +> [11, 16] Identifier (x)
+                       |  `> [11, 18] Identifier (x)
+                       `> [11, 22] Multiply
+                          +> [11, 21] Int (1)
+                          `> [11, 23] Int (2)

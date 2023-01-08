@@ -15,6 +15,7 @@ public class Register extends DVal {
     @Override
     public String toString() {
         return name;
+
     }
 
     /**
@@ -29,6 +30,7 @@ public class Register extends DVal {
      * Stack Pointer
      */
     public static final Register SP = new Register("SP");
+
     /**
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
@@ -48,6 +50,9 @@ public class Register extends DVal {
      * Convenience shortcut for R[1]
      */
     public static final GPRegister R1 = R[1];
+
+    public static int RMAX = 16;
+
     static private GPRegister[] initRegisters() {
         GPRegister [] res = new GPRegister[16];
         for (int i = 0; i <= 15; i++) {

@@ -6,6 +6,15 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -16,7 +25,26 @@ import org.apache.log4j.Logger;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
-    
+
+    public void codeGenDeclVar(DecacCompiler compiler) {
+        ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
+        exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        // LOAD la valeur dans R1
+        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.R1));
+        if (getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        } else {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -150,10 +178,13 @@ public class Identifier extends AbstractIdentifier {
 
     private Symbol name;
 
+
     public Identifier(Symbol name) {
         Validate.notNull(name);
         this.name = name;
     }
+
+
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,

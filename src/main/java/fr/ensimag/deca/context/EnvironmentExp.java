@@ -87,4 +87,7 @@ public class EnvironmentExp {
         }
     }
 
+    public int size() {
+        return this.dictionary.size();
+    }
 }

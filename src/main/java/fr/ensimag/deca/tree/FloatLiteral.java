@@ -4,6 +4,12 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -39,6 +45,15 @@ public class FloatLiteral extends AbstractExpr {
                 + this.getLocation().errorOutPut() + ": Float type error", this.getLocation());
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(new ImmediateFloat(value).toString()));
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.getR(n)));
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

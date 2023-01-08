@@ -9,8 +9,8 @@
 
 {
     int i = 1;
-    if ( (i == 1 && i > 2) || (i <= 1) {
-        print("Hello");
+    if ((i == 1 && i > 2) || (i <= 1)) {
+        println("Hello");
     }
 
 }

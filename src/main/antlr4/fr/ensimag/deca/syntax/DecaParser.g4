@@ -103,6 +103,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
       )? {
         $tree = new DeclVar($t, varName, initialization);
         setLocation($tree, $i.start);
+        setLocation(initialization, $e.start);
         }
     ;
 
@@ -168,7 +169,7 @@ if_then_else returns[IfThenElse tree]
     List<AbstractExpr> elsifConditions = new ArrayList<AbstractExpr>();
     List<ListInst> elsifBodies = new ArrayList<ListInst>();
     ListInst thenBranch = null;
-    ListInst elseBranch = null;
+    ListInst elseBranch = new ListInst();
     IfThenElse tempTree = null;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
@@ -207,6 +208,7 @@ list_expr returns[ListExpr tree]
         }
        (COMMA e2=expr {
         $tree.add($e2.tree);
+
         }
        )* )?
     ;
@@ -390,7 +392,8 @@ select_expr returns[AbstractExpr tree]
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
-            setLocation($tree, $DOT);
+            setLocation($tree, $e1.start);
+
 
         }
         (o=OPARENT args=list_expr CPARENT {
@@ -399,6 +402,7 @@ select_expr returns[AbstractExpr tree]
         }
         | /* epsilon */ {
             // we matched "e.i"
+
         }
         )
     ;
@@ -411,6 +415,7 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
+
 
         } // $tree = $args.tree; marche pas car $tree est AbstractExpr et $args.tree est ListExpr
     | OPARENT expr CPARENT {
@@ -430,16 +435,11 @@ primary_expr returns[AbstractExpr tree]
             $tree = $ident.tree;
             setLocation($tree, $NEW);
         } // pas sûr
-    | cast=OPARENT type CPARENT OPARENT expr CPARENT { /*
+    | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
             assert($expr.tree != null);
-            if ($type.tree instanceof IntLiteral) {
-                $tree = (IntLiteral) $expr.tree;
-            } else if ($type.tree instanceof FloatLiteral) {
-                $tree = (FloatLiteral) $expr.tree;
-            } else {
-                throw new RuntimeException("Invalid cast");
-            } */
+            setLocation($tree, $cast);
+
         } // marche pas
     | literal {
             assert($literal.tree != null);
@@ -451,6 +451,7 @@ type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
+            setLocation($tree, $ident.start);
         }
     ;
 
@@ -490,7 +491,6 @@ literal returns[AbstractExpr tree]
         }
     | NULL {
         $tree = null;
-        setLocation($tree, $NULL);
         }
     ;
 

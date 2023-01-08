@@ -35,4 +35,5 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         }
         return this.getType();
     }
+
 }

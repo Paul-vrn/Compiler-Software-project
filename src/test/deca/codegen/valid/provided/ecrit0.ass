@@ -1,0 +1,10 @@
+; start main program
+; Main program
+; Beginning of main instructions:
+	ADDSP #0
+	WSTR "ok"
+	WNL
+	WSTR "ok"
+	WNL
+	HALT
+; end main program

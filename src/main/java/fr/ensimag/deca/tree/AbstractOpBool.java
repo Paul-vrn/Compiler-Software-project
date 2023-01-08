@@ -38,4 +38,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         }
     }
 
+    public void codeGenCond(DecacCompiler compiler, int p) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 }

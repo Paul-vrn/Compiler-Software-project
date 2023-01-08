@@ -34,7 +34,6 @@ public class StringLiteral extends AbstractStringLiteral {
         if(this.getType() == null){
             this.setType(new StringType(compiler.createSymbol("String")));
         }
-        System.out.println("JE SUIS LA");
         if (this.getType().isString()){
             return this.getType();
         }

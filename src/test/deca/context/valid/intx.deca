@@ -8,12 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    boolean moiroud = true;
-    int a = 3;
-    int y;
-    while (a == 2) {
-        print("Hello");
-        y = 9;
-    }
     print("salut");
 }

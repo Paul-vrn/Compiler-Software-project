@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -9,9 +10,11 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -51,9 +54,24 @@ public class IfThenElse extends AbstractInst {
 
     }
 
-    protected void codeGenIf(DecacCompiler compiler, int n) {
+    protected void codeGenIf(DecacCompiler compiler, int p) {
 
-        condition.codeGenExpr(compiler, n);
+        Label labelElse = new Label("ELSE" + Integer.toString(p));
+        Label labelEnd = new Label("END");
+
+        condition.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new CMP(0, Register.getR(2)));
+        compiler.addInstruction(new BEQ(labelElse)); // si la condition est fausse on branche au else
+        thenBranch.codeGenListInst(compiler);
+        compiler.addInstruction(new BRA(labelEnd)); // on branche à la fin
+
+        compiler.addLabel(labelElse);
+        p++;
+        elseBranch.codeGenListInst(compiler); //modifier le codgen listInst ou inst pour passer p en argument
+
+
+        compiler.addLabel(labelEnd);
+
     }
 
 

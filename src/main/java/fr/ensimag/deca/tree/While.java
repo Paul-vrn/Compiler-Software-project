@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -9,7 +10,11 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -42,17 +47,18 @@ public class While extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        // coder Condition
-        condition.codeGenInst(compiler);
-        condition.codeGenPrint(compiler);
-        Label debut = new Label("while"); // nom incorrect
-        compiler.addInstruction(new BRA(debut));
-        compiler.addLabel(debut);
-        for (AbstractInst i : getBody().getList()) {
-            i.codeGenInst(compiler);
-        }
-        compiler.addLabel(new Label("end_while"));
+        Label labelStart = new Label("WHILE_START_" + LabelIdentification.nbLabelWhile);
+        Label labelCond = new Label("WHILE_COND_" + LabelIdentification.nbLabelWhile);
 
+        compiler.addInstruction(new BRA(labelCond));
+        compiler.addLabel(labelStart);
+        body.codeGenListInst(compiler);
+        compiler.addLabel(labelCond);
+        condition.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new CMP(1, Register.getR(2)));
+        compiler.addInstruction(new BEQ(labelStart));
+
+        LabelIdentification.nbLabelWhile++;
     }
 
     @Override

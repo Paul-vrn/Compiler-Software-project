@@ -43,11 +43,6 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         this.rightOperand = rightOperand;
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        leftOperand.codeGenInst(compiler);
-        rightOperand.codeGenInst(compiler);
-    }
 
     @Override
     public void decompile(IndentPrintStream s) {

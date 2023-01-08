@@ -19,7 +19,11 @@ public class UnaryMinus extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.setType(getOperand().verifyExpr(compiler, localEnv, currentClass));
+        if(!(this.getType().isFloat() || this.getType().isInt())){
+            throw new ContextualError("Operator UnaryMinus type mismatch", this.getLocation());
+        }
+        return this.getType();
     }
 
 

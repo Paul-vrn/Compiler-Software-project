@@ -20,7 +20,11 @@ public class ReadInt extends AbstractReadExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        // TO DO : SOLVE PROBLEM of TYPE
+        if(this.getType() != compiler.environmentType.INT){
+            throw new ContextualError("ReadInt type mismatch", this.getLocation());
+        }
+        return this.getType();
     }
 
 

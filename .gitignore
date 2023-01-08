@@ -25,5 +25,7 @@ hs_err_pid*
 **/*.ass
 target/
 .idea/
-outputFiles/assembly/*.ass
-outputFiles/assembly/*.deca
+gen/
+
+.vscode/
+docker/bin/

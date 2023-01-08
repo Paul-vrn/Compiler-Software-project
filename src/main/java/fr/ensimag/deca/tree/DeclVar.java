@@ -33,6 +33,11 @@ public class DeclVar extends AbstractDeclVar {
 
         Type varType = this.type.verifyType(compiler);
 
+        /* Verification : type void is forbidden */
+        if(this.type.getType().isVoid()){
+            throw new ContextualError("Type void forbidden", this.getLocation());
+        }
+
         varName.setType(varType);
         this.varName.verifyExpr(compiler, localEnv, currentClass);
         try{

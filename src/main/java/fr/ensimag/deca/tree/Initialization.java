@@ -7,6 +7,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -29,7 +33,10 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("not yet implemented");
+        expression.codeGenInst(compiler);
+        DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(compiler.getMemory().getLastGRegister()), op));
+
     }
 
     public Initialization(AbstractExpr expression) {

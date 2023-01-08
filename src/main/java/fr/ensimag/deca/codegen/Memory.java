@@ -8,10 +8,12 @@ public class Memory {
     private int offset;
     private int nbRegister;
     private int nbIfThenElse;
+    private int lastGRegister;
     public Memory(int nbRegister) {
         this.nbRegister = nbRegister;
         this.nbIfThenElse = 0;
         this.offset = 1;
+        this.lastGRegister = 2;
     }
     public Memory(){
         this(15);
@@ -31,5 +33,12 @@ public class Memory {
     }
     public void increaseOffset() {
         increaseOffset(1);
+    }
+
+    public int getLastGRegister() {
+        return lastGRegister;
+    }
+    public void setLastGRegister(int lastGRegister) {
+        this.lastGRegister = lastGRegister;
     }
 }

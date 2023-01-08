@@ -60,7 +60,6 @@ public class DeclVar extends AbstractDeclVar {
 
     public void codeGen(DecacCompiler compiler) {
         this.varName.codeGenDeclVar(compiler);
-        // TODO Auto-generated method stub
         this.initialization.codeGenInit(compiler, this.varName);
     }
 

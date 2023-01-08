@@ -67,7 +67,7 @@ public class IfThenElse extends AbstractInst {
 
         compiler.addLabel(labelElse);
         p++;
-        elseBranch.codeGenListInst(compiler); //modifier le codgen listInst ou inst pour passer p en argument
+        elseBranch.codeGenIf(compiler, p);
 
 
         compiler.addLabel(labelEnd);

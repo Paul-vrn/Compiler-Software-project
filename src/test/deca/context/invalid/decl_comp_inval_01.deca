@@ -1,0 +1,14 @@
+// Description:
+//    Initialisation
+//
+// Resultats:
+//    Ligne 13: The validated object is null.
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x;
+   int y = 2;
+   int z = x + y;
+}

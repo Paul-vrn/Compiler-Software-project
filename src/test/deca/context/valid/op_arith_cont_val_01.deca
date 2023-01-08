@@ -1,0 +1,18 @@
+// Description:
+//    Initialisation et typage
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int a = 4;
+   float b = 4.1;
+   float c = a * b;
+   float d = a + b;
+   float e = b - a;
+   int f = a / a;
+
+}

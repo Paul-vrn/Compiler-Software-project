@@ -88,26 +88,61 @@ public class CompilerOptions {
         }
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
-        //TODO option implementation page 103
-        if(argsArrayList.contains("-p")){
-            enableDecompilation();
-        }
-        if(argsArrayList.contains("-v")){
-            enableVerification();
-        }
-        // Check if incompatible options -p and -v are both checked
-        if(getDecompilation() && getVerification()){
-            throw new UnsupportedOperationException("Incompatible options -p and -v");
-        }
+        //TODO option specification page 103
         if(argsArrayList.contains("-b")){
-            enablePrintBanner();
+            if(argsArrayList.size()==1){
+                enablePrintBanner();
+            }
+            else{
+                throw new UnsupportedOperationException("Option -b is a standalone option and should not be used with any other option or files");
+            }
+            return;
         }
+        if(!argsArrayList.isEmpty()) {
+            int i = 0;
+            File file = new File(argsArrayList.get(i));
+            while (!file.exists()) {
+                switch (argsArrayList.get(i)) {
+                    case "-p":
+                        enableDecompilation();
+                        break;
+                    case "-v":
+                        enableVerification();
+                        break;
+                    case "-n":
+                        throw new UnsupportedOperationException("-n not yet implemented");
+                    case "-r":
+                        // TODO : set Register.RMAX
+                        throw new UnsupportedOperationException("-r not yet implemented");
+                    case "d":
+                        throw new UnsupportedOperationException("-d not yet implemented");
+                    case "-P":
+                        throw new UnsupportedOperationException("-P not yet implemented");
+                    default:
+                        throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
+                }
+                i++;
+                if(i<argsArrayList.size()) {
+                    file = new File(argsArrayList.get(i));
+                }
+                else{
+                    break;
+                }
+            }
+            if(getDecompilation() && getVerification()){
+                throw new UnsupportedOperationException("Options -p and -v are incompatible");
+            }
+            while(i < argsArrayList.size()) {
+                file = new File(argsArrayList.get(i));
+                if (file.exists()) {
+                    sourceFiles.add(file);
+                    i++;
+                } else {
+                    throw new UnsupportedOperationException("Unknown file" + argsArrayList.get(i));
+                }
 
-        File file = new File(argsArrayList.get(argsArrayList.size()-1));
-        if(!file.exists()){
-            throw new UnsupportedOperationException("File not found");
+            }
         }
-        sourceFiles.add(file);
     }
 
     protected void displayUsage() {

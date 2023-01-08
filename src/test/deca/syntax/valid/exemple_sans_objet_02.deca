@@ -1,13 +1,12 @@
 // Description:
-//    Programme du cours, exemple pour la partie sans objet.
+//    Programme pour afficher x².
 //
 // Resultats:
-//      0.5*x²
+//      x²
 // Historique:
 //    cree le 04/01/2023
-
 {
    int x ;
    x=readInt() ;
-   println(0.5*(x*x)) ;
+   println(0.5*(x*x*(1*2))) ;
 }

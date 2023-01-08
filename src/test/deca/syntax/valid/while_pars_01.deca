@@ -2,7 +2,7 @@
 //    Programme minimaliste utilisant println.
 //
 // Resultats:
-//    Hello
+//    0
 //
 // Historique:
 //    cree le 04/01/2023
@@ -13,5 +13,6 @@
         while (a>=0) {
             a = a - 1;
         }
+        println(a);
 
 }

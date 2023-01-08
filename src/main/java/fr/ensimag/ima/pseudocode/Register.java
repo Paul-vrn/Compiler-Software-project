@@ -52,12 +52,10 @@ public class Register extends DVal {
 
     public static int RMAX;
 
-    static private GPRegister[] initRegisters(int n) {
-        GPRegister [] res = new GPRegister[n];
-        for (int i = 0; i <= n-1; i++) {
-            res[i] = new GPRegister("R" + i, i);
+    public static void initRegisters() {
+        R = new GPRegister[RMAX];
+        for (int i = 0; i <= RMAX-1; i++) {
+            R[i] = new GPRegister("R" + i, i);
         }
-        RMAX = n-1;
-        return res;
     }
 }

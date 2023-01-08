@@ -9,5 +9,5 @@
 
 {
     Object obj = 1;
-    int obj_ent = (int) 1;
+    int obj_ent = (int)obj;
 }

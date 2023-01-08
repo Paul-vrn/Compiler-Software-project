@@ -30,5 +30,8 @@ public class NullType extends Type {
         return true;
     }
 
-
+    // p75: Pour toute classe A, null est un sous-type de type_class(A)
+    public boolean isSubClassOf(ClassType potentialSuperClass) {
+        return true;
+    }
 }

@@ -5,7 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import sun.jvm.hotspot.asm.ImmediateOrRegister;
+
 
 import java.io.PrintStream;
 

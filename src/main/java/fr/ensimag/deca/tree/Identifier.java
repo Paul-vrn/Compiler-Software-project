@@ -145,6 +145,11 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.getR(n)));
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
      * 

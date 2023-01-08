@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.REM;
 
 /**
  *
@@ -29,6 +31,13 @@ public class Modulo extends AbstractOpArith {
         }else{
             throw new ContextualError("arithmetic modulo type mismatch", this.getLocation());
         }
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        getLeftOperand().codeGenExpr(compiler, n);
+        getRightOperand().codeGenExpr(compiler, n + 1);
+        compiler.addInstruction(new REM(Register.getR(n + 1), Register.getR(n)));
     }
 
 

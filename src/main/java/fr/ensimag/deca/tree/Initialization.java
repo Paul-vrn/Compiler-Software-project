@@ -35,7 +35,6 @@ public class Initialization extends AbstractInitialization {
         expression.codeGenExpr(compiler, 2);
         DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
         compiler.addInstruction(new STORE(Register.getR(2), op));
-
     }
 
     public Initialization(AbstractExpr expression) {

@@ -103,6 +103,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
       )? {
         $tree = new DeclVar($t, varName, initialization);
         setLocation($tree, $i.start);
+        setLocation(initialization, $e.start);
         }
     ;
 
@@ -207,6 +208,7 @@ list_expr returns[ListExpr tree]
         }
        (COMMA e2=expr {
         $tree.add($e2.tree);
+
         }
        )* )?
     ;
@@ -451,6 +453,7 @@ type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
+            setLocation($tree, $ident.start);
         }
     ;
 

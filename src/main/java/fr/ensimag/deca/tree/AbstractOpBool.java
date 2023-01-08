@@ -1,10 +1,13 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 /**
  *
@@ -38,5 +41,13 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     public void codeGenCond(DecacCompiler compiler, int p) {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        LabelIdentification.printBool(compiler);
     }
 }

@@ -54,4 +54,11 @@ public class Not extends AbstractUnaryExpr {
         LabelIdentification.nbLabelNot++;
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        LabelIdentification.printBool(compiler);
+    }
+
 }

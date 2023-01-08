@@ -5,6 +5,9 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
@@ -33,6 +36,14 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             throw new ContextualError("arithmetic type mismatch", this.getLocation());
         }
         return this.getType();
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        // TODO : faire soit float soit int
+        compiler.addInstruction(new WINT());
     }
 
 }

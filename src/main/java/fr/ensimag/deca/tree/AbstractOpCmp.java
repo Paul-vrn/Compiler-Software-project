@@ -59,9 +59,9 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        System.out.println("AbstractOpCmp");
-        getLeftOperand().codeGenExpr(compiler,2);
-        getRightOperand().codeGenExpr(compiler,3);
-        //TODO en fonction de l'opérateur
+        this.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        LabelIdentification.printBool(compiler);
     }
+
 }

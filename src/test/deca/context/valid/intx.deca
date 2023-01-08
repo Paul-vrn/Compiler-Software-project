@@ -8,5 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    print("salut");
+    int x = 4;
 }

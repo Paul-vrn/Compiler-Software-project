@@ -39,8 +39,9 @@ public class DeclVar extends AbstractDeclVar {
                     + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
         }
 
-        varName.setType(varType);
-        this.varName.verifyExpr(compiler, localEnv, currentClass);
+        this.varName.setType(varType);
+        this.varName.setDefinition(new VariableDefinition(varType, getLocation()));
+
         try{
             localEnv.declare(varName.getName(), (ExpDefinition) varName.getDefinition());
         }catch(EnvironmentExp.DoubleDefException e){

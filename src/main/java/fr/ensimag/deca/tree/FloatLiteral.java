@@ -35,7 +35,7 @@ public class FloatLiteral extends AbstractExpr {
         if (this.getType().isFloat()){
             return this.getType();
         }
-        throw new ContextualError("Type problem", this.getLocation());
+        throw new ContextualError("Float Type problem", this.getLocation());
     }
 
 

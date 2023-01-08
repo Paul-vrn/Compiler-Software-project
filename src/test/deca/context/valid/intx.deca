@@ -8,8 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    float y;
-    int x;
-    x = 4;
-    y = "Hey toi la bas";
+    boolean x = 4 < 4+5;
 }

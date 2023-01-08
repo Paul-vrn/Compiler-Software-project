@@ -51,23 +51,11 @@ public class IfThenElse extends AbstractInst {
 
     }
 
-    protected void codeGenIf(DecacCompiler compiler, int p) {
+    protected void codeGenIf(DecacCompiler compiler, int n) {
 
-        condition.codeGenInst(compiler); // met le résultat dans un registre
-
-        compiler.addInstruction(new BNE(new Label(""))); // saute à la fin du if
-        thenBranch.codeGenListInst(compiler);
-        compiler.addInstruction(new BRA(new Label("E_FIN" + compiler.getNbIf()))); // on va à la fin
-        compiler.addLabel(new Label("E_ELSE" + compiler.getNbIf() + "." + p));
-        compiler.addLabel(new Label("E_Sinon"+compiler.getNbIf() + "." + p));
-        elseBranch.codeGenListInst(compiler);
-        compiler.addLabel(new Label("E_Fin"+ compiler.getNbIf()));
-        compiler.getMemory().increaseNbIfThenElse();
+        condition.codeGenExpr(compiler, n);
     }
 
-    protected void codeGenElseIf(DecacCompiler compiler){
-
-    }
 
     @Override
     public void decompile(IndentPrintStream s){

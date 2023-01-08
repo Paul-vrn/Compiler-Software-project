@@ -28,7 +28,7 @@ public class Or extends AbstractOpBool {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
 
-        Label labelEnd = new Label("OR_END_" + LabelIdentification.nbOr);
+        Label labelEnd = new Label("OR_" + LabelIdentification.nbOr);
 
         getLeftOperand().codeGenExpr(compiler, n);
 

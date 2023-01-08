@@ -29,7 +29,8 @@ public class IntLiteral extends AbstractExpr {
         if (this.getType().isInt()){
             return this.getType();
         }
-        throw new ContextualError("Int Type problem", this.getLocation());
+        throw new ContextualError( compiler.displaySourceFile() + ":"
+                + this.getLocation().errorOutPut() + ": Int Type error", this.getLocation());
     }
 
 

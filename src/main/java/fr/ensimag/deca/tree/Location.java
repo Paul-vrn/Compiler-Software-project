@@ -50,6 +50,14 @@ public class Location implements Serializable {
 
     private final int line;
     private final int positionInLine;
+
+    /**
+     * Returns a nice output string for a compiling error.
+     * @return nice string with the line and positionInLine.
+     */
+    public String errorOutPut(){
+        return this.getLine() + ":" + this.getPositionInLine();
+    }
     private final String filename;
 
     public Location(int line, int positionInLine, String filename) {

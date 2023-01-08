@@ -27,12 +27,14 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
             if(type1.isBoolean() && type2.isBoolean()){
                 this.setType(compiler.environmentType.BOOLEAN);
             }else{
-                throw new ContextualError("arithmetic type mismatch", this.getLocation());
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Boolean operation type mismatch", this.getLocation());
             }
             return this.getType();
         }
         else {
-            throw new ContextualError("arithmetic type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Boolean operation type mismatch", this.getLocation());
         }
     }
 

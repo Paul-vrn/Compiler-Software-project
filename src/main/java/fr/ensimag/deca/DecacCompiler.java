@@ -248,4 +248,9 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    public String displaySourceFile(){
+        String[] error = this.getSource().toString().split("/");
+        return error[error.length - 1];
+    }
+
 }

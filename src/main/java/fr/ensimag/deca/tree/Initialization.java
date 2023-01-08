@@ -38,7 +38,8 @@ public class Initialization extends AbstractInitialization {
         Type type2 = this.getExpression().verifyExpr(compiler, localEnv, currentClass);
 
         if(!(t.sameType(type2) || (t.isFloat() && type2.isInt()))){
-            throw new ContextualError("Initialization type error", this.expression.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.expression.getLocation().errorOutPut() + ": Initialization type error", this.expression.getLocation());
         }
 
         /*Verify the condition : assign_compatible(env_types, type1, type2)*/

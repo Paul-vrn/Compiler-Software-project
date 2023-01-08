@@ -9,7 +9,12 @@
 //    cree le 01/01/2023
 
 {
-    print(3+5);
+    boolean x = true;
+    if (5 < 3){
+        print(3);
+    } else {
+        print(2);
+    }
 }
 
 

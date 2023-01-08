@@ -46,7 +46,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            compiler.addInstruction(new CMP(Register.getR(n + 1), Register.getR(n)));
+            compiler.addInstruction(new CMP(Register.getR(n), Register.getR(n+1)));
 
         } else {
             compiler.addInstruction(new PUSH(Register.getR(n)));
@@ -55,5 +55,13 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             compiler.addInstruction(new POP(Register.getR(n)));
             compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
         }
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        System.out.println("AbstractOpCmp");
+        getLeftOperand().codeGenExpr(compiler,2);
+        getRightOperand().codeGenExpr(compiler,3);
+        //TODO en fonction de l'opérateur
     }
 }

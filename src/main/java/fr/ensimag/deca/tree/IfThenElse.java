@@ -51,7 +51,7 @@ public class IfThenElse extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     protected void codeGenIf(DecacCompiler compiler, int p) {
@@ -64,12 +64,8 @@ public class IfThenElse extends AbstractInst {
         compiler.addInstruction(new BEQ(labelElse)); // si la condition est fausse on branche au else
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd)); // on branche à la fin
-
         compiler.addLabel(labelElse);
-        p++;
-        elseBranch.codeGenIf(compiler, p);
-
-
+        elseBranch.codeGenIf(compiler, p+1);
         compiler.addLabel(labelEnd);
 
     }

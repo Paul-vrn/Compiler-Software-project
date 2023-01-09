@@ -34,7 +34,13 @@ public class Assign extends AbstractBinaryExpr {
                               ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        this.setType(type1);
+        try {
+            this.setType(type1);
+        }catch(Exception e){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Missing type declaration", this.getLocation());
+        }
+
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         if(!(type1.sameType(type2) || type1.isFloat() && type2.isInt())){

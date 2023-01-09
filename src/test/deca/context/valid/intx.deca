@@ -8,5 +8,6 @@
 //    cree le 01/01/2023
 
 {
-    int x = readInt();
+    int x = 5;
+    z = x + 5;
 }

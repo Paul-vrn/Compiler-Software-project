@@ -6,12 +6,27 @@ int d = 4;
 int e = 5;
 int f = 6;
 
+float g = 1.5;
+float h = 2.5;
+float i = 3.5;
+float j = 4.5;
+float k = 5.5;
+float l = 6.5;
+
 a = a + b * c - d / e + f % b;
 b = a * b - c / d + e % f - a;
 c = a / b + c * d - e % f + a;
 d = a % b + c / d - e * f + a;
 e = a - b / c + d * e - f % a;
 f = a * b + c / d - e % f + a;
+
+g = g + h * i - j / k + l;
+h = g * h - i / j + k - g;
+i = g / h + i * j - k + g;
+j = g * h + i / j - k * l + g;
+k = g - h / i / k / l;
+l = g + h + i + j + k + l;
+
 
 println("Output : ");
 println(a);
@@ -20,14 +35,28 @@ println(c);
 println(d);
 println(e);
 println(f);
+println(g);
+println(h);
+println(i);
+println(j);
+println(k);
+println(l);
 
-println("Expected output : ");
-println("7");
-println("12");
-println("14");
-println("-13");
-println("-64");
-println("94");
+
+println("Expected Output");
+println(7);
+println(12);
+println(14);
+println(-13);
+println(-64);
+println(94);
+println(15.931818);
+println(28.619947);
+println(26.738487);
+println(442.091522);
+println(15.901877);
+println(535.783630);
+
+
 }
-
 

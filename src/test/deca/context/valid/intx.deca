@@ -8,5 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    int x = readInt();
+    float x = 4%6;
 }

@@ -50,7 +50,7 @@ public class Initialization extends AbstractInitialization {
 
         if(!(t.sameType(type2) || (t.isFloat() && type2.isInt()))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.expression.getLocation().errorOutPut() + ": Initialization type error", this.expression.getLocation());
+                    + this.expression.getLocation().errorOutPut() + ": Initialization type error, " + type2 + " into " + t + " forbidden", this.expression.getLocation());
         }
 
         /*Verify the condition : assign_compatible(env_types, type1, type2)*/

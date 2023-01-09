@@ -34,7 +34,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
         // LOAD la valeur dans R1
-        System.out.println("Identifier.codeGenPrint");
+        //System.out.println("Identifier.codeGenPrint");
         compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.R1));
         if (getType().isInt()) {
             compiler.addInstruction(new WINT());

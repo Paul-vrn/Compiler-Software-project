@@ -65,7 +65,7 @@ public class IfThenElse extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenIf(compiler, 0);
     }
 
     protected void codeGenIf(DecacCompiler compiler, int p) {

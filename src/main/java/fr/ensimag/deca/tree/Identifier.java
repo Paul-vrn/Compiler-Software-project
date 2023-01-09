@@ -28,13 +28,12 @@ import org.apache.log4j.Logger;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
-        exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
     }
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.R1));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
         if (getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()) {

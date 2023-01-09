@@ -33,8 +33,7 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.codeGenExpr(compiler, 2);
-        DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
-        compiler.addInstruction(new STORE(Register.getR(2), op));
+        compiler.addInstruction(new STORE(Register.getR(2), varName.getExpDefinition().getOperand()));
     }
 
     public Initialization(AbstractExpr expression) {

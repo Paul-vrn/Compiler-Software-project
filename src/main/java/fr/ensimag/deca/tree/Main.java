@@ -56,6 +56,7 @@ public class Main extends AbstractMain {
         compiler.addInstruction(new ADDSP(compiler.envExpCurrent.size()));
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
+        compiler.getMemory().generateErrorCode(compiler);
     }
     
     @Override

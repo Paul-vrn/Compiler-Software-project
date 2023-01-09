@@ -1,0 +1,13 @@
+// Description:
+//    Programme pour tester les expressions dans inst
+//
+// Resultats:
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+   int a;
+   int x;
+   x = a = 2;
+}

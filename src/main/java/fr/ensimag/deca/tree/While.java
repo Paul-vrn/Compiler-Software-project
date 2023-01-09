@@ -49,7 +49,7 @@ public class While extends AbstractInst {
     protected void codeGenInst(DecacCompiler compiler) {
         Label labelStart = new Label("WHILE_START_" + LabelIdentification.nbLabelWhile);
         Label labelCond = new Label("WHILE_COND_" + LabelIdentification.nbLabelWhile);
-
+        LabelIdentification.nbLabelWhile++;
         compiler.addInstruction(new BRA(labelCond));
         compiler.addLabel(labelStart);
         body.codeGenListInst(compiler);
@@ -57,8 +57,6 @@ public class While extends AbstractInst {
         condition.codeGenExpr(compiler, 2);
         compiler.addInstruction(new CMP(1, Register.getR(2)));
         compiler.addInstruction(new BEQ(labelStart));
-
-        LabelIdentification.nbLabelWhile++;
     }
 
     @Override

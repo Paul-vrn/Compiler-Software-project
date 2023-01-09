@@ -1,6 +1,6 @@
 
 {
-    if(true){print(1);}
+    if((3>=2) && (3<5)){print(1);}
     else{print(0);}
 }
 

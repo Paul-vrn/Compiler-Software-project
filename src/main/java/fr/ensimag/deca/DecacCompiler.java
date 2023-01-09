@@ -107,7 +107,14 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
+    public void addIndex(int i, Instruction inst) {
+        program.addIndex(i, inst);
+    }
+    public int getLineIndex(){
+        return program.getLastIndex();
+    }
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -144,8 +151,6 @@ public class DecacCompiler {
         memory.increaseOffset();
         return val;
     }
-
-    public EnvironmentExp envExpCurrent = null;
 
     /**
      * Run the compiler (parse source file, generate code)

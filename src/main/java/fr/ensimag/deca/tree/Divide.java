@@ -29,6 +29,7 @@ public class Divide extends AbstractOpArith {
             getRightOperand().codeGenExpr(compiler, n + 1);
             if(this.getType().isFloat()){
                 compiler.addInstruction(new DIV(Register.getR(n+1), Register.getR(n)));
+                compiler.addInstruction(new BOV(compiler.getMemory().getOverflowErrorLabel()));
             }
             else{
                 compiler.addInstruction(new QUO(Register.getR(n+1), Register.getR(n)));
@@ -41,6 +42,7 @@ public class Divide extends AbstractOpArith {
             compiler.addInstruction(new POP(Register.getR(n)));
             if(this.getType().isFloat()){
                 compiler.addInstruction(new DIV(Register.R0, Register.getR(n)));
+                compiler.addInstruction(new BOV(compiler.getMemory().getOverflowErrorLabel()));
             }
             else{
                 compiler.addInstruction(new QUO(Register.R0, Register.getR(n)));

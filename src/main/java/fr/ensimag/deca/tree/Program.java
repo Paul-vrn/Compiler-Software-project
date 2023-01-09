@@ -35,20 +35,17 @@ public class Program extends AbstractProgram {
 
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
-//        LOG.debug("verify program: start");
-//        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify program: end");
-
-        //this.classes.verifyListClass(compiler);
         this.main.verifyMain(compiler);
     }
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
+
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.getMemory().generateErrorCode(compiler);
     }
 
     @Override

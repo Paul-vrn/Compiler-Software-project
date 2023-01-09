@@ -9,6 +9,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -41,7 +42,6 @@ public class Main extends AbstractMain {
 //        throw new UnsupportedOperationException("not yet implemented");
 
         this.mainEnvironment = new EnvironmentExp(null);
-        compiler.envExpCurrent = this.mainEnvironment;
         // TO DO : Don't forget to add "equals" in the env_exp_object
 
         this.declVariables.verifyListDeclVariable(compiler, this.mainEnvironment, null);
@@ -50,13 +50,12 @@ public class Main extends AbstractMain {
 
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        // A FAIRE: traiter les déclarations de variables.
         compiler.addComment("Beginning of main instructions:");
-        // TODO define TSTO
-        compiler.addInstruction(new ADDSP(compiler.envExpCurrent.size()));
+        int indexTSTO = compiler.getLineIndex();
+        compiler.addInstruction(new ADDSP(this.mainEnvironment.size()));
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
-        compiler.getMemory().generateErrorCode(compiler);
+        compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
     }
     
     @Override

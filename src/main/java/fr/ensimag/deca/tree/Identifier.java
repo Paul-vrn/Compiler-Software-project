@@ -145,7 +145,7 @@ public class Identifier extends AbstractIdentifier {
 
 
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.getR(n)));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
     }
 
     /**

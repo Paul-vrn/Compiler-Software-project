@@ -9,8 +9,9 @@
 //    cree le 01/01/2023
 
 {
-    int x = 5;
-    print(x);
+    float x = 2;
+    float y = 2.0;
+    print(x*y);
 }
 
 

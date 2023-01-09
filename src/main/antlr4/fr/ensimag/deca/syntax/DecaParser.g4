@@ -166,39 +166,39 @@ inst returns[AbstractInst tree]
 if_then_else returns[IfThenElse tree]
 @init {
     AbstractExpr condition = null;
-    List<AbstractExpr> elsifConditions = new ArrayList<AbstractExpr>();
-    List<ListInst> elsifBodies = new ArrayList<ListInst>();
+    List<AbstractExpr> conditions = new ArrayList<AbstractExpr>();
+    List<ListInst> bodies = new ArrayList<ListInst>();
+    List<Token> tokens = new ArrayList<Token>();
     ListInst thenBranch = null;
     ListInst elseBranch = new ListInst();
     IfThenElse tempTree = null;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
-        condition = $condition.tree;
-        thenBranch = $li_if.tree;
+        tokens.add($if1);
+        conditions.add($condition.tree);
+        bodies.add($li_if.tree);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-            elsifConditions.add($elsif_cond.tree);
-            elsifBodies.add($elsif_li.tree);
-            setLocation(elseBranch, $ELSE);
-        } // pas sûr
+            tokens.add($elsif);
+            conditions.add($elsif_cond.tree);
+            bodies.add($elsif_li.tree);
+        }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
         elseBranch = $li_else.tree;
         }
       )? {
-        for (int i = elsifConditions.size(); i > 0; i--) {
-            tempTree = new IfThenElse(
-                            elsifConditions.get(i-1),
-                            elsifBodies.get(i-1),
+        for (int i = conditions.size(); i > 0; i--) {
+            System.out.println(elseBranch.toString());
+            $tree = new IfThenElse(
+                            conditions.get(i-1),
+                            bodies.get(i-1),
                             elseBranch
             );
-
+            setLocation($tree, tokens.get(i-1));
             elseBranch = new ListInst();
-            elseBranch.add(tempTree);
-            setLocation(tem, $ELSE);
+            elseBranch.add($tree);
         }
-        $tree = new IfThenElse(condition, thenBranch, elseBranch);
-        setLocation($tree, $if1);
       }
     ;
 

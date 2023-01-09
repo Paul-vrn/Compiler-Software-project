@@ -39,8 +39,6 @@ public class Identifier extends AbstractIdentifier {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());
-        } else if (getType().isBoolean()) {
-            LabelIdentification.printBool(compiler);
         } else {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }

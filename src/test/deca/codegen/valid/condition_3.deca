@@ -8,8 +8,5 @@
 // Historique:
 //    cree le 01/01/2023
 {
-    if((3>=2) && (3<5)){print(1);}
-    else{print(0);}
+
 }
-
-

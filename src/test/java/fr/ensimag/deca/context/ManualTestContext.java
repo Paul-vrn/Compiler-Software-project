@@ -7,6 +7,8 @@ import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
+
+import java.io.File;
 import java.io.IOException;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Level;
@@ -24,7 +26,8 @@ public class ManualTestContext {
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);
-        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), null);
+        File file = new File(args[0]);
+        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), file);
         parser.setDecacCompiler(compiler);
         AbstractProgram prog = parser.parseProgramAndManageErrors(System.err);
         if (prog == null) {

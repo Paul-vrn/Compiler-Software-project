@@ -213,7 +213,8 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
         if(compiler.environmentType.defOfType(this.getName()) == null){
-            throw new ContextualError("Unknown type", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Unknown type", this.getLocation());
         }
         this.setType(compiler.environmentType.defOfType(this.getName()).getType());
         this.setDefinition(compiler.environmentType.defOfType(this.getName()));

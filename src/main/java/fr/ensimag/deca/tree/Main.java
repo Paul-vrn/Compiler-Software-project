@@ -45,9 +45,6 @@ public class Main extends AbstractMain {
         // TO DO : Don't forget to add "equals" in the env_exp_object
 
         this.declVariables.verifyListDeclVariable(compiler, this.mainEnvironment, null);
-        System.out.println("-------------------------------------------------------");
-        this.mainEnvironment.printEnvironmentContent();
-        System.out.println("-------------------------------------------------------");
         this.insts.verifyListInst(compiler, this.mainEnvironment, null, new VoidType(compiler.createSymbol("void")));
     }
 

@@ -1,5 +1,5 @@
 // Description:
-//    Programme definissant la variable entière x.
+//    Initialisation et typage
 //
 // Resultats:
 //
@@ -8,5 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    int x = readInt();
+   int a = 2%3;
 }

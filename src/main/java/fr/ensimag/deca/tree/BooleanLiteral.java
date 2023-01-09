@@ -6,8 +6,6 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
-
 import java.io.PrintStream;
 
 /**
@@ -34,7 +32,8 @@ public class BooleanLiteral extends AbstractExpr {
         if (this.getType().isBoolean()){
             return this.getType();
         }
-        throw new ContextualError("Boolean Type problem", this.getLocation());
+        throw new ContextualError( compiler.displaySourceFile() + ":"
+                + this.getLocation().errorOutPut() + ": Boolean Type problem", this.getLocation());
     }
 
     @Override

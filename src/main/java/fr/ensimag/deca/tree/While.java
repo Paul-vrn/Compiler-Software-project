@@ -65,6 +65,11 @@ public class While extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        this.condition.verifyExpr(compiler, localEnv, currentClass);
+
+        for (AbstractInst i : this.body.getList()) {
+            i.verifyInst(compiler, localEnv, currentClass, returnType);
+        }
     }
 
     @Override

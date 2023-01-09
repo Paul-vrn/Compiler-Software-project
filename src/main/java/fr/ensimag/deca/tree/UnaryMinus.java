@@ -24,7 +24,9 @@ public class UnaryMinus extends AbstractUnaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         this.setType(getOperand().verifyExpr(compiler, localEnv, currentClass));
         if(!(this.getType().isFloat() || this.getType().isInt())){
-            throw new ContextualError("Operator UnaryMinus type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Operator UnaryMinus type mismatch", this.getLocation());
+
         }
         return this.getType();
     }

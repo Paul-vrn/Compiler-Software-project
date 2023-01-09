@@ -1,0 +1,12 @@
+// Description:
+//    Initialisation et typage
+//
+// Resultats:
+//    Ligne 11: Affectation de types incompatibles.
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int a = true;
+}

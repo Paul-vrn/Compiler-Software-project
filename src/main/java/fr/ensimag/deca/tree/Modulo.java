@@ -29,7 +29,8 @@ public class Modulo extends AbstractOpArith {
                 this.setType(compiler.environmentType.INT);
                 return this.getType();
         }else{
-            throw new ContextualError("arithmetic modulo type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Arithmetic modulo operation type mismatch", this.getLocation());
         }
     }
 

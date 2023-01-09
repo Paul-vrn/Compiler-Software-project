@@ -189,7 +189,6 @@ if_then_else returns[IfThenElse tree]
         }
       )? {
         for (int i = conditions.size(); i > 0; i--) {
-            System.out.println(elseBranch.toString());
             $tree = new IfThenElse(
                             conditions.get(i-1),
                             bodies.get(i-1),

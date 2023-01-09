@@ -27,7 +27,7 @@ public class Divide extends AbstractOpArith {
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            if(getLeftOperand().getType().isFloat() || getRightOperand().getType().isFloat()){
+            if(this.getType().isFloat()){
                 compiler.addInstruction(new DIV(Register.getR(n+1), Register.getR(n)));
             }
             else{

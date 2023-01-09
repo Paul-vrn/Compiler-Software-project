@@ -43,7 +43,7 @@ public class Assign extends AbstractBinaryExpr {
 
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        if(!(type1.sameType(type2) || type1.isFloat() && type2.isInt())){
+        if(!(type1.sameType(type2) || (type1.isFloat() && type2.isInt()))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
         }

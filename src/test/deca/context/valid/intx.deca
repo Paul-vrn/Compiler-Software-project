@@ -8,6 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    int x = 5;
-    z = x + 5;
+    boolean x = 4<true;
 }

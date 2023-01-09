@@ -33,7 +33,8 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         }else if((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat())){
             this.setType(compiler.environmentType.FLOAT);
         }else{
-            throw new ContextualError("arithmetic type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Arithmetic operation type mismatch", this.getLocation());
         }
         return this.getType();
     }

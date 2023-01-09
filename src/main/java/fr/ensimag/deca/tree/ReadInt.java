@@ -22,7 +22,8 @@ public class ReadInt extends AbstractReadExpr {
             ClassDefinition currentClass) throws ContextualError {
         // TO DO : SOLVE PROBLEM of TYPE
         if(this.getType() != compiler.environmentType.INT){
-            throw new ContextualError("ReadInt type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": ReadInt type mismatch", this.getLocation());
         }
         return this.getType();
     }

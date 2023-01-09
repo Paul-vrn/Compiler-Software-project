@@ -28,7 +28,8 @@ public class Not extends AbstractUnaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         this.setType(getOperand().verifyExpr(compiler, localEnv, currentClass));
         if(!this.getType().isBoolean()){
-            throw new ContextualError("Operator Not type mismatch", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Operator Not type mismatch", this.getLocation());
         }
         return this.getType();
     }

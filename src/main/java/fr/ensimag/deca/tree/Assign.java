@@ -38,7 +38,8 @@ public class Assign extends AbstractBinaryExpr {
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         if(!(type1.sameType(type2) || type1.isFloat() && type2.isInt())){
-            throw new ContextualError("Assign Type problem here", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
         }
     }
 
@@ -51,7 +52,8 @@ public class Assign extends AbstractBinaryExpr {
         this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         if(!this.getType().sameType(this.getRightOperand().getType())){
-            throw new ContextualError("Assign Type problem here", this.getLocation());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
         }
 
         return this.getType();

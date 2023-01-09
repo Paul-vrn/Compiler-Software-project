@@ -1,12 +1,12 @@
 // Description:
-//    Programme definissant la variable entière x.
+//    Initialisation et typage
 //
 // Resultats:
-//
+//      Ligne 11: ,
 //
 // Historique:
 //    cree le 01/01/2023
 
 {
-    int x = 4;
+   int a = 4%(1.2)
 }

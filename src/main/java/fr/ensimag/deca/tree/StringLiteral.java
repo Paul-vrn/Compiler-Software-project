@@ -37,7 +37,8 @@ public class StringLiteral extends AbstractStringLiteral {
         if (this.getType().isString()){
             return this.getType();
         }
-        throw new ContextualError("String Type problem", this.getLocation());
+        throw new ContextualError( compiler.displaySourceFile() + ":"
+                + this.getLocation().errorOutPut() + ": String Type error", this.getLocation());
     }
 
     @Override

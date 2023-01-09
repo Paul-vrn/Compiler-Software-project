@@ -34,7 +34,8 @@ public class BooleanLiteral extends AbstractExpr {
         if (this.getType().isBoolean()){
             return this.getType();
         }
-        throw new ContextualError("Boolean Type problem", this.getLocation());
+        throw new ContextualError( compiler.displaySourceFile() + ":"
+                + this.getLocation().errorOutPut() + ": Boolean Type problem", this.getLocation());
     }
 
     @Override

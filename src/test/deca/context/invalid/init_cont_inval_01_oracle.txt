@@ -1,0 +1,1 @@
+init_cont_inval_01.deca:11:11: Initialization type error

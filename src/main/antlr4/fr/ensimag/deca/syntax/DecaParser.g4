@@ -179,6 +179,7 @@ if_then_else returns[IfThenElse tree]
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
             elsifConditions.add($elsif_cond.tree);
             elsifBodies.add($elsif_li.tree);
+            setLocation(elseBranch, $ELSE);
         } // pas sûr
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
@@ -194,6 +195,7 @@ if_then_else returns[IfThenElse tree]
 
             elseBranch = new ListInst();
             elseBranch.add(tempTree);
+            setLocation(tem, $ELSE);
         }
         $tree = new IfThenElse(condition, thenBranch, elseBranch);
         setLocation($tree, $if1);

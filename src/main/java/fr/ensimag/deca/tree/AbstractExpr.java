@@ -127,8 +127,8 @@ public abstract class AbstractExpr extends AbstractInst {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()){
             compiler.addInstruction(printHex ? new WFLOATX() : new WFLOAT());
-        } else if (getType().isBoolean()){
-            LabelIdentification.printBool(compiler);
+        } else {
+            throw new UnsupportedOperationException("not implemented implemented");
         }
     }
 

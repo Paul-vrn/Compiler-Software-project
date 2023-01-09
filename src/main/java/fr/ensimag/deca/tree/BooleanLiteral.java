@@ -43,17 +43,6 @@ public class BooleanLiteral extends AbstractExpr {
         compiler.addInstruction(new LOAD(value ? 1 : 0, Register.getR(n)));
     }
 
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        System.out.println("BooleanLiteral");
-        if (value) {
-            compiler.addInstruction(new WSTR("true"));
-        } else {
-            compiler.addInstruction(new WSTR("false"));
-        }
-    }
-
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(Boolean.toString(value));
@@ -63,7 +52,6 @@ public class BooleanLiteral extends AbstractExpr {
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
     }
-
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do

@@ -19,16 +19,4 @@ public class LabelIdentification {
 
     private LabelIdentification(){}
 
-    public static void printBool(DecacCompiler compiler){
-        Label label = new Label("printBool_" + printBool);
-        Label labelEnd = new Label("printBoolEnd_" + printBool);
-        compiler.addInstruction(new CMP(1, Register.R1));
-        compiler.addInstruction(new BEQ(label));
-        compiler.addInstruction(new WSTR("false"));
-        compiler.addInstruction(new BRA(labelEnd));
-        compiler.addLabel(label);
-        compiler.addInstruction(new WSTR("true"));
-        compiler.addLabel(labelEnd);
-        printBool++;
-    }
 }

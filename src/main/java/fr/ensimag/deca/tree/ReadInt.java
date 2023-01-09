@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -46,6 +47,6 @@ public class ReadInt extends AbstractReadExpr {
     public void codeGenExpr(DecacCompiler compiler, int n) {
 
         compiler.addInstruction(new RINT());
-        compiler.addInstruction(new BOV(compiler.getMemory().getIOErrorLabel()));
+        compiler.addInstruction(new BOV(LabelFactory.createIOErrorLabel()));
     }
 }

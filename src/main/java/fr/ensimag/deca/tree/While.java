@@ -1,6 +1,6 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -12,7 +12,6 @@ import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
@@ -47,9 +46,9 @@ public class While extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label labelStart = new Label("WHILE_START_" + LabelIdentification.nbLabelWhile);
-        Label labelCond = new Label("WHILE_COND_" + LabelIdentification.nbLabelWhile);
-        LabelIdentification.nbLabelWhile++;
+        Label labelStart = new Label("WHILE_START_" + LabelFactory.nbLabelWhile);
+        Label labelCond = new Label("WHILE_COND_" + LabelFactory.nbLabelWhile);
+        LabelFactory.nbLabelWhile++;
         compiler.addInstruction(new BRA(labelCond));
         compiler.addLabel(labelStart);
         body.codeGenListInst(compiler);

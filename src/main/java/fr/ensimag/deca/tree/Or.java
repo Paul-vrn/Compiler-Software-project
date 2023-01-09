@@ -2,7 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.LabelIdentification;
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
@@ -27,8 +27,8 @@ public class Or extends AbstractOpBool {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Label labelEnd = new Label("OR_" + LabelIdentification.nbOr);
-        LabelIdentification.nbOr++;
+        Label labelEnd = new Label("OR_" + LabelFactory.nbOr);
+        LabelFactory.nbOr++;
         getLeftOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(1, Register.getR(n)));
         // Si expr 1 est vrai on va direct à la fin

@@ -1,6 +1,6 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -42,8 +42,8 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Label label = new Label("NOT_" + LabelIdentification.nbLabelNot);
-        LabelIdentification.nbLabelNot++;
+        Label label = new Label("NOT_" + LabelFactory.nbLabelNot);
+        LabelFactory.nbLabelNot++;
         getOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(0, Register.getR(n)));
         compiler.addInstruction(new BNE(label));

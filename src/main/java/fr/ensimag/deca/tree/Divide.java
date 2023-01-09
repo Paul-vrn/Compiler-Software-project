@@ -39,7 +39,7 @@ public class Divide extends AbstractOpArith {
             getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             compiler.addInstruction(new POP(Register.getR(n)));
-            if(getLeftOperand().getType().isFloat() || getRightOperand().getType().isFloat()){
+            if(this.getType().isFloat()){
                 compiler.addInstruction(new DIV(Register.R0, Register.getR(n)));
             }
             else{

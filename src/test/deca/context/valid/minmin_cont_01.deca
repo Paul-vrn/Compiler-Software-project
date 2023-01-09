@@ -1,0 +1,13 @@
+// Description:
+//    Programme minimaliste testant un nombre avec plusieurs opérateurs unaires imbriqués.
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+    int x = -(-(-3));
+}

@@ -8,6 +8,5 @@
 //    cree le 01/01/2023
 
 {
-    int x;
-    x = 0;
+    int x = y;
 }

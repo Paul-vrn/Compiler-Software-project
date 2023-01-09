@@ -1,5 +1,5 @@
 // Description:
-//    Programme definissant la variable entière x.
+//    Initialisation et typage
 //
 // Resultats:
 //
@@ -8,5 +8,8 @@
 //    cree le 01/01/2023
 
 {
-    float x = 4%6;
+   int x = x;
+   int int = x;
+
+
 }

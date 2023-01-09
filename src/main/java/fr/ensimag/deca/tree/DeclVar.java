@@ -42,6 +42,8 @@ public class DeclVar extends AbstractDeclVar {
         this.varName.setType(varType);
         this.varName.setDefinition(new VariableDefinition(varType, getLocation()));
 
+        this.initialization.verifyInitialization(compiler, varName.getType(), localEnv, currentClass);
+
         try{
             localEnv.declare(varName.getName(), (ExpDefinition) varName.getDefinition());
         }catch(EnvironmentExp.DoubleDefException e){
@@ -49,7 +51,7 @@ public class DeclVar extends AbstractDeclVar {
                     + this.getLocation().errorOutPut() + ": Variable already defined", this.getLocation());
         }
 
-        this.initialization.verifyInitialization(compiler, varName.getType(), localEnv, currentClass);
+
 
     }
 

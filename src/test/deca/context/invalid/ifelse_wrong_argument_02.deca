@@ -1,0 +1,13 @@
+// Description:
+//     ifelse avec une condition qui n'est pas un boolean.
+//
+// Resultats:
+//    Ligne 12: Condition argument of if/elseif should be a boolean
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   if(true){}
+   else if(4){}
+}

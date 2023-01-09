@@ -38,12 +38,4 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         return this.getType();
     }
 
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
-        // TODO : faire soit float soit int
-        compiler.addInstruction(new WINT());
-    }
-
 }

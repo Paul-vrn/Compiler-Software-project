@@ -39,13 +39,4 @@ public class UnaryMinus extends AbstractUnaryExpr {
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        // TODO : marche pas
-        getOperand().codeGenExpr(compiler, 1);
-        compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(2)));
-        compiler.addInstruction(new SUB(Register.getR(2), Register.getR(1)));
-        compiler.addInstruction(new WINT());
-    }
 }

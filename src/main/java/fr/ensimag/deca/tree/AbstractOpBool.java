@@ -42,12 +42,4 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     public void codeGenCond(DecacCompiler compiler, int p) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
-        LabelIdentification.printBool(compiler);
-    }
 }

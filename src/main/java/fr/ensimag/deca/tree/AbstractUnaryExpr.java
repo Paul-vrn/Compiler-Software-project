@@ -41,7 +41,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler){
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex){
         this.codeGenExpr(compiler, 2);
     }
 

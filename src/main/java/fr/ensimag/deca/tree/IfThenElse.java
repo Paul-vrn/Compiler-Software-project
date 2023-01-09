@@ -56,8 +56,8 @@ public class IfThenElse extends AbstractInst {
 
     protected void codeGenIf(DecacCompiler compiler, int p) {
 
-        Label labelElse = new Label("ELSE" + Integer.toString(p));
-        Label labelEnd = new Label("END");
+        Label labelElse = new Label("ELSE_" + p);
+        Label labelEnd = new Label("END_" + p);
 
         condition.codeGenExpr(compiler, 2);
         compiler.addInstruction(new CMP(0, Register.getR(2)));

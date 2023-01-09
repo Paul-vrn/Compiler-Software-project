@@ -56,12 +56,4 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
         }
     }
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
-        LabelIdentification.printBool(compiler);
-    }
-
 }

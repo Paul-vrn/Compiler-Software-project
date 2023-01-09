@@ -44,7 +44,7 @@ public class BooleanLiteral extends AbstractExpr {
 
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         System.out.println("BooleanLiteral");
         if (value) {
             compiler.addInstruction(new WSTR("true"));

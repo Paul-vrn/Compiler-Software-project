@@ -41,9 +41,6 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-
-        // x = ! (y == z)
-
         Label label = new Label("NOT_" + LabelIdentification.nbLabelNot);
         getOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(0, Register.getR(n))); // RN == 0 ?
@@ -53,12 +50,4 @@ public class Not extends AbstractUnaryExpr {
         compiler.addInstruction(new LOAD(0, Register.getR(n))); // =>  RN = 0
         LabelIdentification.nbLabelNot++;
     }
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
-        LabelIdentification.printBool(compiler);
-    }
-
 }

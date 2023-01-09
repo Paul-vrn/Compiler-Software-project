@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import fr.ensimag.ima.pseudocode.Register;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -53,12 +54,13 @@ public class CompilerOptions {
 
     private int debug = 0;
 
-
+    private boolean decompilation = false;
     private boolean verificationEnabled = false;
     private boolean printBanner = false;
+
     private List<File> sourceFiles = new ArrayList<File>();
 
-    private boolean decompilation = false;
+
 
     private boolean parallel = false;
     
@@ -113,7 +115,15 @@ public class CompilerOptions {
                         throw new UnsupportedOperationException("-n not yet implemented");
                     case "-r":
                         // TODO : set Register.RMAX = X
-                        throw new UnsupportedOperationException("-r not yet implemented");
+                        i++;
+                        int newRMAX = Integer.parseInt(argsArrayList.get(i));
+                        if(newRMAX >= 4 && newRMAX <= 16){
+                            Register.RMAX = newRMAX - 1;
+                        }
+                        else{
+                            throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");
+                        }
+                        break;
                     case "d":
                         throw new UnsupportedOperationException("-d not yet implemented");
                     case "-P":

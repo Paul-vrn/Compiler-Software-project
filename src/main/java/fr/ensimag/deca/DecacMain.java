@@ -3,6 +3,7 @@ package fr.ensimag.deca;
 import java.io.File;
 import org.apache.log4j.Logger;
 
+
 /**
  * Main class for the command-line Deca compiler.
  *

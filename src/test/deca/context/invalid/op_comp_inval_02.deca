@@ -2,7 +2,7 @@
 //    Affectation et typage
 //
 // Resultats:
-//    Ligne 11: Compare operation type mismatch
+//    Ligne 11: op_comp_inval_02.deca:11:18: Compare operation type mismatch
 //
 // Historique:
 //    cree le 01/01/2023

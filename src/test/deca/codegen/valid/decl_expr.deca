@@ -1,0 +1,15 @@
+// Description:
+//    déclaration d'une variable null
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    print((5 > 3) && (2 > 4));
+}
+
+

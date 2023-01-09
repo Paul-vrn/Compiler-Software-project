@@ -1,5 +1,7 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.Memory;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -8,10 +10,8 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.AbstractLine;
-import fr.ensimag.ima.pseudocode.IMAProgram;
-import fr.ensimag.ima.pseudocode.Instruction;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -131,6 +131,21 @@ public class DecacCompiler {
     public Symbol createSymbol(String name) {
         return this.symbolTable.create(name);
     }
+
+    private final Memory memory = new Memory();
+    public Memory getMemory() {
+        return memory;
+    }
+    public int getNbIf(){
+        return memory.getNbIfThenElse();
+    }
+    public int nextOffSet(){
+        int val = memory.getOffset();
+        memory.increaseOffset();
+        return val;
+    }
+
+    public EnvironmentExp envExpCurrent = null;
 
     /**
      * Run the compiler (parse source file, generate code)

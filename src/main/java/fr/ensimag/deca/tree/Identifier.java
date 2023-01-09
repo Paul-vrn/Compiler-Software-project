@@ -1,20 +1,20 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.ClassType;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -25,7 +25,28 @@ import org.apache.log4j.Logger;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
-    
+
+    public void codeGenDeclVar(DecacCompiler compiler) {
+        ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
+        exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        // LOAD la valeur dans R1
+        System.out.println("Identifier.codeGenPrint");
+        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.R1));
+        if (getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        } else if (getType().isBoolean()) {
+
+        } else {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -126,6 +147,11 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.getR(n)));
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
      * 
@@ -159,15 +185,25 @@ public class Identifier extends AbstractIdentifier {
 
     private Symbol name;
 
+
     public Identifier(Symbol name) {
         Validate.notNull(name);
         this.name = name;
     }
 
+
+
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        if(localEnv.get(this.getName()) != null){
+            this.setType(localEnv.get(this.getName()).getType());
+            this.setDefinition(localEnv.get(this.getName()));
+        }
+        else{
+            this.setDefinition(new VariableDefinition(this.getType(), this.getLocation()));
+        }
+        return this.getType();
     }
 
     /**
@@ -176,7 +212,12 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        if(compiler.environmentType.defOfType(this.getName()) == null){
+            throw new ContextualError("Unknown type", this.getLocation());
+        }
+        this.setType(compiler.environmentType.defOfType(this.getName()).getType());
+        this.setDefinition(compiler.environmentType.defOfType(this.getName()));
+        return this.getType();
     }
     
     

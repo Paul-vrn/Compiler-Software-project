@@ -1,0 +1,20 @@
+// Description:
+//    déclaration d'une variable null
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    boolean x = true;
+    if (5 < 3){
+        print(3);
+    } else {
+        print(2);
+    }
+}
+
+

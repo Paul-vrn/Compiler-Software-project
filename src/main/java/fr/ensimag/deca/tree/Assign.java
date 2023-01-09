@@ -6,6 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -27,11 +30,40 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
+                              ClassDefinition currentClass, Type returnType)
+            throws ContextualError {
+        Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        this.setType(type1);
+        Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if(!(type1.sameType(type2) || type1.isFloat() && type2.isInt())){
+            throw new ContextualError("Assign Type problem here", this.getLocation());
+        }
     }
 
+    @Override
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+            ClassDefinition currentClass) throws ContextualError {
+        //TODO : understand and modify this function
+
+        this.setType(this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass));
+        this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if(!this.getType().sameType(this.getRightOperand().getType())){
+            throw new ContextualError("Assign Type problem here", this.getLocation());
+        }
+
+        return this.getType();
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        Identifier id = (Identifier) this.getLeftOperand();
+        DAddr op = compiler.envExpCurrent.get(id.getName()).getOperand();
+        this.getRightOperand().codeGenExpr(compiler, 2);
+        compiler.addInstruction(new STORE(Register.getR(2), op));
+    }
 
     @Override
     protected String getOperatorName() {

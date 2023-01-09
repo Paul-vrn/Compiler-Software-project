@@ -112,6 +112,7 @@ public class CompilerOptions {
                     case "-n":
                         throw new UnsupportedOperationException("-n not yet implemented");
                     case "-r":
+                        // TODO : set Register.RMAX = X
                         throw new UnsupportedOperationException("-r not yet implemented");
                     case "d":
                         throw new UnsupportedOperationException("-d not yet implemented");

@@ -1,0 +1,12 @@
+// Description:
+//    Programme definissant la variable entière x.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    boolean x = 4 < 4+5;
+}

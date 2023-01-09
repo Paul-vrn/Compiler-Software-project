@@ -19,6 +19,8 @@ import fr.ensimag.deca.tools.SymbolTable;
  */
 public abstract class AbstractIdentifier extends AbstractLValue {
 
+    public abstract void codeGenDeclVar(DecacCompiler compiler);
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
@@ -93,4 +95,6 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      *         (corresponds to the "type" attribute)
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
+
+
 }

@@ -99,6 +99,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
       (EQUALS e=expr {
         assert($e.tree != null);
         initialization = new Initialization($e.tree);
+        setLocation(initialization, $e.start);
         }
       )? {
         $tree = new DeclVar($t, varName, initialization);
@@ -195,6 +196,7 @@ if_then_else returns[IfThenElse tree]
             elseBranch.add(tempTree);
         }
         $tree = new IfThenElse(condition, thenBranch, elseBranch);
+        setLocation($tree, $if1);
       }
     ;
 
@@ -207,6 +209,7 @@ list_expr returns[ListExpr tree]
         }
        (COMMA e2=expr {
         $tree.add($e2.tree);
+
         }
        )* )?
     ;
@@ -449,6 +452,7 @@ type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
+            setLocation($tree, $ident.start);
         }
     ;
 
@@ -488,7 +492,6 @@ literal returns[AbstractExpr tree]
         }
     | NULL {
         $tree = null;
-        setLocation($tree, $NULL);
         }
     ;
 

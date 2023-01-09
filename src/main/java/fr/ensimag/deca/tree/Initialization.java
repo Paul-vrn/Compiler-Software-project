@@ -7,6 +7,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -26,6 +30,13 @@ public class Initialization extends AbstractInitialization {
         this.expression = expression;
     }
 
+    @Override
+    protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        expression.codeGenExpr(compiler, 2);
+        DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(2), op));
+    }
+
     public Initialization(AbstractExpr expression) {
         Validate.notNull(expression);
         this.expression = expression;
@@ -35,7 +46,14 @@ public class Initialization extends AbstractInitialization {
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type2 = this.getExpression().verifyExpr(compiler, localEnv, currentClass);
+
+        if(!(t.sameType(type2) || (t.isFloat() && type2.isInt()))){
+            throw new ContextualError("Initialization type error", this.expression.getLocation());
+        }
+
+        /*Verify the condition : assign_compatible(env_types, type1, type2)*/
+        //if(compiler.environmentType.defOfType(t))
     }
 
 

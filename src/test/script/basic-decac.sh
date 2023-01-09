@@ -90,7 +90,22 @@ if [ "$decac_moins_v" = "" ]; then
     exit 1
 fi
 
-echo "Pas de probleme detecte avec decac -v."
+echo "Pas de probleme detecte avec decac -v. pas sûr de l'implémentation par contre"
+
+ARITH_EXPRESS_TEST="$DECAC_HOME"/src/test/deca/codegen/valid/test_expression_arith.deca
+
+decac_moins_r_4=$(decac -r 4 "$ARITH_EXPRESS_TEST")
+decac_moins_r=$(decac "$ARITH_EXPRESS_TEST")
+
+if [ "$decac_moins_r_4" != "" ]; then
+    echo "ERREUR: decac -r a produit une sortie à partir d'un programme correct"
+    exit 1
+fi
+
+echo "Pas de probleme detecte avec decac -r.(besoin de plus de test)"
+
+
+
 
 echo "Reste des options pas encore implémenter."
 

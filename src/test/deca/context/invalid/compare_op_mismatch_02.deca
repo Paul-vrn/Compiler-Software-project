@@ -1,0 +1,12 @@
+// Description:
+//     Operation compare avec des mauvais types.
+//
+// Resultats:
+//    Ligne 11: Compare operation type mismatch
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   boolean x = false < true;
+}

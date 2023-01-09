@@ -49,6 +49,11 @@ public class Initialization extends AbstractInitialization {
             throws ContextualError {
         Type type2 = this.getExpression().verifyExpr(compiler, localEnv, currentClass);
 
+        if(type2 == null){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.expression.getLocation().errorOutPut() + ": Initialization impossible with undefined value", this.expression.getLocation());
+        }
+
         if(!(t.sameType(type2) || (t.isFloat() && type2.isInt()))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.expression.getLocation().errorOutPut() + ": Initialization type error, " + type2 + " into " + t + " forbidden", this.expression.getLocation());

@@ -1,0 +1,12 @@
+// Description:
+//     while avec une condition qui n'est pas un boolean.
+//
+// Resultats:
+//    Ligne 11: Condition argument of while should be a boolean
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   while(4){}
+}

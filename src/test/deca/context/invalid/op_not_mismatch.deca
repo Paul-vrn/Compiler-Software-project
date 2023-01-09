@@ -1,0 +1,12 @@
+// Description:
+//     Operateur not avec une valeur non booleenne.
+//
+// Resultats:
+//    Ligne 11: Operator Not type mismatch
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   boolean x = !4;
+}

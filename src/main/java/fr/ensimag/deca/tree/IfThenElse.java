@@ -56,7 +56,7 @@ public class IfThenElse extends AbstractInst {
 
     protected void codeGenIf(DecacCompiler compiler, int p) {
 
-        Label labelElse = new Label("ELSE" + Integer.toString(p));
+        Label labelElse = new Label("ELSE" + LabelIdentification.nbLabelIfThenElse + Integer.toString(p));
         Label labelEnd = new Label("END");
 
         condition.codeGenExpr(compiler, 2);
@@ -66,7 +66,10 @@ public class IfThenElse extends AbstractInst {
         compiler.addInstruction(new BRA(labelEnd)); // on branche à la fin
         compiler.addLabel(labelElse);
         elseBranch.codeGenIf(compiler, p+1);
-        compiler.addLabel(labelEnd);
+        if(p==0){
+            compiler.addLabel(labelEnd);
+            LabelIdentification.nbLabelIfThenElse++;
+        }
 
     }
 

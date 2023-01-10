@@ -50,6 +50,6 @@ public class ReadInt extends AbstractReadExpr {
 
         compiler.addInstruction(new RINT());
         compiler.addInstruction(new LOAD(Register.R1, Register.getR(n)));
-        compiler.addInstruction(new BOV(LabelFactory.createIOErrorLabel()));
+        compiler.addInstruction(new BOV(compiler.getLabelFactory().createIOErrorLabel()));
     }
 }

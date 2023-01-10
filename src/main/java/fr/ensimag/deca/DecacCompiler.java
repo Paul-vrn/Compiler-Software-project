@@ -1,7 +1,7 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.codegen.Memory;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -17,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -143,15 +141,19 @@ public class DecacCompiler {
     public Memory getMemory() {
         return memory;
     }
-    public int getNbIf(){
-        return memory.getNbIfThenElse();
-    }
     public int nextOffSet(){
         int val = memory.getOffset();
         memory.increaseOffset();
         return val;
     }
 
+    private final LabelFactory labelFactory = new LabelFactory();
+    public LabelFactory getLabelFactory() {return labelFactory;}
+    public int nbWhile(){return labelFactory.nbWhile();}
+    public int nbNot(){return labelFactory.nbNot();}
+    public int nbAnd(){return labelFactory.nbAnd();}
+    public int nbOr(){return labelFactory.nbOr();}
+    
     /**
      * Run the compiler (parse source file, generate code)
      *

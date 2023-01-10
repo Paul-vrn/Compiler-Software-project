@@ -82,12 +82,6 @@ public class CodegenTest {
     }
 
 
-
-
-
-
-
-
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
         DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), new File(args[0]));
@@ -106,10 +100,6 @@ public class CodegenTest {
             output.append(line);
             output.append(System.getProperty("line.separator"));
         }
-        System.out.println(output.toString());
-
-
-
         String oracle = new String(Files.readAllBytes(Paths.get(fileOracle)));
         assertEquals(oracle, output.toString());
 

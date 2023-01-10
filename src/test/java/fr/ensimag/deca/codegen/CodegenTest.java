@@ -81,7 +81,19 @@ public class CodegenTest {
         generalTestValid(args, file2);
     }
 
+    @Test
+    void test10() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/minmin_cont.deca"};
+        String file2 = "src/test/deca/codegen/valid/minmin_cont_oracle.txt";
+        generalTestValid(args, file2);
+    }
 
+    @Test
+    void test11() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/intint_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/intint_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
 
 
 

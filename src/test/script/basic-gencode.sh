@@ -3,34 +3,55 @@
 # Auteur : gl21
 # Version initiale : 01/01/2023
 
-# Encore un test simpliste. On compile un fichier (cond0.deca), on
-# lance ima dessus, et on compare le résultat avec la valeur attendue.
+# Set the color variable
+green='\033[0;92m'
+# Clear the color after that
+clear='\033[0m'
 
-# Ce genre d'approche est bien sûr généralisable, en conservant le
-# résultat attendu dans un fichier pour chaque fichier source.
+red='\033[0;31m'
+
 cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 
-# On ne teste qu'un fichier. Avec une boucle for appropriée, on
-# pourrait faire bien mieux ...
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass 2>/dev/null
-decac ./src/test/deca/codegen/valid/provided/cond0.deca || exit 1
-if [ ! -f ./src/test/deca/codegen/valid/provided/cond0.ass ]; then
-    echo "Fichier cond0.ass non généré."
-    exit 1
-fi
+# On récupère la liste de tous les fichiers .deca dans le dossier valid
+for fichier in ./src/test/deca/codegen/valid/*.deca
+do
+  # On enlève l'extension .deca du nom du fichier
+  nom_fichier=${fichier%.*}
+  filename=$(basename "$nom_fichier")
 
-resultat=$(ima ./src/test/deca/codegen/valid/provided/cond0.ass) || exit 1
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass
 
-# On code en dur la valeur attendue.
-attendu=ok
+  # On supprime le fichier .ass correspondant (s'il existe)
+  rm -f "$nom_fichier.ass" 2>/dev/null
 
-if [ "$resultat" = "$attendu" ]; then
-    echo "Tout va bien"
-else
-    echo "Résultat inattendu de ima:"
-    echo "$resultat"
-    exit 1
-fi
+  # On compile le fichier .deca
+  decac "$fichier" || exit 1
+  if [ ! -f "$nom_fichier.ass" ]; then
+      echo "Fichier $nom_fichier.ass non généré."
+      exit 1
+  fi
+
+  # On récupère le résultat de l'exécution du fichier .ass
+  resultat=$(ima "$nom_fichier.ass") || exit 1
+
+  echo "$resultat"
+
+  # On supprime le fichier .ass
+  rm -f "$nom_fichier.ass"
+
+  nom_fichier_oracle="$nom_fichier"_oracle.txt
+  oracle="_oracle.txt"
+
+
+  # On récupère le résultat attendu pour ce fichier (à partir du fichier de même nom dans le dossier oracles)
+  attendu=$(cat "./src/test/deca/codegen/valid/oracles/$filename$oracle")
+
+  if [ "$resultat" = "$attendu" ]; then
+      echo "${green}Tout va bien pour $filename${clear}"
+  else
+      echo "${red}Résultat inattendu de ima pour $filename:${clear}"
+      echo "${red}$resultat${clear}"
+      exit 1
+  fi
+done

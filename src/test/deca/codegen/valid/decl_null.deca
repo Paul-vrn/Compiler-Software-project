@@ -9,7 +9,8 @@
 //    cree le 01/01/2023
 
 {
-   print(true);
+   int x = null;
+   print(x);
 }
 
 

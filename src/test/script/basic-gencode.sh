@@ -44,7 +44,7 @@ do
   nom_fichier_oracle="$nom_fichier"_oracle.txt
   oracle="_oracle.txt"
 
-  attendu=$(cat "./src/test/deca/codegen/valid/oracles/$filename$oracle")
+  attendu=$(cat "./src/test/deca/codegen/valid/$filename$oracle")
 
   if [ "$resultat" = "$attendu" ]; then
       echo "${green}Tout va bien pour $filename${clear}"

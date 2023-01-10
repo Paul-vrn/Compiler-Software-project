@@ -38,13 +38,13 @@ public class Divide extends AbstractOpArith {
 
         if(this.getType().isFloat()){
             compiler.addInstruction(new CMP(new ImmediateFloat(0.0f), regRight));
-            compiler.addInstruction(new BEQ(LabelFactory.createDivByZeroErrorLabel()));
+            compiler.addInstruction(new BEQ(compiler.getLabelFactory().createDivByZeroErrorLabel()));
             compiler.addInstruction(new DIV(regRight, Register.getR(n)));
-            compiler.addInstruction(new BOV(LabelFactory.createOverflowErrorLabel()));
+            compiler.addInstruction(new BOV(compiler.getLabelFactory().createOverflowErrorLabel()));
         }
         else{
             compiler.addInstruction(new CMP(new ImmediateInteger(0), regRight));
-            compiler.addInstruction(new BEQ(LabelFactory.createDivByZeroErrorLabel()));
+            compiler.addInstruction(new BEQ(compiler.getLabelFactory().createDivByZeroErrorLabel()));
             compiler.addInstruction(new QUO(regRight, Register.getR(n)));
         }
     }

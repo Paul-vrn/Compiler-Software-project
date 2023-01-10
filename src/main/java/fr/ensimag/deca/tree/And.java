@@ -26,8 +26,7 @@ public class And extends AbstractOpBool {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Label labelEnd = new Label("AND_END_" + LabelFactory.nbAnd);
-        LabelFactory.nbAnd++;
+        Label labelEnd = new Label("AND_END_" + compiler.nbAnd());
         getLeftOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(0, Register.getR(n)));
         compiler.addInstruction(new BEQ(labelEnd)); // si expr1 est faux on va à la fin

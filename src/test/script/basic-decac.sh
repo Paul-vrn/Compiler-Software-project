@@ -50,6 +50,7 @@ TEST_FILE="$DECAC_HOME"/src/test/deca/syntax/valid/provided/hello.deca
 ORACLE_FILE="$DECAC_HOME"/src/test/deca/syntax/valid/hello_decompiled_oracle.txt
 decac_moins_p=$(decac -p "$TEST_FILE")
 
+
 if [ "$?" -ne 0 ]; then
     echo "ERREUR: decac -p a termine avec un status different de zero."
     exit 1

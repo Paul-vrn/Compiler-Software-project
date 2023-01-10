@@ -211,16 +211,19 @@ public class DecacCompiler {
             LOG.info("Parsing failed");
             return true;
         }
-        if(compilerOptions.getVerification()){
-            return false;
-        }
+
         if(compilerOptions.getDecompilation()){
             prog.decompile(out);
+            return false;
         }
         assert(prog.checkAllLocations());
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if(compilerOptions.getVerification()){
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);

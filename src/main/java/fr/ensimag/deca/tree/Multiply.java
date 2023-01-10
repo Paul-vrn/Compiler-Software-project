@@ -18,7 +18,6 @@ public class Multiply extends AbstractOpArith {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        //TODO code des opérations arithmétiques à factoriser
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);

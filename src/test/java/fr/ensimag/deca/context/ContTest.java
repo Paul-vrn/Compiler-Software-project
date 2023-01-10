@@ -19,8 +19,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ContTest {
     @Test
@@ -418,7 +417,6 @@ public class ContTest {
         try {
             prog.verifyProgram(compiler);
         } catch (ContextualError e) {
-            //System.out.println(c.getMessage());;
             String file2 = fileOracle;
             String toCompare = new String(Files.readAllBytes(Paths.get(file2)));
             assertEquals(e.getMessage(), toCompare);

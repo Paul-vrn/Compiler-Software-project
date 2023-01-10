@@ -11,7 +11,7 @@
       |         `> [11, 12] Int (1)
       |            type: int
       `> ListInst [List with 1 elements]
-         []> IfThenElse
+         []> [12, 4] IfThenElse
              +> [12, 26] Or
              |  type: boolean
              |  +> [12, 16] And

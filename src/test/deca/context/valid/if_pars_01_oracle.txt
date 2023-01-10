@@ -11,7 +11,7 @@
       |         `> [11, 16] Int (2)
       |            type: int
       `> ListInst [List with 1 elements]
-         []> IfThenElse
+         []> [12, 8] IfThenElse
              +> [12, 13] Equals
              |  type: boolean
              |  +> [12, 12] Identifier (a)

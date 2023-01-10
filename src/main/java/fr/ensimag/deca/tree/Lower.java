@@ -1,6 +1,11 @@
 package fr.ensimag.deca.tree;
 
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.SLE;
+import fr.ensimag.ima.pseudocode.instructions.SLT;
+
 /**
  *
  * @author gl21
@@ -18,4 +23,9 @@ public class Lower extends AbstractOpIneq {
         return "<";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        super.codeGenExpr(compiler, n);
+        compiler.addInstruction(new SLT(Register.getR(n)));
+    }
 }

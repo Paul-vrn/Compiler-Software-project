@@ -1,0 +1,12 @@
+// Description:
+//     Operation arithmetique avec des mauvais types.
+//
+// Resultats:
+//    Ligne 11: Arithmetic operation type mismatch
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x = 4 + true;
+}

@@ -1,0 +1,14 @@
+// Description:
+//    Programme minimaliste qui teste un if non terminé (dont il manque une accolade).
+//
+// Resultats:
+//      Erreur ligne 11:
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+     int x = 0;
+     if (x == 1)
+        x = 3;
+}

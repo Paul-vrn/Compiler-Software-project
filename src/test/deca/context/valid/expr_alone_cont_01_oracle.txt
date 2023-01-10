@@ -1,0 +1,17 @@
+`> [9, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [9, 0] Main
+      +> ListDeclVar [List with 0 elements]
+      `> ListInst [List with 4 elements]
+         []> [10, 4] Multiply
+         ||  type: int
+         ||  +> [10, 3] Int (4)
+         ||  |  type: int
+         ||  `> [10, 5] Int (5)
+         ||     type: int
+         []> [11, 3] ReadInt
+         ||  type: int
+         []> [12, 3] ReadFloat
+         ||  type: float
+         []> [13, 3] Int (3)
+             type: int

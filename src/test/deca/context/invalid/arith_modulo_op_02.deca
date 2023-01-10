@@ -1,0 +1,12 @@
+// Description:
+//     Operation arithmetique modulo avec des mauvais types.
+//
+// Resultats:
+//    Ligne 12: Arithmetic modulo operation type mismatch
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   float x = 4%6.918;
+}

@@ -5,6 +5,9 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
@@ -21,6 +24,24 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        // TODO : optimize this part (switch case ?)
+        if(type1 == null || type2 == null){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Arithmetic operation impossible with undefined operand", this.getLocation());
+        }
+
+        if(type1.isInt() && type2.isInt()){
+            this.setType(compiler.environmentType.INT);
+        }else if((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat())){
+            this.setType(compiler.environmentType.FLOAT);
+        }else{
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Arithmetic operation type mismatch", this.getLocation());
+        }
+        return this.getType();
     }
+
 }

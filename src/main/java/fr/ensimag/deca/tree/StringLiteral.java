@@ -31,15 +31,12 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        this.setType(new StringType(compiler.createSymbol("String")));
-        if (this.getType().isString()){
-            return this.getType();
-        }
-        throw new ContextualError("Type problem", this.getLocation());
+        this.setType(compiler.environmentType.STRING);
+        return this.getType();
     }
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         compiler.addInstruction(new WSTR(new ImmediateString(value)));
     }
 

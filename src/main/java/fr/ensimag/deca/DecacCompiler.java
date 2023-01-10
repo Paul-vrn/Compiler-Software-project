@@ -1,5 +1,7 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelFactory;
+import fr.ensimag.deca.codegen.Memory;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -8,17 +10,13 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.AbstractLine;
-import fr.ensimag.ima.pseudocode.IMAProgram;
-import fr.ensimag.ima.pseudocode.Instruction;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -107,7 +105,14 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
+    public void addIndex(int i, Instruction inst) {
+        program.addIndex(i, inst);
+    }
+    public int getLineIndex(){
+        return program.getLastIndex();
+    }
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -132,6 +137,23 @@ public class DecacCompiler {
         return this.symbolTable.create(name);
     }
 
+    private final Memory memory = new Memory();
+    public Memory getMemory() {
+        return memory;
+    }
+    public int nextOffSet(){
+        int val = memory.getOffset();
+        memory.increaseOffset();
+        return val;
+    }
+
+    private final LabelFactory labelFactory = new LabelFactory();
+    public LabelFactory getLabelFactory() {return labelFactory;}
+    public int nbWhile(){return labelFactory.nbWhile();}
+    public int nbNot(){return labelFactory.nbNot();}
+    public int nbAnd(){return labelFactory.nbAnd();}
+    public int nbOr(){return labelFactory.nbOr();}
+    
     /**
      * Run the compiler (parse source file, generate code)
      *
@@ -140,53 +162,10 @@ public class DecacCompiler {
     public boolean compile() throws DecacFatalError {
         String sourceFile = source.getAbsolutePath();
 
-        // The decompiled filed name is in projet-GL/outputFiles/decompiled
-
-
-        String[] temp1 = sourceFile.split("/");
-        String[] temp2 = temp1[temp1.length-1].split(".deca");
-        String[] temp3 = sourceFile.split("projet-GL/");
-
-
-        String path1 = temp3[0] + "projet-GL/outputFiles/";
-        File pathAsFile1 = new File(path1);
-
-        if (!Files.exists(Paths.get(path1))) {
-            pathAsFile1.mkdir();
-        }
-
-        String path2 = temp3[0] + "projet-GL/outputFiles/assembly/";
-        File pathAsFile2 = new File(path2);
-
-        if (!Files.exists(Paths.get(path2))) {
-            pathAsFile2.mkdir();
-        }
-
-
-        String path3 = temp3[0] + "projet-GL/outputFiles/decompiled";
-        File pathAsFile3 = new File(path3);
-
-        if (!Files.exists(Paths.get(path3))) {
-            pathAsFile3.mkdir();
-        }
-
-
-        String outputDecompiled = temp3[0] + "projet-GL/outputFiles/decompiled/" + temp2[0] + "Decompiled.deca";
-
-        //String outputDecompiled = sourceFile.substring(0, sourceFile.length() - 5) + "Decompiled.deca";
-        String fileAss = temp3[0] + "projet-GL/outputFiles/assembly/" + temp2[0] + ".ass";
-        String destFile = fileAss;
-
-        FileOutputStream intermediate = null;
-        try {
-            intermediate = new FileOutputStream(outputDecompiled);
-        } catch (FileNotFoundException e) {
-            throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
-        }
+        String destFile = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
 
         PrintStream err = System.err;
-        PrintStream out = new PrintStream(intermediate);
-        //PrintStream out = System.out;
+        PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
             return doCompile(sourceFile, destFile, out, err);
@@ -232,16 +211,19 @@ public class DecacCompiler {
             LOG.info("Parsing failed");
             return true;
         }
-        if(compilerOptions.getVerification()){
-            return false;
-        }
+
         if(compilerOptions.getDecompilation()){
             prog.decompile(out);
+            return false;
         }
         assert(prog.checkAllLocations());
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if(compilerOptions.getVerification()){
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);
@@ -289,6 +271,11 @@ public class DecacCompiler {
         DecaParser parser = new DecaParser(tokens);
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
+    }
+
+    public String displaySourceFile(){
+        String[] error = this.getSource().toString().split("/");
+        return error[error.length - 1];
     }
 
 }

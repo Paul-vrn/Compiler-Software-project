@@ -1,0 +1,22 @@
+// Description:
+//    Programme minimaliste utilisant un commentaire.
+//
+// Resultats:
+//      bon
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+    int i = 1;
+    int j = 2;
+    int k = 3;
+    if (i == 1) {
+        if (j >= 2) {
+            if (k < 4) {
+                println("bon");
+            }
+        }
+    }
+}
+

@@ -99,6 +99,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
       (EQUALS e=expr {
         assert($e.tree != null);
         initialization = new Initialization($e.tree);
+        setLocation(initialization, $e.start);
         }
       )? {
         $tree = new DeclVar($t, varName, initialization);
@@ -165,36 +166,38 @@ inst returns[AbstractInst tree]
 if_then_else returns[IfThenElse tree]
 @init {
     AbstractExpr condition = null;
-    List<AbstractExpr> elsifConditions = new ArrayList<AbstractExpr>();
-    List<ListInst> elsifBodies = new ArrayList<ListInst>();
+    List<AbstractExpr> conditions = new ArrayList<AbstractExpr>();
+    List<ListInst> bodies = new ArrayList<ListInst>();
+    List<Token> tokens = new ArrayList<Token>();
     ListInst thenBranch = null;
-    ListInst elseBranch = null;
+    ListInst elseBranch = new ListInst();
     IfThenElse tempTree = null;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
-        condition = $condition.tree;
-        thenBranch = $li_if.tree;
+        tokens.add($if1);
+        conditions.add($condition.tree);
+        bodies.add($li_if.tree);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-            elsifConditions.add($elsif_cond.tree);
-            elsifBodies.add($elsif_li.tree);
-        } // pas sûr
+            tokens.add($elsif);
+            conditions.add($elsif_cond.tree);
+            bodies.add($elsif_li.tree);
+        }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
         elseBranch = $li_else.tree;
         }
       )? {
-        for (int i = elsifConditions.size(); i > 0; i--) {
-            tempTree = new IfThenElse(
-                            elsifConditions.get(i-1),
-                            elsifBodies.get(i-1),
+        for (int i = conditions.size(); i > 0; i--) {
+            $tree = new IfThenElse(
+                            conditions.get(i-1),
+                            bodies.get(i-1),
                             elseBranch
             );
-
+            setLocation($tree, tokens.get(i-1));
             elseBranch = new ListInst();
-            elseBranch.add(tempTree);
+            elseBranch.add($tree);
         }
-        $tree = new IfThenElse(condition, thenBranch, elseBranch);
       }
     ;
 
@@ -207,6 +210,7 @@ list_expr returns[ListExpr tree]
         }
        (COMMA e2=expr {
         $tree.add($e2.tree);
+
         }
        )* )?
     ;
@@ -390,7 +394,8 @@ select_expr returns[AbstractExpr tree]
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
-            setLocation($tree, $DOT);
+            setLocation($tree, $e1.start);
+
 
         }
         (o=OPARENT args=list_expr CPARENT {
@@ -399,6 +404,7 @@ select_expr returns[AbstractExpr tree]
         }
         | /* epsilon */ {
             // we matched "e.i"
+
         }
         )
     ;
@@ -411,6 +417,7 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
+
 
         } // $tree = $args.tree; marche pas car $tree est AbstractExpr et $args.tree est ListExpr
     | OPARENT expr CPARENT {
@@ -430,16 +437,10 @@ primary_expr returns[AbstractExpr tree]
             $tree = $ident.tree;
             setLocation($tree, $NEW);
         } // pas sûr
-    | cast=OPARENT type CPARENT OPARENT expr CPARENT { /*
+    | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
             assert($expr.tree != null);
-            if ($type.tree instanceof IntLiteral) {
-                $tree = (IntLiteral) $expr.tree;
-            } else if ($type.tree instanceof FloatLiteral) {
-                $tree = (FloatLiteral) $expr.tree;
-            } else {
-                throw new RuntimeException("Invalid cast");
-            } */
+            setLocation($tree, $cast);
         } // marche pas
     | literal {
             assert($literal.tree != null);
@@ -451,6 +452,7 @@ type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
+            setLocation($tree, $ident.start);
         }
     ;
 
@@ -490,7 +492,6 @@ literal returns[AbstractExpr tree]
         }
     | NULL {
         $tree = null;
-        setLocation($tree, $NULL);
         }
     ;
 

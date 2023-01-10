@@ -1,0 +1,15 @@
+// Description:
+//    Programme testant les fonctions read(int et float).
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+
+        int x = readInt();
+        float y = readFloat();
+
+}

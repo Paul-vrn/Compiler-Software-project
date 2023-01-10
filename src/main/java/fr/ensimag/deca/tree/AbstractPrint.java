@@ -40,15 +40,21 @@ public abstract class AbstractPrint extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
 
+        Type type1;
+
         for (AbstractExpr current : this.arguments.getList()){
-            current.verifyExpr(compiler, localEnv, currentClass);
+            type1 = current.verifyExpr(compiler, localEnv, currentClass);
+            if(type1 == null || !(type1.isInt() || type1.isFloat() || type1.isString())){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Print argument in a wrong type", this.getLocation());
+            }
         }
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         for (AbstractExpr a : getArguments().getList()) {
-            a.codeGenPrint(compiler);
+            a.codeGenPrint(compiler, printHex);
         }
     }
 

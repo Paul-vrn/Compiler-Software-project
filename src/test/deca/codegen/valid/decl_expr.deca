@@ -1,0 +1,16 @@
+// Description:
+//    déclaration d'une variable null
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    int x = 10;
+    println(x);
+}
+
+

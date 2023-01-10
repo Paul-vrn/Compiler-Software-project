@@ -22,7 +22,9 @@ public class IntType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        if(otherType == null){
+            return false;
+        }else return otherType.isInt();
     }
 
 

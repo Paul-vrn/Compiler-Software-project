@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -33,14 +30,34 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
+
+        Type varType = this.type.verifyType(compiler);
+
+        /* Verification : type void is forbidden */
+        if(this.type.getType().isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
+        }
+
+        this.varName.setType(varType);
+        this.varName.setDefinition(new VariableDefinition(varType, getLocation()));
+
+        this.initialization.verifyInitialization(compiler, varName.getType(), localEnv, currentClass);
+
+        try{
+            localEnv.declare(varName.getName(), (ExpDefinition) varName.getDefinition());
+        }catch(EnvironmentExp.DoubleDefException e){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Variable already defined", this.getLocation());
+        }
+
+
+
     }
 
     
     @Override
     public void decompile(IndentPrintStream s) {
-
-
-
         this.type.decompile(s);
         s.print(" ");
         this.varName.decompile(s);
@@ -49,7 +66,11 @@ public class DeclVar extends AbstractDeclVar {
         }
         s.print(";");
         s.println();
+    }
 
+    public void codeGen(DecacCompiler compiler) {
+        this.varName.codeGenDeclVar(compiler);
+        this.initialization.codeGenInit(compiler, this.varName);
     }
 
     @Override

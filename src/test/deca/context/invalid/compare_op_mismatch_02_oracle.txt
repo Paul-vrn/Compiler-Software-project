@@ -1,0 +1,1 @@
+compare_op_mismatch_02.deca:11:21: Compare operation type mismatch

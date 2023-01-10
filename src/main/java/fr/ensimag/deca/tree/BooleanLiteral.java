@@ -1,11 +1,13 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.io.PrintStream;
 
 /**
@@ -28,9 +30,18 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.setType(new BooleanType(compiler.createSymbol("boolean")));
+        if (this.getType().isBoolean()){
+            return this.getType();
+        }
+        throw new ContextualError( compiler.displaySourceFile() + ":"
+                + this.getLocation().errorOutPut() + ": Boolean Type problem", this.getLocation());
     }
 
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addInstruction(new LOAD(value ? 1 : 0, Register.getR(n)));
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -41,7 +52,6 @@ public class BooleanLiteral extends AbstractExpr {
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
     }
-
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do

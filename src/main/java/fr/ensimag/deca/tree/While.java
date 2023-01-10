@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -8,6 +9,11 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -34,15 +40,33 @@ public class While extends AbstractInst {
         this.body = body;
     }
 
+    /**
+     * Page 225, 8.2
+     * @param compiler
+     */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        int nbWhile = compiler.nbWhile();
+        Label labelStart = new Label("WHILE_START_" + nbWhile);
+        Label labelCond = new Label("WHILE_COND_" + nbWhile);
+        compiler.addInstruction(new BRA(labelCond));
+        compiler.addLabel(labelStart);
+        body.codeGenListInst(compiler);
+        compiler.addLabel(labelCond);
+        condition.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new CMP(1, Register.getR(2)));
+        compiler.addInstruction(new BEQ(labelStart));
     }
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        this.condition.verifyCondition(compiler, localEnv, currentClass);
+
+        for (AbstractInst i : this.body.getList()) {
+            i.verifyInst(compiler, localEnv, currentClass, returnType);
+        }
     }
 
     @Override

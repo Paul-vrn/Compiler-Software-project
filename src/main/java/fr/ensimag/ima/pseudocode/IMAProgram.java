@@ -75,4 +75,16 @@ public class IMAProgram {
     public void addFirst(Instruction i, String comment) {
         addFirst(new Line(null, i, comment));
     }
+
+    public int getLastIndex(){
+        return lines.size();
+    }
+
+    public void addIndex(int i, Line l) {
+        lines.add(i, l);
+    }
+
+    public void addIndex(int i, Instruction inst) {
+        addIndex(i, new Line(inst));
+    }
 }

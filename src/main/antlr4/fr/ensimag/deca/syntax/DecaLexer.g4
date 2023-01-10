@@ -118,5 +118,3 @@ BLOCK_COMMENT : COMMENT_OPENING .*? COMMENT_CLOSING {skip();};
 
 // ESPACES
 SEPARATEUR : (' ' | '\t' | '\r' | '\n') {skip();};
-
-DEFAULT: . ;

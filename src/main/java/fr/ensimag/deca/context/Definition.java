@@ -4,6 +4,7 @@ import fr.ensimag.deca.tree.Location;
 
 /**
  * Definition of an identifier.
+ * A definition is a couple (nature, type).
  * 
  * @author gl21
  * @date 01/01/2023
@@ -66,6 +67,8 @@ public abstract class Definition {
      */
     public MethodDefinition asMethodDefinition(String errorMessage, Location l)
             throws ContextualError {
+        if (this instanceof MethodDefinition) // TODO potentially measure the performance compared to a comparison with getNature()
+            return (MethodDefinition) this;
         throw new ContextualError(errorMessage, l);
     }
     
@@ -75,6 +78,8 @@ public abstract class Definition {
      */
     public FieldDefinition asFieldDefinition(String errorMessage, Location l)
             throws ContextualError {
+        if (this instanceof FieldDefinition)
+            return (FieldDefinition) this;
         throw new ContextualError(errorMessage, l);
     }
 

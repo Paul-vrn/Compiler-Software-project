@@ -5,6 +5,9 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -20,12 +23,32 @@ public class Not extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.setType(getOperand().verifyExpr(compiler, localEnv, currentClass));
+        if(!this.getType().isBoolean()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Operator Not type mismatch", this.getLocation());
+        }
+        return this.getType();
     }
 
 
     @Override
     protected String getOperatorName() {
         return "!";
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int nbNot = compiler.nbNot();
+        Label label = new Label("NOT_" + nbNot);
+        Label labelEnd = new Label("NOT_END_" + nbNot);
+        getOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new CMP(0, Register.getR(n)));
+        compiler.addInstruction(new BNE(label));
+        compiler.addInstruction(new LOAD(1, Register.getR(n)));
+        compiler.addInstruction(new BRA(labelEnd));
+        compiler.addLabel(label);
+        compiler.addInstruction(new LOAD(0, Register.getR(n)));
+        compiler.addLabel(labelEnd);
     }
 }

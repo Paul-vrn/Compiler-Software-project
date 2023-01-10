@@ -1,0 +1,1 @@
+arith_undef_operand.deca:11:14: Arithmetic operation impossible with undefined operand

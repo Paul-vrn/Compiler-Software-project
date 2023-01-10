@@ -1,0 +1,13 @@
+`> [10, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [10, 0] Main
+      +> ListDeclVar [List with 1 elements]
+      |  []> [11, 9] DeclVar
+      |      +> [11, 3] Identifier (float)
+      |      |  definition: type (builtin), type=float
+      |      +> [11, 9] Identifier (a)
+      |      |  definition: variable defined at [11, 9], type=float
+      |      `> [11, 13] Initialization
+      |         `> [11, 13] Int (3)
+      |            type: int
+      `> ListInst [List with 0 elements]

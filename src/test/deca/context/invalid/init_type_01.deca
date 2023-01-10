@@ -1,0 +1,12 @@
+// Description:
+//     Initialisation non compatible avec le type de variable.
+//
+// Resultats:
+//    Ligne 11: Initialization type error
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x = true;
+}

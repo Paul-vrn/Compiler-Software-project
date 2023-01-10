@@ -9,8 +9,5 @@
 //    cree le 01/01/2023
 
 {
-   int x = null;
-   print(x);
+   println("null not yet implemented");
 }
-
-

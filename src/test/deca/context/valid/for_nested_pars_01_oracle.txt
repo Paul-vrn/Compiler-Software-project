@@ -27,7 +27,7 @@
       |         `> [13, 12] Int (3)
       |            type: int
       `> ListInst [List with 1 elements]
-         []> IfThenElse
+         []> [14, 4] IfThenElse
              +> [14, 10] Equals
              |  type: boolean
              |  +> [14, 8] Identifier (i)
@@ -35,7 +35,7 @@
              |  `> [14, 13] Int (1)
              |     type: int
              +> ListInst [List with 1 elements]
-             |  []> IfThenElse
+             |  []> [15, 8] IfThenElse
              |      +> [15, 14] GreaterOrEqual
              |      |  type: boolean
              |      |  +> [15, 12] Identifier (j)
@@ -43,7 +43,7 @@
              |      |  `> [15, 17] Int (2)
              |      |     type: int
              |      +> ListInst [List with 1 elements]
-             |      |  []> IfThenElse
+             |      |  []> [16, 12] IfThenElse
              |      |      +> [16, 18] Lower
              |      |      |  type: boolean
              |      |      |  +> [16, 16] Identifier (k)

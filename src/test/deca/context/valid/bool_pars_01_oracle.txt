@@ -19,7 +19,7 @@
       |         `> [13, 20] BooleanLiteral (false)
       |            type: boolean
       `> ListInst [List with 1 elements]
-         []> IfThenElse
+         []> [14, 4] IfThenElse
              +> [14, 13] Equals
              |  type: boolean
              |  +> [14, 8] Identifier (bool)

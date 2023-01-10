@@ -9,7 +9,7 @@
       |      |  definition: variable defined at [11, 12], type=int
       |      `> NoInitialization
       `> ListInst [List with 1 elements]
-         []> IfThenElse
+         []> [12, 8] IfThenElse
              +> [12, 12] BooleanLiteral (true)
              |  type: boolean
              +> ListInst [List with 2 elements]

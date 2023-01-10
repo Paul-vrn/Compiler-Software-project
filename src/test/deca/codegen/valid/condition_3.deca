@@ -8,6 +8,11 @@
 // Historique:
 //    cree le 01/01/2023
 {
-    if((3>=2) && (3>5) || (false)){print(1);}
-    else{print(0);}
+    boolean x = false;
+    boolean y  = true;
+    if (!!!!(x)){
+        print("if");
+    } else {
+        print("else");
+    }
 }

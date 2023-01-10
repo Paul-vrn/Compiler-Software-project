@@ -46,9 +46,9 @@ public class While extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label labelStart = new Label("WHILE_START_" + LabelFactory.nbLabelWhile);
-        Label labelCond = new Label("WHILE_COND_" + LabelFactory.nbLabelWhile);
-        LabelFactory.nbLabelWhile++;
+        int nbWhile = compiler.nbWhile();
+        Label labelStart = new Label("WHILE_START_" + nbWhile);
+        Label labelCond = new Label("WHILE_COND_" + nbWhile);
         compiler.addInstruction(new BRA(labelCond));
         compiler.addLabel(labelStart);
         body.codeGenListInst(compiler);

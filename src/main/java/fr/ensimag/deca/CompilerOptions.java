@@ -30,6 +30,8 @@ public class CompilerOptions {
         return parallel;
     }
 
+    public void enableParallel() {parallel = true;}
+
     public boolean getPrintBanner() {
         return printBanner;
     }
@@ -47,6 +49,7 @@ public class CompilerOptions {
     public boolean getVerification(){return verificationEnabled;}
 
     public void enableVerification(){this.verificationEnabled = true;}
+
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -57,13 +60,10 @@ public class CompilerOptions {
     private boolean decompilation = false;
     private boolean verificationEnabled = false;
     private boolean printBanner = false;
+    private boolean parallel = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
-
-
-    private boolean parallel = false;
-    
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
         Logger logger = Logger.getRootLogger();
@@ -114,7 +114,6 @@ public class CompilerOptions {
                     case "-n":
                         throw new UnsupportedOperationException("-n not yet implemented");
                     case "-r":
-                        // TODO : set Register.RMAX = X
                         i++;
                         int newRMAX = Integer.parseInt(argsArrayList.get(i));
                         if(newRMAX >= 4 && newRMAX <= 16){
@@ -127,7 +126,8 @@ public class CompilerOptions {
                     case "d":
                         throw new UnsupportedOperationException("-d not yet implemented");
                     case "-P":
-                        throw new UnsupportedOperationException("-P not yet implemented");
+                        enableParallel();
+                        break;
                     default:
                         throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
                 }

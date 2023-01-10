@@ -1,5 +1,8 @@
 package fr.ensimag.deca.codegen;
 
+import fr.ensimag.deca.CompilerOptions;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.DecacFatalError;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -24,8 +27,50 @@ public class CodegenTest {
 
     @Test
     void test2() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/condition_2.deca"};
+        String file2 = "src/test/deca/codegen/valid/condition_2_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test3() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/condition_3.deca"};
+        String file2 = "src/test/deca/codegen/valid/condition_3_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test4() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/decl_expr.deca"};
+        String file2 = "src/test/deca/codegen/valid/decl_expr_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test5() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/decl_null.deca"};
+        String file2 = "src/test/deca/codegen/valid/decl_null_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test6() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/test_expression_arith.deca"};
         String file2 = "src/test/deca/codegen/valid/test_expression_arith_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test7() throws IOException { //probleme label ifthenelse
+        String[] args = {"src/test/deca/codegen/valid/test_expression_bool.deca"};
+        String file2 = "src/test/deca/codegen/valid/test_expression_bool_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test8() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/while.deca"};
+        String file2 = "src/test/deca/codegen/valid/while_oracle.txt";
         generalTestValid(args, file2);
     }
 
@@ -34,43 +79,32 @@ public class CodegenTest {
 
 
 
+
+
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
-        try {
-            String[] decacCommand = {"/bin/bash", "decac", args[0]};
-            Process decacProcess = Runtime.getRuntime().exec(decacCommand);
-            int exitStatus;
-            try {
-                exitStatus = decacProcess.waitFor();
-            } catch (InterruptedException e) {
-                exitStatus = -1;
-            }
-            if(exitStatus==-1){
-                System.out.println("Error in decac execution");
-            }
-            //if the process has an output throw an error
-            if (decacProcess.getInputStream().read() != -1) {
-                throw new Error("Compilation has an output");
-            }
-            String AssemblerFileName = args[0].substring(0, args[0].length() - "deca".length()) + "ass";
-            String[] imaCommand = {"/bin/bash", "ima", AssemblerFileName};
-            Process imaProcess = Runtime.getRuntime().exec(imaCommand);
-            //put the output of imaProcess in a string called output
-            BufferedReader reader = new BufferedReader(new InputStreamReader(imaProcess.getInputStream()));
-            String line = null;
-            StringBuilder output = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                output.append(line);
-                output.append(System.getProperty("line.separator"));
-            }
-
-
-
-            String oracle = new String(Files.readAllBytes(Paths.get(fileOracle)));
-            assertEquals(oracle, output);
-
-        } catch (IOException e) {
+        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), new File(args[0]));
+        try{
+            compiler.compile();
+        } catch (DecacFatalError e) {
             e.printStackTrace();
         }
+        String AssemblerFileName = args[0].substring(0, args[0].length() - "deca".length()) + "ass";
+        String[] imaCommand = {"../global/bin/ima", AssemblerFileName};
+        Process imaProcess = Runtime.getRuntime().exec(imaCommand);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(imaProcess.getInputStream()));
+        String line = "";
+        StringBuilder output = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            output.append(line);
+            output.append(System.getProperty("line.separator"));
+        }
+        System.out.println(output.toString());
+
+
+
+        String oracle = new String(Files.readAllBytes(Paths.get(fileOracle)));
+        assertEquals(oracle, output.toString());
+
     }
 }

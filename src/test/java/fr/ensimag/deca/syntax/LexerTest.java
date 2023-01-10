@@ -32,16 +32,11 @@ public class LexerTest {
         String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_02.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
 
-        String file = "src/test/deca/syntax/invalid/commentaire_lex_02_oracle.txt";
-        String toCompare = new String(Files.readAllBytes(Paths.get(file)));
-
-        generalTest(lex, toCompare, "Commentaire2");
+        generalTestError(lex, "Commentaire2");
     }
 
     @Test
     void testCommentaire3() throws IOException {
-        System.out.println("------------------------------------");
-        System.out.println("TEST : Commentaire3" + "\n");
 
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_03.deca"};
@@ -58,15 +53,12 @@ public class LexerTest {
         while(true)
         {
             Token t = lex.nextToken();
-            //System.out.println("TEST : " + t.getText());
             if(t.getType() == -1)
             {
                 break;
             }
-            System.out.println(t);
             concatenatedString += t.getText();
         }
-        System.out.println(concatenatedString);
     }
 
     @Test
@@ -148,8 +140,6 @@ public class LexerTest {
      * @param name
      */
     void generalTest(DecaLexer lex, String toCompare, String name) {
-        System.out.println("------------------------------------");
-        System.out.println("TEST : " + name + "\n");
 
         String concatenatedString = "";
         //On parcourt les tokens qui nous interessent
@@ -160,11 +150,29 @@ public class LexerTest {
             {
                 break;
             }
-            System.out.println(t.getText() + "  " + t.getType());
             concatenatedString += t.getText();
         }
-        System.out.println("AFFICHAGE DE CONCATENATED STRING : " + concatenatedString);
         assertEquals(toCompare, concatenatedString);
-        System.out.println("");
+    }
+
+    void generalTestError(DecaLexer lex, String name) {
+        try{
+            String concatenatedString = "";
+            //On parcourt les tokens qui nous interessent
+            while(true)
+            {
+                Token t = lex.nextToken();
+                if(t.getText() == "<EOF>")
+                {
+                    break;
+                }
+                concatenatedString += t.getText();
+            }
+            System.out.println(concatenatedString);
+        }catch (Exception e){
+
+        }
+        fail( "Didn't throw an Exception as expected" );
+
     }
 }

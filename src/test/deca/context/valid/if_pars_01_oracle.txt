@@ -4,16 +4,23 @@
       +> ListDeclVar [List with 1 elements]
       |  []> [11, 12] DeclVar
       |      +> [11, 8] Identifier (int)
+      |      |  definition: type (builtin), type=int
       |      +> [11, 12] Identifier (a)
-      |      `> Initialization
+      |      |  definition: variable defined at [11, 12], type=int
+      |      `> [11, 16] Initialization
       |         `> [11, 16] Int (2)
+      |            type: int
       `> ListInst [List with 1 elements]
          []> IfThenElse
              +> [12, 13] Equals
+             |  type: boolean
              |  +> [12, 12] Identifier (a)
+             |  |  definition: variable defined at [11, 12], type=int
              |  `> [12, 15] Int (2)
+             |     type: int
              +> ListInst [List with 1 elements]
              |  []> [13, 12] Println
              |      `> ListExpr [List with 1 elements]
-             |         []> [13, 20] StringLiteral ("Hello")
+             |         []> [13, 20] StringLiteral (Hello)
+             |             type: string
              `> ListInst [List with 0 elements]

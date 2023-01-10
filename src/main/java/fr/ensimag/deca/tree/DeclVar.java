@@ -34,8 +34,8 @@ public class DeclVar extends AbstractDeclVar {
         Type varType = this.type.verifyType(compiler);
 
         /* Verification : type void is forbidden */
-        if(this.type.getType().isVoid()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        if(this.type.getType().isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
         }
 

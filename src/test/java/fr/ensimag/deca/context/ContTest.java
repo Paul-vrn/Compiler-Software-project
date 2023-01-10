@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-public class ContText {
+public class ContTest {
     @Test
     void test1() throws IOException {
         String[] args = {"src/test/deca/context/invalid/arith_modulo_op_01.deca"};
@@ -218,6 +218,165 @@ public class ContText {
         String file2 = "src/test/deca/context/invalid/while_wrong_argument_oracle.txt";
         generalTestInvalid(args, file2);
     }
+
+    @Test
+    void test29() throws IOException {
+        String[] args = {"src/test/deca/context/valid/assign_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/assign_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test30() throws IOException {
+        String[] args = {"src/test/deca/context/valid/assign_mult_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/assign_mult_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test31() throws IOException {
+        String[] args = {"src/test/deca/context/valid/bool_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/bool_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test32() throws IOException {
+        String[] args = {"src/test/deca/context/valid/cond_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/cond_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test33() throws IOException {
+        String[] args = {"src/test/deca/context/valid/condition_modulo_01.deca"};
+        String file2 = "src/test/deca/context/valid/condition_modulo_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test34() throws IOException {
+        String[] args = {"src/test/deca/context/valid/exemple_sans_objet.deca"};
+        String file2 = "src/test/deca/context/valid/exemple_sans_objet_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test35() throws IOException {
+        String[] args = {"src/test/deca/context/valid/expr_alone_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/expr_alone_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test36() throws IOException {
+        String[] args = {"src/test/deca/context/valid/for_nested_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/for_nested_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test37() throws IOException {
+        String[] args = {"src/test/deca/context/valid/hw_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/hw_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test38() throws IOException {
+        String[] args = {"src/test/deca/context/valid/if_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/if_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test39() throws IOException {
+        String[] args = {"src/test/deca/context/valid/if_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/if_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test40() throws IOException {
+        String[] args = {"src/test/deca/context/valid/init_cont_val_01.deca"};
+        String file2 = "src/test/deca/context/valid/init_cont_val_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test41() throws IOException {
+        String[] args = {"src/test/deca/context/valid/init_cont_val_02.deca"};
+        String file2 = "src/test/deca/context/valid/init_cont_val_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test42() throws IOException {
+        String[] args = {"src/test/deca/context/valid/intint_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/intint_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test43() throws IOException {
+        String[] args = {"src/test/deca/context/valid/minmin_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/minmin_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test44() throws IOException {
+        String[] args = {"src/test/deca/context/valid/mod_cont_val_01.deca"};
+        String file2 = "src/test/deca/context/valid/mod_cont_val_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test45() throws IOException {
+        String[] args = {"src/test/deca/context/valid/name_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/name_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test46() throws IOException {
+        String[] args = {"src/test/deca/context/valid/negative_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/negative_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test47() throws IOException {
+        String[] args = {"src/test/deca/context/valid/negative_pars_02.deca"};
+        String file2 = "src/test/deca/context/valid/negative_pars_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test48() throws IOException {
+        String[] args = {"src/test/deca/context/valid/not_cont_val_01.deca"};
+        String file2 = "src/test/deca/context/valid/not_cont_val_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test49() throws IOException {
+        String[] args = {"src/test/deca/context/valid/op_arith_cont_val_01.deca"};
+        String file2 = "src/test/deca/context/valid/op_arith_cont_val_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test50() throws IOException {
+        String[] args = {"src/test/deca/context/valid/op_comp_valid_01.deca"};
+        String file2 = "src/test/deca/context/valid/op_comp_valid_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test51() throws IOException {
+        String[] args = {"src/test/deca/context/valid/print_assign_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/print_assign_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test52() throws IOException {
+        String[] args = {"src/test/deca/context/valid/print_nest_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/print_nest_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test53() throws IOException {
+        String[] args = {"src/test/deca/context/valid/read_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/read_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test54() throws IOException {
+        String[] args = {"src/test/deca/context/valid/while_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/while_pars_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);

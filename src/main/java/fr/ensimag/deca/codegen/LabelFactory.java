@@ -8,22 +8,33 @@ import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 public class LabelFactory {
 
-    public static int nbLabelNot = 0;
-    public static int nbLabelIfThenElse = 0;
-    public static int nbLabelWhile = 0;
-    public static int nbAnd = 0;
-    public static int nbOr = 0;
+    private int nbNot;
+    private int nbIfThenElse;
+    private int nbWhile;
+    private int nbAnd;
+    private int nbOr;
 
-    private static boolean flagOverflowError = false;
-    private static boolean flagStackError = false;
-    private static boolean flagIOError = false;
-    private static boolean flagDivByZeroError = false;
+    private boolean flagOverflowError;
+    private boolean flagStackError;
+    private boolean flagIOError;
+    private boolean flagDivByZeroError;
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
 
-    public static void createErrorSection(DecacCompiler compiler){
+    public LabelFactory() {
+        this.nbNot = 0;
+        this.nbIfThenElse = 0;
+        this.nbWhile = 0;
+        this.nbAnd = 0;
+        this.nbOr = 0;
+        this.flagOverflowError = false;
+        this.flagStackError = false;
+        this.flagIOError = false;
+        this.flagDivByZeroError = false;
+    }
+    public void createErrorSection(DecacCompiler compiler){
         if (flagOverflowError){
             compiler.addLabel(overflowErrorLabel);
             compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
@@ -49,20 +60,20 @@ public class LabelFactory {
             compiler.addInstruction(new ERROR());
         }
     }
-    public static Label createOverflowErrorLabel(){
+    public Label createOverflowErrorLabel(){
         flagOverflowError = true;
         return overflowErrorLabel;
     }
-    public static Label createStackErrorLabel(){
+    public Label createStackErrorLabel(){
         flagStackError = true;
         return stackErrorLabel;
     }
-    public static Label createIOErrorLabel(){
+    public Label createIOErrorLabel(){
         flagIOError = true;
         return ioErrorLabel;
     }
 
-    public static Label createDivByZeroErrorLabel(){
+    public Label createDivByZeroErrorLabel(){
         flagDivByZeroError = true;
         return DivByZeroErrorLabel;
     }
@@ -71,4 +82,38 @@ public class LabelFactory {
 
     }
 
+    public int nbNot(){
+        int i = nbNot;
+        nbNot++;
+        return i;
+    }
+    public int nbIfThenElse(){
+        int i = nbIfThenElse;
+        nbIfThenElse++;
+        return i;
+    }
+
+    public int getNbIfThenElse() {
+        return nbIfThenElse;
+    }
+
+    public void setNbIfThenElse(int nbIfThenElse) {
+        this.nbIfThenElse = nbIfThenElse;
+    }
+
+    public int nbWhile(){
+        int i = nbWhile;
+        nbWhile++;
+        return i;
+    }
+    public int nbAnd(){
+        int i = nbAnd;
+        nbAnd++;
+        return i;
+    }
+    public int nbOr(){
+        int i = nbOr;
+        nbOr++;
+        return i;
+    }
 }

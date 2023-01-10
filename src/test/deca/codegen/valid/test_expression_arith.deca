@@ -27,8 +27,6 @@ j = g * h + i / j - k * l + g;
 k = g - h / i / k / l;
 l = g + h + i + j + k + l;
 
-
-println("Output : ");
 println(a);
 println(b);
 println(c);
@@ -41,22 +39,5 @@ println(i);
 println(j);
 println(k);
 println(l);
-
-
-println("Expected Output");
-println(7);
-println(12);
-println(14);
-println(-13);
-println(-64);
-println(94);
-println(15.931818);
-println(28.619947);
-println(26.738487);
-println(442.091522);
-println(15.901877);
-println(535.783630);
-
-
 }
 

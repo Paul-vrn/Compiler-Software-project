@@ -32,7 +32,7 @@ public class Multiply extends AbstractOpArith {
             compiler.addInstruction(new MUL(Register.R0, Register.getR(n)));
         }
         if (this.getType().isFloat())
-            compiler.addInstruction(new BOV(LabelFactory.createOverflowErrorLabel()));
+            compiler.addInstruction(new BOV(compiler.getLabelFactory().createOverflowErrorLabel()));
     }
 
     @Override

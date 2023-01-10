@@ -3,34 +3,54 @@
 # Auteur : gl21
 # Version initiale : 01/01/2023
 
-# Encore un test simpliste. On compile un fichier (cond0.deca), on
-# lance ima dessus, et on compare le résultat avec la valeur attendue.
+# Set the color variable
+green='\033[0;92m'
+# Clear the color after that
+clear='\033[0m'
 
-# Ce genre d'approche est bien sûr généralisable, en conservant le
-# résultat attendu dans un fichier pour chaque fichier source.
+yellow='\033[0;33m'
+
 cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 
-# On ne teste qu'un fichier. Avec une boucle for appropriée, on
-# pourrait faire bien mieux ...
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass 2>/dev/null
-decac ./src/test/deca/codegen/valid/provided/cond0.deca || exit 1
-if [ ! -f ./src/test/deca/codegen/valid/provided/cond0.ass ]; then
-    echo "Fichier cond0.ass non généré."
-    exit 1
-fi
+for fichier in ./src/test/deca/codegen/valid/*.deca
+do
+  nom_fichier=${fichier%.*}
+  filename=$(basename "$nom_fichier")
 
-resultat=$(ima ./src/test/deca/codegen/valid/provided/cond0.ass) || exit 1
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass
+  rm -f "$nom_fichier.ass" 2>/dev/null
 
-# On code en dur la valeur attendue.
-attendu=ok
+  decac "$fichier"
+  if [ $? -ne 0 ]; then
+      echo "${red} Error : decac failed for $filename"
+      continue
+  fi
 
-if [ "$resultat" = "$attendu" ]; then
-    echo "Tout va bien"
-else
-    echo "Résultat inattendu de ima:"
-    echo "$resultat"
-    exit 1
-fi
+  if [ ! -f "$nom_fichier.ass" ]; then
+      echo "Fichier $nom_fichier.ass non généré."
+      continue
+  fi
+
+  resultat=$(ima "$nom_fichier.ass")
+  if [ $? -ne 0 ]; then
+      echo "${yellow} Error : ima failed for $filename${clear}"
+      continue
+  fi
+
+  echo "$resultat"
+  rm -f "$nom_fichier.ass"
+
+  nom_fichier_oracle="$nom_fichier"_oracle.txt
+  oracle="_oracle.txt"
+
+  attendu=$(cat "./src/test/deca/codegen/valid/oracles/$filename$oracle")
+
+  if [ "$resultat" = "$attendu" ]; then
+      echo "${green}Tout va bien pour $filename${clear}"
+  else
+      echo "${yellow}Résultat inattendu de ima pour $filename:${clear}"
+      echo "${yellow}$resultat${clear}"
+  fi
+done
+

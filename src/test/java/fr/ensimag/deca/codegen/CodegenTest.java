@@ -27,17 +27,54 @@ public class CodegenTest {
 
     @Test
     void test2() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/condition_2.deca"};
+        String file2 = "src/test/deca/codegen/valid/condition_2_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test3() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/condition_3.deca"};
+        String file2 = "src/test/deca/codegen/valid/condition_3_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test4() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/decl_expr.deca"};
+        String file2 = "src/test/deca/codegen/valid/decl_expr_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test5() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/decl_null.deca"};
+        String file2 = "src/test/deca/codegen/valid/decl_null_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test6() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/test_expression_arith.deca"};
         String file2 = "src/test/deca/codegen/valid/test_expression_arith_oracle.txt";
         generalTestValid(args, file2);
     }
 
     @Test
-    void test3() throws IOException {
+    void test7() throws IOException { //probleme label ifthenelse
         String[] args = {"src/test/deca/codegen/valid/test_expression_bool.deca"};
         String file2 = "src/test/deca/codegen/valid/test_expression_bool_oracle.txt";
         generalTestValid(args, file2);
     }
+
+    @Test
+    void test8() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/while.deca"};
+        String file2 = "src/test/deca/codegen/valid/while_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+
 
 
 

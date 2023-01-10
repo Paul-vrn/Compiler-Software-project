@@ -45,7 +45,7 @@ public class Program extends AbstractProgram {
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        LabelFactory.createErrorSection(compiler);
+        compiler.getLabelFactory().createErrorSection(compiler);
     }
 
     @Override

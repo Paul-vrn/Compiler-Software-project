@@ -48,6 +48,6 @@ public class ReadFloat extends AbstractReadExpr {
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new RFLOAT());
         compiler.addInstruction(new LOAD(Register.R1, Register.getR(n)));
-        compiler.addInstruction(new BOV(LabelFactory.createIOErrorLabel()));
+        compiler.addInstruction(new BOV(compiler.getLabelFactory().createIOErrorLabel()));
     }
 }

@@ -27,8 +27,7 @@ public class Or extends AbstractOpBool {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Label labelEnd = new Label("OR_" + LabelFactory.nbOr);
-        LabelFactory.nbOr++;
+        Label labelEnd = new Label("OR_" + compiler.nbOr());
         getLeftOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(1, Register.getR(n)));
         // Si expr 1 est vrai on va direct à la fin

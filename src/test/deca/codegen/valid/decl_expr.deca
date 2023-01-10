@@ -9,7 +9,7 @@
 //    cree le 01/01/2023
 
 {
-    int x;
+    int x = 10;
     println(x);
 }
 

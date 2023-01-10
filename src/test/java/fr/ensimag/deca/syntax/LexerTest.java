@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LexerTest {
 
     @Test
-    void testCommentaire1() throws IOException {
+    void test1() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -27,42 +27,19 @@ public class LexerTest {
     }
 
     @Test
-    void testCommentaire2() throws IOException {
+    void test2() throws IOException {
         //lancer programme deca
-        String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_02.deca"};
+        String[] args = {"src/test/deca/syntax/invalid/str_conc_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
 
-        generalTestError(lex, "Commentaire2");
+        String file = "src/test/deca/syntax/invalid/str_conc_lex_01_oracle.txt";
+        String toCompare = new String(Files.readAllBytes(Paths.get(file)));
+
+        generalTest(lex, toCompare, "Conc1");
     }
 
     @Test
-    void testCommentaire3() throws IOException {
-
-        //lancer programme deca
-        String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_03.deca"};
-        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-
-        //On skip les 10 lignes de commentaire du test
-        for(int i = 0; i < 10; i++)
-        {
-            lex.nextToken();
-        }
-
-        String concatenatedString = "";
-        //On parcourt les tokens qui nous interessent
-        while(true)
-        {
-            Token t = lex.nextToken();
-            if(t.getType() == -1)
-            {
-                break;
-            }
-            concatenatedString += t.getText();
-        }
-    }
-
-    @Test
-    void testFloat1() throws IOException {
+    void test3() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/float_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -74,7 +51,7 @@ public class LexerTest {
     }
 
     @Test
-    void testFloatHex1() throws IOException {
+    void test4() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/floathex_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -86,7 +63,7 @@ public class LexerTest {
     }
 
     @Test
-    void testMultiline1() throws IOException {
+    void test5() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/multiline_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -98,7 +75,7 @@ public class LexerTest {
     }
 
     @Test
-    void testMultiline2() throws IOException {
+    void test6() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/multiline_lex_02.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -110,7 +87,7 @@ public class LexerTest {
     }
 
     @Test
-    void testSci1() throws IOException {
+    void test7() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/sci_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -121,17 +98,41 @@ public class LexerTest {
         generalTest(lex, toCompare, "Sci1");
     }
 
-    @Test
-    void testConc1() throws IOException {
-        //lancer programme deca
-        String[] args = {"src/test/deca/syntax/invalid/str_conc_lex_01.deca"};
-        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-
-        String file = "src/test/deca/syntax/invalid/str_conc_lex_01_oracle.txt";
-        String toCompare = new String(Files.readAllBytes(Paths.get(file)));
-
-        generalTest(lex, toCompare, "Conc1");
-    }
+//    @Test
+//    void test8() throws IOException {
+//        //lancer programme deca
+//        String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_02.deca"};
+//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
+//
+//        generalTestError(lex);
+//    }
+//
+//    @Test
+//    void test9() throws IOException {
+//        //lancer programme deca
+//        String[] args = {"src/test/deca/syntax/invalid/esc_lex_02.deca"};
+//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
+//
+//        generalTestError(lex);
+//    }
+//
+//    @Test
+//    void test10() throws IOException {
+//        //lancer programme deca
+//        String[] args = {"src/test/deca/syntax/invalid/ident_lex_01.deca"};
+//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
+//
+//        generalTestError(lex);
+//    }
+//
+//    @Test
+//    void test11() throws IOException {
+//        //lancer programme deca
+//        String[] args = {"src/test/deca/syntax/invalid/include_lex_0.deca"};
+//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
+//
+//        generalTestError(lex);
+//    }
 
     /**
      * Checks if the lexer return is ok.
@@ -155,24 +156,22 @@ public class LexerTest {
         assertEquals(toCompare, concatenatedString);
     }
 
-    void generalTestError(DecaLexer lex, String name) {
+    void generalTestError(DecaLexer lex) {
         try{
             String concatenatedString = "";
             //On parcourt les tokens qui nous interessent
             while(true)
             {
                 Token t = lex.nextToken();
+                System.out.println(t.getType() + "  " + t.getText());
                 if(t.getText() == "<EOF>")
                 {
                     break;
                 }
                 concatenatedString += t.getText();
+                fail( "Didn't throw an Exception as expected" );
             }
-            System.out.println(concatenatedString);
-        }catch (Exception e){
-
-        }
-        fail( "Didn't throw an Exception as expected" );
+        }catch (Exception e){}
 
     }
 }

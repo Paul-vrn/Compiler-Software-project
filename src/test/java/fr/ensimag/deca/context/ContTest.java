@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-public class ContText {
+public class ContTest {
     @Test
     void test1() throws IOException {
         String[] args = {"src/test/deca/context/invalid/arith_modulo_op_01.deca"};

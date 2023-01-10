@@ -1,0 +1,14 @@
+{
+int x = 5;
+int y = 10;
+int z = x + y;
+if(z > 10)
+{
+println("ok");
+}
+while(z > 10)
+{
+println("ok");
+z = z -1;
+}
+}

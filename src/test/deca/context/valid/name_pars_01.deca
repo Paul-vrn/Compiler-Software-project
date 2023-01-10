@@ -1,0 +1,12 @@
+// Description:
+//    Test de noms farfelus d'identifier
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int __a3$ = 2;
+}

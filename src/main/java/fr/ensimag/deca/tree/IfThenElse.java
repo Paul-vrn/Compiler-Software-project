@@ -1,6 +1,6 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -12,7 +12,6 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
@@ -42,12 +41,7 @@ public class IfThenElse extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        Type type1 = this.condition.verifyExpr(compiler, localEnv, currentClass);
-
-        if(!type1.isBoolean()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.condition.getLocation().errorOutPut() + ": Condition argument of if/elseif should be a boolean", this.condition.getLocation());
-        }
+        this.condition.verifyCondition(compiler, localEnv, currentClass);
 
         for (AbstractInst i : this.thenBranch.getList()) {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
@@ -70,8 +64,8 @@ public class IfThenElse extends AbstractInst {
 
     protected void codeGenIf(DecacCompiler compiler, int p) {
 
-        Label labelElse = new Label("ELSE_" + LabelIdentification.nbLabelIfThenElse + "_" + Integer.toString(p));
-        Label labelEnd = new Label("END_IF_" + LabelIdentification.nbLabelIfThenElse);
+        Label labelElse = new Label("ELSE_" + LabelFactory.nbLabelIfThenElse + "_" + Integer.toString(p));
+        Label labelEnd = new Label("END_IF_" + LabelFactory.nbLabelIfThenElse);
 
         condition.codeGenExpr(compiler, 2);
         compiler.addInstruction(new CMP(0, Register.getR(2)));
@@ -82,7 +76,7 @@ public class IfThenElse extends AbstractInst {
         elseBranch.codeGenIf(compiler, p+1);
         if(p==0){
             compiler.addLabel(labelEnd);
-            LabelIdentification.nbLabelIfThenElse++;
+            LabelFactory.nbLabelIfThenElse++;
         }
 
     }

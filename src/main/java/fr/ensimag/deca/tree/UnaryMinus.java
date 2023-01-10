@@ -39,16 +39,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        if (n < Register.RMAX) {
-            getOperand().codeGenExpr(compiler, n + 1);
-            compiler.addInstruction(new OPP(Register.getR(n+1), Register.getR(n)));
-
-        } else {
-            compiler.addInstruction(new PUSH(Register.getR(n)));
-            getOperand().codeGenExpr(compiler, n);
-            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-            compiler.addInstruction(new POP(Register.getR(n)));
-            compiler.addInstruction(new OPP(Register.R0, Register.getR(n)));
-        }
+        getOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new OPP(Register.getR(n), Register.getR(n)));
     }
 }

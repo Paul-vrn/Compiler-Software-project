@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -8,7 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Register;
@@ -89,7 +88,18 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type2 = this.verifyExpr(compiler, localEnv, currentClass);
+
+        if(type2 == null){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Assign impossible with undefined value", this.getLocation());
+        }
+
+        if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt()))){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
+        }
+        return this;
     }
     
     
@@ -97,7 +107,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.verifyExpr(compiler, localEnv, currentClass);
     }
 
     /**
@@ -112,7 +122,12 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type = this.verifyExpr(compiler, localEnv, currentClass);
+
+        if(!type.isBoolean()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Condition argument of if/elseif should be a boolean", this.getLocation());
+        }
     }
 
     /**

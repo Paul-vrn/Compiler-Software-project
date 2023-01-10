@@ -17,16 +17,18 @@ import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
-public class Cast extends AbstractInst{
+public class Cast extends AbstractBinaryExpr{
     private AbstractIdentifier type;
     private AbstractExpr expr;
 
     public Cast(AbstractIdentifier type, AbstractExpr expr) {
+        super(expr, expr);
         this.type = type;
         this.expr = expr;
     }
 
-    public AbstractIdentifier getType() {
+    public String getOperatorName() {return "";}
+    public AbstractIdentifier getType1() {
         return type;
     }
 
@@ -34,7 +36,6 @@ public class Cast extends AbstractInst{
         return expr;
     }
 
-    @Override
     public void VerifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass, Type returnType) throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
@@ -45,8 +46,12 @@ public class Cast extends AbstractInst{
         this.expr.verifyExpr(compiler, localEnv, currentClass);
     }
 
+    public Type verifyExpr(DecacCompiler compiler,
+                                    EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError{
+        return null;
+    }
 
-    @Override
     public void codeGen(){
 
     }
@@ -72,7 +77,6 @@ public class Cast extends AbstractInst{
         expr.iter(f);
     }
 
-    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix, boolean isLastChild) {
         type.prettyPrint(s, prefix, false);
         expr.prettyPrint(s, prefix, true);

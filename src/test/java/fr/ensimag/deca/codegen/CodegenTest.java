@@ -74,6 +74,13 @@ public class CodegenTest {
         generalTestValid(args, file2);
     }
 
+    @Test
+    void test9() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/decl_expr_cond_if_while.deca"};
+        String file2 = "src/test/deca/codegen/valid/decl_expr_cond_if_while_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
 
 
 

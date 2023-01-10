@@ -7,20 +7,20 @@
       |      |  definition: type (builtin), type=int
       |      +> [11, 12] Identifier (a)
       |      |  definition: variable defined at [11, 12], type=int
-      |      `> [11, 16] Initialization
-      |         `> [11, 16] Int (2)
-      |            type: int
+      |      `> NoInitialization
       `> ListInst [List with 1 elements]
          []> IfThenElse
-             +> [12, 13] Equals
+             +> [12, 12] BooleanLiteral (true)
              |  type: boolean
-             |  +> [12, 12] Identifier (a)
-             |  |  definition: variable defined at [11, 12], type=int
-             |  `> [12, 15] Int (2)
-             |     type: int
-             +> ListInst [List with 1 elements]
-             |  []> [13, 12] Println
+             +> ListInst [List with 2 elements]
+             |  []> [13, 14] Assign
+             |  ||  type: int
+             |  ||  +> [13, 12] Identifier (a)
+             |  ||  |  definition: variable defined at [11, 12], type=int
+             |  ||  `> [13, 16] Int (2)
+             |  ||     type: int
+             |  []> [14, 12] Println
              |      `> ListExpr [List with 1 elements]
-             |         []> [13, 20] StringLiteral (Hello)
+             |         []> [14, 20] StringLiteral (Hello)
              |             type: string
              `> ListInst [List with 0 elements]

@@ -5,25 +5,32 @@
       `> ListInst [List with 1 elements]
          []> IfThenElse
              +> [12, 8] BooleanLiteral (true)
+             |  type: boolean
              +> ListInst [List with 1 elements]
              |  []> [13, 8] Print
              |      `> ListExpr [List with 1 elements]
              |         []> [13, 14] Int (1)
+             |             type: int
              `> ListInst [List with 1 elements]
                 []> IfThenElse
                     +> [14, 15] BooleanLiteral (true)
+                    |  type: boolean
                     +> ListInst [List with 1 elements]
                     |  []> [15, 8] Print
                     |      `> ListExpr [List with 1 elements]
                     |         []> [15, 14] Int (2)
+                    |             type: int
                     `> ListInst [List with 1 elements]
                        []> IfThenElse
                            +> [16, 15] BooleanLiteral (true)
+                           |  type: boolean
                            +> ListInst [List with 1 elements]
                            |  []> [17, 8] Print
                            |      `> ListExpr [List with 1 elements]
                            |         []> [17, 14] Int (3)
+                           |             type: int
                            `> ListInst [List with 1 elements]
                               []> [19, 8] Print
                                   `> ListExpr [List with 1 elements]
                                      []> [19, 14] Int (4)
+                                         type: int

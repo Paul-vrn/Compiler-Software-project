@@ -5,10 +5,12 @@ public class Memory {
     private int nbIfThenElse;
     private int lastGRegister;
     private int TSTO;
+    private int currentTSTO;
 
 
     public Memory() {
         this.TSTO = 0;
+        this.currentTSTO = 0;
         this.nbIfThenElse = 0;
         this.offset = 1;
         this.lastGRegister = 2;
@@ -52,6 +54,12 @@ public class Memory {
      * Increase TSTO value
      */
     public void increaseTSTO() {
-        TSTO++;
+        currentTSTO++;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    public void decreaseTSTO() {
+        currentTSTO--;
+        TSTO = Math.max(currentTSTO, TSTO);
     }
 }

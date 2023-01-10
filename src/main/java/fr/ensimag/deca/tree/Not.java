@@ -8,9 +8,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -43,12 +41,15 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         Label label = new Label("NOT_" + LabelFactory.nbLabelNot);
+        Label labelEnd = new Label("NOT_END_" + LabelFactory.nbLabelNot);
         LabelFactory.nbLabelNot++;
         getOperand().codeGenExpr(compiler, n);
         compiler.addInstruction(new CMP(0, Register.getR(n)));
         compiler.addInstruction(new BNE(label));
         compiler.addInstruction(new LOAD(1, Register.getR(n)));
+        compiler.addInstruction(new BRA(labelEnd));
         compiler.addLabel(label);
         compiler.addInstruction(new LOAD(0, Register.getR(n)));
+        compiler.addLabel(labelEnd);
     }
 }

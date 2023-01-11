@@ -416,6 +416,7 @@ public class ContTest {
         }
         try {
             prog.verifyProgram(compiler);
+            fail("Test not passed : didn't return expected Exception error");
         } catch (ContextualError e) {
             String file2 = fileOracle;
             String toCompare = new String(Files.readAllBytes(Paths.get(file2)));

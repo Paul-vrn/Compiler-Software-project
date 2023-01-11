@@ -132,7 +132,7 @@ public class LexerTest {
                     break;
                 }
                 concatenatedString += t.getText();
-                fail( "Didn't throw an Exception as expected" );
+                fail("Test not passed : didn't throw an Exception as expected");
             }
         }catch (Exception e){}
 

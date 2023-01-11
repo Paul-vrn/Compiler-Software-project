@@ -118,9 +118,6 @@ public class CodegenTest {
             output.append(line);
             output.append(System.getProperty("line.separator"));
         }
-        System.out.println(output.toString());
-
-
 
         String oracle = new String(Files.readAllBytes(Paths.get(fileOracle)));
         assertEquals(oracle, output.toString());

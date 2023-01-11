@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.ima.pseudocode.Register;
 
@@ -17,7 +18,6 @@ public class Multiply extends AbstractOpArith {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        //TODO code des opérations arithmétiques à factoriser
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
@@ -25,11 +25,15 @@ public class Multiply extends AbstractOpArith {
 
         } else {
             compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.getMemory().increaseTSTO();
             getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             compiler.addInstruction(new POP(Register.getR(n)));
+            compiler.getMemory().decreaseTSTO();
             compiler.addInstruction(new MUL(Register.R0, Register.getR(n)));
         }
+        if (this.getType().isFloat())
+            compiler.getLabelFactory().createTestOverflow(compiler);
     }
 
     @Override

@@ -11,7 +11,7 @@ b = !a && b || !c && d && e || !f;
 c = a || !b && c || d && !e || f;
 d = !a || b && !c || !d && e || !f;
 e = a && !b || c && d || !e && f;
-f = !a && b || c && !d || e && !f;
+f = !(!a && b || c && !d || e && !f);
 
 if(a){
     println("test bool 1 passe");
@@ -19,7 +19,7 @@ if(a){
 else{
     println("Erreur sur test bool 1");
 }
-if(!b){
+if(b){
     println("test bool 2 passe");
 }
 else{
@@ -43,7 +43,7 @@ if(e){
 else{
     println("Erreur sur test bool 5");
 }
-if(f){
+if(!f){
     println("test bool 6 passe");
 }
 else{

@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -8,16 +7,12 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 
 /**
  * Deca Identifier
@@ -28,13 +23,12 @@ import org.apache.log4j.Logger;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        ExpDefinition exp = compiler.envExpCurrent.get(this.getName());
-        exp.setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
     }
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.R1));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
         if (getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()) {
@@ -146,7 +140,7 @@ public class Identifier extends AbstractIdentifier {
 
 
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(compiler.envExpCurrent.get(this.getName()).getOperand(), Register.getR(n)));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
     }
 
     /**

@@ -1,0 +1,18 @@
+// Description:
+//    Programme minimaliste traitant un test booléen.
+//
+// Resultats:
+//   Hello
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+    boolean bool = true;
+    boolean bool2 = false;
+    if (bool == bool2) {
+    } else {
+        println("Hello");
+    }
+}

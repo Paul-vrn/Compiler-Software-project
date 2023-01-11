@@ -1,0 +1,14 @@
+// Description:
+//    Programme minimaliste qui teste la syntaxe des conditions if.
+//
+// Resultats:
+//      Erreur ligne 11: condition missing
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+     int x = 1;
+     if x == 1 {
+     }
+}

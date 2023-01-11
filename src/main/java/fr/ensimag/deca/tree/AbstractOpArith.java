@@ -28,14 +28,27 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         // TODO : optimize this part (switch case ?)
+        if(type1 == null || type2 == null){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Arithmetic operation impossible with undefined operand", this.getLocation());
+        }
+
         if(type1.isInt() && type2.isInt()){
             this.setType(compiler.environmentType.INT);
         }else if((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat())){
             this.setType(compiler.environmentType.FLOAT);
+            if(type1.isInt() && type2.isFloat()){
+                this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+                this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+            }else if (type1.isFloat() && type2.isInt()){
+                this.setRightOperand(new ConvFloat(this.getRightOperand()));
+                this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            }
         }else{
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Arithmetic operation type mismatch", this.getLocation());
         }
+
         return this.getType();
     }
 

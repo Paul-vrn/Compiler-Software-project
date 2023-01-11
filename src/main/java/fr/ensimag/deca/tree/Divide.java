@@ -2,12 +2,8 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
 
-import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
@@ -25,16 +21,26 @@ public class Divide extends AbstractOpArith {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         getLeftOperand().codeGenExpr(compiler, n);
+        GPRegister regRight = null;
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            compiler.addInstruction(new QUO(Register.getR(n+1), Register.getR(n)));
-
+            regRight = Register.getR(n + 1);
         } else {
             compiler.addInstruction(new PUSH(Register.getR(n)));
             getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             compiler.addInstruction(new POP(Register.getR(n)));
-            compiler.addInstruction(new QUO(Register.R0, Register.getR(n)));
+            regRight = Register.R0;
+        }
+
+        if(this.getType().isFloat()){
+            compiler.getLabelFactory().createTestDiv0(compiler, regRight, false);
+            compiler.addInstruction(new DIV(regRight, Register.getR(n)));
+            compiler.getLabelFactory().createTestOverflow(compiler);
+        }
+        else{
+            compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
+            compiler.addInstruction(new QUO(regRight, Register.getR(n)));
         }
     }
 

@@ -1,0 +1,15 @@
+// Description:
+//    lecture eronné d'un int
+//
+// Resultats:
+//    Error: Input/Output error
+//
+//
+// Historique:
+//    cree le 01/01/2023
+{
+    int x = readInt();
+    println(x);
+}
+
+

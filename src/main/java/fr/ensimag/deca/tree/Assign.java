@@ -41,7 +41,7 @@ public class Assign extends AbstractBinaryExpr {
                     + this.getLocation().errorOutPut() + ": Missing type declaration", this.getLocation());
         }
 
-        this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, type1);
+        this.setRightOperand(this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, type1));
     }
 
     @Override

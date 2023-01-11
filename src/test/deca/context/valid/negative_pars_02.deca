@@ -9,7 +9,7 @@
 
 {
 
-        int a = -1.4;
+        float a = -1.4;
         println(a);
 
 }

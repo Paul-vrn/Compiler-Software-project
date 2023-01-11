@@ -1,5 +1,6 @@
 package fr.ensimag.deca.codegen;
 
+import fr.ensimag.deca.CLIException;
 import fr.ensimag.deca.CompilerOptions;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.DecacFatalError;
@@ -21,70 +22,70 @@ public class CodegenTest {
 
 
     @Test
-    void test1() throws IOException {
+    void test01Condition() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/condition.deca"};
         String file2 = "src/test/deca/codegen/valid/condition_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test2() throws IOException {
+    void test02Condition2() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/condition_2.deca"};
         String file2 = "src/test/deca/codegen/valid/condition_2_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test3() throws IOException {
+    void test03Condition3() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/condition_3.deca"};
         String file2 = "src/test/deca/codegen/valid/condition_3_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test4() throws IOException {
+    void test04DeclExpr() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/decl_expr.deca"};
         String file2 = "src/test/deca/codegen/valid/decl_expr_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test5() throws IOException {
+    void test05DeclNull() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/decl_null.deca"};
         String file2 = "src/test/deca/codegen/valid/decl_null_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test6() throws IOException {
+    void test06ExprArith() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/test_expression_arith.deca"};
         String file2 = "src/test/deca/codegen/valid/test_expression_arith_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test7() throws IOException { //probleme label ifthenelse
+    void test07ExprBool() throws IOException { //probleme label ifthenelse
         String[] args = {"src/test/deca/codegen/valid/test_expression_bool.deca"};
         String file2 = "src/test/deca/codegen/valid/test_expression_bool_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test8() throws IOException {
+    void test08While() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/while.deca"};
         String file2 = "src/test/deca/codegen/valid/while_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test9() throws IOException {
+    void test09DeclExprCondIfWhile() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/decl_expr_cond_if_while.deca"};
         String file2 = "src/test/deca/codegen/valid/decl_expr_cond_if_while_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test10() throws IOException {
+    void test10TestIOFloat() throws IOException {
         String[] args = {"src/test/deca/codegen/error/test_io_float_error.deca"};
         String file2 = "src/test/deca/codegen/error/test_io_float_error_oracle.txt";
         String input = "5";
@@ -92,7 +93,7 @@ public class CodegenTest {
     }
 
     @Test
-    void test11() throws IOException {
+    void test11TestIOInt() throws IOException {
         String[] args = {"src/test/deca/codegen/error/test_io_int_error.deca"};
         String file2 = "src/test/deca/codegen/error/test_io_int_error_oracle.txt";
         String input = "5.0";
@@ -100,7 +101,7 @@ public class CodegenTest {
     }
 
     @Test
-    void test12() throws IOException {
+    void test12TestIOInt() throws IOException {
         String[] args = {"src/test/deca/codegen/error/test_io_int_error.deca"};
         String file2 = "src/test/deca/codegen/error/test_io_int_error_oracle.txt";
         String input = "test";
@@ -108,14 +109,14 @@ public class CodegenTest {
     }
 
     @Test
-    void test13() throws IOException {
+    void test13DivFloat() throws IOException {
         String[] args = {"src/test/deca/codegen/error/test_div_0_float.deca"};
         String file2 = "src/test/deca/codegen/error/test_div_0_float_oracle.txt";
         generalTestValid(args, file2, null);
     }
 
     @Test
-    void test14() throws IOException {
+    void test14Div0() throws IOException {
         String[] args = {"src/test/deca/codegen/error/test_div_0_int.deca"};
         String file2 = "src/test/deca/codegen/error/test_div_0_int_oracle.txt";
         generalTestValid(args, file2, null);
@@ -123,15 +124,80 @@ public class CodegenTest {
 
 
 
+    @Test
+    void test15ExprArithR() throws IOException{
+        //test 16 and 17 should produce the same output regardless of the -r option
+        String[] args = {"src/test/deca/codegen/valid/test_expression_arith_r.deca"};
+        String file2 = "src/test/deca/codegen/valid/test_expression_arith_r_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+    @Test
+    void test16ExprArithR4() throws IOException {
+        String[] args = {"-r", "4", "src/test/deca/codegen/valid/test_expression_arith_r.deca"};
+        String file2 = "src/test/deca/codegen/valid/test_expression_arith_r_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test17Equals() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/equals.deca"};
+        String file2 = "src/test/deca/codegen/valid/equals_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test18NotEquals() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/not_equals.deca"};
+        String file2 = "src/test/deca/codegen/valid/not_equals_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test19EmptyMain() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/empty_main.deca"};
+        String file2 = "src/test/deca/codegen/valid/empty_main_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test20LowerOrEqual() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/lower_or_equal.deca"};
+        String file2 = "src/test/deca/codegen/valid/lower_or_equal_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test21NoInit() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/no_init.deca"};
+        String file2 = "src/test/deca/codegen/valid/no_init_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
-        Logger.getRootLogger().setLevel(Level.DEBUG);
-        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), new File(args[0]));
+        Logger.getRootLogger().setLevel(Level.ERROR);
+        //if to add option
+        CompilerOptions options = new CompilerOptions();
+        try {
+            options.parseArgs(args);
+        } catch (CLIException e) {
+            System.err.println("Error during option parsing:\n"
+                    + e.getMessage());
+            System.exit(1);
+        }
+        if(options.getSourceFiles().size() != 1) {
+            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented (yet?)");
+            System.exit(1);
+        }
+        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), options.getSourceFiles().get(0));
         try{
             compiler.compile();
         } catch (DecacFatalError e) {
             e.printStackTrace();
         }
-        String AssemblerFileName = args[0].substring(0, args[0].length() - "deca".length()) + "ass";
+        int fileNameLength = args[args.length-1].length();
+        String AssemblerFileName = args[args.length-1].substring(0, fileNameLength - "deca".length()) + "ass";
         String[] imaCommand = (input == null) ?
                 new String[] {"../global/bin/ima", AssemblerFileName} :
                 new String[] {"/bin/sh", "-c", "echo " + input + " | ../global/bin/ima " + AssemblerFileName };

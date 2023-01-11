@@ -13,7 +13,7 @@ float j = 4.5;
 float k = 5.5;
 float l = 6.5;
 
-a = a + b * c - d / e + f % b;
+a = ------(a + b * c - d / e + f % b);
 b = a * b - c / d + e % f - a;
 c = a / b + c * d - e % f + a;
 d = a % b + c / d - e * f + a;

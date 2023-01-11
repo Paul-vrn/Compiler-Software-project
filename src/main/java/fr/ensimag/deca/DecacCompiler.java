@@ -216,6 +216,9 @@ public class DecacCompiler {
             prog.decompile(out);
             return false;
         }
+        if(compilerOptions.getNoCheck()){
+            labelFactory.setNoCheck(true);
+        }
         assert(prog.checkAllLocations());
 
         prog.verifyProgram(this);

@@ -11,7 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compileSource>1.8</compileSource>
-        <jacoco.skip>true</jacoco.skip>
+        <skip.unit.tests>false</skip.unit.tests>
+        <jacoco.skip>false</jacoco.skip>
         <jacoco.report_dir>${project.build.directory}/site</jacoco.report_dir>
     </properties>
 
@@ -109,6 +110,15 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
+                <configuration>
+                <!-- Sets the VM argument line used when unit tests are run -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- <excludes>
+                        <- Exclude integration tests when unit tests are run ->
+                        <exclude> **/IT*.java</exclude>
+                    </excludes> -->
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -163,26 +173,30 @@
                     <excludes>
                         <exclude>fr/ensimag/deca/tools/DecacInternalError.class</exclude>
                         <exclude>fr/ensimag/deca/ima/pseudocode/IMAInternalError.class</exclude>
+                        <exclude>*Test</exclude> <!-- TODO added this exclude value -->
                     </excludes>
                 </configuration>                               
                 <executions>
                     <execution>
-                        <id>default-instrument</id>
+                        <id>pre-unit-test</id>
                         <goals>
-                            <goal>instrument</goal>
-                        </goals>             
-                    </execution>
-                    <execution>
-                        <id>default-restore-instrumented-classes</id>
-                        <goals>
-                            <goal>restore-instrumented-classes</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <destFile>${jacoco.report_dir}/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-report</id>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <dataFile>${jacoco.report_dir}/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${jacoco.report_dir}</outputDirectory>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>

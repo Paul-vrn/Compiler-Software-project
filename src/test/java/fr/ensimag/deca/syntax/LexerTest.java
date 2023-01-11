@@ -98,42 +98,6 @@ public class LexerTest {
         generalTest(lex, toCompare, "Sci1");
     }
 
-//    @Test
-//    void test8() throws IOException {
-//        //lancer programme deca
-//        String[] args = {"src/test/deca/syntax/invalid/commentaire_lex_02.deca"};
-//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-//
-//        generalTestError(lex);
-//    }
-//
-//    @Test
-//    void test9() throws IOException {
-//        //lancer programme deca
-//        String[] args = {"src/test/deca/syntax/invalid/esc_lex_02.deca"};
-//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-//
-//        generalTestError(lex);
-//    }
-//
-//    @Test
-//    void test10() throws IOException {
-//        //lancer programme deca
-//        String[] args = {"src/test/deca/syntax/invalid/ident_lex_01.deca"};
-//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-//
-//        generalTestError(lex);
-//    }
-//
-//    @Test
-//    void test11() throws IOException {
-//        //lancer programme deca
-//        String[] args = {"src/test/deca/syntax/invalid/include_lex_0.deca"};
-//        DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
-//
-//        generalTestError(lex);
-//    }
-
     /**
      * Checks if the lexer return is ok.
      * @param lex
@@ -163,13 +127,12 @@ public class LexerTest {
             while(true)
             {
                 Token t = lex.nextToken();
-                System.out.println(t.getType() + "  " + t.getText());
                 if(t.getText() == "<EOF>")
                 {
                     break;
                 }
                 concatenatedString += t.getText();
-                fail( "Didn't throw an Exception as expected" );
+                fail("Test not passed : didn't throw an Exception as expected");
             }
         }catch (Exception e){}
 

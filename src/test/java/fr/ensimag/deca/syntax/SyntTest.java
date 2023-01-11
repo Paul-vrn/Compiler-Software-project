@@ -108,6 +108,38 @@ public class SyntTest {
         generalTestError(args);
     }
 
+    @Test
+    void test12() throws IOException {
+        //lancer programme deca
+        String[] args = {"src/test/deca/syntax/invalid/esc_lex_02.deca"};
+
+        generalTestError(args);
+    }
+
+    @Test
+    void test13() throws IOException {
+        //lancer programme deca
+        String[] args = {"src/test/deca/syntax/invalid/include_lex_0.deca"};
+
+        generalTestError(args);
+    }
+
+    @Test
+    void test14() throws IOException {
+        //lancer programme deca
+        String[] args = {"src/test/deca/syntax/invalid/include_lex_1.deca"};
+
+        generalTestError(args);
+    }
+
+    @Test
+    void test15() throws IOException {
+        //lancer programme deca
+        String[] args = {"src/test/deca/syntax/invalid/include_lex_2.deca"};
+
+        generalTestError(args);
+    }
+
     void generalTest(String[] args, String fileOracle) throws IOException {
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);
@@ -121,6 +153,7 @@ public class SyntTest {
         AbstractProgram prog = parser.parseProgramAndManageErrors(System.err);
         if (prog == null) {
             System.exit(1);
+            fail("Test not passed : didn't throw an Exception as expected");
         } else {
             String toCompare = new String(Files.readAllBytes(Paths.get(fileOracle)));
             assertEquals(prog.prettyPrint(), toCompare);
@@ -144,7 +177,7 @@ public class SyntTest {
                 }
             }));
             if (prog != null) {
-                fail("Didn't return expected Exception error");
+                fail("Test not passed : didn't return expected Exception error");
             }
         }catch (Exception e){}
     }

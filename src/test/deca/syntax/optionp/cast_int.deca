@@ -1,0 +1,5 @@
+{
+	int x = 3;
+	float y = 3.14;
+	y = (float)(x);
+}

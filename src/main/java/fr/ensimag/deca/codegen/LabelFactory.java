@@ -1,13 +1,12 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.ERROR;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 public class LabelFactory {
 
+    private boolean noCheck;
     private int nbNot;
     private int nbIfThenElse;
     private int nbWhile;
@@ -24,6 +23,7 @@ public class LabelFactory {
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
 
     public LabelFactory() {
+        this.noCheck = false;
         this.nbNot = 0;
         this.nbIfThenElse = 0;
         this.nbWhile = 0;
@@ -34,7 +34,12 @@ public class LabelFactory {
         this.flagIOError = false;
         this.flagDivByZeroError = false;
     }
+    public void setNoCheck(boolean noCheck) {
+        this.noCheck = noCheck;
+    }
     public void createErrorSection(DecacCompiler compiler){
+        if (noCheck)
+            return;
         if (flagOverflowError){
             compiler.addLabel(overflowErrorLabel);
             compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
@@ -60,47 +65,18 @@ public class LabelFactory {
             compiler.addInstruction(new ERROR());
         }
     }
-    public Label createOverflowErrorLabel(){
-        flagOverflowError = true;
-        return overflowErrorLabel;
-    }
-    public Label createStackErrorLabel(){
-        flagStackError = true;
-        return stackErrorLabel;
-    }
-    public Label createIOErrorLabel(){
-        flagIOError = true;
-        return ioErrorLabel;
-    }
-
-    public Label createDivByZeroErrorLabel(){
-        flagDivByZeroError = true;
-        return DivByZeroErrorLabel;
-    }
-
-    public void createOverFlowErrorCode(DecacCompiler compiler){
-
-    }
 
     public int nbNot(){
         int i = nbNot;
         nbNot++;
         return i;
     }
-    public int nbIfThenElse(){
-        int i = nbIfThenElse;
-        nbIfThenElse++;
-        return i;
-    }
-
     public int getNbIfThenElse() {
         return nbIfThenElse;
     }
-
     public void setNbIfThenElse(int nbIfThenElse) {
         this.nbIfThenElse = nbIfThenElse;
     }
-
     public int nbWhile(){
         int i = nbWhile;
         nbWhile++;
@@ -116,4 +92,30 @@ public class LabelFactory {
         nbOr++;
         return i;
     }
+
+    public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
+        if (noCheck)
+            return;
+        flagDivByZeroError = true;
+        compiler.addInstruction(new CMP(
+                isInt ? new ImmediateInteger(0) : new ImmediateFloat(0.0f),
+                r
+        ));
+        compiler.addInstruction(new BEQ(DivByZeroErrorLabel));
+    }
+
+    public void createTestOverflow(DecacCompiler compiler) {
+        if (noCheck)
+            return;
+        flagOverflowError = true;
+        compiler.addInstruction(new BOV(overflowErrorLabel));
+    }
+
+    public void createTestIo(DecacCompiler compiler){
+        if (noCheck)
+            return;
+        flagIOError = true;
+        compiler.addInstruction(new BOV(ioErrorLabel));
+    }
+
 }

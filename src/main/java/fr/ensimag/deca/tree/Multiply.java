@@ -25,13 +25,15 @@ public class Multiply extends AbstractOpArith {
 
         } else {
             compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.getMemory().increaseTSTO();
             getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             compiler.addInstruction(new POP(Register.getR(n)));
+            compiler.getMemory().decreaseTSTO();
             compiler.addInstruction(new MUL(Register.R0, Register.getR(n)));
         }
         if (this.getType().isFloat())
-            compiler.addInstruction(new BOV(compiler.getLabelFactory().createOverflowErrorLabel()));
+            compiler.getLabelFactory().createTestOverflow(compiler);
     }
 
     @Override

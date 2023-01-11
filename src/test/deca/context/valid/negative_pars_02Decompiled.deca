@@ -1,0 +1,4 @@
+{
+	float a = -0x1.666666p0;
+	println(a);
+}

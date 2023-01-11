@@ -77,7 +77,6 @@ INT : '0' | POSITIVE_DIGIT DIGIT* {
         throw new IllegalArgumentException("Integer overflow");
     }
 };
-// TODO : changer l'erreur en erreur de compilation
 //erreur de compilation levée si littéral entier pas codable comme un entier signé positif sur 32 bits
 
 //LITTERAUX FLOTTANTS

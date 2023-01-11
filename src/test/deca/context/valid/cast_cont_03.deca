@@ -1,0 +1,13 @@
+// Description:
+//    test Cast 3
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x = 1;
+   float y = (float) (x);
+}

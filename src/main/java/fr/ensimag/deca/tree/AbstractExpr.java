@@ -99,6 +99,13 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
         }
+
+        if(expectedType.isFloat() && type2.isInt()){
+            ConvFloat c = new ConvFloat(this);
+            c.verifyExpr(compiler, localEnv, currentClass);
+            return c;
+        }
+
         return this;
     }
     

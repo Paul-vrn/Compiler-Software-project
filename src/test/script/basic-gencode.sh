@@ -32,13 +32,12 @@ do
       continue
   fi
 
-  resultat=$(ima "$nom_fichier.ass")
+  resultat=$("../global/bin/ima" "$nom_fichier.ass")
   if [ $? -ne 0 ]; then
       echo "${yellow} Error : ima failed for $filename${clear}"
       continue
   fi
 
-  echo "$resultat"
   rm -f "$nom_fichier.ass"
 
   nom_fichier_oracle="$nom_fichier"_oracle.txt

@@ -17,12 +17,12 @@ import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
-public class Cast extends AbstractBinaryExpr{
+public class Cast extends AbstractExpr{
     private AbstractIdentifier type;
     private AbstractExpr expr;
 
     public Cast(AbstractIdentifier type, AbstractExpr expr) {
-        super(expr, expr);
+        super();
         this.type = type;
         this.expr = expr;
     }
@@ -35,20 +35,17 @@ public class Cast extends AbstractBinaryExpr{
         return expr;
     }
 
-    public void VerifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-                           ClassDefinition currentClass, Type returnType) throws ContextualError {
-        Type type1 = this.type.verifyType(compiler);
-        if(!type1.isInt()){
-            throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.type.getLocation().errorOutPut() + ": Float can be casted only with Int", this.type.getLocation());
-        }
-        this.expr.verifyExpr(compiler, localEnv, currentClass);
-    }
-
     public Type verifyExpr(DecacCompiler compiler,
                                     EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError{
-        return null;
+        Type type1 = this.type.verifyType(compiler);
+        this.getExpr().verifyExpr(compiler,localEnv,currentClass);
+        if(!(type1.isInt() || type1.isFloat() || type1.sameType(this.getExpr().getType()))){
+            throw new ContextualError(compiler.displaySourceFile() + ":"
+                    + this.type.getLocation().errorOutPut() + ": Float can be casted only with Int and Float", this.type.getLocation());
+        }
+        this.setType(type1);
+        return type1;
     }
 
     public void codeGen(){

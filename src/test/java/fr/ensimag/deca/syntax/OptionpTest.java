@@ -39,7 +39,7 @@ public class OptionpTest {
 
     @Test
     void test1() throws IOException {
-        String[] args = {"src/test/deca/codegen/valid/condition.deca"};
+        String[] args = {"src/test/deca/syntax/optionp/condition2.deca"};
         generalTestValid(args, null);
     }
 
@@ -49,34 +49,31 @@ public class OptionpTest {
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
 
-        String outputDecompiled = args[0].substring(0, args[0].length() - 5) + "Decompiled.deca";
-
-        CompilerOptions compilerOpts = new CompilerOptions();
-        compilerOpts.enableDecompilation();
-        DecacCompiler compiler = new DecacCompiler(compilerOpts, new File(args[0]));
-        try {
-            compiler.compile();
-        } catch (DecacFatalError e) {
-            e.printStackTrace();
-        }
-
-
-        CompilerOptions compilerOpts2 = new CompilerOptions();
-        File fileDecompiled = new File(outputDecompiled);
-        DecacCompiler compiler2 = new DecacCompiler(compilerOpts2, fileDecompiled);
-
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);
 
         final DecacCompiler decacCompiler = new DecacCompiler(new CompilerOptions(), new File(args[0]));
-        final DecacCompiler decacCompiler2 = new DecacCompiler(new CompilerOptions(), fileDecompiled);
+
 
         parser.setDecacCompiler(decacCompiler);
-        parser.setDecacCompiler(decacCompiler2);
+
 
         AbstractProgram prog = parser.parseProgramAndManageErrors(System.err);
-        AbstractProgram prog2 = parser.parseProgramAndManageErrors(System.err);
+
+        String outputDecompiled = args[0].substring(0, args[0].length() - 5) + "Decompiled.deca";
+        PrintStream out = new PrintStream(new FileOutputStream(outputDecompiled));
+        prog.decompile(out);
+
+        File fileDecompiled = new File(outputDecompiled);
+        String [] argsDecompiled = {outputDecompiled};
+
+        DecaLexer lex2 = AbstractDecaLexer.createLexerFromArgs(argsDecompiled);
+        CommonTokenStream tokens2 = new CommonTokenStream(lex2);
+        DecaParser parser2 = new DecaParser(tokens2);
+        final DecacCompiler decacCompiler2 = new DecacCompiler(new CompilerOptions(), fileDecompiled);
+        parser2.setDecacCompiler(decacCompiler2);
+        AbstractProgram prog2 = parser2.parseProgramAndManageErrors(System.err);
 
         if (prog == null) {
             System.exit(1);

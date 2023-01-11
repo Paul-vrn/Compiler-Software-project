@@ -38,24 +38,190 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OptionpTest {
 
     @Test
-    void test1() throws IOException {
+    void test01() throws IOException {
         String[] args = {"src/test/deca/syntax/optionp/condition.deca"};
         generalTestValid(args, null);
     }
 
     @Test
-    void test2() throws IOException {
+    void test02() throws IOException {
         String[] args = {"src/test/deca/syntax/optionp/condition_2.deca"};
         generalTestValid(args, null);
     }
 
     @Test
-    void test3() throws IOException {
-        String[] args = {"src/test/deca/syntax/optionp/condition_2.deca"};
+    void test03() throws IOException {
+        String[] args = {"src/test/deca/syntax/valid/commentaire_pars_01.deca"};
         generalTestValid(args, null);
     }
 
+    @Test
+    void test04() throws IOException {
+        String[] args = {"src/test/deca/syntax/valid/include_pars_01.deca"};
+        generalTestValid(args, null);
+    }
 
+    @Test
+    void test05() throws IOException {
+        String[] args = {"src/test/deca/syntax/valid/str_conc_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test06() throws IOException {
+        String[] args = {"src/test/deca/context/valid/assign_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test07() throws IOException {
+        String[] args = {"src/test/deca/context/valid/assign_mult_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test08() throws IOException {
+        String[] args = {"src/test/deca/context/valid/bool_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test09() throws IOException {
+        String[] args = {"src/test/deca/context/valid/cond_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test10() throws IOException {
+        String[] args = {"src/test/deca/context/valid/condition_modulo_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test11() throws IOException {
+        String[] args = {"src/test/deca/context/valid/exemple_sans_objet.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test12() throws IOException {
+        String[] args = {"src/test/deca/context/valid/expr_alone_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test13() throws IOException {
+        String[] args = {"src/test/deca/context/valid/for_nested_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test14() throws IOException {
+        String[] args = {"src/test/deca/context/valid/hw_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test15() throws IOException {
+        String[] args = {"src/test/deca/context/valid/if_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test16() throws IOException {
+        String[] args = {"src/test/deca/context/valid/if_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test17() throws IOException {
+        String[] args = {"src/test/deca/context/valid/init_cont_val_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test18() throws IOException {
+        String[] args = {"src/test/deca/context/valid/init_cont_val_02.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test19() throws IOException {
+        String[] args = {"src/test/deca/context/valid/intint_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test20() throws IOException {
+        String[] args = {"src/test/deca/context/valid/minmin_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test21() throws IOException {
+        String[] args = {"src/test/deca/context/valid/mod_cont_val_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test22() throws IOException {
+        String[] args = {"src/test/deca/context/valid/name_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test23() throws IOException {
+        String[] args = {"src/test/deca/context/valid/negative_pars_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test24() throws IOException {
+        String[] args = {"src/test/deca/context/valid/negative_pars_02.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test25() throws IOException {
+        String[] args = {"src/test/deca/context/valid/not_cont_val_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test26() throws IOException {
+        String[] args = {"src/test/deca/context/valid/op_arith_cont_val_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test27() throws IOException {
+        String[] args = {"src/test/deca/context/valid/op_comp_valid_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test28() throws IOException {
+        String[] args = {"src/test/deca/context/valid/print_assign_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test29() throws IOException {
+        String[] args = {"src/test/deca/context/valid/print_nest_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test30() throws IOException {
+        String[] args = {"src/test/deca/context/valid/read_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test31() throws IOException {
+        String[] args = {"src/test/deca/context/valid/while_pars_01.deca"};
+        generalTestValid(args, null);
+    }
 
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);

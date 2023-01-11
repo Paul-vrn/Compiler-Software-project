@@ -153,6 +153,7 @@ public class SyntTest {
         AbstractProgram prog = parser.parseProgramAndManageErrors(System.err);
         if (prog == null) {
             System.exit(1);
+            fail("Test not passed : didn't throw an Exception as expected");
         } else {
             String toCompare = new String(Files.readAllBytes(Paths.get(fileOracle)));
             assertEquals(prog.prettyPrint(), toCompare);
@@ -176,7 +177,7 @@ public class SyntTest {
                 }
             }));
             if (prog != null) {
-                fail("Didn't return expected Exception error");
+                fail("Test not passed : didn't return expected Exception error");
             }
         }catch (Exception e){}
     }

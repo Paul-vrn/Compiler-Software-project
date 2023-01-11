@@ -50,7 +50,10 @@ public class CompilerOptions {
 
     public void enableVerification(){this.verificationEnabled = true;}
 
-    
+    public boolean getNoCheck(){return noCheck;}
+
+    public void enableNoCheck(){this.noCheck = true;}
+
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
@@ -61,6 +64,7 @@ public class CompilerOptions {
     private boolean verificationEnabled = false;
     private boolean printBanner = false;
     private boolean parallel = false;
+    private boolean noCheck = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
@@ -112,7 +116,8 @@ public class CompilerOptions {
                         enableVerification();
                         break;
                     case "-n":
-                        throw new UnsupportedOperationException("-n not yet implemented");
+                        enableNoCheck();
+                        break;
                     case "-r":
                         i++;
                         int newRMAX = Integer.parseInt(argsArrayList.get(i));

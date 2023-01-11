@@ -21,9 +21,11 @@
                     type: float
                     +> [12, 11] Float (0.5)
                     |  type: float
-                    `> [12, 17] Multiply
-                       type: int
-                       +> [12, 16] Identifier (x)
-                       |  definition: variable defined at [10, 7], type=int
-                       `> [12, 18] Identifier (x)
-                          definition: variable defined at [10, 7], type=int
+                    `> ConvFloat
+                       type: float
+                       `> [12, 17] Multiply
+                          type: int
+                          +> [12, 16] Identifier (x)
+                          |  definition: variable defined at [10, 7], type=int
+                          `> [12, 18] Identifier (x)
+                             definition: variable defined at [10, 7], type=int

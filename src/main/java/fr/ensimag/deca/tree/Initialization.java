@@ -57,8 +57,11 @@ public class Initialization extends AbstractInitialization {
                     + this.expression.getLocation().errorOutPut() + ": Initialization type error, " + type2 + " into " + t + " forbidden", this.expression.getLocation());
         }
 
-        /*Verify the condition : assign_compatible(env_types, type1, type2)*/
-        //if(compiler.environmentType.defOfType(t))
+        if(t.isFloat() && type2.isInt()){
+            ConvFloat c = new ConvFloat(this.expression);
+            c.verifyExpr(compiler, localEnv, currentClass);
+            this.expression = c;
+        }
     }
 
 

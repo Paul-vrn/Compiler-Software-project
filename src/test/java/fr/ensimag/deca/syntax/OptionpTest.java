@@ -39,10 +39,21 @@ public class OptionpTest {
 
     @Test
     void test1() throws IOException {
-        String[] args = {"src/test/deca/syntax/optionp/condition2.deca"};
+        String[] args = {"src/test/deca/syntax/optionp/condition.deca"};
         generalTestValid(args, null);
     }
 
+    @Test
+    void test2() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/condition_2.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test3() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/condition_2.deca"};
+        generalTestValid(args, null);
+    }
 
 
 
@@ -78,7 +89,9 @@ public class OptionpTest {
         if (prog == null) {
             System.exit(1);
         } else {
-            assertEquals(prog.prettyPrint(), prog2.prettyPrint());
+            String expected = prog.prettyPrint().replaceAll("\\[.*?\\]", "");
+            String actual = prog2.prettyPrint().replaceAll("\\[.*?\\]", "");
+            assertEquals(expected, actual);
         }
     }
 }

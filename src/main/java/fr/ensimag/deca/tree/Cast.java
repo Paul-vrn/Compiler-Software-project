@@ -28,9 +28,8 @@ public class Cast extends AbstractBinaryExpr{
     }
 
     public String getOperatorName() {return "";}
-    public AbstractIdentifier getType1() {
-        return type;
-    }
+
+    public AbstractIdentifier getType1() {return type;}
 
     public AbstractExpr getExpr() {
         return expr;

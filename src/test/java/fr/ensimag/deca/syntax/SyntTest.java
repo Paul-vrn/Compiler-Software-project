@@ -4,6 +4,8 @@ import fr.ensimag.deca.CompilerOptions;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tree.AbstractProgram;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -162,6 +164,7 @@ public class SyntTest {
 
     void generalTestError(String[] args) throws IOException {
         try {
+            Logger.getRootLogger().setLevel(Level.OFF);
             DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
             CommonTokenStream tokens = new CommonTokenStream(lex);
             DecaParser parser = new DecaParser(tokens);

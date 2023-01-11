@@ -7,6 +7,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
+import java.util.Iterator;
+
 /**
  * List of expressions (eg list of parameters).
  *
@@ -18,8 +20,12 @@ public class ListExpr extends TreeList<AbstractExpr> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        for ( AbstractExpr current : this.getList()){
-            current.decompile(s);
+        Iterator<AbstractExpr> it = this.getList().iterator();
+        while (it.hasNext()) {
+            it.next().decompile(s);
+            if (it.hasNext()) {
+                s.print(", ");
+            }
         }
     }
 }

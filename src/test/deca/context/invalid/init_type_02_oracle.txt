@@ -1,0 +1,1 @@
+init_type_02.deca:11:13: Initialization type error, boolean into float forbidden

@@ -1,0 +1,14 @@
+ // Description:
+ //    Programme minimaliste qui teste les while (pas d'accolade).
+ //
+ // Resultats:
+ //      Erreur ligne 11:
+ //
+ // Historique:
+ //    cree le 01/01/2023
+
+ {
+      int x = 0;
+      while(x == 1)
+            x = 1;
+ }

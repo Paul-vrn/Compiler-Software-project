@@ -89,7 +89,7 @@ public class LabelFactory {
     }
     public int nbIfThenElse(){
         int i = nbIfThenElse;
-        nbNot++;
+        nbIfThenElse++;
         return i;
     }
 
@@ -108,12 +108,12 @@ public class LabelFactory {
     }
     public int nbAnd(){
         int i = nbAnd;
-        nbNot++;
+        nbAnd++;
         return i;
     }
     public int nbOr(){
         int i = nbOr;
-        nbNot++;
+        nbOr++;
         return i;
     }
 }

@@ -38,7 +38,6 @@ do
       continue
   fi
 
-  echo "$resultat"
   rm -f "$nom_fichier.ass"
 
   nom_fichier_oracle="$nom_fichier"_oracle.txt

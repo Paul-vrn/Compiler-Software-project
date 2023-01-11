@@ -10,10 +10,7 @@ import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 public class Cast extends AbstractExpr{
@@ -48,9 +45,16 @@ public class Cast extends AbstractExpr{
         return type1;
     }
 
-    public void codeGen(){
-
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        getExpr().codeGenExpr(compiler, n);
+        if (getType().isInt()) {
+            compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+        }
     }
+
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("(");

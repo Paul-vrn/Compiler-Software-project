@@ -1,10 +1,8 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
@@ -14,28 +12,23 @@ import java.io.PrintStream;
  * @author gl21
  * @date 01/01/2023
  */
-public class DeclClass extends AbstractDeclClass {
+public class ClassBody extends AbstractDeclClass {
 
-    private AbstractIdentifier name;
-    private AbstractIdentifier superClass;
-    private ClassBody body;
+    private ListDeclField fields;
+    private ListDeclMethod methods;
 
-    public DeclClass(AbstractIdentifier name, AbstractIdentifier superClass,
-            ClassBody body) {
-        Validate.notNull(name);
-        Validate.notNull(superClass);
-        Validate.notNull(body);
-        this.name = name;
-        this.superClass = superClass;
-        this.body = body;
+    public ClassBody(ListDeclField fields, ListDeclMethod methods) {
+        this.fields = fields;
+        this.methods = methods;
     }
-
     @Override
     public void decompile(IndentPrintStream s) {
-        name.decompile(s);
-        s.print(" extends ");
-        superClass.decompile(s);
-        body.decompile(s);
+        s.println(" {");
+        s.indent();
+        fields.decompile(s);
+        methods.decompile(s);
+        s.unindent();
+        s.print("}");
     }
 
     @Override

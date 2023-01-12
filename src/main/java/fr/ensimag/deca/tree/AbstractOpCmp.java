@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelIdentification;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -52,9 +51,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
         } else {
             compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.getMemory().increaseTSTO();
             getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             compiler.addInstruction(new POP(Register.getR(n)));
+            compiler.getMemory().decreaseTSTO();
             compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
         }
     }

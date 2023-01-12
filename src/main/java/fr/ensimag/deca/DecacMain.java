@@ -1,6 +1,13 @@
 package fr.ensimag.deca;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.apache.log4j.Logger;
 
 
@@ -12,7 +19,10 @@ import org.apache.log4j.Logger;
  */
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
-    
+
+    public static final ExecutorService service = Executors.newFixedThreadPool(8);
+
+
     public static void main(String[] args) throws DecacFatalError {
         // example log4j message.
         LOG.info("Decac compiler started");
@@ -30,7 +40,7 @@ public class DecacMain {
             System.out.println("\033[1;95m" + "Ratio Systems" + "\u001B[0m"); //print Banner in purple and return
             return;
         }
-        if (options.getSourceFiles().isEmpty()) { //TODO spécifier le fichier dans lequel on envoie le code avec -p une fois qu'on sera lequel c'est
+        if (options.getSourceFiles().isEmpty()) {
             System.out.println("This is the " + "\033[1;91m" + "decac" + "\u001B[0m" + " compiler\n" +
                     "To use it follow this syntax : \n" + "\033[1;37m" + "decac [[-p | -v] [-n] [-r X] [-d]* [-P] [-w] <source deca file(s)>...] | [-b]\n" + "\u001B[0m"
                     + "Options : " +
@@ -38,7 +48,7 @@ public class DecacMain {
                     "-v : Stops the program after the verification process (no output in the absence of problems)\n"+
                     "(note that option -p and -v are incompatible\n"+
                     "-n : No check, removes execution checks\n" +
-                    "-r X : pas compris\n"+ //TODO marquer ce que ça veut dire quand on le saura
+                    "-r X : pas compris\n"+
                     "-d : Debug option, enables debug trace. Repeat the option to get more traces\n" +
                     "-P : Parallel, if there are multiple source files, compiles concurrently");
         }
@@ -47,7 +57,21 @@ public class DecacMain {
             // compiler, et lancer l'exécution des méthodes compile() de chaque
             // instance en parallèle. Il est conseillé d'utiliser
             // java.util.concurrent de la bibliothèque standard Java.
-            throw new UnsupportedOperationException("Parallel build not yet implemented");
+            List<Future> futures = new ArrayList<>();
+            for (File source : options.getSourceFiles()){
+                Future<Boolean> future = service.submit(new Task(new DecacCompiler(options, source)));
+                futures.add(future);
+            }
+
+            for (Future future : futures){
+                try {
+                    if (!(boolean) future.get()){
+                        error = true;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
@@ -57,5 +81,18 @@ public class DecacMain {
             }
         }
         System.exit(error ? 1 : 0);
+    }
+
+    private static class Task implements Callable<Boolean> {
+        private DecacCompiler compiler;
+
+        public Task(DecacCompiler compiler) {
+            this.compiler = compiler;
+        }
+
+        @Override
+        public Boolean call() throws Exception {
+            return compiler.compile();
+        }
     }
 }

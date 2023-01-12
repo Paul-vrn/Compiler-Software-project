@@ -34,13 +34,15 @@ public class DeclVar extends AbstractDeclVar {
         Type varType = this.type.verifyType(compiler);
 
         /* Verification : type void is forbidden */
-        if(this.type.getType().isVoid()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        if(this.type.getType().isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
         }
 
         this.varName.setType(varType);
         this.varName.setDefinition(new VariableDefinition(varType, getLocation()));
+
+        this.initialization.verifyInitialization(compiler, varName.getType(), localEnv, currentClass);
 
         try{
             localEnv.declare(varName.getName(), (ExpDefinition) varName.getDefinition());
@@ -49,7 +51,7 @@ public class DeclVar extends AbstractDeclVar {
                     + this.getLocation().errorOutPut() + ": Variable already defined", this.getLocation());
         }
 
-        this.initialization.verifyInitialization(compiler, varName.getType(), localEnv, currentClass);
+
 
     }
 

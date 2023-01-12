@@ -9,7 +9,5 @@
 //    cree le 01/01/2023
 
 {
-   print(true);
+   println("null not yet implemented");
 }
-
-

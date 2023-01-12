@@ -1,0 +1,14 @@
+// Description:
+//    Programme minimaliste qui teste la présence de virgule dans une affectation.
+//
+// Resultats:
+//      Erreur ligne 13:
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+     int x;
+     int y;
+     x,y = 2;
+}

@@ -1,29 +1,17 @@
 package fr.ensimag.deca.codegen;
 
-import fr.ensimag.ima.pseudocode.Register;
-
-import static fr.ensimag.ima.pseudocode.Register.GB;
-
 public class Memory {
     private int offset;
-    private int nbRegister;
-    private int nbIfThenElse;
     private int lastGRegister;
-    private int nbNot;
-    public Memory(int nbRegister) {
-        this.nbRegister = nbRegister;
-        this.nbIfThenElse = 0;
+    private int TSTO;
+    private int currentTSTO;
+
+
+    public Memory() {
+        this.TSTO = 0;
+        this.currentTSTO = 0;
         this.offset = 1;
         this.lastGRegister = 2;
-    }
-    public Memory(){
-        this(15);
-    }
-    public int getNbIfThenElse() {
-        return nbIfThenElse;
-    }
-    public void increaseNbIfThenElse() {
-        nbIfThenElse++;
     }
 
     public int getOffset() {
@@ -36,10 +24,26 @@ public class Memory {
         increaseOffset(1);
     }
 
-    public int getLastGRegister() {
-        return lastGRegister;
+    /**
+     * Return TSTO value and reset it afterwards
+     * @return int TSTO
+     */
+    public int TSTO() {
+        int i = TSTO;
+        TSTO = 0;
+        return i;
     }
-    public void setLastGRegister(int lastGRegister) {
-        this.lastGRegister = lastGRegister;
+
+    /**
+     * Increase TSTO value
+     */
+    public void increaseTSTO() {
+        currentTSTO++;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    public void decreaseTSTO() {
+        currentTSTO--;
+        TSTO = Math.max(currentTSTO, TSTO);
     }
 }

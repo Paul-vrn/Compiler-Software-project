@@ -33,8 +33,7 @@ public class NoInitialization extends AbstractInitialization {
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        DAddr op = compiler.envExpCurrent.get(varName.getName()).getOperand();
-        compiler.addInstruction(new STORE(Register.getR(0), op));
+        compiler.addInstruction(new STORE(Register.getR(0), varName.getExpDefinition().getOperand()));
     }
 
     /**

@@ -1,0 +1,13 @@
+// Description:
+//    Initialisation et typage
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x = 2;
+   int int = x;
+}

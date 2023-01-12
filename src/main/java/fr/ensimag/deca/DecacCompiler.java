@@ -1,7 +1,7 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.codegen.Memory;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -17,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -107,7 +105,14 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
+    public void addIndex(int i, Instruction inst) {
+        program.addIndex(i, inst);
+    }
+    public int getLineIndex(){
+        return program.getLastIndex();
+    }
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -136,17 +141,19 @@ public class DecacCompiler {
     public Memory getMemory() {
         return memory;
     }
-    public int getNbIf(){
-        return memory.getNbIfThenElse();
-    }
     public int nextOffSet(){
         int val = memory.getOffset();
         memory.increaseOffset();
         return val;
     }
 
-    public EnvironmentExp envExpCurrent = null;
-
+    private final LabelFactory labelFactory = new LabelFactory();
+    public LabelFactory getLabelFactory() {return labelFactory;}
+    public int nbWhile(){return labelFactory.nbWhile();}
+    public int nbNot(){return labelFactory.nbNot();}
+    public int nbAnd(){return labelFactory.nbAnd();}
+    public int nbOr(){return labelFactory.nbOr();}
+    
     /**
      * Run the compiler (parse source file, generate code)
      *
@@ -204,16 +211,19 @@ public class DecacCompiler {
             LOG.info("Parsing failed");
             return true;
         }
-        if(compilerOptions.getVerification()){
-            return false;
-        }
+
         if(compilerOptions.getDecompilation()){
             prog.decompile(out);
+            return false;
         }
         assert(prog.checkAllLocations());
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if(compilerOptions.getVerification()){
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);

@@ -1,0 +1,12 @@
+// Description:
+//     if avec une condition qui n'est pas un boolean.
+//
+// Resultats:
+//    Ligne 11: Condition argument of if/elseif should be a boolean
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   if(3){}
+}

@@ -26,8 +26,12 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      */
     void verifyListClass(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify listClass: start");
-        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify listClass: end");
+        for (AbstractDeclClass current : this.getList()){
+            current.verifyClass(compiler);
+        }
+
+        //TODO : env_typesr = env_types ? page 80
+        LOG.debug("verify listClass: end");
     }
 
     /**

@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
@@ -33,8 +34,19 @@ public class Program extends AbstractProgram {
     private ListDeclClass classes;
     private AbstractMain main;
 
+    public EnvironmentType verifyProgramPass1(DecacCompiler compiler){
+        this.
+    }
+
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
+        /* PASS 1*/
+        this.classes.verifyListClass(compiler);
+
+        /* PASS 2*/
+        this.classes.verifyListClassBody(compiler);
+
+        /* PASS 3*/
         this.main.verifyMain(compiler);
     }
 

@@ -12,7 +12,7 @@ import java.io.PrintStream;
  * @author gl21
  * @date 01/01/2023
  */
-public class ClassBody extends AbstractDeclClass {
+public class ClassBody extends Tree {
 
     private ListDeclField fields;
     private ListDeclMethod methods;
@@ -30,23 +30,6 @@ public class ClassBody extends AbstractDeclClass {
         s.unindent();
         s.print("}");
     }
-
-    @Override
-    protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
-    @Override
-    protected void verifyClassMembers(DecacCompiler compiler)
-            throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-    
-    @Override
-    protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
-
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {

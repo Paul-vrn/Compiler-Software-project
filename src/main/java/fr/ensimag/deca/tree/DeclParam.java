@@ -1,7 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -11,13 +9,13 @@ import java.io.PrintStream;
  * @author gl21
  * @date 01/01/2023
  */
-public class Param extends Tree {
+public class DeclParam extends Tree {
 
 
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
 
-    public Param(AbstractIdentifier type, AbstractIdentifier varName) {
+    public DeclParam(AbstractIdentifier type, AbstractIdentifier varName) {
         Validate.notNull(type);
         Validate.notNull(varName);
         this.type = type;

@@ -1,7 +1,6 @@
 package fr.ensimag.deca;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,6 +53,10 @@ public class CompilerOptions {
 
     public void enableNoCheck(){this.noCheck = true;}
 
+    public void enableArmCompilation(){this.armCompilation = true;}
+
+    public boolean getARMCompilation(){return armCompilation;}
+
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
@@ -65,6 +68,7 @@ public class CompilerOptions {
     private boolean printBanner = false;
     private boolean parallel = false;
     private boolean noCheck = false;
+    private boolean armCompilation = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
@@ -132,6 +136,9 @@ public class CompilerOptions {
                         throw new UnsupportedOperationException("-d not yet implemented");
                     case "-P":
                         enableParallel();
+                        break;
+                    case "-ARM":
+                        enableArmCompilation();
                         break;
                     default:
                         throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));

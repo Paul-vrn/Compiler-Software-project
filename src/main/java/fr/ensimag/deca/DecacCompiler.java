@@ -68,14 +68,14 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#add(fr.ensimag.ima.pseudocode.AbstractLine)
+     * AbstractCodeGenProgram#add(AbstractLine)
      */
     public void add(AbstractLine line) {
         program.add(line);
     }
 
     /**
-     * @see fr.ensimag.ima.pseudocode.IMAProgram#addComment(java.lang.String)
+     * @see AbstractCodeGenProgram#addComment(java.lang.String)
      */
     public void addComment(String comment) {
         program.addComment(comment);
@@ -83,7 +83,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addLabel(fr.ensimag.ima.pseudocode.Label)
+     * AbstractCodeGenProgram#addLabel(Label)
      */
     public void addLabel(Label label) {
         program.addLabel(label);
@@ -91,7 +91,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
+     * AbstractCodeGenProgram#addInstruction(Instruction)
      */
     public void addInstruction(Instruction instruction) {
         program.addInstruction(instruction);
@@ -99,7 +99,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction,
+     * AbstractCodeGenProgram#addInstruction(Instruction,
      * java.lang.String)
      */
     public void addInstruction(Instruction instruction, String comment) {
@@ -115,7 +115,7 @@ public class DecacCompiler {
 
     /**
      * @see 
-     * fr.ensimag.ima.pseudocode.IMAProgram#display()
+     * AbstractCodeGenProgram#display()
      */
     public String displayIMAProgram() {
         return program.display();
@@ -126,7 +126,7 @@ public class DecacCompiler {
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
-    private final IMAProgram program = new IMAProgram();
+    private AbstractCodeGenProgram program;
 
 
     /** The global environment for types (and the symbolTable) */
@@ -227,6 +227,8 @@ public class DecacCompiler {
         if(compilerOptions.getVerification()){
             return false;
         }
+
+        program = (compilerOptions.getARMCompilation()) ? new ARMProgram() : new IMAProgram();
 
         addComment("start main program");
         prog.codeGenProgram(this);

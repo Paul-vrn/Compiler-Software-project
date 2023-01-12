@@ -16,8 +16,8 @@ import java.io.PrintStream;
  */
 public class MethodBody extends AbstractMethodBody {
 
-    private ListDeclVar listDeclField;
-    private ListInst listInst;
+    private ListDeclVar listDeclField = new ListDeclVar();
+    private ListInst listInst = new ListInst();
 
     public MethodBody(ListDeclVar listDeclVar, ListInst listInst) {
         this.listDeclField = listDeclVar;

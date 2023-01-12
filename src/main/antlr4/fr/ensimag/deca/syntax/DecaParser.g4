@@ -526,9 +526,11 @@ class_decl returns[DeclClass tree]
 
 class_extension returns[AbstractIdentifier tree]
     : EXTENDS ident {
+        $tree = $ident.tree;
         setLocation($tree, $EXTENDS);
         }
     | /* epsilon */ {
+        $tree = null;
         }
     ;
 
@@ -571,7 +573,6 @@ list_decl_field[ListDeclField l, Visibility v, AbstractIdentifier t]
         $l.add($dv2.tree);
       }
     ;
-//✅
 decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
 @init   {
         AbstractInitialization initialization = new NoInitialization();
@@ -628,8 +629,8 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-param returns[Param tree]
+param returns[DeclParam tree]
     : type ident {
-        $tree = new Param($type.tree, $ident.tree);
+        $tree = new DeclParam($type.tree, $ident.tree);
         }
     ;

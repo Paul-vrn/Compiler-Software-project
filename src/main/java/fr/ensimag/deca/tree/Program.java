@@ -34,19 +34,16 @@ public class Program extends AbstractProgram {
     private ListDeclClass classes;
     private AbstractMain main;
 
-    public EnvironmentType verifyProgramPass1(DecacCompiler compiler){
-        this.
-    }
-
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         /* PASS 1*/
         this.classes.verifyListClass(compiler);
 
         /* PASS 2*/
-        this.classes.verifyListClassBody(compiler);
+        this.classes.verifyListClassMembers(compiler);
 
         /* PASS 3*/
+        this.classes.verifyListClassBody(compiler);
         this.main.verifyMain(compiler);
     }
 

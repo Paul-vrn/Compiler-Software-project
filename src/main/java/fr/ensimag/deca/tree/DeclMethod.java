@@ -48,12 +48,18 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        type.prettyPrint(s, prefix, false);
+        varName.prettyPrint(s, prefix, true);
+        listParams.prettyPrint(s, prefix, true);
+        methodBody.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        type.iter(f);
+        varName.iter(f);
+        listParams.iter(f);
+        methodBody.iter(f);
     }
 
     @Override

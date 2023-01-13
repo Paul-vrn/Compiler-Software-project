@@ -570,9 +570,9 @@ list_decl_field[ListDeclField l, Visibility v, AbstractIdentifier t]
     {
         $l.add($dv1.tree);
     }
-    (COMMA dv2=decl_field[$v, $t])* {
-        $l.add($dv2.tree);
-      }
+    (COMMA dv2=decl_field[$v, $t] {
+         $l.add($dv2.tree);
+    })*
     ;
 decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
 @init   {
@@ -586,7 +586,8 @@ decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
         }
       )? {
         $tree = new DeclField($v, $t, $i.tree, initialization);
-        setLocation($tree,$i.start);
+        System.out.println($tree);
+        setLocation($tree, $i.start);
         }
     ;
 
@@ -596,10 +597,8 @@ decl_method returns[AbstractDeclMethod tree]
 }
     : type ident OPARENT params=list_params CPARENT (block {
         methodBody = new MethodBody($block.decls, $block.insts);
-        setLocation($tree, $type.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
-        setLocation($tree, $ASM);
         }
       ) {
         assert(methodBody != null);

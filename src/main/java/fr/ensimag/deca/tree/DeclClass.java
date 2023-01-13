@@ -4,6 +4,8 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.commons.lang.Validate;
+
 import java.io.PrintStream;
 
 /**
@@ -14,9 +16,33 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
+    private AbstractIdentifier name;
+    private AbstractIdentifier superClass;
+    private ListDeclMethod methods;
+    private ListDeclField fieldSets;
+
+    public DeclClass(AbstractIdentifier name, AbstractIdentifier superClass,
+                     ListDeclField lf, ListDeclMethod lm) {
+        Validate.notNull(name);
+        this.name = name;
+        this.superClass = superClass;
+        this.fieldSets = lf;
+        this.methods = lm;
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        name.decompile(s);
+        if (superClass != null) {
+            s.print(" extends ");
+            superClass.decompile(s);
+        }
+        s.println(" {");
+        s.indent();
+        fieldSets.decompile(s);
+        methods.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
     @Override
@@ -38,12 +64,22 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.name.prettyPrint(s, prefix, false);
+        if (this.superClass != null) {
+            this.superClass.prettyPrint(s, prefix, true);
+        }
+        this.fieldSets.prettyPrint(s, prefix, true);
+        this.methods.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.name.iter(f);
+        if (this.superClass != null) {
+            this.superClass.iter(f);
+        }
+        this.fieldSets.iter(f);
+        this.methods.iter(f);
     }
 
 }

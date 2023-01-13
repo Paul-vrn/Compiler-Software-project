@@ -18,7 +18,9 @@ public class ImmediateInteger extends DVal {
     public String toString() {
         return "#" + value;
     }
-
+    public String toArmString() {
+        return this.toString();
+    }
     public int getValue() {
         return value;
     }

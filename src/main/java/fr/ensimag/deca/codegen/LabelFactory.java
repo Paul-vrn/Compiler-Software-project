@@ -12,7 +12,7 @@ public class LabelFactory {
     private int nbWhile;
     private int nbAnd;
     private int nbOr;
-
+    private int nbString;
     private boolean flagOverflowError;
     private boolean flagStackError;
     private boolean flagIOError;
@@ -20,7 +20,10 @@ public class LabelFactory {
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
-    private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
+    private static final Label divByZeroErrorLabel = new Label("div_by_zero_error");
+
+    private static final Label printfLabel = new Label("printf");
+
 
     public LabelFactory() {
         this.noCheck = false;
@@ -59,7 +62,7 @@ public class LabelFactory {
             compiler.addInstruction(new ERROR());
         }
         if (flagDivByZeroError){
-            compiler.addLabel(DivByZeroErrorLabel);
+            compiler.addLabel(divByZeroErrorLabel);
             compiler.addInstruction(new WSTR("Error: Division by zero"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
@@ -93,6 +96,11 @@ public class LabelFactory {
         return i;
     }
 
+    public int nbString(){
+        int i = nbString;
+        nbString++;
+        return i;
+    }
     public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
             return;
@@ -101,7 +109,7 @@ public class LabelFactory {
                 isInt ? new ImmediateInteger(0) : new ImmediateFloat(0.0f),
                 r
         ));
-        compiler.addInstruction(new BEQ(DivByZeroErrorLabel));
+        compiler.addInstruction(new BEQ(divByZeroErrorLabel));
     }
 
     public void createTestOverflow(DecacCompiler compiler) {
@@ -116,6 +124,10 @@ public class LabelFactory {
             return;
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
+    }
+
+    public Label getPrintfLabel() {
+        return printfLabel;
     }
 
 }

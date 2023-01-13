@@ -35,6 +35,7 @@ public class AbstractCodeGenProgram {
         lines.addFirst(l);
     }
 
+    public void addFirst(Label l) { lines.addFirst(new Line(l));}
     /**
      * Display the program in a textual form readable by IMA to stream s.
      */

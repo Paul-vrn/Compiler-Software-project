@@ -4,6 +4,12 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
+import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -40,6 +46,10 @@ public class StringLiteral extends AbstractStringLiteral {
         compiler.addInstruction(new WSTR(new ImmediateString(value)));
     }
 
+    protected void armCodeGenPrint(DecacCompiler compiler) {
+        // todo mov r0, =LabelDuString
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+    }
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("\"");

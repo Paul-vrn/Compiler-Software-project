@@ -4,7 +4,11 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
@@ -39,6 +43,13 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(new ImmediateInteger(value), Register.getR(n)));
+    }
+
+    @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        //compiler.addInstruction(new LDR(new Label("t"), RegisterARM.getR(n)));
+        //todo mov r0, =Label de "%d"
+        compiler.addInstruction(new LDR(new ImmediateInteger(value), RegisterARM.getR(1)));
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 
     @Override

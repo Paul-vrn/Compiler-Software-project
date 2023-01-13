@@ -168,6 +168,17 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    /**
+     *
+     * @param compiler
+     * @param n number of the register R (for integer)
+     * @param m number of the register S (for float)
+     */
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);

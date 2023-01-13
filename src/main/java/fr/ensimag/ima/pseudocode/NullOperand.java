@@ -13,4 +13,8 @@ public class NullOperand extends DVal {
         return "#null";
     }
 
+    @Override
+    public String toArmString() {
+        return new ImmediateInteger(0).toArmString();
+    }
 }

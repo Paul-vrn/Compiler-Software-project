@@ -36,6 +36,7 @@ public class Line extends AbstractLine {
     private void checkComment(final String s) {
         if (s == null) {
             return;
+
         }
         if (s.contains("\n")) {
             throw new IMAInternalError("Comment '" + s + "'contains newline character");

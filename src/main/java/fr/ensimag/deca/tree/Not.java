@@ -7,6 +7,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.MVN;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -50,5 +52,11 @@ public class Not extends AbstractUnaryExpr {
         compiler.addLabel(label);
         compiler.addInstruction(new LOAD(0, Register.getR(n)));
         compiler.addLabel(labelEnd);
+    }
+
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        getOperand().armCodeGenExpr(compiler, n, m);
+        compiler.addInstruction(new MVN(RegisterARM.getR(n), RegisterARM.getR(n)));
     }
 }

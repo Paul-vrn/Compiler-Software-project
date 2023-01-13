@@ -1,5 +1,7 @@
 package fr.ensimag.ima.pseudocode;
 
+import fr.ensimag.deca.codegen.LabelFactory;
+
 /**
  * Immediate operand representing a string.
  * 
@@ -17,5 +19,10 @@ public class ImmediateString extends Operand {
     @Override
     public String toString() {
         return "\"" + value.replace("\"", "\"\"") + "\"";
+    }
+
+    @Override
+    public String toArmString() {
+        return this.toString();
     }
 }

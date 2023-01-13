@@ -15,7 +15,10 @@ public class Register extends DVal {
     @Override
     public String toString() {
         return name;
+    }
 
+    public String toArmString() {
+        return this.toString();
     }
 
     /**

@@ -28,6 +28,12 @@ public class BinaryInstruction extends Instruction {
         s.print(operand2);
     }
 
+    void armDisplayOperands(PrintStream s) {
+        s.print(" ");
+        s.print(operand2);
+        s.print(", ");
+        s.print(operand1);
+    }
 
     protected BinaryInstruction(Operand op1, Operand op2) {
         Validate.notNull(op1);

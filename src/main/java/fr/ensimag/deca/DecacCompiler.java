@@ -113,6 +113,9 @@ public class DecacCompiler {
         return program.getLastIndex();
     }
 
+    public void addFirst(Line l){
+        program.addFirst(l);
+    }
     /**
      * @see 
      * AbstractCodeGenProgram#display()
@@ -232,6 +235,7 @@ public class DecacCompiler {
 
         addComment("start main program");
         prog.codeGenProgram(this);
+        // todo cnager de codegen pour arm
         addComment("end main program");
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
@@ -246,6 +250,7 @@ public class DecacCompiler {
         LOG.info("Writing assembler file ...");
 
         program.display(new PrintStream(fstream));
+        //TODO changer de display pour arm
         LOG.info("Compilation of " + sourceName + " successful.");
         return false;
     }

@@ -18,4 +18,9 @@ public class ImmediateFloat extends DVal {
     public String toString() {
         return "#" + Float.toHexString(value);
     }
+
+    @Override
+    public String toArmString() {
+        return this.toString();
+    }
 }

@@ -9,7 +9,7 @@ import java.io.PrintStream;
  * @date 01/01/2023
  */
 public abstract class Instruction {
-    String getName() {
+    protected String getName() {
         return this.getClass().getSimpleName();
     }
     abstract void displayOperands(PrintStream s);

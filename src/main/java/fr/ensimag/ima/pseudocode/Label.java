@@ -15,7 +15,9 @@ public class Label extends Operand {
     public String toString() {
         return name;
     }
-
+    public String toArmString() {
+        return name;
+    }
     public Label(String name) {
         super();
         Validate.isTrue(name.length() <= 1024, "Label name too long, not supported by IMA");

@@ -26,4 +26,8 @@ public class LabelOperand extends DVal {
         return label.toString();
     }
 
+    @Override
+    public String toArmString() {
+        return label.toArmString();
+    }
 }

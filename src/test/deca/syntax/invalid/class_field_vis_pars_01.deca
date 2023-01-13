@@ -1,0 +1,13 @@
+// Description:
+//    Programme testant la déclaration d'une méthode .
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A {
+    private int x;
+}

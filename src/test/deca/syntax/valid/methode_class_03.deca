@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant la déclaration d'une méthode .
+//
+// Resultats:
+//      1.2
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A {
+    int x(int y) {
+        float u = 1.2;
+        println(u);
+    }
+}

@@ -6,7 +6,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
-import sun.jvm.hotspot.opto.Block;
+//import sun.jvm.hotspot.opto.Block;
 
 import java.io.PrintStream;
 

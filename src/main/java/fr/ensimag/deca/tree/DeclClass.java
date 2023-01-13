@@ -1,8 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.ClassType;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -47,6 +46,21 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
+
+        EnvironmentType envTypes = new EnvironmentType(compiler);
+        System.out.println(envTypes.OBJECT.getDefinition());
+        superClass.setDefinition(envTypes.OBJECT.getDefinition());
+        ClassType classtype = new ClassType(name.getName(),getLocation(),superClass.getClassDefinition());
+        this.name.setType(classtype);
+        this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
+
+
+        try{
+            compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
+        }catch(EnvironmentType.DoubleDefException e){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Class name already used", this.getLocation());
+        }
 
     }
 

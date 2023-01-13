@@ -518,8 +518,13 @@ list_classes returns[ListDeclClass tree]
     ;
 
 class_decl returns[DeclClass tree]
-    : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
-        $tree = new DeclClass($name.tree, $superclass.tree, $class_body.tree);
+@init   {
+            ListDeclField lf = new ListDeclField();
+            ListDeclMethod lm = new ListDeclMethod();
+        }
+    : CLASS name=ident superclass=class_extension
+    OBRACE class_body[lf, lm] CBRACE {
+        $tree = new DeclClass($name.tree, $superclass.tree, lf, lm);
         setLocation($tree, $CLASS);
         }
     ;
@@ -534,23 +539,19 @@ class_extension returns[AbstractIdentifier tree]
         }
     ;
 
-class_body returns[ClassBody tree]
+class_body[ListDeclField lf, ListDeclMethod lm]
 @init   {
-            ListDeclField listDeclField = new ListDeclField();
-            ListDeclMethod listDeclMethod = new ListDeclMethod();
         }
     : (m=decl_method {
-         listDeclMethod.add($m.tree);
+         $lm.add($m.tree);
         }
-      | decl_field_set[listDeclField] {
-      }
-      )* {
-        $tree = new ClassBody(listDeclField, listDeclMethod);
-      }
-    ;
+      | decl_field_set[$lf]
+      )*
+      ;
 
 decl_field_set[ListDeclField l]
     : v=visibility t=type list_decl_field[$l, $v.tree, $t.tree] SEMI
+
     ;
 
 visibility returns[Visibility tree]

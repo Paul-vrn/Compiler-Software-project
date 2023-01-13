@@ -43,15 +43,18 @@ public class DeclField extends AbstractDeclField {
         s.print(";");
     }
 
-
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.type.prettyPrint(s, prefix, false);
+        this.fieldName.prettyPrint(s, prefix, true);
+        this.initialization.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.type.iter(f);
+        this.fieldName.iter(f);
+        this.initialization.iter(f);
     }
 
     @Override

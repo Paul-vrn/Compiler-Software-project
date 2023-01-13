@@ -36,12 +36,14 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        listDeclField.prettyPrint(s, prefix, false);
+        listInst.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        listDeclField.iter(f);
+        listInst.iter(f);
     }
 
     @Override

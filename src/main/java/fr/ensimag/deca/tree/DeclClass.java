@@ -18,24 +18,31 @@ public class DeclClass extends AbstractDeclClass {
 
     private AbstractIdentifier name;
     private AbstractIdentifier superClass;
-    private ClassBody body;
+    private ListDeclMethod methods;
+    private ListDeclField fieldSets;
 
     public DeclClass(AbstractIdentifier name, AbstractIdentifier superClass,
-            ClassBody body) {
+                     ListDeclField lf, ListDeclMethod lm) {
         Validate.notNull(name);
-        Validate.notNull(superClass);
-        Validate.notNull(body);
         this.name = name;
         this.superClass = superClass;
-        this.body = body;
+        this.fieldSets = lf;
+        this.methods = lm;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
         name.decompile(s);
-        s.print(" extends ");
-        superClass.decompile(s);
-        body.decompile(s);
+        if (superClass != null) {
+            s.print(" extends ");
+            superClass.decompile(s);
+        }
+        s.println(" {");
+        s.indent();
+        fieldSets.decompile(s);
+        methods.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
     @Override
@@ -57,12 +64,22 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.name.prettyPrint(s, prefix, false);
+        if (this.superClass != null) {
+            this.superClass.prettyPrint(s, prefix, true);
+        }
+        this.fieldSets.prettyPrint(s, prefix, true);
+        this.methods.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        this.name.iter(f);
+        if (this.superClass != null) {
+            this.superClass.iter(f);
+        }
+        this.fieldSets.iter(f);
+        this.methods.iter(f);
     }
 
 }

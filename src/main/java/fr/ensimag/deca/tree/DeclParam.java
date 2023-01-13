@@ -31,11 +31,13 @@ public class DeclParam extends Tree {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        type.prettyPrint(s, prefix, false);
+        varName.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        type.iter(f);
+        varName.iter(f);
     }
 }

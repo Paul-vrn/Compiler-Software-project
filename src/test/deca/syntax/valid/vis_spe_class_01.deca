@@ -1,0 +1,13 @@
+// Description:
+//    Programme testant la déclaration de champs.
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A {
+    protected int x, y=x;
+}

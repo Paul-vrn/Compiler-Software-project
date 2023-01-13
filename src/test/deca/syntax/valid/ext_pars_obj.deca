@@ -1,0 +1,13 @@
+// Description:
+//    Programme testant l'implémentation de "extends".
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A extends {
+
+}

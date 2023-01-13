@@ -1,0 +1,14 @@
+// Description:
+//    Programme testant la déclaration imbriquée d'une classe.
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A {
+    class C {
+    }
+}

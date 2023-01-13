@@ -1,0 +1,15 @@
+// Description:
+//    Programme testant la déclaration d'une méthode .
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+class A {
+    int x(int y) {
+        "Hello";
+    }
+}

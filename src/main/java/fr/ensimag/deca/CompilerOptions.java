@@ -1,6 +1,7 @@
 package fr.ensimag.deca;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,14 +50,9 @@ public class CompilerOptions {
 
     public void enableVerification(){this.verificationEnabled = true;}
 
-    public boolean getNoCheck(){return noCheck;}
+    public void enableARM(){this.optionARM = true;}
 
-    public void enableNoCheck(){this.noCheck = true;}
-
-    public void enableArmCompilation(){this.armCompilation = true;}
-
-    public boolean getARMCompilation(){return armCompilation;}
-
+    
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
@@ -67,8 +63,8 @@ public class CompilerOptions {
     private boolean verificationEnabled = false;
     private boolean printBanner = false;
     private boolean parallel = false;
-    private boolean noCheck = false;
-    private boolean armCompilation = false;
+
+    private boolean optionARM = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
@@ -113,6 +109,9 @@ public class CompilerOptions {
             File file = new File(argsArrayList.get(i));
             while (!file.exists()) {
                 switch (argsArrayList.get(i)) {
+                    case "-ARM":
+                        enableARM();
+                        break;
                     case "-p":
                         enableDecompilation();
                         break;
@@ -120,8 +119,7 @@ public class CompilerOptions {
                         enableVerification();
                         break;
                     case "-n":
-                        enableNoCheck();
-                        break;
+                        throw new UnsupportedOperationException("-n not yet implemented");
                     case "-r":
                         i++;
                         int newRMAX = Integer.parseInt(argsArrayList.get(i));
@@ -136,9 +134,6 @@ public class CompilerOptions {
                         throw new UnsupportedOperationException("-d not yet implemented");
                     case "-P":
                         enableParallel();
-                        break;
-                    case "-ARM":
-                        enableArmCompilation();
                         break;
                     default:
                         throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));

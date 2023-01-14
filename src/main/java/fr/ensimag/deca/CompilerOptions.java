@@ -50,6 +50,8 @@ public class CompilerOptions {
 
     public void enableVerification(){this.verificationEnabled = true;}
 
+    public void enableARM(){this.optionARM = true;}
+
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -61,6 +63,8 @@ public class CompilerOptions {
     private boolean verificationEnabled = false;
     private boolean printBanner = false;
     private boolean parallel = false;
+
+    private boolean optionARM = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
@@ -105,6 +109,9 @@ public class CompilerOptions {
             File file = new File(argsArrayList.get(i));
             while (!file.exists()) {
                 switch (argsArrayList.get(i)) {
+                    case "-ARM":
+                        enableARM();
+                        break;
                     case "-p":
                         enableDecompilation();
                         break;

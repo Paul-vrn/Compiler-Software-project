@@ -25,8 +25,7 @@ public class RegisterOffset extends DAddr {
         return offset + "(" + register + ")";
     }
 
-    @Override
-    public String toArmString() {
-        return "[" + register.toArmString() + ", #" + offset + "]";
+    public String toARMString() {
+        return "[" + register + ", #" + offset + "]";
     }
 }

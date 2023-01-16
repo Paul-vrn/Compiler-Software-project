@@ -1,8 +1,0 @@
-{
-	int a = 4;
-	float b = 0x1.066666p2;
-	float c = (a * b);
-	float d = (a + b);
-	float e = (b - a);
-	int f = (a / a);
-}

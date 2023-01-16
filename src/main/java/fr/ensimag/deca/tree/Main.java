@@ -8,6 +8,10 @@ import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
@@ -56,6 +60,16 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
         compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
+    }
+
+    @Override
+    protected void armCodeGenMain(DecacCompiler compiler) {
+        compiler.addComment("Beginning of main instructions:");
+        compiler.addData(new Line(new Label("int"), new ASCII(new ImmediateString("%d"))));
+        compiler.addData(new Line(new Label("float"), new ASCII(new ImmediateString("%f"))));
+
+        declVariables.armCodeGenListDeclVar(compiler);
+        insts.armCodeGenListInst(compiler);
     }
     
     @Override

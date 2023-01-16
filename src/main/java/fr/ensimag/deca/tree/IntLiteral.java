@@ -3,12 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
 import fr.ensimag.ima.pseudocode.arm.instructions.BL;
 import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
+import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
@@ -48,6 +47,12 @@ public class IntLiteral extends AbstractExpr {
     @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         //compiler.addInstruction(new LDR(new Label("t"), RegisterARM.getR(n)));
         //todo mov r0, =Label de "%d"
+
+        Label strLabel = new Label("str" + compiler.getLabelFactory().nbString());
+        compiler.addInstruction(new MOV(new LabelOperand(strLabel), Register.R0));
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+
+
         compiler.addInstruction(new LDR(new ImmediateInteger(value), RegisterARM.getR(1)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }

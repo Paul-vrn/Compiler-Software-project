@@ -32,7 +32,7 @@ public class ListInst extends TreeList<AbstractInst> {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
         }
 
-        //TO DO : not finished ?
+        //TODO : not finished ?
     }
 
     public void codeGenListInst(DecacCompiler compiler) {
@@ -40,7 +40,11 @@ public class ListInst extends TreeList<AbstractInst> {
             i.codeGenInst(compiler);
         }
     }
-
+    public void armCodeGenListInst(DecacCompiler compiler) {
+        for (AbstractInst i : getList()) {
+            i.armCodeGenInst(compiler);
+        }
+    }
     public void codeGenIf(DecacCompiler compiler,int p){
         for (AbstractInst i : getList()) {
             if(i instanceof IfThenElse){

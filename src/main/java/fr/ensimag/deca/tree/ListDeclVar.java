@@ -49,4 +49,6 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
         }
     }
 
+    public void armCodeGenListDeclVar(DecacCompiler compiler) {
+    }
 }

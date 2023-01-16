@@ -22,6 +22,11 @@ public class Print extends AbstractPrint {
     }
 
     @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+        super.codeGenInstARM(compiler);
+    }
+
+    @Override
     String getSuffix() {
         return "";
     }

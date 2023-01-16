@@ -28,6 +28,7 @@ public class AbstractCodeGenProgram {
         lines.add(new Line(null, i, s));
     }
 
+    public void addData(Line l) {};
     /**
      * Add a line at the front of the program.
      */
@@ -73,6 +74,10 @@ public class AbstractCodeGenProgram {
 
     public void addIndex(int i, Instruction inst) {
         addIndex(i, new Line(inst));
+    }
+
+    public void append(AbstractCodeGenProgram p) {
+        lines.addAll(p.lines);
     }
 
 }

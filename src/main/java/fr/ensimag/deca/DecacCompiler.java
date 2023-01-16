@@ -116,6 +116,7 @@ public class DecacCompiler {
     public void addFirst(Line l){
         program.addFirst(l);
     }
+    public void addData(Line l) { program.addData(l);}
     /**
      * @see 
      * AbstractCodeGenProgram#display()
@@ -234,8 +235,11 @@ public class DecacCompiler {
         program = (compilerOptions.getARMCompilation()) ? new ARMProgram() : new IMAProgram();
 
         addComment("start main program");
-        prog.codeGenProgram(this);
-        // todo cnager de codegen pour arm
+        if (compilerOptions.getARMCompilation()) {
+            prog.armCodeGenProgram(this);
+        } else {
+            prog.codeGenProgram(this);
+        }
         addComment("end main program");
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);

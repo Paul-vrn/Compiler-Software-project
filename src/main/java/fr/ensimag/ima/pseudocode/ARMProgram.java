@@ -1,5 +1,9 @@
 package fr.ensimag.ima.pseudocode;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.LinkedList;
+
 /**
  * Abstract representation of an IMA program, i.e. set of Lines.
  *
@@ -8,8 +12,26 @@ package fr.ensimag.ima.pseudocode;
  */
 public class ARMProgram extends AbstractCodeGenProgram {
 
-    public void append(ARMProgram p) {
-        lines.addAll(p.lines);
+    protected final LinkedList<AbstractLine> linesData = new LinkedList<AbstractLine>();
+
+    public void addData(AbstractLine line) {
+        linesData.add(line);
     }
 
+    @Override
+    /**
+     * Display the program in a textual form readable by IMA to stream s.
+     */
+    public void display(PrintStream s) {
+        s.println(".data");
+        for (AbstractLine l: linesData) {
+            l.display(s);
+        }
+        s.println(".text");
+        s.println(".global main");
+        s.println("main:");
+        for (AbstractLine l: lines) {
+            l.display(s);
+        }
+    }
 }

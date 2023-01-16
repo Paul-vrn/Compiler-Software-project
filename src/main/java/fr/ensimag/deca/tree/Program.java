@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -47,6 +48,13 @@ public class Program extends AbstractProgram {
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
         compiler.getLabelFactory().createErrorSection(compiler);
+    }
+
+    @Override
+    public void armCodeGenProgram(DecacCompiler compiler) {
+        compiler.addComment("Main program");
+        main.armCodeGenMain(compiler);
+        //compiler.getLabelFactory().createErrorSection(compiler);
     }
 
     @Override

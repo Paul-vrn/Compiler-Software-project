@@ -16,7 +16,9 @@ public class Line extends AbstractLine {
         this.instruction = instruction;
         this.comment = comment;
     }
-
+    public Line(Label label, Instruction instruction) {
+        this(label, instruction, null);
+    }
     public Line(Instruction instruction) {
         super();
         this.instruction = instruction;

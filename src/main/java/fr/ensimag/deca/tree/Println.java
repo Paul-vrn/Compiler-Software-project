@@ -27,6 +27,12 @@ public class Println extends AbstractPrint {
     }
 
     @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+        super.codeGenInstARM(compiler);
+        // TODO print "\n"
+    }
+
+    @Override
     String getSuffix() {
         return "ln";
     }

@@ -27,6 +27,10 @@ public class NoOperation extends AbstractInst {
     protected void codeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

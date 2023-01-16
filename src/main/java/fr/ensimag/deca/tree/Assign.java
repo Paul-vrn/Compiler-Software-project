@@ -75,6 +75,11 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+
+    }
+
+    @Override
     protected String getOperatorName() {
         return "=";
     }

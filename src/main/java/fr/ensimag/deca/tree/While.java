@@ -57,6 +57,10 @@ public class While extends AbstractInst {
         compiler.addInstruction(new CMP(1, Register.getR(2)));
         compiler.addInstruction(new BEQ(labelStart));
     }
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,

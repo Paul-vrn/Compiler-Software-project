@@ -50,4 +50,8 @@ public class Divide extends AbstractOpArith {
         return "/";
     }
 
+    @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+
+    }
 }

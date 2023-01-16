@@ -182,6 +182,9 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);

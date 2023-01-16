@@ -62,6 +62,9 @@ public class IfThenElse extends AbstractInst {
         this.codeGenIf(compiler, 0);
     }
 
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+    }
     protected void codeGenIf(DecacCompiler compiler, int p) {
         int nbIf = compiler.getLabelFactory().getNbIfThenElse();
         Label labelElse = new Label("ELSE_" + nbIf + "_" + p);

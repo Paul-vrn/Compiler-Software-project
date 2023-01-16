@@ -6,3 +6,16 @@ class A {
     int z(){
     	return(1);}
     }
+
+class B extends A {
+	int a;
+	int b;
+	int c;
+	int d;
+	int e(){
+	}
+	int f(){
+	}
+	int g(){
+	}
+}

@@ -1,6 +1,6 @@
 package fr.ensimag.ima.pseudocode.instructions;
 
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.UnaryInstruction;
 
 /**
@@ -8,7 +8,7 @@ import fr.ensimag.ima.pseudocode.UnaryInstruction;
  * @date 01/01/2023
  */
 public class PUSH extends UnaryInstruction {
-    public PUSH(Register op1) {
+    public PUSH(RegisterIMA op1) {
         super(op1);
     }
 }

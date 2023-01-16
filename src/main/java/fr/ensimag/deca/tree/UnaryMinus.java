@@ -7,7 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.arm.instructions.RSB;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -43,7 +43,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         getOperand().codeGenExpr(compiler, n);
-        compiler.addInstruction(new OPP(Register.getR(n), Register.getR(n)));
+        compiler.addInstruction(new OPP(RegisterIMA.getR(n), RegisterIMA.getR(n)));
     }
 
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {

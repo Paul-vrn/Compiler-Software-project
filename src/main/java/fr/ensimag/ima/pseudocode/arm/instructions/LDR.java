@@ -2,7 +2,7 @@ package fr.ensimag.ima.pseudocode.arm.instructions;
 
 import fr.ensimag.ima.pseudocode.BinaryInstructionDValToReg;
 import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.GPRegisterIMA;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 
 /**
@@ -11,11 +11,11 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
  */
 public class LDR extends BinaryInstructionDValToReg {
 
-    public LDR(DVal op1, GPRegister op2) {
+    public LDR(DVal op1, GPRegisterIMA op2) {
         super(op1, op2);
     }
 
-    public LDR(int i, GPRegister r) {
+    public LDR(int i, GPRegisterIMA r) {
         this(new ImmediateInteger(i), r);
     }
 

@@ -4,12 +4,10 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
 import fr.ensimag.ima.pseudocode.arm.instructions.BL;
 import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 
@@ -41,7 +39,7 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(new ImmediateInteger(value), Register.getR(n)));
+        compiler.addInstruction(new LOAD(new ImmediateInteger(value), RegisterIMA.getR(n)));
     }
 
     @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
@@ -49,7 +47,7 @@ public class IntLiteral extends AbstractExpr {
         //todo mov r0, =Label de "%d"
 
         Label strLabel = new Label("str" + compiler.getLabelFactory().nbString());
-        compiler.addInstruction(new MOV(new LabelOperand(strLabel), Register.R0));
+        compiler.addInstruction(new MOV(new LabelOperand(strLabel), RegisterIMA.R0));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
 
 

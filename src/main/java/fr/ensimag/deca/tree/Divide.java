@@ -3,8 +3,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 
-import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.GPRegisterIMA;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 
@@ -21,26 +21,26 @@ public class Divide extends AbstractOpArith {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         getLeftOperand().codeGenExpr(compiler, n);
-        GPRegister regRight = null;
-        if (n < Register.RMAX) {
+        GPRegisterIMA regRight = null;
+        if (n < RegisterIMA.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            regRight = Register.getR(n + 1);
+            regRight = RegisterIMA.getR(n + 1);
         } else {
-            compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
             getRightOperand().codeGenExpr(compiler, n);
-            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-            compiler.addInstruction(new POP(Register.getR(n)));
-            regRight = Register.R0;
+            compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.R0));
+            compiler.addInstruction(new POP(RegisterIMA.getR(n)));
+            regRight = RegisterIMA.R0;
         }
 
         if(this.getType().isFloat()){
             compiler.getLabelFactory().createTestDiv0(compiler, regRight, false);
-            compiler.addInstruction(new DIV(regRight, Register.getR(n)));
+            compiler.addInstruction(new DIV(regRight, RegisterIMA.getR(n)));
             compiler.getLabelFactory().createTestOverflow(compiler);
         }
         else{
             compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
-            compiler.addInstruction(new QUO(regRight, Register.getR(n)));
+            compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
         }
     }
 

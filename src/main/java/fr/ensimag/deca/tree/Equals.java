@@ -2,7 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -26,6 +26,6 @@ public class Equals extends AbstractOpExactCmp {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         super.codeGenExpr(compiler, n);
-        compiler.addInstruction(new SEQ(Register.getR(n)));
+        compiler.addInstruction(new SEQ(RegisterIMA.getR(n)));
     }
 }

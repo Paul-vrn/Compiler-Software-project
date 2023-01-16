@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -10,7 +9,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -73,7 +72,7 @@ public class IfThenElse extends AbstractInst {
             compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
         }
         condition.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new CMP(0, Register.getR(2)));
+        compiler.addInstruction(new CMP(0, RegisterIMA.getR(2)));
         compiler.addInstruction(new BEQ(labelElse));
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));

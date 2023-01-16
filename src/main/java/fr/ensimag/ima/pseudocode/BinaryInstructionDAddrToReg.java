@@ -9,7 +9,7 @@ package fr.ensimag.ima.pseudocode;
  */
 public class BinaryInstructionDAddrToReg extends BinaryInstructionDValToReg {
 
-    public BinaryInstructionDAddrToReg(DAddr op1, GPRegister op2) {
+    public BinaryInstructionDAddrToReg(DAddr op1, GPRegisterIMA op2) {
         super(op1, op2);
     }
 

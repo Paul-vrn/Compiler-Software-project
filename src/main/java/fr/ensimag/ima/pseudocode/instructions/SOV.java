@@ -1,6 +1,6 @@
 package fr.ensimag.ima.pseudocode.instructions;
 
-import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.GPRegisterIMA;
 import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
 
 /**
@@ -10,7 +10,7 @@ import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
  */
 public class SOV extends UnaryInstructionToReg {
 
-    public SOV(GPRegister op) {
+    public SOV(GPRegisterIMA op) {
         super(op);
     }
 

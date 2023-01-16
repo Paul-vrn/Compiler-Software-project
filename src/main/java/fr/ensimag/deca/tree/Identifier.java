@@ -7,7 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
@@ -23,12 +23,16 @@ import org.apache.commons.lang.Validate;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterIMA.GB));
+    }
+
+    public void armCodeGenDeclVar(DecacCompiler compiler){
+        //this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterARM.FP));
     }
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), RegisterIMA.R1));
         if (getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()) {
@@ -140,7 +144,7 @@ public class Identifier extends AbstractIdentifier {
 
 
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), RegisterIMA.getR(n)));
     }
 
     /**

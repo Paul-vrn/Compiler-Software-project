@@ -1,6 +1,6 @@
 package fr.ensimag.ima.pseudocode.instructions;
 
-import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.GPRegisterIMA;
 import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
 
 /**
@@ -8,7 +8,7 @@ import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
  * @date 01/01/2023
  */
 public class SHR extends UnaryInstructionToReg {
-    public SHR(GPRegister op1) {
+    public SHR(GPRegisterIMA op1) {
         super(op1);
     }
 }

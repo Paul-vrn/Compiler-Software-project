@@ -10,7 +10,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -144,7 +144,7 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        compiler.addInstruction(new LOAD(RegisterIMA.getR(2), RegisterIMA.R1));
         if (getType().isInt()){
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()){

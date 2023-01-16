@@ -17,7 +17,7 @@ public class RegisterARM extends DVal {
         return name;
     }
 
-    @Override
+
     public String toArmString() {
         return this.toString();
     }
@@ -44,38 +44,38 @@ public class RegisterARM extends DVal {
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
      */
-    private static final GPRegister[] R = initRegisters();
+    private static final GPRegisterIMA[] R = initRegisters();
     /**
      * General Purpose Registers
      */
-    public static GPRegister getR(int i) {
+    public static GPRegisterIMA getR(int i) {
         return R[i];
     }
 
-    private static final GPRegister[] S = initFloatRegisters();
+    private static final GPRegisterIMA[] S = initFloatRegisters();
 
-    public static GPRegister getS(int i) {
+    public static GPRegisterIMA getS(int i) {
         return S[i];
     }
     /**
      * Convenience shortcut for R[7] Syscall number
      */
-    public static final GPRegister R7 = R[7];
+    public static final GPRegisterIMA R7 = R[7];
 
     public static int RMAX = 10;
 
-    static private GPRegister[] initRegisters() {
-        GPRegister [] res = new GPRegister[10];
+    static private GPRegisterIMA[] initRegisters() {
+        GPRegisterIMA[] res = new GPRegisterIMA[10];
         for (int i = 0; i <= 9; i++) {
-            res[i] = new GPRegister("R" + i, i);
+            res[i] = new GPRegisterIMA("R" + i, i);
         }
         return res;
     }
 
-    static private GPRegister[] initFloatRegisters() {
-        GPRegister [] res = new GPRegister[32];
+    static private GPRegisterIMA[] initFloatRegisters() {
+        GPRegisterIMA[] res = new GPRegisterIMA[32];
         for (int i = 0; i <= 31; i++) {
-            res[i] = new GPRegister("S" + i, i);
+            res[i] = new GPRegisterIMA("S" + i, i);
         }
         return res;
     }

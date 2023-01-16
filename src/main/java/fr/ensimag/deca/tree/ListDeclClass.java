@@ -5,7 +5,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.log4j.Logger;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.ima.pseudocode.NullOperand;
 
@@ -53,14 +53,14 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         for(AbstractDeclClass AbstractC : getList()) {
             DeclClass C = (DeclClass) AbstractC;
             Identifier supperClassID = (Identifier) C.getSuperClass();
-            supperClassID.getClassDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+            supperClassID.getClassDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterIMA.GB));
             if(supperClassID != null) {
-                compiler.addInstruction(new LOAD(supperClassID.getClassDefinition().getOperand(), Register.R1));
-                compiler.addInstruction(new PUSH(Register.R1));
+                compiler.addInstruction(new LOAD(supperClassID.getClassDefinition().getOperand(), RegisterIMA.R1));
+                compiler.addInstruction(new PUSH(RegisterIMA.R1));
             }
             else {
-                compiler.addInstruction(new LOAD(new NullOperand(), Register.R1));
-                compiler.addInstruction(new PUSH(Register.R1));
+                compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.R1));
+                compiler.addInstruction(new PUSH(RegisterIMA.R1));
             }
         }
     }

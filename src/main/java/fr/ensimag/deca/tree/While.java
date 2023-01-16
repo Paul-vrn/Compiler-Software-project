@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -10,7 +9,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -54,7 +53,7 @@ public class While extends AbstractInst {
         body.codeGenListInst(compiler);
         compiler.addLabel(labelCond);
         condition.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new CMP(1, Register.getR(2)));
+        compiler.addInstruction(new CMP(1, RegisterIMA.getR(2)));
         compiler.addInstruction(new BEQ(labelStart));
     }
     @Override

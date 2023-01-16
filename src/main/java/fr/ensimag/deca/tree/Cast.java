@@ -8,10 +8,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import org.apache.commons.lang.Validate;
 
 public class Cast extends AbstractExpr{
     private AbstractIdentifier type;
@@ -48,9 +46,9 @@ public class Cast extends AbstractExpr{
     public void codeGenExpr(DecacCompiler compiler, int n) {
         getExpr().codeGenExpr(compiler, n);
         if (getType().isInt()) {
-            compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
+            compiler.addInstruction(new INT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         } else if (getType().isFloat()) {
-            compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+            compiler.addInstruction(new FLOAT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         }
     }
 

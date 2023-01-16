@@ -1,0 +1,17 @@
+// Description:
+//    Programme testant la déclaration d'une class.
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+{
+class A {
+
+    int x(int y, boolean z, float o) {
+    }
+}
+}

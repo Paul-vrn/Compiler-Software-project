@@ -181,6 +181,14 @@ public class CodegenTest {
     }
 
 
+    @Test
+    void test23Include() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/include.deca"};
+        String file2 = "src/test/deca/codegen/valid/include_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+
 
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);

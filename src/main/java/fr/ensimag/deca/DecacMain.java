@@ -44,11 +44,11 @@ public class DecacMain {
             System.out.println("This is the " + "\033[1;91m" + "decac" + "\u001B[0m" + " compiler\n" +
                     "To use it follow this syntax : \n" + "\033[1;37m" + "decac [[-p | -v] [-n] [-r X] [-d]* [-P] [-w] <source deca file(s)>...] | [-b]\n" + "\u001B[0m"
                     + "Options : " +
-                    "\n-p : After the lexing and parsing operation, decompiles the code and send it to a file\n"+
+                    "\n-p : After the lexing and parsing operations, decompiles the code and prints it in the terminal\n"+
                     "-v : Stops the program after the verification process (no output in the absence of problems)\n"+
                     "(note that option -p and -v are incompatible\n"+
                     "-n : No check, removes execution checks\n" +
-                    "-r X : pas compris\n"+
+                    "-r X : limits the number of available registers (4<= X <= 16)\n"+
                     "-d : Debug option, enables debug trace. Repeat the option to get more traces\n" +
                     "-P : Parallel, if there are multiple source files, compiles concurrently");
         }

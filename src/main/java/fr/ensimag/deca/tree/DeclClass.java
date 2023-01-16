@@ -21,6 +21,10 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclMethod methods;
     private ListDeclField fieldSets;
 
+    AbstractIdentifier getSuperClass(){
+        return superClass;
+    }
+
     public DeclClass(AbstractIdentifier name, AbstractIdentifier superClass,
                      ListDeclField lf, ListDeclMethod lm) {
         Validate.notNull(name);

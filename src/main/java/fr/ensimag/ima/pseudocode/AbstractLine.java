@@ -9,5 +9,5 @@ import java.io.PrintStream;
  * @date 01/01/2023
  */
 public abstract class AbstractLine {
-    abstract void display(PrintStream s);
+    abstract void display(PrintStream s, boolean arm);
 }

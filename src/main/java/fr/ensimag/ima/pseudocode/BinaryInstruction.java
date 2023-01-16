@@ -30,9 +30,9 @@ public class BinaryInstruction extends Instruction {
 
     void armDisplayOperands(PrintStream s) {
         s.print(" ");
-        s.print(operand2);
+        s.print(operand2.toArmString());
         s.print(", ");
-        s.print(operand1);
+        s.print(operand1.toArmString());
     }
 
     protected BinaryInstruction(Operand op1, Operand op2) {

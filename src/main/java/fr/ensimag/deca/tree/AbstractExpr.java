@@ -178,7 +178,8 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    protected void codeGenPrintARM(DecacCompiler compiler, boolean printHex) {
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        System.out.println(this.getClass().getName());
         throw new UnsupportedOperationException("not yet implemented");
     }
 

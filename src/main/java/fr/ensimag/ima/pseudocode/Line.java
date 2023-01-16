@@ -1,6 +1,7 @@
 package fr.ensimag.ima.pseudocode;
 
 import java.io.PrintStream;
+import java.util.Objects;
 
 /**
  * Line of code in an IMA program.
@@ -52,23 +53,23 @@ public class Line extends AbstractLine {
     private Label label;
 
     @Override
-    void display(PrintStream s) {
+    void display(PrintStream s, boolean arm) {
         boolean tab = false;
         if (label != null) {
             s.print(label);
-                        s.print(":");
+            s.print(":");
             tab = true;
         }
         if (instruction != null) {
             s.print("\t");
-            instruction.display(s);
+            instruction.display(s, arm);
             tab = true;
         }
         if (comment != null) {
             if (tab) {
                             s.print("\t");
                         }
-            s.print("; " + comment);
+            s.print(((arm) ? "@ " : "; " )+ comment);
         }
         s.println();
     }
@@ -95,5 +96,18 @@ public class Line extends AbstractLine {
 
     public Label getLabel() {
         return label;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Line)) return false;
+        Line line = (Line) o;
+        return Objects.equals(label, line.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(instruction, comment, label);
     }
 }

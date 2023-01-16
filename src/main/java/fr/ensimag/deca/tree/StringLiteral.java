@@ -6,6 +6,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
 import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
@@ -43,12 +44,14 @@ public class StringLiteral extends AbstractStringLiteral {
         compiler.addInstruction(new WSTR(new ImmediateString(value)));
     }
 
-    protected void armCodeGenPrint(DecacCompiler compiler) {
+    @Override
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
         Label strLabel = new Label("str" + compiler.getLabelFactory().nbString());
         compiler.addData(new Line(strLabel, new ASCII(new ImmediateString(value))));
-        compiler.addInstruction(new MOV(new LabelOperand(strLabel), RegisterIMA.R0));
+        compiler.addInstruction(new LDR(new LabelOperand(strLabel), RegisterARM.getR(0)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("\"");

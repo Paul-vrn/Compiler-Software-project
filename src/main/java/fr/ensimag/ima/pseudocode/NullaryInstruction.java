@@ -13,4 +13,8 @@ public abstract class NullaryInstruction extends Instruction {
     void displayOperands(PrintStream s) {
         // no operand
     }
+    @Override
+    void armDisplayOperands(PrintStream s) {
+        // no operand
+    }
 }

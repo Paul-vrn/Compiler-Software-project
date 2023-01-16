@@ -18,6 +18,11 @@ public abstract class UnaryInstruction extends Instruction {
         s.print(operand);
     }
 
+    @Override
+    void armDisplayOperands(PrintStream s) {
+        s.print(" ");
+        s.print(operand.toArmString());
+    }
     protected UnaryInstruction(Operand operand) {
         Validate.notNull(operand);
         this.operand = operand;

@@ -29,11 +29,11 @@ public class TernaryInstruction extends Instruction {
     }
 
     void armDisplayOperands(PrintStream s) {
-        s.print(operand3);
+        s.print(operand3.toArmString());
         s.print(", ");
-        s.print(operand2);
+        s.print(operand2.toArmString());
         s.print(", ");
-        s.print(operand1);
+        s.print(operand1.toArmString());
     }
     protected TernaryInstruction(Operand op1, Operand op2, Operand op3) {
         Validate.notNull(op1);

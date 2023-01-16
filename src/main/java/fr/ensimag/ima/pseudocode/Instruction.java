@@ -13,8 +13,13 @@ public abstract class Instruction {
         return this.getClass().getSimpleName();
     }
     abstract void displayOperands(PrintStream s);
-    void display(PrintStream s) {
+    abstract void armDisplayOperands(PrintStream s);
+    void display(PrintStream s, boolean arm) {
         s.print(getName());
-        displayOperands(s);
+        if (arm) {
+            armDisplayOperands(s);
+        } else {
+            displayOperands(s);
+        }
     }
 }

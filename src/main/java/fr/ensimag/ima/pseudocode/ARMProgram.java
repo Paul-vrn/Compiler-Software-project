@@ -14,6 +14,7 @@ public class ARMProgram extends AbstractCodeGenProgram {
 
     protected final LinkedList<AbstractLine> linesData = new LinkedList<AbstractLine>();
 
+    @Override
     public void addData(AbstractLine line) {
         linesData.add(line);
     }
@@ -25,13 +26,13 @@ public class ARMProgram extends AbstractCodeGenProgram {
     public void display(PrintStream s) {
         s.println(".data");
         for (AbstractLine l: linesData) {
-            l.display(s);
+            l.display(s, true);
         }
         s.println(".text");
         s.println(".global main");
         s.println("main:");
         for (AbstractLine l: lines) {
-            l.display(s);
+            l.display(s, true);
         }
     }
 }

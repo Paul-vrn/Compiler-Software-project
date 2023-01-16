@@ -8,10 +8,10 @@ import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.ImmediateString;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
+import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
@@ -70,6 +70,9 @@ public class Main extends AbstractMain {
 
         declVariables.armCodeGenListDeclVar(compiler);
         insts.armCodeGenListInst(compiler);
+
+        compiler.addInstruction(new MOV(new ImmediateInteger(0), RegisterARM.getR(0)));
+        compiler.addInstruction(new BL(new Label("exit")));
     }
     
     @Override

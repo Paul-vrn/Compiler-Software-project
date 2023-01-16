@@ -28,7 +28,7 @@ public class AbstractCodeGenProgram {
         lines.add(new Line(null, i, s));
     }
 
-    public void addData(Line l) {};
+    public void addData(AbstractLine l) {};
     /**
      * Add a line at the front of the program.
      */
@@ -42,7 +42,7 @@ public class AbstractCodeGenProgram {
      */
     public void display(PrintStream s) {
         for (AbstractLine l: lines) {
-            l.display(s);
+            l.display(s, false);
         }
     }
 

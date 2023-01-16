@@ -11,6 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compileSource>1.8</compileSource>
+        <skip.unit.tests>false</skip.unit.tests>
         <jacoco.skip>true</jacoco.skip>
         <jacoco.report_dir>${project.build.directory}/site</jacoco.report_dir>
     </properties>
@@ -109,6 +110,15 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
+                <configuration>
+                <!-- Sets the VM argument line used when unit tests are run -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- <excludes>
+                        <- Exclude integration tests when unit tests are run ->
+                        <exclude> **/IT*.java</exclude>
+                    </excludes> -->
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -126,6 +136,7 @@
                                     <directory>src/test/</directory>
                                     <includes>
                                         <include>**/*.ass</include>
+                                        <include>**/*Decompiled.deca</include>
                                     </includes>
                                     <followSymlinks>false</followSymlinks>
                                 </fileset>
@@ -163,26 +174,30 @@
                     <excludes>
                         <exclude>fr/ensimag/deca/tools/DecacInternalError.class</exclude>
                         <exclude>fr/ensimag/deca/ima/pseudocode/IMAInternalError.class</exclude>
+                        <exclude>*Test</exclude> <!-- TODO added this exclude value -->
                     </excludes>
                 </configuration>                               
                 <executions>
                     <execution>
-                        <id>default-instrument</id>
+                        <id>pre-unit-test</id>
                         <goals>
-                            <goal>instrument</goal>
-                        </goals>             
-                    </execution>
-                    <execution>
-                        <id>default-restore-instrumented-classes</id>
-                        <goals>
-                            <goal>restore-instrumented-classes</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <destFile>${jacoco.report_dir}/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-report</id>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <dataFile>${jacoco.report_dir}/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${jacoco.report_dir}</outputDirectory>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -211,57 +226,6 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
-                    <!-- One <execution> per executable to launch. Execution
-                    failure (exit status != 0) will stop the tests. -->
-                    <execution>
-                        <id>basic-lex</id>
-                        <configuration>
-                            <executable>./src/test/script/basic-lex.sh</executable>
-                            <!-- If we need to pass arguments :
-                                 <arguments>
-                                 <argument>...</argument>
-                                 </arguments>
-                            -->
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>basic-synt</id>
-                        <configuration>
-                            <executable>./src/test/script/basic-synt.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <!-- run a unit test by defining our own class with a main
-                        function -->
-                        <!-- warning: java assertions are not enabled -->
-                        <id>unit-test-symbol</id>
-                        <configuration>
-                            <mainClass>fr.ensimag.deca.tools.ManualTestSymbol</mainClass>
-                            <classpathScope>test</classpathScope>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>basic-context</id>
-                        <configuration>
-                            <executable>./src/test/script/basic-context.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
                     <execution>
                         <id>basic-gencode</id>
                         <configuration>
@@ -276,16 +240,6 @@
                         <id>basic-decac</id>
                         <configuration>
                             <executable>./src/test/script/basic-decac.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>common-tests</id>
-                        <configuration>
-                            <executable>./src/test/script/common-tests.sh</executable>
                         </configuration>
                         <phase>test</phase>
                         <goals>

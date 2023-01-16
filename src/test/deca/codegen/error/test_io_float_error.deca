@@ -1,0 +1,15 @@
+// Description:
+//    lecture eronné d'un float
+//
+// Resultats:
+//    Error: Input/Output error
+//
+//
+// Historique:
+//    cree le 01/01/2023
+{
+    float x = readFloat();
+    println(x);
+}
+
+

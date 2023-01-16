@@ -1,0 +1,5 @@
+{
+	int x = 3;
+	float y = 0x1.91eb86p1;
+	(y = (float)(x));
+}

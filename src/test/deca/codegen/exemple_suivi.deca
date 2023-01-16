@@ -1,0 +1,15 @@
+{
+	int resultat = 1;
+	int n = readInt();
+	int initial = n;
+	if (n<0){
+		println("Veuillez entrer un entier supérieur à 0");
+	}
+	else{
+		while (n>0){
+			resultat = resultat * n;
+			n = n-1;
+		}
+		println(initial, "! = ", resultat);
+	}
+}

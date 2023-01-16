@@ -2,11 +2,8 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.LabelFactory;
 
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
@@ -37,14 +34,12 @@ public class Divide extends AbstractOpArith {
         }
 
         if(this.getType().isFloat()){
-            compiler.addInstruction(new CMP(new ImmediateFloat(0.0f), regRight));
-            compiler.addInstruction(new BEQ(compiler.getLabelFactory().createDivByZeroErrorLabel()));
+            compiler.getLabelFactory().createTestDiv0(compiler, regRight, false);
             compiler.addInstruction(new DIV(regRight, Register.getR(n)));
-            compiler.addInstruction(new BOV(compiler.getLabelFactory().createOverflowErrorLabel()));
+            compiler.getLabelFactory().createTestOverflow(compiler);
         }
         else{
-            compiler.addInstruction(new CMP(new ImmediateInteger(0), regRight));
-            compiler.addInstruction(new BEQ(compiler.getLabelFactory().createDivByZeroErrorLabel()));
+            compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
             compiler.addInstruction(new QUO(regRight, Register.getR(n)));
         }
     }

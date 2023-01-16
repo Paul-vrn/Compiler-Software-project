@@ -43,15 +43,13 @@ public class IntLiteral extends AbstractExpr {
     }
 
     @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        //compiler.addInstruction(new LDR(new Label("t"), RegisterARM.getR(n)));
-        //todo mov r0, =Label de "%d"
+        compiler.addInstruction(new MOV(new ImmediateInteger(value), RegisterARM.getR(n)));
+    }
 
-        Label strLabel = new Label("str" + compiler.getLabelFactory().nbString());
-        compiler.addInstruction(new MOV(new LabelOperand(strLabel), RegisterIMA.R0));
-        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
-
-
-        compiler.addInstruction(new LDR(new ImmediateInteger(value), RegisterARM.getR(1)));
+    @Override
+    public void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getlabelInt()), RegisterARM.getR(0)));
+        compiler.addInstruction(new MOV(new ImmediateInteger(value), RegisterARM.getR(1)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 

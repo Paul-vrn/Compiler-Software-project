@@ -65,8 +65,6 @@ public class Main extends AbstractMain {
     @Override
     protected void armCodeGenMain(DecacCompiler compiler) {
         compiler.addComment("Beginning of main instructions:");
-        compiler.addData(new Line(new Label("int"), new ASCII(new ImmediateString("%d"))));
-        compiler.addData(new Line(new Label("float"), new ASCII(new ImmediateString("%f"))));
 
         declVariables.armCodeGenListDeclVar(compiler);
         insts.armCodeGenListInst(compiler);

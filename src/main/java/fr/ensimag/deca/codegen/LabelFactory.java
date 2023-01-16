@@ -2,6 +2,8 @@ package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 public class LabelFactory {
@@ -22,8 +24,13 @@ public class LabelFactory {
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label divByZeroErrorLabel = new Label("div_by_zero_error");
 
+    /* ARM labels */
     private static final Label printfLabel = new Label("printf");
-
+    private static final Label scanfLabel = new Label("scanf");
+    private boolean flagLabelInt;
+    private boolean flagLabelFloat;
+    private static final Label LabelInt = new Label("int");
+    private static final Label LabelFloat = new Label("float");
 
     public LabelFactory() {
         this.noCheck = false;
@@ -125,9 +132,26 @@ public class LabelFactory {
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
+    public Label getlabelInt(){
+        flagLabelInt = true;
+        return LabelFactory.LabelInt;
+    }
+
+    public Label getlabelFloat(){
+        flagLabelFloat = true;
+        return LabelFactory.LabelFloat;
+    }
 
     public Label getPrintfLabel() {
         return printfLabel;
     }
 
+    public void createPrintLabel(DecacCompiler compiler) {
+        if (flagLabelInt) {
+            compiler.addData(new Line(new Label("int"), new ASCII(new ImmediateString("%d"))));
+        }
+        if (flagLabelFloat){
+            compiler.addData(new Line(new Label("float"), new ASCII(new ImmediateString("%f"))));
+        }
+    }
 }

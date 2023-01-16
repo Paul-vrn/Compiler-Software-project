@@ -49,9 +49,9 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
         }
     }
 
-    public void armCodeGenListDeclVar(DecacCompiler compiler) {
+    protected void armCodeGenListDeclVar(DecacCompiler compiler) {
         for (AbstractDeclVar current : this.getList()){
-            //current.armCodeGen(compiler);
+            current.armCodeGen(compiler);
         }
     }
 }

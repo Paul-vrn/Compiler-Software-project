@@ -10,12 +10,12 @@ public class RegisterOffset extends DAddr {
     public int getOffset() {
         return offset;
     }
-    public RegisterIMA getRegister() {
+    public AbstractRegister getRegister() {
         return register;
     }
     private final int offset;
-    private final RegisterIMA register;
-    public RegisterOffset(int offset, RegisterIMA register) {
+    private final AbstractRegister register;
+    public RegisterOffset(int offset, AbstractRegister register) {
         super();
         this.offset = offset;
         this.register = register;

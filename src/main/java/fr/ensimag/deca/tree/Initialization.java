@@ -8,9 +8,11 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.arm.instructions.STR;
 
 /**
  * @author gl21
@@ -33,6 +35,12 @@ public class Initialization extends AbstractInitialization {
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.codeGenExpr(compiler, 2);
         compiler.addInstruction(new STORE(RegisterIMA.getR(2), varName.getExpDefinition().getOperand()));
+    }
+
+    @Override
+    protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        expression.armCodeGenExpr(compiler, 0, 0);
+        compiler.addInstruction(new STR(RegisterARM.getR(0), varName.getExpDefinition().getOperand()));
     }
 
     public Initialization(AbstractExpr expression) {

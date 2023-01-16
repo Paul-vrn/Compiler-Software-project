@@ -28,4 +28,6 @@ public abstract class AbstractInitialization extends Tree {
 
 
     protected abstract void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName);
+
+    protected abstract void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName);
 }

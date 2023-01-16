@@ -132,6 +132,10 @@ public class DecacCompiler {
      */
     private AbstractCodeGenProgram program;
 
+    public AbstractCodeGenProgram getProgram() {
+        return program;
+    }
+
 
     /** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();

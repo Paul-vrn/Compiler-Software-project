@@ -8,8 +8,12 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.arm.instructions.STR;
+import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.Label;
 
 import java.io.PrintStream;
 
@@ -32,6 +36,13 @@ public class NoInitialization extends AbstractInitialization {
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.getR(0)));
         compiler.addInstruction(new STORE(RegisterIMA.getR(0), varName.getExpDefinition().getOperand()));
+    }
+
+    @Override
+    protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        compiler.addInstruction(new LOAD(new NullOperand(), RegisterARM.getR(0)));
+        compiler.addInstruction(new STR(RegisterARM.getR(0), varName.getExpDefinition().getOperand()));
+        //compiler.getProgram().addData(new Line(new Label(varName.getName().getName()), varName.getExpDefinition().getOperand()));
     }
 
     /**

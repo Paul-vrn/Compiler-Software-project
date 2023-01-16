@@ -74,8 +74,8 @@ public class DeclVar extends AbstractDeclVar {
     }
 
     public void armCodeGen(DecacCompiler compiler) {
-        //this.varName.armCodeGenDeclVar(compiler);
-        //this.initialization.armCodeGenInit(compiler, this.varName);
+        this.varName.armCodeGenDeclVar(compiler);
+        this.initialization.armCodeGenInit(compiler, this.varName);
     }
 
     @Override

@@ -7,6 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -27,7 +28,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     public void armCodeGenDeclVar(DecacCompiler compiler){
-        //this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterARM.FP));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterARM.FP));
     }
 
     @Override

@@ -1,4 +1,8 @@
 class A {
     int x;
-    int x(){}
-}
+	int b = 4;
+    int x(int b){
+    	return(b);}
+    int z(){
+    	return(1);}
+    }

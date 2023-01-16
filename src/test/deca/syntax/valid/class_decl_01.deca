@@ -1,0 +1,12 @@
+// Description:
+//    Programme testant la déclaration d'une classe.
+//
+// Resultats:
+//		- 0 si le test est réussi
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+class A {
+}

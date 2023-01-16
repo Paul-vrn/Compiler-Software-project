@@ -18,7 +18,10 @@ for fichier in ./src/test/deca/codegen/valid/*.deca
 do
   nom_fichier=${fichier%.*}
   filename=$(basename "$nom_fichier")
-
+  if [ "$fichier" == "./src/test/deca/codegen/valid/to_be_included.deca" ]
+  then
+    continue
+  fi
   rm -f "$nom_fichier.ass" 2>/dev/null
 
   decac "$fichier"

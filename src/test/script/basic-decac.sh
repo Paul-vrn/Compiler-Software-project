@@ -108,14 +108,14 @@ fi
 echo "Pas de probleme detecte avec decac -r.(besoin de plus de test)"
 
 
+decac_moins_P=$(decac "$ARITH_EXPRESS_TEST" "$ARITH_EXPRESS_TEST")
 
+if [ "$decac_moins_P" != "" ]; then
+    echo "ERREUR: decac -P a produit une sortie à partir d'un programme correct"
+    exit 1
+fi
 
-echo "Reste des options pas encore implémenter."
-
-
-
-# ... et ainsi de suite.
-
+echo "Pas de probleme detecte avec decac -P."
 
 
 

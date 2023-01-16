@@ -6,7 +6,7 @@ package fr.ensimag.ima.pseudocode;
  * @author Ensimag
  * @date 01/01/2023
  */
-public class GPRegisterIMA extends RegisterIMA {
+public class GPRegister extends RegisterIMA {
     /**
      * @return the number of the register, e.g. 12 for R12.
      */
@@ -16,7 +16,7 @@ public class GPRegisterIMA extends RegisterIMA {
 
     private int number;
 
-    public GPRegisterIMA(String name, int number) {
+    public GPRegister(String name, int number) {
         super(name);
         this.number = number;
     }

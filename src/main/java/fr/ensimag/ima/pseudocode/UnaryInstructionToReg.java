@@ -7,7 +7,7 @@ package fr.ensimag.ima.pseudocode;
  */
 public class UnaryInstructionToReg extends UnaryInstruction {
 
-    public UnaryInstructionToReg(GPRegisterIMA op) {
+    public UnaryInstructionToReg(GPRegister op) {
         super(op);
     }
 

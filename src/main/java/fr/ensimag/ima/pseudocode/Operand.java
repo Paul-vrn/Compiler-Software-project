@@ -10,5 +10,8 @@ public abstract class Operand {
     @Override
     public abstract String toString();
 
-    public abstract String toArmString();
+    public String toArmString() {
+        return this.toString();
+    }
+
 }

@@ -1,6 +1,6 @@
 package fr.ensimag.ima.pseudocode.instructions;
 
-import fr.ensimag.ima.pseudocode.GPRegisterIMA;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
 
 /**
@@ -9,7 +9,7 @@ import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
  */
 public class DEL extends UnaryInstructionToReg {
 
-    public DEL(GPRegisterIMA op) {
+    public DEL(GPRegister op) {
         super(op);
     }
 

@@ -101,7 +101,7 @@ public class LabelFactory {
         nbString++;
         return i;
     }
-    public void createTestDiv0(DecacCompiler compiler, GPRegisterIMA r, boolean isInt) {
+    public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
             return;
         flagDivByZeroError = true;

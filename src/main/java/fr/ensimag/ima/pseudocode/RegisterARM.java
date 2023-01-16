@@ -6,21 +6,15 @@ package fr.ensimag.ima.pseudocode;
  * @author Ensimag
  * @date 01/01/2023
  */
-public class RegisterARM extends DVal {
-    private String name;
-    protected RegisterARM(String name) {
-        this.name = name;
-    }
+public class RegisterARM extends AbstractRegister {
+
+    protected RegisterARM(String name) {super(name);}
 
     @Override
     public String toString() {
         return name;
     }
 
-
-    public String toArmString() {
-        return this.toString();
-    }
 
     /**
      * Global Base register
@@ -44,38 +38,38 @@ public class RegisterARM extends DVal {
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
      */
-    private static final GPRegisterIMA[] R = initRegisters();
+    private static final GPRegister[] R = initRegisters();
     /**
      * General Purpose Registers
      */
-    public static GPRegisterIMA getR(int i) {
+    public static GPRegister getR(int i) {
         return R[i];
     }
 
-    private static final GPRegisterIMA[] S = initFloatRegisters();
+    private static final GPRegister[] S = initFloatRegisters();
 
-    public static GPRegisterIMA getS(int i) {
+    public static GPRegister getS(int i) {
         return S[i];
     }
     /**
      * Convenience shortcut for R[7] Syscall number
      */
-    public static final GPRegisterIMA R7 = R[7];
+    public static final GPRegister R7 = R[7];
 
     public static int RMAX = 10;
 
-    static private GPRegisterIMA[] initRegisters() {
-        GPRegisterIMA[] res = new GPRegisterIMA[10];
+    static private GPRegister[] initRegisters() {
+        GPRegister[] res = new GPRegister[10];
         for (int i = 0; i <= 9; i++) {
-            res[i] = new GPRegisterIMA("R" + i, i);
+            res[i] = new GPRegister("R" + i, i);
         }
         return res;
     }
 
-    static private GPRegisterIMA[] initFloatRegisters() {
-        GPRegisterIMA[] res = new GPRegisterIMA[32];
+    static private GPRegister[] initFloatRegisters() {
+        GPRegister[] res = new GPRegister[32];
         for (int i = 0; i <= 31; i++) {
-            res[i] = new GPRegisterIMA("S" + i, i);
+            res[i] = new GPRegister("S" + i, i);
         }
         return res;
     }

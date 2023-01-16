@@ -9,7 +9,7 @@ import fr.ensimag.ima.pseudocode.*;
  */
 public class RSB extends TernaryInstruction {
 
-    public RSB(DVal op1, GPRegisterIMA op2) {
+    public RSB(DVal op1, GPRegister op2) {
         super(op1, op2);
     }
 

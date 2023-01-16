@@ -6,20 +6,12 @@ package fr.ensimag.ima.pseudocode;
  * @author Ensimag
  * @date 01/01/2023
  */
-public class RegisterIMA extends DVal {
-    private String name;
+public class RegisterIMA extends AbstractRegister {
     protected RegisterIMA(String name) {
-        this.name = name;
+        super(name);
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 
-    public String toArmString() {
-        return this.toString();
-    }
 
     /**
      * Global Base register
@@ -38,29 +30,29 @@ public class RegisterIMA extends DVal {
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
      */
-    private static final GPRegisterIMA[] R = initRegisters();
-    /**
-     * General Purpose Registers
-     */
-    public static GPRegisterIMA getR(int i) {
+    private static final GPRegister[] R = initRegisters();
+
+
+    public static GPRegister getR(int i) {
         return R[i];
     }
     /**
      * Convenience shortcut for R[0]
      */
-    public static final GPRegisterIMA R0 = R[0];
+    public static final GPRegister R0 = R[0];
     /**
      * Convenience shortcut for R[1]
      */
-    public static final GPRegisterIMA R1 = R[1];
+    public static final GPRegister R1 = R[1];
 
     public static int RMAX = 16;
 
-    static private GPRegisterIMA[] initRegisters() {
-        GPRegisterIMA[] res = new GPRegisterIMA[16];
+    static private GPRegister[] initRegisters() {
+        GPRegister[] res = new GPRegister[16];
         for (int i = 0; i <= 15; i++) {
-            res[i] = new GPRegisterIMA("R" + i, i);
+            res[i] = new GPRegister("R" + i, i);
         }
         return res;
     }
+
 }

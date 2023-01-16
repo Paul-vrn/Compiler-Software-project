@@ -2,7 +2,7 @@ package fr.ensimag.ima.pseudocode.arm.instructions;
 
 import fr.ensimag.ima.pseudocode.BinaryInstructionDValToReg;
 import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegisterIMA;
+import fr.ensimag.ima.pseudocode.GPRegister;
 
 /**
  * @author Ensimag
@@ -10,7 +10,7 @@ import fr.ensimag.ima.pseudocode.GPRegisterIMA;
  */
 public class MVN extends BinaryInstructionDValToReg {
 
-    public MVN(DVal op1, GPRegisterIMA op2) {
+    public MVN(DVal op1, GPRegister op2) {
         super(op1, op2);
     }
 

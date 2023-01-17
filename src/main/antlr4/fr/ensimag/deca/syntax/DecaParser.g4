@@ -604,6 +604,7 @@ decl_method returns[AbstractDeclMethod tree]
       ) {
         assert(methodBody != null);
         $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+        setLocation($tree, $type.start);
         }
     ;
 
@@ -633,5 +634,6 @@ multi_line_string returns[String text, Location location]
 param returns[DeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $type.start);
         }
     ;

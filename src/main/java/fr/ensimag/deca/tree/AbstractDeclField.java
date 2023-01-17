@@ -28,6 +28,9 @@ public abstract class AbstractDeclField extends Tree {
                                           EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
-    public abstract void codeGen(DecacCompiler compiler);
+    public abstract AbstractInitialization getInitialization();
+
+    public abstract AbstractIdentifier getFieldName();
+
 
 }

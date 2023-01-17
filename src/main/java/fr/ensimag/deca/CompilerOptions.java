@@ -69,29 +69,8 @@ public class CompilerOptions {
     private List<File> sourceFiles = new ArrayList<File>();
 
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
-        Logger logger = Logger.getRootLogger();
-        // map command-line debug option to log4j's level.
-        switch (getDebug()) {
-        case QUIET: break; // keep default
-        case INFO:
-            logger.setLevel(Level.INFO); break;
-        case DEBUG:
-            logger.setLevel(Level.DEBUG); break;
-        case TRACE:
-            logger.setLevel(Level.TRACE); break;
-        default:
-            logger.setLevel(Level.ALL); break;
-        }
-        logger.info("Application-wide trace level set to " + logger.getLevel());
 
-        boolean assertsEnabled = false;
-        assert assertsEnabled = true; // Intentional side effect!!!
-        if (assertsEnabled) {
-            logger.info("Java assertions enabled");
-        } else {
-            logger.info("Java assertions disabled");
-        }
+
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
         //TODO option specification page 103
@@ -130,8 +109,9 @@ public class CompilerOptions {
                             throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");
                         }
                         break;
-                    case "d":
-                        throw new UnsupportedOperationException("-d not yet implemented");
+                    case "-d":
+                        debug++;
+                        break;
                     case "-P":
                         enableParallel();
                         break;
@@ -146,6 +126,31 @@ public class CompilerOptions {
                     break;
                 }
             }
+
+            // A FAIRE : parcourir args pour positionner les options correctement.
+            Logger logger = Logger.getRootLogger();
+            // map command-line debug option to log4j's level.
+            switch (getDebug()) {
+                case QUIET: break; // keep default
+                case INFO:
+                    logger.setLevel(Level.INFO); break;
+                case DEBUG:
+                    logger.setLevel(Level.DEBUG); break;
+                case TRACE:
+                    logger.setLevel(Level.TRACE); break;
+                default:
+                    logger.setLevel(Level.ALL); break;
+            }
+            logger.info("Application-wide trace level set to " + logger.getLevel());
+
+            boolean assertsEnabled = false;
+            assert assertsEnabled = true; // Intentional side effect!!!
+            if (assertsEnabled) {
+                logger.info("Java assertions enabled");
+            } else {
+                logger.info("Java assertions disabled");
+            }
+
             if(getDecompilation() && getVerification()){
                 throw new UnsupportedOperationException("Options -p and -v are incompatible");
             }

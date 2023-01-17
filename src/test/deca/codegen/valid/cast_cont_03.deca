@@ -1,0 +1,18 @@
+// Description:
+//    test Cast 3
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   int x = 1;
+   float y = (float) (x);
+   if (!(y = 1.0)) {
+	  printf("Cast 3: failed");
+   else{
+   	  printf("Cast 3: passed");
+   }
+}

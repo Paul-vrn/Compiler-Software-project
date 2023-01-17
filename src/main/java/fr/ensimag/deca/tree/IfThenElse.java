@@ -63,7 +63,7 @@ public class IfThenElse extends AbstractInst {
     }
 
     protected void codeGenIf(DecacCompiler compiler, int p) {
-        int nbIf = compiler.getLabelFactory().getNbIfThenElse();
+            int nbIf = compiler.getLabelFactory().getNbIfThenElse();
         Label labelElse = new Label("ELSE_" + nbIf + "_" + p);
         Label labelEnd = new Label("END_IF_" + nbIf);
         if (p == 0) {

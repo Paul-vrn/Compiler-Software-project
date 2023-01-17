@@ -46,6 +46,10 @@ public class EnvironmentType {
 
     private final Map<Symbol, TypeDefinition> envTypes;
 
+    public Map<Symbol, TypeDefinition> getEnvTypes() {
+        return envTypes;
+    }
+
     public TypeDefinition defOfType(Symbol s) {
         return envTypes.get(s);
     }

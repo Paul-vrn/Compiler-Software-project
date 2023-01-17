@@ -68,10 +68,17 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
         Identifier id = (Identifier) this.getLeftOperand();
-        this.getRightOperand().codeGenExpr(compiler, 2);
-        compiler.addInstruction(new STORE(Register.getR(2), id.getExpDefinition().getOperand()));
+        this.getRightOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new STORE(Register.getR(n), id.getExpDefinition().getOperand()));
+    }
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
+        //Identifier id = (Identifier) this.getLeftOperand();
+        //this.getRightOperand().codeGenExpr(compiler, 2);
+        //compiler.addInstruction(new STORE(Register.getR(2), id.getExpDefinition().getOperand()));
     }
 
     @Override

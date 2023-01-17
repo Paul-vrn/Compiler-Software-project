@@ -10,7 +10,11 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -153,6 +157,15 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new UnsupportedOperationException("not implemented implemented");
         }
     }
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        this.armCodeGenExpr(compiler, 1, 1);
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+        } else {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+        }
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+    }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
@@ -178,10 +191,7 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
-        System.out.println(this.getClass().getName());
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+
 
     protected void armCodeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");

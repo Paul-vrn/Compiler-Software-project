@@ -3,7 +3,6 @@ package fr.ensimag.deca.codegen;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 public class LabelFactory {
@@ -15,6 +14,7 @@ public class LabelFactory {
     private int nbAnd;
     private int nbOr;
     private int nbString;
+    private int nbFloat;
     private boolean flagOverflowError;
     private boolean flagStackError;
     private boolean flagIOError;
@@ -108,6 +108,12 @@ public class LabelFactory {
         nbString++;
         return i;
     }
+    public int nbFloat(){
+        int i = nbFloat;
+        nbFloat++;
+        return i;
+    }
+
     public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
             return;
@@ -132,12 +138,12 @@ public class LabelFactory {
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
-    public Label getlabelInt(){
+    public Label getLabelInt(){
         flagLabelInt = true;
         return LabelFactory.LabelInt;
     }
 
-    public Label getlabelFloat(){
+    public Label getLabelFloat(){
         flagLabelFloat = true;
         return LabelFactory.LabelFloat;
     }

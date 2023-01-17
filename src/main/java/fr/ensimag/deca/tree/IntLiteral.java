@@ -48,7 +48,7 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     public void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getlabelInt()), RegisterARM.getR(0)));
+        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
         compiler.addInstruction(new MOV(new ImmediateInteger(value), RegisterARM.getR(1)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }

@@ -15,25 +15,6 @@ public class RegisterARM extends AbstractRegister {
         return name;
     }
 
-
-    /**
-     * Global Base register
-     */
-    public static final RegisterARM FP = new RegisterARM("FP    ");
-    /**
-     * Local Base register
-     */
-    public static final RegisterARM IP = new RegisterARM("IP");
-    /**
-     * Stack Pointer
-     */
-    public static final RegisterARM SP = new RegisterARM("SP");
-
-    /**
-     * Link Register
-     */
-    public static final RegisterARM LR = new RegisterARM("LR");
-
     /**
      * General Purpose Registers. Array is private because Java arrays cannot be
      * made immutable, use getR(i) to access it.
@@ -51,16 +32,34 @@ public class RegisterARM extends AbstractRegister {
     public static GPRegister getS(int i) {
         return S[i];
     }
+
+    private static final GPRegister[] D = initDoubleRegisters();
+
+    public static GPRegister getD(int i) {
+        return D[i];
+    }
     /**
      * Convenience shortcut for R[7] Syscall number
      */
     public static final GPRegister R7 = R[7];
 
+    public static final GPRegister FP = R[11];
+
+    public static final GPRegister IP = R[12];
+
+    public static final GPRegister SP = R[13];
+
+    public static final GPRegister LR = R[14];
+
+    public static final GPRegister PC = R[15];
+
     public static int RMAX = 10;
 
+    public static int SMAX = 31;
+
     static private GPRegister[] initRegisters() {
-        GPRegister[] res = new GPRegister[10];
-        for (int i = 0; i <= 9; i++) {
+        GPRegister[] res = new GPRegister[16];
+        for (int i = 0; i <= 15; i++) {
             res[i] = new GPRegister("R" + i, i);
         }
         return res;
@@ -70,6 +69,14 @@ public class RegisterARM extends AbstractRegister {
         GPRegister[] res = new GPRegister[32];
         for (int i = 0; i <= 31; i++) {
             res[i] = new GPRegister("S" + i, i);
+        }
+        return res;
+    }
+
+    static private GPRegister[] initDoubleRegisters() {
+        GPRegister[] res = new GPRegister[16];
+        for (int i = 0; i <= 15; i++) {
+            res[i] = new GPRegister("D" + i, i);
         }
         return res;
     }

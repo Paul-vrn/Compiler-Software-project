@@ -21,6 +21,6 @@ public class ImmediateFloat extends DVal {
 
     @Override
     public String toArmString() {
-        return this.toString();
+        return String.valueOf(this.value);
     }
 }

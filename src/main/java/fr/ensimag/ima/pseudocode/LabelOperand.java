@@ -28,6 +28,6 @@ public class LabelOperand extends DVal {
 
     @Override
     public String toArmString() {
-        return "="+label.toString();
+        return "="+label.toArmString();
     }
 }

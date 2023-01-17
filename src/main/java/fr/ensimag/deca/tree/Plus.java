@@ -2,9 +2,11 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.arm.instructions.ADDS;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -38,12 +40,36 @@ public class Plus extends AbstractOpArith {
 
     @Override
     public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        if(m < RegisterARM.RMAX) {
-            getLeftOperand().armCodeGenExpr(compiler, m, m+1);
-            getRightOperand().armCodeGenExpr(compiler, m+1, m+2);
-            compiler.addInstruction(new ADDS(RegisterARM.getR(m), RegisterARM.getR(m+1), RegisterARM.getR(n)));
+        if (getType().isFloat()) {
+            if (m < RegisterARM.SMAX) {
+                getLeftOperand().armCodeGenExpr(compiler, n, m);
+                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
+                compiler.addInstruction(new ADDS(RegisterARM.getS(m+1), RegisterARM.getS(m)));
+            } else {
+                getLeftOperand().armCodeGenExpr(compiler, n, m);
+                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
+                compiler.addInstruction(new PUSH(RegisterARM.getS(m)));
+                getRightOperand().armCodeGenExpr(compiler, n, m);
+                compiler.addInstruction(new LDR(RegisterARM.getS(m), RegisterARM.getS(0)));
+                compiler.addInstruction(new POP(RegisterARM.getS(m)));
+                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
+                compiler.addInstruction(new ADDS(RegisterARM.getS(0), RegisterARM.getS(m)));
+            }
         } else {
-            throw new UnsupportedOperationException("not yet implemented, arm register overflow");
+            if (m < RegisterARM.RMAX) {
+                getLeftOperand().armCodeGenExpr(compiler, n, m);
+                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
+                compiler.addInstruction(new ADDS(RegisterARM.getR(n+1), RegisterARM.getR(n)));
+            } else {
+                getLeftOperand().armCodeGenExpr(compiler, n, m);
+                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
+                compiler.addInstruction(new PUSH(RegisterARM.getS(n)));
+                getRightOperand().armCodeGenExpr(compiler, n, m);
+                compiler.addInstruction(new LDR(RegisterARM.getR(n), RegisterARM.getR(12)));
+                compiler.addInstruction(new POP(RegisterARM.getR(n)));
+                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
+                compiler.addInstruction(new ADDS(RegisterARM.getR(12), RegisterARM.getR(n)));
+            }
         }
     }
  

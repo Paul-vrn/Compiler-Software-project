@@ -29,6 +29,7 @@ public class TernaryInstruction extends Instruction {
     }
 
     void armDisplayOperands(PrintStream s) {
+        s.print(" ");
         s.print(operand3.toArmString());
         s.print(", ");
         s.print(operand2.toArmString());

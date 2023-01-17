@@ -39,8 +39,12 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-        expression.armCodeGenExpr(compiler, 0, 0);
-        compiler.addInstruction(new STR(RegisterARM.getR(0), varName.getExpDefinition().getOperand()));
+        expression.armCodeGenExpr(compiler, 2, 0);
+        if (expression.getType().isInt()){
+            compiler.addInstruction(new STR(RegisterARM.getR(2), varName.getExpDefinition().getOperand()));
+        } else {
+            compiler.addInstruction(new STR(RegisterARM.getS(0), varName.getExpDefinition().getOperand()));
+        }
     }
 
     public Initialization(AbstractExpr expression) {

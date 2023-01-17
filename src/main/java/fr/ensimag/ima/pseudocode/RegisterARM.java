@@ -43,6 +43,9 @@ public class RegisterARM extends AbstractRegister {
      */
     public static final GPRegister R7 = R[7];
 
+    /**
+     * équivalent de LB
+     */
     public static final GPRegister FP = R[11];
 
     public static final GPRegister IP = R[12];
@@ -59,9 +62,14 @@ public class RegisterARM extends AbstractRegister {
 
     static private GPRegister[] initRegisters() {
         GPRegister[] res = new GPRegister[16];
-        for (int i = 0; i <= 15; i++) {
+        for (int i = 0; i <= 10; i++) {
             res[i] = new GPRegister("R" + i, i);
         }
+        res[11] = new GPRegister("FP", 11);
+        res[12] = new GPRegister("IP", 12);
+        res[13] = new GPRegister("SP", 13);
+        res[14] = new GPRegister("LR", 14);
+        res[15] = new GPRegister("PC", 15);
         return res;
     }
 

@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
@@ -28,7 +29,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     public void armCodeGenDeclVar(DecacCompiler compiler){
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), RegisterARM.FP));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextArmOffSet(), RegisterARM.SP));
     }
 
     @Override
@@ -143,9 +144,14 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
-
+    @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), RegisterIMA.getR(n)));
+    }
+
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
     }
 
     /**

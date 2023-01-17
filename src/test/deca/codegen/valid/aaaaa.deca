@@ -1,0 +1,6 @@
+{
+int x = 5;
+int y = 2;
+print(x);
+print(y);
+}

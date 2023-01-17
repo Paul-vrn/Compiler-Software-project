@@ -28,6 +28,7 @@ public class BinaryInstruction extends Instruction {
         s.print(operand2);
     }
 
+    @Override
     void armDisplayOperands(PrintStream s) {
         s.print(" ");
         s.print(operand2.toArmString());

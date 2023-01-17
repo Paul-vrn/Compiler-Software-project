@@ -154,6 +154,11 @@ public class DecacCompiler {
         memory.increaseOffset();
         return val;
     }
+    public int nextArmOffSet(){
+        int val = memory.getArmOffset();
+        memory.increaseArmOffset(4);
+        return val;
+    }
 
     private final LabelFactory labelFactory = new LabelFactory();
     public LabelFactory getLabelFactory() {return labelFactory;}

@@ -14,6 +14,7 @@ public abstract class Instruction {
     }
     abstract void displayOperands(PrintStream s);
     abstract void armDisplayOperands(PrintStream s);
+
     void display(PrintStream s, boolean arm) {
         s.print(getName());
         if (arm) {

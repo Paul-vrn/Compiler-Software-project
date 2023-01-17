@@ -5,7 +5,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.arm.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -52,6 +56,26 @@ public class Modulo extends AbstractOpArith {
         }
     }
 
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        if (m < RegisterARM.RMAX) {
+            getLeftOperand().armCodeGenExpr(compiler, n, m);
+            getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
+            compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(0)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(n+1), RegisterARM.getR(1)));
+            compiler.addInstruction(new BL(new Label("__aeabi_idivmod", true)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(1), RegisterARM.getR(n)));
+        } else {
+            getLeftOperand().armCodeGenExpr(compiler, n, m);
+            compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
+            compiler.addInstruction(new PUSH(RegisterARM.getS(n)));
+            getRightOperand().armCodeGenExpr(compiler, n, m);
+            compiler.addInstruction(new LDR(RegisterARM.getR(n), RegisterARM.getR(12)));
+            compiler.addInstruction(new POP(RegisterARM.getR(n)));
+            compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
+            compiler.addInstruction(new MULS(RegisterARM.getR(12), RegisterARM.getR(n)));
+        }
+    }
 
     @Override
     protected String getOperatorName() {

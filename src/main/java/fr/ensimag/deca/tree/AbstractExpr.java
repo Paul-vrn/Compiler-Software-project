@@ -13,10 +13,7 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.arm.instructions.BL;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
-import fr.ensimag.ima.pseudocode.arm.instructions.VCVTDS;
-import fr.ensimag.ima.pseudocode.arm.instructions.VMOV;
+import fr.ensimag.ima.pseudocode.arm.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -160,12 +157,13 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
     protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
-        this.armCodeGenExpr(compiler, 1, 1);
+        this.armCodeGenExpr(compiler, 2, 2);
         if (getType().isInt()) {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(2), RegisterARM.getR(1)));
         } else {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
-            compiler.addInstruction(new VCVTDS(RegisterARM.getS(1), RegisterARM.getD(0)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));
             compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
         }
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));

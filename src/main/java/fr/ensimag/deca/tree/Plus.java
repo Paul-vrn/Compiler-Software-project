@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.ADDS;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -31,6 +33,17 @@ public class Plus extends AbstractOpArith {
             compiler.addInstruction(new POP(RegisterIMA.getR(n)));
             compiler.getMemory().decreaseTSTO();
             compiler.addInstruction(new ADD(RegisterIMA.R0, RegisterIMA.getR(n)));
+        }
+    }
+
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        if(m < RegisterARM.RMAX) {
+            getLeftOperand().armCodeGenExpr(compiler, m, m+1);
+            getRightOperand().armCodeGenExpr(compiler, m+1, m+2);
+            compiler.addInstruction(new ADDS(RegisterARM.getR(m), RegisterARM.getR(m+1), RegisterARM.getR(n)));
+        } else {
+            throw new UnsupportedOperationException("not yet implemented, arm register overflow");
         }
     }
  

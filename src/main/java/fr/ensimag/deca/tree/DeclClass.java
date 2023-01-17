@@ -3,9 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+//import jdk.javadoc.internal.doclint.Env;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -15,10 +17,10 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
-    private AbstractIdentifier name;
-    private AbstractIdentifier superClass;
-    private ListDeclMethod methods;
-    private ListDeclField fieldSets;
+    private final AbstractIdentifier name;
+    private final AbstractIdentifier superClass;
+    private final ListDeclMethod methods;
+    private final ListDeclField fieldSets;
 
     public DeclClass(AbstractIdentifier name, AbstractIdentifier superClass,
                      ListDeclField lf, ListDeclMethod lm) {
@@ -47,12 +49,20 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
 
-        EnvironmentType envTypes = new EnvironmentType(compiler);
-        System.out.println(envTypes.OBJECT.getDefinition());
-        superClass.setDefinition(envTypes.OBJECT.getDefinition());
-        ClassType classtype = new ClassType(name.getName(),getLocation(),superClass.getClassDefinition());
-        this.name.setType(classtype);
-        this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
+        //TODO:Comprendre où est envExpr ici et comment y accéder + faire le cas où c'est Object
+        EnvironmentType envTypespredef = new EnvironmentType(compiler);
+        ClassDefinition objdef = (ClassDefinition) envTypespredef.getEnvTypes().get(compiler.createSymbol("Object"));
+
+        if (superClass == null) {
+            ClassType classtype = new ClassType(name.getName(),getLocation(), objdef);
+            this.name.setType(classtype);
+            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), objdef));
+
+        } else {
+            ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
+            this.name.setType(classtype);
+            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
+        }
 
 
         try{
@@ -67,7 +77,11 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+
+
+
+
+
     }
     
     @Override

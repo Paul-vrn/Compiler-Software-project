@@ -8,7 +8,6 @@ import fr.ensimag.deca.context.Type;
 
 public abstract class AbstractDeclParam extends Tree{
 
-    protected abstract Type verifyDeclParamPass2(DecacCompiler compiler,
-                                                 AbstractIdentifier superClass, AbstractIdentifier name)
+    protected abstract Type verifyDeclParamPass2(DecacCompiler compiler)
             throws ContextualError;
 }

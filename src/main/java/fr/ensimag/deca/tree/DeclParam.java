@@ -1,9 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Signature;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -46,8 +44,17 @@ public class DeclParam extends AbstractDeclParam {
     }
 
     @Override
-    protected Type verifyDeclParamPass2(DecacCompiler compiler,
-                                        AbstractIdentifier superClass, AbstractIdentifier name) throws ContextualError {
+    protected Type verifyDeclParamPass2(DecacCompiler compiler) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+        if(this.type.getType().isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
+        }
+        this.varName.setType(type1);
+        this.varName.setDefinition(new ParamDefinition(type1, getLocation()));
+
+        return type1;
+
 
     }
 }

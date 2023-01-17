@@ -37,13 +37,13 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         /* PASS 1*/
-        this.classes.verifyListClass(compiler);
+        //this.classes.verifyListClass(compiler);
 
         /* PASS 2*/
-        this.classes.verifyListClassMembers(compiler);
+        //this.classes.verifyListClassMembers(compiler);
 
         /* PASS 3*/
-        this.classes.verifyListClassBody(compiler);
+        //this.classes.verifyListClassBody(compiler);
         this.main.verifyMain(compiler);
     }
 

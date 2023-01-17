@@ -1,12 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.Signature;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -26,9 +22,9 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         Signature sig = new Signature();
 
         for (AbstractDeclParam current : this.getList()) {
-
-
+            sig.add(current.verifyDeclParamPass2(compiler));
         }
+        return sig;
     }
 
     @Override

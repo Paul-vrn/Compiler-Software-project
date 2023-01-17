@@ -78,8 +78,16 @@ public class DeclClass extends AbstractDeclClass {
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
+        EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
+        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
+            compiler.environmentType.getEnvTypes().remove(name.getName());
+            ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
+            this.name.setType(classtype);
+            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
 
-        EnvironmentExp envExpM = this.methods
+            //compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
+
+        }
 
     }
     

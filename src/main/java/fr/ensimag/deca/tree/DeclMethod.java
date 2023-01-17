@@ -4,7 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
-import sun.jvm.hotspot.opto.Block;
 
 import java.io.PrintStream;
 
@@ -59,10 +58,6 @@ public class DeclMethod extends AbstractDeclMethod {
         methodBody.iter(f);
     }
 
-    @Override
-    protected void verifyDeclField(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-
-    }
 
     @Override
     protected EnvironmentExp verifyDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass,
@@ -70,16 +65,29 @@ public class DeclMethod extends AbstractDeclMethod {
         Type type1 = this.type.verifyType(compiler);
 
         this.varName.setType(type1);
-        Signature sig = this.listParams.
+        Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
         this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
-                this.listParams., 0));
+                sig, 0));
 
-        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-            if(!superClass.getClassDefinition().getMembers().get(name.getName()).isField()){
+        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
+            if(!(superClass.getClassDefinition().getMembers().get(name.getName()).isMethod()
+                    && superClass.getClassDefinition().getMembers().get(name.getName()).asMethodDefinition("conversion en MethodeDef impossible",getLocation()).getSignature() == sig
+                    && (superClass.getClassDefinition().getMembers().get(name.getName()).getType().sameType(type1)
+                    || type1.asClassType("bruh", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(name.getName()).getType().asClassType("bruh",getLocation())))))
+                {
                 throw new ContextualError( compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
+                        + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
             }
         }
+
+
+
+        EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+        try{
+            envToReturn.declare(name.getName(), this.varName.getMethodDefinition());
+        }catch (EnvironmentExp.DoubleDefException ignored){}
+
+        return envToReturn;
     }
 
     @Override

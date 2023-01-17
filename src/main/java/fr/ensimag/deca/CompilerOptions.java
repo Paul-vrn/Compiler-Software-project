@@ -112,11 +112,24 @@ public class CompilerOptions {
                     case "-d":
                         debug++;
                         break;
+                    case "-dd":
+                        debug = 2;
+                        break;
+                    case "-ddd":
+                        debug = 3;
+                        break;
+                    case "-d{4,}":
+                        debug = 4;
+                        break;
                     case "-P":
                         enableParallel();
                         break;
                     default:
-                        throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
+                        if (argsArrayList.get(i).matches("-d{4,}")) {
+                            debug = 4;}
+                        else {
+                            throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
+                        }
                 }
                 i++;
                 if(i<argsArrayList.size()) {

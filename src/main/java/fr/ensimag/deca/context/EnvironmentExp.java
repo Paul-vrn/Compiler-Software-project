@@ -29,6 +29,10 @@ public class EnvironmentExp {
 
     HashMap<Symbol, ExpDefinition> dictionary = new HashMap<>();
 
+    public HashMap<Symbol, ExpDefinition> getDictionary(){
+        return this.dictionary;
+    }
+
     EnvironmentExp parentEnvironment;
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {

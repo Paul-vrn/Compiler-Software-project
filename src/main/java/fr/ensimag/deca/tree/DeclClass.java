@@ -77,10 +77,9 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+        EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
 
-
-
-
+        EnvironmentExp envExpM = this.methods
 
     }
     

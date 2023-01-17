@@ -1,9 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 import sun.jvm.hotspot.opto.Block;
@@ -19,11 +17,10 @@ import java.io.PrintStream;
 public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier varName;
-    private ListParams listParams;
-
+    private ListDeclParam listParams;
     private AbstractMethodBody methodBody;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListParams listParams, AbstractMethodBody methodBody) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListDeclParam listParams, AbstractMethodBody methodBody) {
         Validate.notNull(type);
         Validate.notNull(varName);
         Validate.notNull(listParams);
@@ -65,6 +62,24 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyDeclField(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
 
+    }
+
+    @Override
+    protected EnvironmentExp verifyDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass,
+                                                   AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+
+        this.varName.setType(type1);
+        Signature sig = this.listParams.
+        this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
+                this.listParams., 0));
+
+        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
+            if(!superClass.getClassDefinition().getMembers().get(name.getName()).isField()){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
+            }
+        }
     }
 
     @Override

@@ -15,6 +15,8 @@ import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.arm.instructions.BL;
 import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
+import fr.ensimag.ima.pseudocode.arm.instructions.VCVTDS;
+import fr.ensimag.ima.pseudocode.arm.instructions.VMOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -163,6 +165,8 @@ public abstract class AbstractExpr extends AbstractInst {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
         } else {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(1), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
         }
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }

@@ -1,7 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.arm.instructions.ASCIZ;
+import fr.ensimag.ima.pseudocode.arm.instructions.BL;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
 
 
@@ -29,7 +32,8 @@ public class Println extends AbstractPrint {
     @Override
     public void armCodeGenInst(DecacCompiler compiler) {
         super.codeGenInstARM(compiler);
-        // TODO print "\n"
+        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelLn()), RegisterARM.getR(0)));
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 
     @Override

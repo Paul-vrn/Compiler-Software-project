@@ -7,6 +7,7 @@ import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.arm.instructions.ADDS;
 import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
+import fr.ensimag.ima.pseudocode.arm.instructions.VADD;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -44,7 +45,7 @@ public class Plus extends AbstractOpArith {
             if (m < RegisterARM.SMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new ADDS(RegisterARM.getS(m+1), RegisterARM.getS(m)));
+                compiler.addInstruction(new VADD(RegisterARM.getS(m+1), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
@@ -53,7 +54,7 @@ public class Plus extends AbstractOpArith {
                 compiler.addInstruction(new LDR(RegisterARM.getS(m), RegisterARM.getS(0)));
                 compiler.addInstruction(new POP(RegisterARM.getS(m)));
                 compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
-                compiler.addInstruction(new ADDS(RegisterARM.getS(0), RegisterARM.getS(m)));
+                compiler.addInstruction(new VADD(RegisterARM.getS(0), RegisterARM.getS(m)));
             }
         } else {
             if (m < RegisterARM.RMAX) {

@@ -7,14 +7,14 @@ import fr.ensimag.ima.pseudocode.UnaryInstruction;
  * @author Ensimag
  * @date 01/01/2023
  */
-public class ASCII extends UnaryInstruction {
+public class ASCIZ extends UnaryInstruction {
 
-    public ASCII(Operand operand) {
+    public ASCIZ(Operand operand) {
         super(operand);
     }
 
     @Override
     protected String getName() {
-        return ".ascii";
+        return ".asciz";
     }
 }

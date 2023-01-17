@@ -3,13 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.IntType;
 import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ASCII;
 import fr.ensimag.ima.pseudocode.arm.instructions.BL;
 import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;

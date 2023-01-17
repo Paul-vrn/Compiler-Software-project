@@ -56,14 +56,6 @@ public class FloatLiteral extends AbstractExpr {
         compiler.addInstruction(new VCVTDS(RegisterARM.getS(1), RegisterARM.getD(0)));
         compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
-        /*
-        vcvt.f64.f32 d5, s0 à faire
-        vmov r1, r3, d5
-        BL printf
-        MOV R0, #0
-        BL exit
-        x: .float 1.23
-        */
     }
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {

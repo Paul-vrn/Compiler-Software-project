@@ -1,8 +1,12 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
+
+import java.util.Map;
 
 /**
  * Definition of a class.
@@ -63,6 +67,23 @@ public class ClassDefinition extends TypeDefinition {
 
     public EnvironmentExp getMembers() {
         return members;
+    }
+
+    public void disjointUnion(DecacCompiler compiler, EnvironmentExp envExpf, EnvironmentExp envExpM) throws ContextualError {
+        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExpf.dictionary.entrySet()){
+            try{
+                this.members.declare(entry.getKey(), entry.getValue());
+            }catch (EnvironmentExp.DoubleDefException ignored){}
+        }
+
+        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExpM.dictionary.entrySet()){
+            try{
+                this.members.declare(entry.getKey(), entry.getValue());
+            }catch (EnvironmentExp.DoubleDefException ignored){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field already defined", this.getLocation());
+            }
+        }
     }
 
     public ClassDefinition(ClassType type, Location location, ClassDefinition superClass) {

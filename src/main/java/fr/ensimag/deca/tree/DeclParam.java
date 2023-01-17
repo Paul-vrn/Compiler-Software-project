@@ -48,7 +48,7 @@ public class DeclParam extends AbstractDeclParam {
         Type type1 = this.type.verifyType(compiler);
         if(this.type.getType().isVoid()) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Type void forbidden", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Parameter type void forbidden", this.getLocation());
         }
         this.varName.setType(type1);
         this.varName.setDefinition(new ParamDefinition(type1, getLocation()));

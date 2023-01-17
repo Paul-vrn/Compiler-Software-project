@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class DeclClass extends AbstractDeclClass {
 
     private final AbstractIdentifier name;
-    private final AbstractIdentifier superClass;
+    private AbstractIdentifier superClass;
     private final ListDeclMethod methods;
     private final ListDeclField fieldSets;
 
@@ -50,19 +50,17 @@ public class DeclClass extends AbstractDeclClass {
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
 
         //TODO:Comprendre où est envExpr ici et comment y accéder + faire le cas où c'est Object
-        EnvironmentType envTypespredef = new EnvironmentType(compiler);
-        ClassDefinition objdef = (ClassDefinition) envTypespredef.getEnvTypes().get(compiler.createSymbol("Object"));
 
-        if (superClass == null) {
-            ClassType classtype = new ClassType(name.getName(),getLocation(), objdef);
-            this.name.setType(classtype);
-            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), objdef));
-
-        } else {
-            ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
-            this.name.setType(classtype);
-            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
+        if(this.superClass == null){
+            this.superClass = new Identifier(compiler.createSymbol("Object"));
+            this.superClass.setDefinition(compiler.environmentType.OBJECT.getDefinition());
+            this.superClass.getClassDefinition().
+            this.superClass.getClassDefinition().;
         }
+
+        ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
+        this.name.setType(classtype);
+        this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
 
 
         try{
@@ -79,7 +77,13 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
+
         if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
+            EnvironmentType envTypeR = new EnvironmentType(compiler);
+            ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
+            newDef.disjointUnion(compiler, envExpF, envExpM);
+
+
             compiler.environmentType.getEnvTypes().remove(name.getName());
             ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
             this.name.setType(classtype);

@@ -39,7 +39,7 @@ public class Cast extends AbstractExpr{
 
         if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2))){
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.type.getLocation().errorOutPut() + ": Float can be casted only with Int and Float", this.type.getLocation());
+                    + this.type.getLocation().errorOutPut() + ": cast type is invalid", this.type.getLocation());
         }
         this.setType(type1);
         return type1;

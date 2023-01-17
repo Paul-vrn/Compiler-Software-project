@@ -183,7 +183,7 @@ public class CodegenTest {
 
 
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
-        Logger.getRootLogger().setLevel(Level.ERROR);
+        Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option
         CompilerOptions options = new CompilerOptions();
         try {

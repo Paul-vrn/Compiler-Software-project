@@ -8,8 +8,10 @@
       |  ||  +> [11, 9] Identifier (a)
       |  ||  |  definition: variable defined at [11, 9], type=float
       |  ||  `> [11, 13] Initialization
-      |  ||     `> [11, 13] Int (4)
-      |  ||        type: int
+      |  ||     `> ConvFloat
+      |  ||        type: float
+      |  ||        `> [11, 13] Int (4)
+      |  ||           type: int
       |  []> [12, 7] DeclVar
       |      +> [12, 3] Identifier (int)
       |      |  definition: type (builtin), type=int

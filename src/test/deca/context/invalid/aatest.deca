@@ -7,11 +7,18 @@
 // Historique:
 //    cree le 01/01/2023
 
-class A{
+class B{
+
+}
+
+class A extends B{
     protected int y;
-    int getX(int x){
-        int x = 25;
-        print(x);
+    int getX(){
+        this;
     }
+}
+
+{
+
 }
 

@@ -58,6 +58,8 @@ public class DeclClass extends AbstractDeclClass {
             this.superClass = new Identifier(compiler.createSymbol("Object"));
             this.superClass.setLocation(Location.BUILTIN);
             this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(compiler.createSymbol("Object")));
+        }else{
+            this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(this.superClass.getName()));
         }
 
         ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
@@ -76,6 +78,7 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 

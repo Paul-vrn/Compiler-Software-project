@@ -157,10 +157,10 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
     protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
-        this.armCodeGenExpr(compiler, 2, 2);
+        this.armCodeGenExpr(compiler, 4, 2);
         if (getType().isInt()) {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
-            compiler.addInstruction(new MOV(RegisterARM.getR(2), RegisterARM.getR(1)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(4), RegisterARM.getR(1)));
         } else {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
             compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));

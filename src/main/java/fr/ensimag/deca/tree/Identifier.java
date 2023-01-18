@@ -29,7 +29,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     public void armCodeGenDeclVar(DecacCompiler compiler){
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextArmOffSet(), RegisterARM.SP));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextArmOffSet(), RegisterARM.FP));
     }
 
     @Override

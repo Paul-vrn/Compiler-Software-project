@@ -77,11 +77,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public void armCodeGenInst(DecacCompiler compiler) {
         Identifier id = (Identifier) this.getLeftOperand();
-        this.getRightOperand().armCodeGenExpr(compiler, 2, 0);
+        this.getRightOperand().armCodeGenExpr(compiler, 4, 2);
         if (getType().isFloat()){
-            compiler.addInstruction(new STR(RegisterARM.getS(0), id.getExpDefinition().getOperand()));
+            compiler.addInstruction(new STR(RegisterARM.getS(2), id.getExpDefinition().getOperand()));
         } else {
-            compiler.addInstruction(new STR(RegisterARM.getR(0), id.getExpDefinition().getOperand()));
+            compiler.addInstruction(new STR(RegisterARM.getR(4), id.getExpDefinition().getOperand()));
         }
     }
 

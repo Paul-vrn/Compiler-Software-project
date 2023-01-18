@@ -6,7 +6,7 @@ package fr.ensimag.ima.pseudocode;
  * @author Ensimag
  * @date 01/01/2023
  */
-public class GPRegister extends RegisterIMA {
+public class GPRegister extends AbstractRegister {
     /**
      * @return the number of the register, e.g. 12 for R12.
      */

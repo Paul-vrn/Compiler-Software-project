@@ -57,27 +57,23 @@ public class Divide extends AbstractOpArith {
                 compiler.addInstruction(new VDIV(RegisterARM.getS(m+1), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new PUSH(RegisterARM.getS(m)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new LDR(RegisterARM.getS(m), RegisterARM.getS(0)));
                 compiler.addInstruction(new POP(RegisterARM.getS(m)));
-                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new VDIV(RegisterARM.getS(0), RegisterARM.getS(m)));
             }
         } else {
-            if (m < RegisterARM.RMAX) {
+            if (n < RegisterARM.RMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
                 compiler.addInstruction(new SDIV(RegisterARM.getR(n+1), RegisterARM.getR(n)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
-                compiler.addInstruction(new PUSH(RegisterARM.getS(n)));
+                compiler.addInstruction(new PUSH(RegisterARM.getR(n)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new LDR(RegisterARM.getR(n), RegisterARM.getR(12)));
                 compiler.addInstruction(new POP(RegisterARM.getR(n)));
-                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new SDIV(RegisterARM.getR(12), RegisterARM.getR(n)));
             }
         }

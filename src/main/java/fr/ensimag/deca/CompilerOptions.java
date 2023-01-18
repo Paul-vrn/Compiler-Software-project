@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 
 import org.apache.log4j.Level;
@@ -131,6 +133,7 @@ public class CompilerOptions {
                         int newRMAX = Integer.parseInt(argsArrayList.get(i));
                         if(newRMAX >= 4 && newRMAX <= 16){
                             RegisterIMA.RMAX = newRMAX - 1;
+                            RegisterARM.RMAX = newRMAX - 1;
                         }
                         else{
                             throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");

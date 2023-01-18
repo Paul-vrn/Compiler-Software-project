@@ -264,7 +264,6 @@ public class DecacCompiler {
         LOG.info("Writing assembler file ...");
 
         program.display(new PrintStream(fstream));
-        //TODO changer de display pour arm
         LOG.info("Compilation of " + sourceName + " successful.");
         return false;
     }

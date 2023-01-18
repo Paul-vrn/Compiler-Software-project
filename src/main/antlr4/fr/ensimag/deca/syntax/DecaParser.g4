@@ -598,12 +598,14 @@ decl_method returns[AbstractDeclMethod tree]
 }
     : type ident OPARENT params=list_params CPARENT (block {
         methodBody = new MethodBody($block.decls, $block.insts);
+        setLocation(methodBody, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         }
       ) {
         assert(methodBody != null);
         $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+        setLocation($tree, $type.start);
         }
     ;
 
@@ -633,5 +635,6 @@ multi_line_string returns[String text, Location location]
 param returns[DeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $type.start);
         }
     ;

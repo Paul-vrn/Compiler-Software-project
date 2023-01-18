@@ -112,7 +112,8 @@ public class ClassDefinition extends TypeDefinition {
 
     public void codeGenMethodTable(DecacCompiler compiler, ArrayList<String> methods){
         ClassDefinition superClass = this.getSuperClass();
-        if(!(superClass.getType().getName().getName().equals("Object"))) {
+        System.out.println("bonjour" + this.getType().getName().getName());
+        if(!(this.getType().getName().getName().equals("Object"))) {
             ArrayList<String> miniMethods = new ArrayList<String>();
             for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
                 if (entry.getValue().isMethod()) {

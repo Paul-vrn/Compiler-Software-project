@@ -33,6 +33,7 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        s.print("class ");
         name.decompile(s);
         if (superClass != null) {
             s.print(" extends ");

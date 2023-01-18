@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant la déclaration d'une methode avec un nom interdit
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+
+class class {
+	void m() {
+		int x;
+    }
+}

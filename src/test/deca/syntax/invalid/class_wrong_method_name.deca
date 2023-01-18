@@ -1,0 +1,17 @@
+// Description:
+//    Programme testant la déclaration d'une methode avec un nom de method incorrect
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+
+class A {
+	void class() {
+		int x;
+    }
+}
+

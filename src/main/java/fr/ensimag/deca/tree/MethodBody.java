@@ -31,7 +31,7 @@ public class MethodBody extends AbstractMethodBody {
         listDeclField.decompile(s);
         listInst.decompile(s);
         s.unindent();
-        s.print("}");
+        s.println("}");
     }
 
     @Override

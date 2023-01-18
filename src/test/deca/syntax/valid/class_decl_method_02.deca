@@ -1,0 +1,21 @@
+// Description:
+//    Programme testant la déclaration d'une classe avec methode puis extends.
+//
+// Resultats:
+//		- 0 si le test est réussi
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+class A {
+	int a;
+	int add(int b) {
+		return a + b;
+	}
+}
+
+class B extends A {
+	int a;
+	int b;
+}

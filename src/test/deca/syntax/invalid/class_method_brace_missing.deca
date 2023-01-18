@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant la déclaration d'une methode avec une parenthèse manquante
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+
+class A {
+	void m( {
+		int x;
+    }
+}

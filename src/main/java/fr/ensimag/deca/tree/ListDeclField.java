@@ -3,11 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -36,8 +35,8 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         for(AbstractDeclField current : this.getList()){
             current.getInitialization().codeGenInit(compiler, current.getFieldName());
         }
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
-        compiler.addInstruction(new PUSH(Register.getR(2))); //On push l'objet courrant pour le faire passer dans l'initialisation de sa super classe
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, RegisterIMA.LB), RegisterIMA.getR(2)));
+        compiler.addInstruction(new PUSH(RegisterIMA.getR(2))); //On push l'objet courrant pour le faire passer dans l'initialisation de sa super classe
         compiler.addInstruction(new BSR(new Label("init." + "Nom de la super class")));
         compiler.addInstruction(new RTS());
     }

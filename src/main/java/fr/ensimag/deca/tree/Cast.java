@@ -43,7 +43,8 @@ public class Cast extends AbstractExpr{
         return type1;
     }
 
-    public void codeGenExpr(DecacCompiler compiler, int n) {
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
         getExpr().codeGenExpr(compiler, n);
         if (getType().isInt()) {
             compiler.addInstruction(new INT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
@@ -51,6 +52,19 @@ public class Cast extends AbstractExpr{
             compiler.addInstruction(new FLOAT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         }
     }
+
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*getExpr().armCodeGenExpr(compiler, n, m);
+        if (getType().isInt()) {
+
+        } else if (getType().isFloat()) {
+
+        }*/
+    }
+
+
 
 
     @Override

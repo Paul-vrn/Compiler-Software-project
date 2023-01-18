@@ -4,9 +4,9 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.Register;
 
 /**
  * Variable declaration
@@ -37,14 +37,14 @@ public abstract class AbstractMethodBody extends Tree {
         //on sauvegarde tout les registres sauf R0 qui contiendra le résultat, les registres SP et LB sont handled par les fonctiosn d'appel
         //i<15 peut être à changer en i<RMAX
         for(int i = 1; i<15; i++) {
-            compiler.addInstruction(new PUSH(Register.getR(i)));
+            compiler.addInstruction(new PUSH(RegisterIMA.getR(i)));
         }
     }
 
     public static void contextRestore(DecacCompiler compiler) {
         //i<15 peut être à changer en i<RMAX
         for(int i = 14; i>0; i--) {
-            compiler.addInstruction(new POP(Register.getR(i)));
+            compiler.addInstruction(new POP(RegisterIMA.getR(i)));
         }
     }
 

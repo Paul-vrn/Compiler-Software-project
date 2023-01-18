@@ -15,6 +15,7 @@ public class LabelFactory {
     private int nbOr;
     private int nbOpComp;
     private int nbString;
+    private int nbInt;
     private int nbFloat;
     private boolean flagOverflowError;
     private boolean flagStackError;
@@ -121,6 +122,11 @@ public class LabelFactory {
         nbFloat++;
         return i;
     }
+    public int nbInt() {
+        int i = nbInt;
+        nbInt++;
+        return i;
+    }
 
     public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
@@ -163,6 +169,8 @@ public class LabelFactory {
     public Label getPrintfLabel() {
         return printfLabel;
     }
+    public Label getScanfLabel() { return scanfLabel; }
+
 
     public void createPrintLabel(DecacCompiler compiler) {
         if (flagLabelInt) {
@@ -175,4 +183,5 @@ public class LabelFactory {
             compiler.addData(new Line(new Label("ln"), new ASCIZ(new ImmediateString("\\n"))));
         }
     }
+
 }

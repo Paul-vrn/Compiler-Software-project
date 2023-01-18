@@ -45,10 +45,10 @@ public class Minus extends AbstractOpArith {
                 compiler.addInstruction(new VSUB(RegisterARM.getS(m+1), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new PUSHARM(RegisterARM.getS(m)));
+                compiler.addInstruction(new VPUSH(RegisterARM.getS(m)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new MOV(RegisterARM.getS(m), RegisterARM.getS(0)));
-                compiler.addInstruction(new POPARM(RegisterARM.getS(m)));
+                compiler.addInstruction(new VPOP(RegisterARM.getS(m)));
                 compiler.addInstruction(new VSUB(RegisterARM.getS(0), RegisterARM.getS(m)));
             }
         } else {

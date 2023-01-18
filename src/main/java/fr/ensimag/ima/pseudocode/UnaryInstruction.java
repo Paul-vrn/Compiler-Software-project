@@ -19,7 +19,7 @@ public abstract class UnaryInstruction extends Instruction {
     }
 
     @Override
-    void armDisplayOperands(PrintStream s) {
+    protected void armDisplayOperands(PrintStream s) {
         s.print(" ");
         s.print(operand.toArmString());
     }

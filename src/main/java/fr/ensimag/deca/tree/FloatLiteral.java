@@ -57,6 +57,7 @@ public class FloatLiteral extends AbstractExpr {
         compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
+
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(new ImmediateFloat(value), RegisterIMA.getR(n)));

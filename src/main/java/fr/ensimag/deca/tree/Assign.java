@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.arm.instructions.STR;
+import fr.ensimag.ima.pseudocode.arm.instructions.VSTR;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
@@ -79,11 +80,11 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-    public void armCodeGenExprInst(DecacCompiler compiler, int n, int m) {
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         Identifier id = (Identifier) this.getLeftOperand();
         this.getRightOperand().armCodeGenExpr(compiler, n, m);
         if (getType().isFloat()){
-            compiler.addInstruction(new STR(RegisterARM.getS(m), id.getExpDefinition().getOperand()));
+            compiler.addInstruction(new VSTR(RegisterARM.getS(m), id.getExpDefinition().getOperand()));
         } else {
             compiler.addInstruction(new STR(RegisterARM.getR(n), id.getExpDefinition().getOperand()));
         }

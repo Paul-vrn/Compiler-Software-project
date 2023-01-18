@@ -25,4 +25,8 @@ public class ImmediateString extends Operand {
     public String toArmString() {
         return this.toString();
     }
+
+    public String getValue() {
+        return value;
+    }
 }

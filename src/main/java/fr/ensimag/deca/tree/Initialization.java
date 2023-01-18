@@ -10,6 +10,7 @@ import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.arm.instructions.VSTR;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.ima.pseudocode.arm.instructions.STR;
@@ -41,7 +42,7 @@ public class Initialization extends AbstractInitialization {
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.armCodeGenExpr(compiler, 4, 2);
         if (expression.getType().isFloat()){
-            compiler.addInstruction(new STR(RegisterARM.getS(2), varName.getExpDefinition().getOperand()));
+            compiler.addInstruction(new VSTR(RegisterARM.getS(2), varName.getExpDefinition().getOperand()));
         } else {
             // int || bool
             compiler.addInstruction(new STR(RegisterARM.getR(4), varName.getExpDefinition().getOperand()));

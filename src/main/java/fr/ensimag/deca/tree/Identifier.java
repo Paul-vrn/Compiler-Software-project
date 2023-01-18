@@ -7,10 +7,11 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
+import fr.ensimag.ima.pseudocode.arm.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
@@ -42,6 +43,22 @@ public class Identifier extends AbstractIdentifier {
         } else {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+    }
+
+    @Override
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(1)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        } else {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(2)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        }
+
     }
 
     @Override

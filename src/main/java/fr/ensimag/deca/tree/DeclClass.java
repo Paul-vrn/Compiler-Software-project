@@ -4,10 +4,12 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 //import jdk.javadoc.internal.doclint.Env;
+import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -97,7 +99,12 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
-        this.methods.verifyListDeclMethodPass3();
+
+        /*for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.name.getClassDefinition().getMembers().getDictionary().entrySet()){
+            System.out.println("ICI : " + entry.getKey());
+        }*/
+
+        this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
     }
 
 

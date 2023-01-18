@@ -1,9 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -17,17 +15,17 @@ import java.io.PrintStream;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
 public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier varName;
-    private ListParams listParams;
+    private ListDeclParam listParams;
     private AbstractMethodBody methodBody;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListParams listParams, AbstractMethodBody methodBody) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListDeclParam listParams, AbstractMethodBody methodBody) {
         Validate.notNull(type);
         Validate.notNull(varName);
         Validate.notNull(listParams);
@@ -66,9 +64,56 @@ public class DeclMethod extends AbstractDeclMethod {
         methodBody.iter(f);
     }
 
-    @Override
-    protected void verifyDeclField(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
 
+    @Override
+    protected EnvironmentExp verifyDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass,
+                                                   AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+
+        this.varName.setType(type1);
+        Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
+        this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
+                sig, 0));
+
+        if (superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
+            if (superClass.getClassDefinition().getMembers().get(name.getName()).isMethod()
+                    && superClass.getClassDefinition().getMembers().get(name.getName()).asMethodDefinition("conversion en MethodeDef impossible", getLocation()).getSignature().equals(sig)) {
+                try {
+                    if (superClass.getClassDefinition().getMembers().get(name.getName()).getType().sameType(type1)
+                            || type1.asClassType("bruh", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(name.getName()).getType().asClassType("bruh", getLocation())))
+                    {}
+                    else{
+                        throw new ContextualError(compiler.displaySourceFile() + ":"
+                                + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
+                    }
+                } catch (ContextualError e) {
+                    throw new ContextualError(compiler.displaySourceFile() + ":"
+                            + this.getLocation().errorOutPut() + ": Subtype condition not respected", this.getLocation());
+                }
+            }
+            else{
+                throw new ContextualError(compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
+            }
+        }
+
+        EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+        try {
+            envToReturn.declare(this.varName.getName(), this.varName.getMethodDefinition());
+        } catch (EnvironmentExp.DoubleDefException ignored) {
+        }
+
+        return envToReturn;
+    }
+
+    @Override
+    protected void verifyDeclMethodPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type returnType = this.type.verifyType(compiler);
+        this.listParams.classEnvExp = envExp;
+        EnvironmentExp envExpParam = this.listParams.verifyListDeclParamPass3(compiler);
+        envExpParam.setParentEnvironment(envExp);
+
+        this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
     }
 
     @Override

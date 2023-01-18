@@ -158,7 +158,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            $tree = $expr.tree;
+            $tree = new Return($expr.tree);
             setLocation($tree, $RETURN);
         }
     ;
@@ -401,6 +401,7 @@ select_expr returns[AbstractExpr tree]
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
             assert($args.tree != null);
+
         }
         | /* epsilon */ {
             // we matched "e.i"
@@ -596,20 +597,22 @@ decl_method returns[AbstractDeclMethod tree]
 @init {
     AbstractMethodBody methodBody = null;
 }
-    : type ident OPARENT params=list_params CPARENT (block {
+    : type ident OPARENT params=list_decl_param CPARENT (block {
         methodBody = new MethodBody($block.decls, $block.insts);
+        setLocation(methodBody, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         }
       ) {
         assert(methodBody != null);
         $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+        setLocation($tree, $type.start);
         }
     ;
 
-list_params returns[ListParams tree]
+list_decl_param returns[ListDeclParam tree]
 @init   {
-            $tree = new ListParams();
+            $tree = new ListDeclParam();
         }
     : (p1=param {
         $tree.add($p1.tree);
@@ -633,5 +636,6 @@ multi_line_string returns[String text, Location location]
 param returns[DeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $type.start);
         }
     ;

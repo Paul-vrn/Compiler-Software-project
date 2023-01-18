@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.deca.context.Type;
 
 /**
  * Variable declaration
@@ -28,7 +29,7 @@ public abstract class AbstractMethodBody extends Tree {
      * @param currentClass corresponds to the "class" attribute (null in the main bloc).
      */
     protected abstract void verifyMethodBody(DecacCompiler compiler,
-                                          EnvironmentExp localEnv, ClassDefinition currentClass)
+                                             EnvironmentExp classEnv, EnvironmentExp envExpParam, AbstractIdentifier name, Type returnType)
             throws ContextualError;
 
     public abstract void codeGen(DecacCompiler compiler);

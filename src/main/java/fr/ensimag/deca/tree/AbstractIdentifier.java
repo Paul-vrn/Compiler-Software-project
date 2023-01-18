@@ -96,5 +96,7 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
 
+    public abstract Definition verifyDefinition(DecacCompiler compiler) throws ContextualError;
+
 
 }

@@ -99,9 +99,7 @@ public class IfThenElse extends AbstractInst {
             compiler.addLabel(labelEnd);
             compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
         }
-
     }
-
 
     @Override
     public void decompile(IndentPrintStream s){

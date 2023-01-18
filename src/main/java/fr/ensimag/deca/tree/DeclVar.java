@@ -51,8 +51,6 @@ public class DeclVar extends AbstractDeclVar {
                     + this.getLocation().errorOutPut() + ": Variable already defined", this.getLocation());
         }
 
-
-
     }
 
     

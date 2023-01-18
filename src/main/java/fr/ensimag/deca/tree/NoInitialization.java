@@ -25,7 +25,7 @@ import java.io.PrintStream;
  * @author gl21
  * @date 01/01/2023
  */
-public class NoInitialization extends AbstractInitialization {
+public class  NoInitialization extends AbstractInitialization {
 
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,

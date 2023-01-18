@@ -5,6 +5,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -20,6 +21,14 @@ public class DeclField extends AbstractDeclField {
     private AbstractIdentifier type;
     private AbstractIdentifier fieldName;
     private AbstractInitialization initialization;
+
+    public AbstractInitialization getInitialization() {
+        return initialization;
+    }
+
+    public AbstractIdentifier getFieldName() {
+        return fieldName;
+    }
 
     public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
         Validate.notNull(visibility);
@@ -62,8 +71,11 @@ public class DeclField extends AbstractDeclField {
 
     }
 
-    @Override
     public void codeGen(DecacCompiler compiler) {
 
+    }
+
+    public void codeGenFieldInit(DecacCompiler compiler) {
+        initialization.codeGenInit(compiler, fieldName);
     }
 }

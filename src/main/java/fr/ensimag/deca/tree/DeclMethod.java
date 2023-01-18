@@ -5,6 +5,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
 //import sun.jvm.hotspot.opto.Block;
 
@@ -20,7 +25,6 @@ public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier varName;
     private ListParams listParams;
-
     private AbstractMethodBody methodBody;
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListParams listParams, AbstractMethodBody methodBody) {
@@ -69,6 +73,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void codeGen(DecacCompiler compiler) {
-
+        Label function = new Label(varName.getName().getName());
+        compiler.addLabel(function);
+        methodBody.codeGen(compiler);
     }
 }

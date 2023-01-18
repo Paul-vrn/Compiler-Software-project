@@ -68,21 +68,29 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
         Identifier id = (Identifier) this.getLeftOperand();
-        this.getRightOperand().codeGenExpr(compiler, 2);
-        compiler.addInstruction(new STORE(RegisterIMA.getR(2), id.getExpDefinition().getOperand()));
+        this.getRightOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new STORE(RegisterIMA.getR(n), id.getExpDefinition().getOperand()));
+    }
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
     }
 
     @Override
-    public void armCodeGenInst(DecacCompiler compiler) {
+    public void armCodeGenExprInst(DecacCompiler compiler, int n, int m) {
         Identifier id = (Identifier) this.getLeftOperand();
-        this.getRightOperand().armCodeGenExpr(compiler, 4, 2);
+        this.getRightOperand().armCodeGenExpr(compiler, n, m);
         if (getType().isFloat()){
-            compiler.addInstruction(new STR(RegisterARM.getS(2), id.getExpDefinition().getOperand()));
+            compiler.addInstruction(new STR(RegisterARM.getS(m), id.getExpDefinition().getOperand()));
         } else {
-            compiler.addInstruction(new STR(RegisterARM.getR(4), id.getExpDefinition().getOperand()));
+            compiler.addInstruction(new STR(RegisterARM.getR(n), id.getExpDefinition().getOperand()));
         }
+    }
+    @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+        this.armCodeGenExpr(compiler, 4, 2);
     }
 
     @Override

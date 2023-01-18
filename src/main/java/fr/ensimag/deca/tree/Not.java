@@ -5,9 +5,13 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
 import fr.ensimag.ima.pseudocode.RegisterARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.B;
+import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
+import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
 import fr.ensimag.ima.pseudocode.arm.instructions.MVN;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
@@ -56,7 +60,16 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        int nbNot = compiler.nbNot();
+        Label label = new Label("NOT_" + nbNot);
+        Label labelEnd = new Label("NOT_END_" + nbNot);
         getOperand().armCodeGenExpr(compiler, n, m);
-        compiler.addInstruction(new MVN(RegisterARM.getR(n), RegisterARM.getR(n)));
+        compiler.addInstruction(new CMP(0, RegisterIMA.getR(n)));
+        compiler.addInstruction(new BNE(label));
+        compiler.addInstruction(new MOV(new ImmediateInteger(1), RegisterIMA.getR(n)));
+        compiler.addInstruction(new B(labelEnd));
+        compiler.addLabel(label);
+        compiler.addInstruction(new MOV(new ImmediateInteger(0), RegisterIMA.getR(n)));
+        compiler.addLabel(labelEnd);
     }
 }

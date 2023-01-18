@@ -169,10 +169,10 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        if (getType().isInt()) {
-            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
-        } else {
+        if (getType().isFloat()) {
             compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(m)));
+        } else {
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
         }
     }
 

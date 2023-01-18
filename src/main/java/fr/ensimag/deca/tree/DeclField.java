@@ -1,9 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
@@ -11,7 +9,7 @@ import org.apache.commons.lang.Validate;
 import java.io.PrintStream;
 
 /**
- * Declaration of a class (<code>class name extends superClass {members}<code>).
+ *
  * 
  * @author gl21
  * @date 01/01/2023
@@ -67,8 +65,32 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyDeclField(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+    protected EnvironmentExp verifyDeclFieldPass2(DecacCompiler compiler, AbstractIdentifier superClass,
+                                        AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
 
+        if(type1.isVoid()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Type void forbidden in class fields", this.getLocation());
+        }
+
+        this.fieldName.setType(type1);
+        this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
+                                    name.getClassDefinition(), 0));
+
+        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
+            if(!superClass.getClassDefinition().getMembers().get(name.getName()).isField()){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
+            }
+        }
+
+        EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+        try{
+            envToReturn.declare(name.getName(), this.fieldName.getFieldDefinition());
+        }catch (EnvironmentExp.DoubleDefException ignored){}
+
+        return envToReturn;
     }
 
     public void codeGen(DecacCompiler compiler) {

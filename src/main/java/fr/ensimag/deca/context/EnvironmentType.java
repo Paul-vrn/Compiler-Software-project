@@ -46,8 +46,25 @@ public class EnvironmentType {
 
     private final Map<Symbol, TypeDefinition> envTypes;
 
+    public Map<Symbol, TypeDefinition> getEnvTypes() {
+        return envTypes;
+    }
+
     public TypeDefinition defOfType(Symbol s) {
         return envTypes.get(s);
+    }
+    public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = -2733379901827316441L;
+    }
+
+    public void declare(Symbol name, TypeDefinition def) throws EnvironmentType.DoubleDefException {
+        if(this.envTypes.containsKey(name))
+        {
+            throw new EnvironmentType.DoubleDefException();
+        }
+        else{
+            this.envTypes.put(name, def);
+        }
     }
 
     public final VoidType    VOID;

@@ -1,9 +1,19 @@
 package fr.ensimag.deca.context;
 
+import java.util.ArrayList;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.Identifier;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.util.Map;
@@ -96,6 +106,50 @@ public class ClassDefinition extends TypeDefinition {
         }
         members = new EnvironmentExp(parent);
         this.superClass = superClass;
+    }
+
+    public void codeGenMethodTable(DecacCompiler compiler, ArrayList<String> methods){
+        ClassDefinition superClass = this.getSuperClass();
+        if(!(superClass.getType().getName().getName().equals("Object"))) {
+            ArrayList<String> miniMethods = new ArrayList<String>();
+            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
+                if (entry.getValue().isMethod()) {
+                    String MethodName = "code.";
+                    MethodName += this.getType().getName().getName();
+                    MethodDefinition meth = (MethodDefinition) entry.getValue();
+                    MethodName += "." + meth.getLabel().toString();
+                    miniMethods.add(0, MethodName);
+                }
+            }
+            methods.addAll(miniMethods);
+            superClass.codeGenMethodTable(compiler, methods);
+        }
+        else{
+            //ArrayList<String> finalMethods = new ArrayList<String>();
+            methods.add("code.Object.equals");
+            for(int i = methods.size()-1; i>=0; i--){
+                String methodToAdd = methods.get(i);
+                for(int j = i; j>=0; j--){
+                    if(methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])){
+                        methodToAdd = methods.get(j);
+                    }
+                }
+                compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
+                compiler.addInstruction(new PUSH(Register.getR(1)));
+            }
+        }
+
+
+
+//        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()){
+//            if(entry.getValue().isMethod()){
+//                MethodDefinition method = (MethodDefinition) entry.getValue();
+//                Label label = new Label("code."+ superClass.getType().getName().getName() + "." + method.getLabel().toString());
+//                compiler.addInstruction(new LOAD(new LabelOperand(label), Register.getR(1)));
+//                compiler.addInstruction(new PUSH(Register.getR(1)));
+//                compiler.addInstruction(new ADDSP(1));
+//            }
+//        }
     }
     
 }

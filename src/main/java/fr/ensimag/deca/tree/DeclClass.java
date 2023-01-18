@@ -24,7 +24,11 @@ public class DeclClass extends AbstractDeclClass {
     private final ListDeclMethod methods;
     private final ListDeclField fieldSets;
 
-    AbstractIdentifier getSuperClass(){
+    public AbstractIdentifier getName() {
+        return name;
+    }
+
+    public AbstractIdentifier getSuperClass(){
         return superClass;
     }
 
@@ -131,5 +135,7 @@ public class DeclClass extends AbstractDeclClass {
         this.fieldSets.iter(f);
         this.methods.iter(f);
     }
+
+
 
 }

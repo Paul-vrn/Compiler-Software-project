@@ -5,7 +5,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
+import fr.ensimag.ima.pseudocode.arm.instructions.POPARM;
+import fr.ensimag.ima.pseudocode.arm.instructions.PUSHARM;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
@@ -57,6 +61,21 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             compiler.addInstruction(new POP(RegisterIMA.getR(n)));
             compiler.getMemory().decreaseTSTO();
             compiler.addInstruction(new CMP(RegisterIMA.getR(n), RegisterIMA.R0));
+        }
+    }
+
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+        getLeftOperand().armCodeGenExpr(compiler, n, m);
+        if (n < RegisterARM.RMAX){
+            getRightOperand().armCodeGenExpr(compiler, n+1, m);
+            compiler.addInstruction(new CMP(RegisterARM.getR(n+1), RegisterARM.getR(n)));
+        } else {
+            compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));
+            getRightOperand().armCodeGenExpr(compiler, n, m);
+            compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(12)));
+            compiler.addInstruction(new POPARM(RegisterARM.getR(n)));
+            compiler.addInstruction(new CMP(RegisterARM.getR(12), RegisterARM.getR(n)));
         }
     }
 }

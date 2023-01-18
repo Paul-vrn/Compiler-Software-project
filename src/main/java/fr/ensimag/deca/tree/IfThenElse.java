@@ -9,7 +9,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.RegisterARM;
 import fr.ensimag.ima.pseudocode.RegisterIMA;
+import fr.ensimag.ima.pseudocode.arm.instructions.B;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -63,14 +65,12 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void armCodeGenInst(DecacCompiler compiler) {
+        this.armCodeGenIf(compiler, 0);
     }
     protected void codeGenIf(DecacCompiler compiler, int p) {
         int nbIf = compiler.getLabelFactory().getNbIfThenElse();
         Label labelElse = new Label("ELSE_" + nbIf + "_" + p);
         Label labelEnd = new Label("END_IF_" + nbIf);
-        if (p == 0) {
-            compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
-        }
         condition.codeGenExpr(compiler, 2);
         compiler.addInstruction(new CMP(0, RegisterIMA.getR(2)));
         compiler.addInstruction(new BEQ(labelElse));
@@ -80,6 +80,24 @@ public class IfThenElse extends AbstractInst {
         elseBranch.codeGenIf(compiler, p+1);
         if(p==0){
             compiler.addLabel(labelEnd);
+            compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
+        }
+    }
+
+    protected void armCodeGenIf(DecacCompiler compiler, int p) {
+        int nbIf = compiler.getLabelFactory().getNbIfThenElse();
+        Label labelElse = new Label("ELSE_" + nbIf + "_" + p);
+        Label labelEnd = new Label("END_IF_" + nbIf);
+        condition.armCodeGenExpr(compiler, 4, 2);
+        compiler.addInstruction(new CMP(0, RegisterARM.getR(4)));
+        compiler.addInstruction(new BEQ(labelElse));
+        thenBranch.armCodeGenListInst(compiler);
+        compiler.addInstruction(new B(labelEnd));
+        compiler.addLabel(labelElse);
+        elseBranch.armCodeGenIf(compiler, p+1);
+        if(p==0){
+            compiler.addLabel(labelEnd);
+            compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
         }
 
     }

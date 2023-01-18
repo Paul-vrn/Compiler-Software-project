@@ -40,10 +40,11 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.armCodeGenExpr(compiler, 4, 2);
-        if (expression.getType().isInt()){
-            compiler.addInstruction(new STR(RegisterARM.getR(4), varName.getExpDefinition().getOperand()));
-        } else {
+        if (expression.getType().isFloat()){
             compiler.addInstruction(new STR(RegisterARM.getS(2), varName.getExpDefinition().getOperand()));
+        } else {
+            // int || bool
+            compiler.addInstruction(new STR(RegisterARM.getR(4), varName.getExpDefinition().getOperand()));
         }
     }
 

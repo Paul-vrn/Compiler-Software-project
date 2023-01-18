@@ -45,12 +45,10 @@ public class Minus extends AbstractOpArith {
                 compiler.addInstruction(new VSUB(RegisterARM.getS(m+1), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new PUSHARM(RegisterARM.getS(m)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new LDR(RegisterARM.getS(m), RegisterARM.getS(0)));
+                compiler.addInstruction(new MOV(RegisterARM.getS(m), RegisterARM.getS(0)));
                 compiler.addInstruction(new POPARM(RegisterARM.getS(m)));
-                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new VSUB(RegisterARM.getS(0), RegisterARM.getS(m)));
             }
         } else {
@@ -60,12 +58,10 @@ public class Minus extends AbstractOpArith {
                 compiler.addInstruction(new SUBS(RegisterARM.getR(n+1), RegisterARM.getR(n)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new SUB(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
-                compiler.addInstruction(new LDR(RegisterARM.getR(n), RegisterARM.getR(12)));
+                compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(12)));
                 compiler.addInstruction(new POPARM(RegisterARM.getR(n)));
-                compiler.addInstruction(new ADD(new ImmediateInteger(4), RegisterARM.SP));
                 compiler.addInstruction(new SUBS(RegisterARM.getR(12), RegisterARM.getR(n)));
             }
         }

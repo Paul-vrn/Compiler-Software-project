@@ -13,6 +13,7 @@ public class LabelFactory {
     private int nbWhile;
     private int nbAnd;
     private int nbOr;
+    private int nbOpComp;
     private int nbString;
     private int nbFloat;
     private boolean flagOverflowError;
@@ -81,6 +82,11 @@ public class LabelFactory {
     public int nbNot(){
         int i = nbNot;
         nbNot++;
+        return i;
+    }
+    public int NbOpComp() {
+        int i = nbOpComp;
+        nbOpComp++;
         return i;
     }
     public int getNbIfThenElse() {

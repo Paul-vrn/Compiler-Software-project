@@ -35,14 +35,12 @@ public class NoInitialization extends AbstractInitialization {
 
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-        compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.getR(0)));
-        compiler.addInstruction(new STORE(RegisterIMA.getR(0), varName.getExpDefinition().getOperand()));
+        // nothing to do
     }
 
     @Override
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-        // TODO x = ? quand x; (null ?)
-        // compiler.addInstruction(new STR(null, varName.getExpDefinition().getOperand()));
+        // nothing to do
     }
 
     /**

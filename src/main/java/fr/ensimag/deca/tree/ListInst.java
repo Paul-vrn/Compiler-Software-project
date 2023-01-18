@@ -55,6 +55,15 @@ public class ListInst extends TreeList<AbstractInst> {
             }
         }
     }
+    public void armCodeGenIf(DecacCompiler compiler, int p) {
+        for (AbstractInst i : getList()) {
+            if(i instanceof IfThenElse){
+                ((IfThenElse)i).armCodeGenIf(compiler,p);}
+            else{
+                i.armCodeGenInst(compiler);
+            }
+        }
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

@@ -30,8 +30,10 @@ public class TernaryInstruction extends Instruction {
 
     void armDisplayOperands(PrintStream s) {
         s.print(" ");
-        s.print(operand3.toArmString());
-        s.print(", ");
+        if (operand3 != null) {
+            s.print(operand3.toArmString());
+            s.print(", ");
+        }
         s.print(operand2.toArmString());
         s.print(", ");
         s.print(operand1.toArmString());
@@ -50,6 +52,5 @@ public class TernaryInstruction extends Instruction {
         Validate.notNull(op2);
         this.operand1 = op1;
         this.operand2 = op2;
-        this.operand3 = op2;
     }
 }

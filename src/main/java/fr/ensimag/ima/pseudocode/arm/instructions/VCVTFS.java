@@ -2,22 +2,21 @@ package fr.ensimag.ima.pseudocode.arm.instructions;
 
 import fr.ensimag.ima.pseudocode.BinaryInstruction;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Operand;
 
 /**
- * int32 <-- float
+ * float <-- int32
  * @author Paul Vernin
  * @date 01/01/2023
  */
-public class VCVTSF extends BinaryInstruction {
+public class VCVTFS extends BinaryInstruction {
 
-    public VCVTSF(GPRegister op1, GPRegister op2) {
+    public VCVTFS(GPRegister op1, GPRegister op2) {
         super(op1, op2);
     }
 
     @Override
     protected String getName() {
-        return "VCVT.S32.F32";
+        return "VCVT.F32.S32";
     }
 
 

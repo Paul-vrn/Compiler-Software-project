@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import java.util.Map;
  */
 public class ListDeclParam extends TreeList<AbstractDeclParam> {
     private static final Logger LOG = Logger.getLogger(ListDeclParam.class);
+    protected EnvironmentExp classEnvExp;
 
     protected Signature verifyListDeclParamPass2(DecacCompiler compiler)
             throws ContextualError {
@@ -25,6 +27,26 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
             sig.add(current.verifyDeclParamPass2(compiler));
         }
         return sig;
+    }
+
+    protected EnvironmentExp verifyListDeclParamPass3(DecacCompiler compiler)
+            throws ContextualError {
+
+        EnvironmentExp envExpR = new EnvironmentExp(this.classEnvExp);
+
+        for (AbstractDeclParam current : this.getList()){
+            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
+                    current.verifyDeclParamPass3(compiler).getDictionary().entrySet()){
+                try {
+                    envExpR.declare(entry.getKey(), entry.getValue());
+                }catch (EnvironmentExp.DoubleDefException e){
+                    throw new ContextualError( compiler.displaySourceFile() + ":"
+                            + this.getLocation().errorOutPut() + ": Param already defined", this.getLocation());
+                }
+            }
+        }
+
+        return envExpR;
     }
 
     @Override

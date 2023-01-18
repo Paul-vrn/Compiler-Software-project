@@ -17,6 +17,9 @@ public abstract class AbstractDeclField extends Tree {
                                                  AbstractIdentifier superClass, AbstractIdentifier name)
             throws ContextualError;
 
+    protected abstract void verifyDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name)
+            throws ContextualError;
+
     public abstract void codeGen(DecacCompiler compiler);
 
 }

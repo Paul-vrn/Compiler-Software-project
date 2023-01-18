@@ -211,6 +211,10 @@ public class Identifier extends AbstractIdentifier {
         this.setDefinition(compiler.environmentType.defOfType(this.getName()));
         return this.getType();
     }
+
+    public Definition verifyDefinition(DecacCompiler compiler) throws ContextualError{
+        return this.definition;
+    }
     
     
     private Definition definition;

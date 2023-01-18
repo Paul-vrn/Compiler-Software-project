@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
@@ -47,8 +48,11 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet supported");
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp classEnv, EnvironmentExp envExpParam,
+                                    AbstractIdentifier name, Type returnType) throws ContextualError {
+        this.listDeclField.verifyListDeclVariable(compiler, envExpParam, name.getClassDefinition());
+
+        this.listInst.verifyListInst(compiler, envExpParam, name.getClassDefinition(), returnType);
     }
 
     @Override

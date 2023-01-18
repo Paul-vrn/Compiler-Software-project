@@ -96,7 +96,8 @@ public class DeclClass extends AbstractDeclClass {
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
+        this.methods.verifyListDeclMethodPass3();
     }
 
 

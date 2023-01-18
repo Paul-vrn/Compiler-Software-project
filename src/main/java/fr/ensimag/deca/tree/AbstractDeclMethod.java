@@ -17,6 +17,10 @@ public abstract class AbstractDeclMethod extends Tree {
                                                            AbstractIdentifier superClass, AbstractIdentifier name)
             throws ContextualError;
 
+    protected abstract void verifyDeclMethodPass3(DecacCompiler compiler,
+                                                            EnvironmentExp envExp, AbstractIdentifier name)
+            throws ContextualError;
+
     public abstract void codeGen(DecacCompiler compiler);
 
 }

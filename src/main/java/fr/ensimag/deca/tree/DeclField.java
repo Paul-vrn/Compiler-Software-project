@@ -85,6 +85,12 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
+    protected void verifyDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+        this.initialization.verifyInitialization(compiler, type1, envExp, name.getClassDefinition());
+    }
+
+    @Override
     public void codeGen(DecacCompiler compiler) {
 
     }

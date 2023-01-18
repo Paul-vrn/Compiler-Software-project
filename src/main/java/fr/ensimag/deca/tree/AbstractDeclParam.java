@@ -10,4 +10,7 @@ public abstract class AbstractDeclParam extends Tree{
 
     protected abstract Type verifyDeclParamPass2(DecacCompiler compiler)
             throws ContextualError;
+
+    protected abstract EnvironmentExp verifyDeclParamPass3(DecacCompiler compiler)
+            throws ContextualError;
 }

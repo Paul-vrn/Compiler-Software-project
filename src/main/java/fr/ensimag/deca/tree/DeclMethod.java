@@ -101,6 +101,16 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
+    protected void verifyDeclMethodPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type returnType = this.type.verifyType(compiler);
+        this.listParams.classEnvExp = envExp;
+        EnvironmentExp envExpParam = this.listParams.verifyListDeclParamPass3(compiler);
+        envExpParam.setParentEnvironment(envExp);
+
+        this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
+    }
+
+    @Override
     public void codeGen(DecacCompiler compiler) {
 
     }

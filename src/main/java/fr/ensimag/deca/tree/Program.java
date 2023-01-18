@@ -7,6 +7,8 @@ import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
+
+import jdk.internal.org.objectweb.asm.Type;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -36,6 +38,11 @@ public class Program extends AbstractProgram {
 
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
+        /*ListDeclMethod listMethod = new ListDeclMethod();
+        listMethod.add(new DeclMethod(new Identifier(), new Identifier(compiler.createSymbol("code.Object.equals")),
+                new ListDeclParam(), null));
+        this.classes.add(new DeclClass(new Identifier(compiler.createSymbol("Object")), null, null, ));*/
+
         /* PASS 1*/
         this.classes.verifyListClass(compiler);
 
@@ -43,7 +50,7 @@ public class Program extends AbstractProgram {
         this.classes.verifyListClassMembers(compiler);
 
         /* PASS 3*/
-        //this.classes.verifyListClassBody(compiler);
+        this.classes.verifyListClassBody(compiler);
         this.main.verifyMain(compiler);
     }
 

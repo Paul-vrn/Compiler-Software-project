@@ -7,10 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.BL;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
-import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
-import fr.ensimag.ima.pseudocode.arm.instructions.SUBS;
+import fr.ensimag.ima.pseudocode.arm.instructions.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
 
@@ -59,6 +56,8 @@ public class ReadFloat extends AbstractReadExpr {
         compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0))); // LDR R0, =float
         compiler.addInstruction(new MOV(RegisterARM.SP, RegisterARM.getR(1))); // MOV R1, SP
         compiler.addInstruction(new BL(compiler.getLabelFactory().getScanfLabel())); // bl scanf
-        compiler.addInstruction(new LDR(new RegisterOffset(0, RegisterARM.SP), RegisterARM.getS(n)));// ldr rn, [sp]
+        compiler.addInstruction(new VLDR(new RegisterOffset(0, RegisterARM.SP), RegisterARM.getS(m)));// ldr sn, [sp]
+        compiler.addInstruction(new ADDS(new ImmediateInteger(4),RegisterARM.SP));
+
     }
 }

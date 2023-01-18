@@ -23,7 +23,7 @@ import org.apache.commons.lang.Validate;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.LB));
     }
 
     @Override

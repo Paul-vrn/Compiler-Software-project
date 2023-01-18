@@ -48,7 +48,7 @@ public class Memory {
      * @return the TSTO
      */
     public void increaseArmOffset() {
-        increaseArmOffset(4);
+        increaseArmOffset(80);
     }
     /**
      * Return TSTO value and reset it afterwards

@@ -54,7 +54,7 @@ public class FloatLiteral extends AbstractExpr {
         // vldr s0, x
         this.armCodeGenExpr(compiler, 4,16);
         compiler.addInstruction(new VCVTDS(RegisterARM.getS(16), RegisterARM.getD(0)));
-        compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(2), RegisterARM.getR(1)));
+        compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 

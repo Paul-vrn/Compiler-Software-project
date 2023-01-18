@@ -30,7 +30,8 @@ public class Identifier extends AbstractIdentifier {
     }
 
     public void armCodeGenDeclVar(DecacCompiler compiler){
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextArmOffSet(), RegisterARM.FP));
+        compiler.increaseArmOffset(4);
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.getNextArmOffSet(), RegisterARM.FP));
     }
 
     @Override
@@ -55,7 +56,7 @@ public class Identifier extends AbstractIdentifier {
             compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
             compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(16)));
             compiler.addInstruction(new VCVTDS(RegisterARM.getS(16), RegisterARM.getD(0)));
-            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(2), RegisterARM.getR(1)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
             compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
         }
 

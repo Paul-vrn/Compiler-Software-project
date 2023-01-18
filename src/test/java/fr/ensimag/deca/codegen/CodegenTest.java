@@ -342,6 +342,20 @@ public class CodegenTest {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test45print_wint() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/print_wint.deca"};
+        String file2 = "src/test/deca/codegen/valid/print_wint_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test46print_wfloat() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/print_wfloat.deca"};
+        String file2 = "src/test/deca/codegen/valid/print_wfloat_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

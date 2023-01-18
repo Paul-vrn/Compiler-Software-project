@@ -79,30 +79,29 @@ public class DeclClass extends AbstractDeclClass {
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 
-        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
+        //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
             EnvironmentType envTypeR = new EnvironmentType(compiler);
             ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
             newDef.disjointUnion(compiler, envExpF, envExpM);
 
-
             compiler.environmentType.getEnvTypes().remove(name.getName());
             ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
             this.name.setType(classtype);
-            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
+            this.name.setDefinition(newDef);
 
-            //compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
-
-        }
+            try{
+                compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
+            }catch (EnvironmentType.DoubleDefException e){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field and method environments conflict", this.getLocation());
+            }
+        //}
 
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
-
-        /*for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.name.getClassDefinition().getMembers().getDictionary().entrySet()){
-            System.out.println("ICI : " + entry.getKey());
-        }*/
 
         this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
     }

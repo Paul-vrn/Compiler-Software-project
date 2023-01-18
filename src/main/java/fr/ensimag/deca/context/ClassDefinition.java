@@ -73,7 +73,9 @@ public class ClassDefinition extends TypeDefinition {
         for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExpf.dictionary.entrySet()){
             try{
                 this.members.declare(entry.getKey(), entry.getValue());
-            }catch (EnvironmentExp.DoubleDefException ignored){}
+            }catch (EnvironmentExp.DoubleDefException ignored){
+
+            }
         }
 
         for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExpM.dictionary.entrySet()){

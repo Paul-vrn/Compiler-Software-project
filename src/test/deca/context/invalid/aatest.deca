@@ -8,9 +8,10 @@
 //    cree le 01/01/2023
 
 class A{
-    protected int x;
-    int getX(){
-        x;
+    protected int y;
+    int getX(int x){
+        int x = 25;
+        print(x);
     }
 }
 

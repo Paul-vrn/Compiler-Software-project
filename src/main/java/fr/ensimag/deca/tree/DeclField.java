@@ -90,10 +90,6 @@ public class DeclField extends AbstractDeclField {
     protected void verifyDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
 
-        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExp.getDictionary().entrySet()){
-            System.out.println("ICI : " + entry.getKey());
-        }
-
         this.initialization.verifyInitialization(compiler, type1, envExp, name.getClassDefinition());
     }
 

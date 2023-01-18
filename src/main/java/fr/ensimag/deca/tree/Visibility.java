@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
+import java.io.PrintStream;
 
 /**
  * Visibility of a field.
@@ -12,6 +15,18 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 public enum Visibility {
     PUBLIC,
     PROTECTED;
+
+    public void prettyPrintVisibility(PrintStream s, String prefix) {
+        s.print(prefix);
+        switch (this) {
+            case PUBLIC:
+                s.println("[visibility=PUBLIC]");
+                break;
+            case PROTECTED:
+                s.println("[visibility=PROTECTED]");
+                break;
+        }
+    }
 
     public void decompile(IndentPrintStream s) {
         switch (this) {

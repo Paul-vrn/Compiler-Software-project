@@ -49,19 +49,17 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
 
-        //TODO:Comprendre où est envExpr ici et comment y accéder + faire le cas où c'est Object
+        //TODO: Comprendre où est envExpr ici et comment y accéder + faire le cas où c'est Object
 
         if(this.superClass == null){
             this.superClass = new Identifier(compiler.createSymbol("Object"));
-            this.superClass.setDefinition(compiler.environmentType.OBJECT.getDefinition());
-            this.superClass.getClassDefinition().
-            this.superClass.getClassDefinition().;
+            this.superClass.setLocation(Location.BUILTIN);
+            this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(compiler.createSymbol("Object")));
         }
 
         ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
         this.name.setType(classtype);
         this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
-
 
         try{
             compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());

@@ -9,6 +9,8 @@
 
 class A{
     protected int x;
-    int getX(){
+    int getX(int y){
+        int y = 4;
+        print("salut");
     }
 }

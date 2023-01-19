@@ -6,9 +6,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
@@ -87,9 +85,13 @@ public class MethodCall extends AbstractExpr{
             compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(n, Register.SP)));
             n--;
         }
+
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
         compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(2));
 
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
+        compiler.addInstruction(new BSR(new RegisterOffset(1, Register.getR(2))));
+        compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
 
     }
 }

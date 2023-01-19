@@ -54,6 +54,9 @@ public class CompilerOptions {
 
     public void enableNoCheck(){this.noCheck = true;}
 
+    public void enableARM(){this.optionARM = true;}
+
+
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
@@ -66,32 +69,13 @@ public class CompilerOptions {
     private boolean parallel = false;
     private boolean noCheck = false;
 
+    private boolean optionARM = false;
+
     private List<File> sourceFiles = new ArrayList<File>();
 
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
-        Logger logger = Logger.getRootLogger();
-        // map command-line debug option to log4j's level.
-        switch (getDebug()) {
-        case QUIET: break; // keep default
-        case INFO:
-            logger.setLevel(Level.INFO); break;
-        case DEBUG:
-            logger.setLevel(Level.DEBUG); break;
-        case TRACE:
-            logger.setLevel(Level.TRACE); break;
-        default:
-            logger.setLevel(Level.ALL); break;
-        }
-        logger.info("Application-wide trace level set to " + logger.getLevel());
 
-        boolean assertsEnabled = false;
-        assert assertsEnabled = true; // Intentional side effect!!!
-        if (assertsEnabled) {
-            logger.info("Java assertions enabled");
-        } else {
-            logger.info("Java assertions disabled");
-        }
+
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
         //TODO option specification page 103
@@ -109,6 +93,9 @@ public class CompilerOptions {
             File file = new File(argsArrayList.get(i));
             while (!file.exists()) {
                 switch (argsArrayList.get(i)) {
+                    case "-ARM":
+                        enableARM();
+                        break;
                     case "-p":
                         enableDecompilation();
                         break;
@@ -128,13 +115,27 @@ public class CompilerOptions {
                             throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");
                         }
                         break;
-                    case "d":
-                        throw new UnsupportedOperationException("-d not yet implemented");
+                    case "-d":
+                        debug++;
+                        break;
+                    case "-dd":
+                        debug = 2;
+                        break;
+                    case "-ddd":
+                        debug = 3;
+                        break;
+                    case "-d{4,}":
+                        debug = 4;
+                        break;
                     case "-P":
                         enableParallel();
                         break;
                     default:
-                        throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
+                        if (argsArrayList.get(i).matches("-d{4,}")) {
+                            debug = 4;}
+                        else {
+                            throw new UnsupportedOperationException("Unknown option or incorrect file name/path : " + argsArrayList.get(i));
+                        }
                 }
                 i++;
                 if(i<argsArrayList.size()) {
@@ -144,6 +145,31 @@ public class CompilerOptions {
                     break;
                 }
             }
+
+            // A FAIRE : parcourir args pour positionner les options correctement.
+            Logger logger = Logger.getRootLogger();
+            // map command-line debug option to log4j's level.
+            switch (getDebug()) {
+                case QUIET: break; // keep default
+                case INFO:
+                    logger.setLevel(Level.INFO); break;
+                case DEBUG:
+                    logger.setLevel(Level.DEBUG); break;
+                case TRACE:
+                    logger.setLevel(Level.TRACE); break;
+                default:
+                    logger.setLevel(Level.ALL); break;
+            }
+            logger.info("Application-wide trace level set to " + logger.getLevel());
+
+            boolean assertsEnabled = false;
+            assert assertsEnabled = true; // Intentional side effect!!!
+            if (assertsEnabled) {
+                logger.info("Java assertions enabled");
+            } else {
+                logger.info("Java assertions disabled");
+            }
+
             if(getDecompilation() && getVerification()){
                 throw new UnsupportedOperationException("Options -p and -v are incompatible");
             }

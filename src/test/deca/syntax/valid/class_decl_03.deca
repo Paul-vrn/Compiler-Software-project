@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant la déclaration d'une classe avec attribut.
+//
+// Resultats:
+//		- 0 si le test est réussi
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+class A {
+	int a;
+}
+
+class B extends A {
+}

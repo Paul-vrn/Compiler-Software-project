@@ -67,6 +67,12 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         }
     }
 
+    public void codeGenDeclFieldNull(DecacCompiler compiler){
+        for (AbstractDeclField current : this.getList()){
+            current.codeGenDeclFieldNull(compiler);
+        }
+    }
+
     public void codeGenDeclField(DecacCompiler compiler) {
         for (AbstractDeclField declField : getList()) {
             declField.codeGenDeclField(compiler);

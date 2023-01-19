@@ -4,14 +4,15 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -118,10 +119,26 @@ public class DeclMethod extends AbstractDeclMethod {
 
     public void codeGenDeclMethod(DecacCompiler compiler, String className) {
         //todo decl method
-        String methodLabelString = "code." + className + "." + this.varName.getName().getName();
-        Label methodLabel = new Label(methodLabelString);
-        compiler.addLabel(methodLabel);
+        List<Line> preInit = new ArrayList<>();
+        compiler.getMemory().resetLastGRegister();
+        int indexTSTO = compiler.getLineIndex();
+
+        compiler.addLabel(new Label("code." + className + "." + this.varName.getName().getName()));
         this.methodBody.codeGenMethodBody(compiler);
+        compiler.addLabel(new Label("fin." + className + "." + this.varName.getName().getName()));
+
+        if (compiler.getMemory().getLastGRegister() > 1) {
+            for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
+                preInit.add(new Line(new PUSH(Register.getR(i))));
+                compiler.getMemory().increaseTSTO();
+                compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+            }
+        }
+        preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
+        compiler.addAllIndex(indexTSTO, preInit);
+        compiler.addInstruction(new RTS());
+        compiler.getMemory().resetLastGRegister();
+
     }
 
 }

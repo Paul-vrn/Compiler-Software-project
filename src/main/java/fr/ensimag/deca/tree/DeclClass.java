@@ -8,10 +8,7 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -150,9 +147,13 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addLabel(new Label("init." + this.name.getName().getName()));
         int indexTSTO = compiler.getLineIndex();
 
-        //todo ajouter les champs de la super class
+        if (superClass.getClassDefinition().getNumberOfFields() > 0){
+            fieldSets.codeGenDeclFieldNull(compiler);
+            compiler.addInstruction(new PUSH(Register.getR(1)));
+            compiler.addInstruction(new BSR(new Label("init." + this.superClass.getName().getName())));
+            compiler.addInstruction(new SUBSP(1));
+        }
         fieldSets.codeGenDeclField(compiler);
-
         if (compiler.getMemory().getLastGRegister() > 1) {
             for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
                 preInit.add(new Line(new PUSH(Register.getR(i))));

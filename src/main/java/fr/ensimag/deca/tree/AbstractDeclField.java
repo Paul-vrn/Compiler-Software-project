@@ -26,4 +26,6 @@ public abstract class AbstractDeclField extends Tree {
 
 
     public abstract void codeGenDeclField(DecacCompiler compiler);
+
+    public abstract void codeGenDeclFieldNull(DecacCompiler compiler);
 }

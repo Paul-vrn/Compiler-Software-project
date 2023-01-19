@@ -4,9 +4,13 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
+import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -37,16 +41,18 @@ public class Program extends AbstractProgram {
 
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
-        /*ListDeclMethod listMethod = new ListDeclMethod();
-        listMethod.add(new DeclMethod(new Identifier(), new Identifier(compiler.createSymbol("code.Object.equals")),
-                new ListDeclParam(), null));
-        this.classes.add(new DeclClass(new Identifier(compiler.createSymbol("Object")), null, null, ));*/
 
         /* PASS 1*/
         this.classes.verifyListClass(compiler);
 
         /* PASS 2*/
         this.classes.verifyListClassMembers(compiler);
+
+        System.out.println("-----------------------------------------");
+        for(Map.Entry<SymbolTable.Symbol, TypeDefinition> entry : compiler.environmentType.getEnvTypes().entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        System.out.println("-----------------------------------------");
 
         /* PASS 3*/
         this.classes.verifyListClassBody(compiler);

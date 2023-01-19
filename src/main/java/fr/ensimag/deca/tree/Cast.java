@@ -34,12 +34,13 @@ public class Cast extends AbstractExpr{
     public Type verifyExpr(DecacCompiler compiler,
                                     EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError{
+        //TODO: Problem verifyExpr or verifyType ?
         Type type1 = this.type.verifyType(compiler);
         Type type2 = this.getExpr().verifyExpr(compiler,localEnv,currentClass);
 
         if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2))){
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.type.getLocation().errorOutPut() + ": cast type is invalid", this.type.getLocation());
+                    + this.type.getLocation().errorOutPut() + ": Cast type is invalid", this.type.getLocation());
         }
         this.setType(type1);
         return type1;

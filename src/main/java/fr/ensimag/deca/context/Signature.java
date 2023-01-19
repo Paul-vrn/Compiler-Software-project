@@ -13,6 +13,10 @@ import java.util.Objects;
 public class Signature {
     List<Type> args = new ArrayList<Type>();
 
+    public void popHead(){
+        this.args.remove(0);
+    }
+
     public void add(Type t) {
         args.add(t);
     }
@@ -24,7 +28,6 @@ public class Signature {
     public int size() {
         return args.size();
     }
-
 
     @Override
     public boolean equals(Object o) {

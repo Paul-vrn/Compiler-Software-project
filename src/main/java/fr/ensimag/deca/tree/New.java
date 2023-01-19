@@ -3,6 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -44,5 +48,16 @@ public class New extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         return null;
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addInstruction(new NEW(className.getClassDefinition().getNumberOfFields()+1, Register.getR(2)));
+        //TODO add erreur tas plein in label factory
+        compiler.addInstruction(new BOV(new Label("tas_plein")));
+        compiler.addInstruction(new LEA(className.getClassDefinition().getOperand(), Register.getR(1)));
+        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(0, Register.getR(2))));
+        compiler.addInstruction(new BSR(new Label("init." + className.getName().getName())));
+        compiler.addInstruction(new POP(Register.getR(2)));
     }
 }

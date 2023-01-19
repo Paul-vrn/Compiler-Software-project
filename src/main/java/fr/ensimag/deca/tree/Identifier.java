@@ -218,7 +218,8 @@ public class Identifier extends AbstractIdentifier {
             this.setDefinition(envExp.getDictionary().get(this.getName()));
         }else{
             this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
-                    ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(), 0));
+                    ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(),
+                    0));
         }
 
         return this.definition;

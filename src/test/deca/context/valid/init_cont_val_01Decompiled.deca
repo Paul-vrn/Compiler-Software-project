@@ -1,0 +1,5 @@
+{
+	int a = 4;
+	float b = 0x1.066666p2;
+	boolean c = true;
+}

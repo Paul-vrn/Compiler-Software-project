@@ -91,23 +91,21 @@ public class DeclClass extends AbstractDeclClass {
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 
         //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-            EnvironmentType envTypeR = new EnvironmentType(compiler);
-            ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
-            newDef.disjointUnion(compiler, envExpF, envExpM);
+        EnvironmentType envTypeR = new EnvironmentType(compiler);
+        ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
+        newDef.disjointUnion(compiler, envExpF, envExpM);
 
-            compiler.environmentType.getEnvTypes().remove(name.getName());
-            ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
-            this.name.setType(classtype);
-            this.name.setDefinition(newDef);
+        compiler.environmentType.getEnvTypes().remove(name.getName());
+        ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
+        this.name.setType(classtype);
+        this.name.setDefinition(newDef);
 
-            try{
-                compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
-            }catch (EnvironmentType.DoubleDefException e){
-                throw new ContextualError( compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": Field and method environments conflict", this.getLocation());
-            }
-        //}
-
+        try{
+            compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
+        }catch (EnvironmentType.DoubleDefException e){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Field and method environments conflict", this.getLocation());
+        }
     }
     
     @Override

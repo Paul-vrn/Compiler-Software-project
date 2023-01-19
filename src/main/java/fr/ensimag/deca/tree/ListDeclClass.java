@@ -62,7 +62,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     void codeGenMethodTable(DecacCompiler compiler) {
 
         //solution temporaire pour mettre la classe objet en bas de la table des méthodes
-
+        System.out.println("----------------------");
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
         compiler.addInstruction(new PUSH(Register.getR(1)));
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
@@ -72,10 +72,6 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
         dummyObjectIdentifier.setDefinition(dummyObjectClass);
         dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, Register.GB));
-
-
-
-
 
         for(AbstractDeclClass c : getList()) {
             ClassDefinition currentClassDefinition = c.getName().getClassDefinition();

@@ -2,18 +2,14 @@ package fr.ensimag.deca.context;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.deca.tree.Identifier;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.util.Map;

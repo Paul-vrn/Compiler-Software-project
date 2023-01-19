@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 //import jdk.javadoc.internal.doclint.Env;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -21,8 +23,8 @@ public class DeclClass extends AbstractDeclClass {
 
     private final AbstractIdentifier name;
     private AbstractIdentifier superClass;
-    private final ListDeclMethod methods;
     private final ListDeclField fieldSets;
+    private final ListDeclMethod methods;
 
     public AbstractIdentifier getName() {
         return name;
@@ -132,6 +134,18 @@ public class DeclClass extends AbstractDeclClass {
         this.methods.iter(f);
     }
 
+
+    public void codeGenDeclClass(DecacCompiler compiler) {
+        // init.X
+        compiler.addLabel(new Label("init." + this.name.getName().getName()));
+        // todo tsto pour init
+        fieldSets.codeGenDeclField(compiler);
+        compiler.addInstruction(new RTS());
+
+        // codeGenDeclMethod
+        methods.codeGenDeclMethod(compiler);
+
+    }
 
 
 }

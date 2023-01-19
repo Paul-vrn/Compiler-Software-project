@@ -38,4 +38,5 @@ public abstract class AbstractDeclClass extends Tree {
     public abstract AbstractIdentifier getName();
 
 
+    public abstract void codeGenDeclClass(DecacCompiler compiler);
 }

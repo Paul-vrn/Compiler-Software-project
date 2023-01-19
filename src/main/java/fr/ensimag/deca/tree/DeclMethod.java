@@ -116,9 +116,8 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    public void codeGen(DecacCompiler compiler) {
-        Label function = new Label(varName.getName().getName());
-        compiler.addLabel(function);
-        methodBody.codeGen(compiler);
+    public void codeGenDeclMethod(DecacCompiler compiler){
+        //todo decl method
     }
+
 }

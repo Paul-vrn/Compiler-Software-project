@@ -162,7 +162,6 @@ public class DeclClass extends AbstractDeclClass {
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
         compiler.addAllIndex(indexTSTO, preInit);
-
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();
         // codeGenDeclMethod

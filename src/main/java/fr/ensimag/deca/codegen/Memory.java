@@ -5,7 +5,6 @@ public class Memory {
     private int lastGRegister;
     private int TSTO;
     private int currentTSTO;
-    private int localOffset;
     private int topOfMethodTable = 0;
 
 
@@ -13,7 +12,6 @@ public class Memory {
         this.TSTO = 0;
         this.currentTSTO = 0;
         this.offset = 1;
-        this.localOffset = 1;
         this.lastGRegister = 1;
     }
 
@@ -35,16 +33,6 @@ public class Memory {
     }
     public void increaseOffset() {
         increaseOffset(1);
-    }
-
-    public void increaseLocalOffset(int i) {
-        localOffset += i;
-    }
-    public int getLocalOffset() {
-        return localOffset;
-    }
-    public void resetLocalOffset() {
-        localOffset = 1;
     }
 
     /**

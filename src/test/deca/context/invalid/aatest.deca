@@ -7,23 +7,7 @@
 // Historique:
 //    cree le 01/01/2023
 
-class B{
-
-}
-
-class A extends B{
-    int z;
-    protected int y;
-    int getX(){
-        this;
-    }
-}
-
 {
-    A a = new A();
-    a instanceof B;
-    a.getX();
-    a.z;
-    a.y;
+    float x = 56;
 }
 

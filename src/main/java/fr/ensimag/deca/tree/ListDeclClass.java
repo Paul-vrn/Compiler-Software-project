@@ -3,7 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.log4j.Logger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.NullOperand;
 
 /**
  *
@@ -45,4 +49,19 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
 
+    void codeGenMethodTable(DecacCompiler compiler) {
+        for(AbstractDeclClass AbstractC : getList()) {
+            DeclClass C = (DeclClass) AbstractC;
+            Identifier supperClassID = (Identifier) C.getSuperClass();
+            supperClassID.getClassDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
+            if(supperClassID != null) {
+                compiler.addInstruction(new LOAD(supperClassID.getClassDefinition().getOperand(), Register.R1));
+                compiler.addInstruction(new PUSH(Register.R1));
+            }
+            else {
+                compiler.addInstruction(new LOAD(new NullOperand(), Register.R1));
+                compiler.addInstruction(new PUSH(Register.R1));
+            }
+        }
+    }
 }

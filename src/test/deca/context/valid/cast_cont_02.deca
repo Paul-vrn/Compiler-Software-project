@@ -1,0 +1,13 @@
+// Description:
+//    Cast
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   float a = 4;
+   int b = (int) (a = 3);
+}

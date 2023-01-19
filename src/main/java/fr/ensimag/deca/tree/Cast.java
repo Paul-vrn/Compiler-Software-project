@@ -10,10 +10,7 @@ import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 public class Cast extends AbstractExpr{
@@ -38,18 +35,26 @@ public class Cast extends AbstractExpr{
                                     EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError{
         Type type1 = this.type.verifyType(compiler);
-        this.getExpr().verifyExpr(compiler,localEnv,currentClass);
-        if(!(type1.isInt() || type1.isFloat() || type1.sameType(this.getExpr().getType()))){
+        Type type2 = this.getExpr().verifyExpr(compiler,localEnv,currentClass);
+
+        if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2))){
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.type.getLocation().errorOutPut() + ": Float can be casted only with Int and Float", this.type.getLocation());
+                    + this.type.getLocation().errorOutPut() + ": cast type is invalid", this.type.getLocation());
         }
         this.setType(type1);
         return type1;
     }
 
-    public void codeGen(){
-
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        getExpr().codeGenExpr(compiler, n);
+        if (getType().isInt()) {
+            compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+        }
     }
+
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("(");

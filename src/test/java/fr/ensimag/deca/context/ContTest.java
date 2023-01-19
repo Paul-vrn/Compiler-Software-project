@@ -376,6 +376,41 @@ public class ContTest {
         generalTestValid(args, file2);
     }
 
+    @Test
+    void test55() throws IOException {
+        String[] args = {"src/test/deca/context/valid/cast_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/cast_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test56() throws IOException {
+        String[] args = {"src/test/deca/context/valid/cast_cont_02.deca"};
+        String file2 = "src/test/deca/context/valid/cast_cont_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test57() throws IOException {
+        String[] args = {"src/test/deca/context/valid/cast_cont_03.deca"};
+        String file2 = "src/test/deca/context/valid/cast_cont_03_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test58() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/cast_inva_cont_01.deca"};
+        String file2 = "src/test/deca/context/invalid/cast_inva_cont_01_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test59() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/cast_inva_cont_02.deca"};
+        String file2 = "src/test/deca/context/invalid/cast_inva_cont_02_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
@@ -416,6 +451,7 @@ public class ContTest {
         }
         try {
             prog.verifyProgram(compiler);
+            fail("Test not passed : didn't return expected Exception error");
         } catch (ContextualError e) {
             String file2 = fileOracle;
             String toCompare = new String(Files.readAllBytes(Paths.get(file2)));

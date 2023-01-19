@@ -230,7 +230,7 @@ public class OptionpTest {
     }
 
     void generalTestValid(String[] args, String input) throws IOException {
-        Logger.getRootLogger().setLevel(Level.DEBUG);
+        Logger.getRootLogger().setLevel(Level.OFF);
 
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);

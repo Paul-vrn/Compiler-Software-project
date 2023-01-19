@@ -18,7 +18,10 @@ for fichier in ./src/test/deca/codegen/valid/*.deca
 do
   nom_fichier=${fichier%.*}
   filename=$(basename "$nom_fichier")
-
+  if [ "$fichier" == "./src/test/deca/codegen/valid/to_be_included.deca" ]
+  then
+    continue
+  fi
   rm -f "$nom_fichier.ass" 2>/dev/null
 
   decac "$fichier"
@@ -32,13 +35,12 @@ do
       continue
   fi
 
-  resultat=$(ima "$nom_fichier.ass")
+  resultat=$("../global/bin/ima" "$nom_fichier.ass")
   if [ $? -ne 0 ]; then
       echo "${yellow} Error : ima failed for $filename${clear}"
       continue
   fi
 
-  echo "$resultat"
   rm -f "$nom_fichier.ass"
 
   nom_fichier_oracle="$nom_fichier"_oracle.txt

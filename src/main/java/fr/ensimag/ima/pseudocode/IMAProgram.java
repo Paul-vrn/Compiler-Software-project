@@ -3,6 +3,7 @@ package fr.ensimag.ima.pseudocode;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract representation of an IMA program, i.e. set of Lines.
@@ -86,5 +87,9 @@ public class IMAProgram {
 
     public void addIndex(int i, Instruction inst) {
         addIndex(i, new Line(inst));
+    }
+
+    public void addAllIndex(int i, List<Line> l) {
+        lines.addAll(i, l);
     }
 }

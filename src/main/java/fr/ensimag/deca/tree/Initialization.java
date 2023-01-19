@@ -35,6 +35,10 @@ public class Initialization extends AbstractInitialization {
         expression.codeGenExpr(compiler, 2);
         compiler.addInstruction(new STORE(Register.getR(2), varName.getExpDefinition().getOperand()));
     }
+    @Override
+    public void codeGenInitField(DecacCompiler compiler, Type type, int n) {
+        expression.codeGenExpr(compiler, 2);
+    }
 
     public Initialization(AbstractExpr expression) {
         Validate.notNull(expression);

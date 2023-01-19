@@ -49,5 +49,6 @@ public class ReadFloat extends AbstractReadExpr {
         compiler.addInstruction(new RFLOAT());
         compiler.addInstruction(new LOAD(Register.R1, Register.getR(n)));
         compiler.getLabelFactory().createTestIo(compiler);
+        compiler.getMemory().setLastGRegister(n);
     }
 }

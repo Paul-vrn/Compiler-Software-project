@@ -6,11 +6,18 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 //import jdk.javadoc.internal.doclint.Env;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -137,11 +144,27 @@ public class DeclClass extends AbstractDeclClass {
 
     public void codeGenDeclClass(DecacCompiler compiler) {
         // init.X
-        compiler.addLabel(new Label("init." + this.name.getName().getName()));
-        // todo tsto pour init
-        fieldSets.codeGenDeclField(compiler);
-        compiler.addInstruction(new RTS());
+        List<Line> preInit = new ArrayList<>();
+        compiler.getMemory().resetLastGRegister();
 
+        compiler.addLabel(new Label("init." + this.name.getName().getName()));
+        int indexTSTO = compiler.getLineIndex();
+
+        //todo ajouter les champs de la super class
+        fieldSets.codeGenDeclField(compiler);
+
+        if (compiler.getMemory().getLastGRegister() > 1) {
+            for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
+                preInit.add(new Line(new PUSH(Register.getR(i))));
+                compiler.getMemory().increaseTSTO();
+                compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+            }
+        }
+        preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
+        compiler.addAllIndex(indexTSTO, preInit);
+
+        compiler.addInstruction(new RTS());
+        compiler.getMemory().resetLastGRegister();
         // codeGenDeclMethod
         methods.codeGenDeclMethod(compiler);
 

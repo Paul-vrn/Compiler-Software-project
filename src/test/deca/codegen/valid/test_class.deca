@@ -1,2 +1,5 @@
-class A {}
+class A {
+    int x = 5;
+    int y = 2;
+}
 

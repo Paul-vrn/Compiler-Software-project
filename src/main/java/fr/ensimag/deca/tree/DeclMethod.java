@@ -73,6 +73,7 @@ public class DeclMethod extends AbstractDeclMethod {
         this.varName.setType(type1);
         Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
         this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(), sig, 0));
+        this.varName.getMethodDefinition().setLabel(new Label(this.varName.getName().getName()));
 
         if (superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
             if (superClass.getClassDefinition().getMembers().get(name.getName()).isMethod()
@@ -115,9 +116,12 @@ public class DeclMethod extends AbstractDeclMethod {
         this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
     }
 
-    @Override
-    public void codeGenDeclMethod(DecacCompiler compiler){
+    public void codeGenDeclMethod(DecacCompiler compiler, String className) {
         //todo decl method
+        String methodLabelString = "code." + className + "." + this.varName.getName().getName();
+        Label methodLabel = new Label(methodLabelString);
+        compiler.addLabel(methodLabel);
+        this.methodBody.codeGenMethodBody(compiler);
     }
 
 }

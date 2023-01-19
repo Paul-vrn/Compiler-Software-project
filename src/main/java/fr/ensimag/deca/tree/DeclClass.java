@@ -165,7 +165,7 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();
         // codeGenDeclMethod
-        methods.codeGenDeclMethod(compiler);
+        methods.codeGenDeclMethod(compiler, this.name.getName().getName());
 
     }
 

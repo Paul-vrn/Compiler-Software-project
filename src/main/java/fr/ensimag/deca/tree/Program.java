@@ -63,8 +63,10 @@ public class Program extends AbstractProgram {
     public void codeGenProgram(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
 
-        compiler.addComment("Main program");
+        compiler.addComment("Method Table Initialization");
         classes.codeGenMethodTable(compiler);
+        compiler.addComment("Class Table Initialization End");
+        compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
         compiler.getLabelFactory().createErrorSection(compiler);

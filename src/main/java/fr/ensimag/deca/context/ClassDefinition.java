@@ -111,23 +111,10 @@ public class ClassDefinition extends TypeDefinition {
     }
 
     public void codeGenMethodTable(DecacCompiler compiler, ArrayList<String> methods){
-        if(!(this.getType().getName().getName().equals("Object"))) {
-        System.out.println("Je suis " + this.getType().getName().getName() + " et voici mes members");
-        for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
-            System.out.println("Members de la classe " + entry.getValue());
-        }
-
-            System.out.println("Voici ma superclass " + this.getSuperClass().getType().getName().getName() + " et voici ses members");
-            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.getSuperClass().members.dictionary.entrySet()) {
-                System.out.println("Members de la classe " + entry.getValue());
-            }
-        }
         ClassDefinition superClass = this.getSuperClass();
         if(!(this.getType().getName().getName().equals("Object"))) {
-            //System.out.println("Je suis entré");
             ArrayList<String> miniMethods = new ArrayList<String>();
             for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
-                //System.out.println("Members de la classe " + entry.getValue());
                 if (entry.getValue().isMethod()) {
                     String MethodName = "code.";
                     MethodName += this.getType().getName().getName();
@@ -138,23 +125,23 @@ public class ClassDefinition extends TypeDefinition {
             }
 
             methods.addAll(miniMethods);
-            //System.out.println("in");
             superClass.codeGenMethodTable(compiler, methods);
-            //System.out.println("out");
         }
         else{
-            //System.out.println(methods);
             methods.add("code.Object.equals");
             for(int i = methods.size()-1; i>=0; i--){
                 String methodToAdd = methods.get(i);
-                for(int j = i; j>=0; j--){
-                    if(methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])){
-                        methodToAdd = methods.get(j);
+                if(!(methodToAdd.equals("method.already.class.declared"))) {
+                    for (int j = i; j >= 0; j--) {
+                        if (methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])) {
+                            methodToAdd = methods.get(j);
+                            methods.set(j, "method.already.class.declared");
+                        }
                     }
+                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
+                    compiler.addInstruction(new PUSH(Register.getR(1)));
+                    compiler.getMemory().increaseTopOfMethodTable();
                 }
-                compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
-                compiler.addInstruction(new PUSH(Register.getR(1)));
-                compiler.getMemory().increaseTopOfMethodTable();
             }
         }
 

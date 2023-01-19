@@ -106,7 +106,8 @@ public class DeclField extends AbstractDeclField {
 
     }
 
-    public void codeGenFieldInit(DecacCompiler compiler) {
+    @Override
+    public void codeGenDeclField(DecacCompiler compiler) {
         initialization.codeGenInit(compiler, fieldName);
     }
 }

@@ -91,4 +91,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             currentClassDefinition.codeGenMethodTable(compiler, methods);
         }
     }
+
+    public void codeGenDeclClasses(DecacCompiler compiler) {
+        for(AbstractDeclClass c : getList()) {
+            c.codeGenDeclClass(compiler);
+        }
+    }
 }

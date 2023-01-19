@@ -67,9 +67,13 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         }
     }
 
+    public void codeGenDeclField(DecacCompiler compiler) {
+        // todo: tsto
+        for (AbstractDeclField declField : getList()) {
+            declField.codeGenDeclField(compiler);
+        }
+    }
     public void codeGenClassInitFunctionGenCode(DecacCompiler compiler) {
-        Label classInitFunctionName = new Label("init." + "Nom de la class");
-        compiler.addLabel(classInitFunctionName);
         compiler.addInstruction(new TSTO(3)); //TSTO de 3 = 1 pour l'argument (this) + 2 pour un appel de fonction
         //ajouter l'instruciton BOV une fois que le code pour le message d'erreur de stack overflow existera
         for(AbstractDeclField current : this.getList()){

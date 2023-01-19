@@ -1,0 +1,18 @@
+// Description:
+//    Programme testant la déclaration d'une methode dans une mathode dans une classe.
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 13/01/2023
+
+
+class A {
+    int x(int y, boolean z, float o) {
+    	int a(boolean z){
+    		}
+    	}
+    }
+

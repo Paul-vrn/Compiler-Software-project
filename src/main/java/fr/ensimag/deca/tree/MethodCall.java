@@ -33,6 +33,10 @@ public class MethodCall extends AbstractExpr{
         }
 
         MethodDefinition def = (MethodDefinition) this.methodId.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
+        if(!def.isMethod()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Must be a method", this.getLocation());
+        }
 
         Signature sig = def.getSignature();
 
@@ -44,7 +48,6 @@ public class MethodCall extends AbstractExpr{
                 break;
             }
         }
-
 
         return def.getType();
     }

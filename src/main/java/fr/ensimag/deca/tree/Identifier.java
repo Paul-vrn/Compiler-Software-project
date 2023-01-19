@@ -4,8 +4,10 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+import java.util.Map;
 
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -219,11 +221,10 @@ public class Identifier extends AbstractIdentifier {
         if(envExp.getDictionary().containsKey(this.getName())){
             this.setDefinition(envExp.getDictionary().get(this.getName()));
         }else{
-            this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
-                    ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(),
-                    0));
-            this.getDefinition().asMethodDefinition("Definition is not a method", getLocation()).setLabel(new Label(this.getName().getName()));
-        }
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Undeclared method", this.getLocation());
+            }
+
         return this.definition;
     }
 

@@ -49,7 +49,7 @@ public class Initialization extends AbstractInitialization {
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        this.getExpression().verifyRValue(compiler, localEnv, currentClass, t);
+        this.setExpression(this.getExpression().verifyRValue(compiler, localEnv, currentClass, t));
     }
 
 

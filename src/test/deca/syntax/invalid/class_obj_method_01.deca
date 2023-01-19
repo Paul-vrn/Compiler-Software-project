@@ -1,0 +1,21 @@
+// Description:
+//    Programme testant l'instanciation d'un objet;
+//
+// Resultats:
+//      Erreur
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+class A {
+	int x;
+    int add(int j) {
+    	return(x+j);
+	}
+}
+{
+	int i = 5;
+	A a = new A();
+	print(a..x(i));
+}

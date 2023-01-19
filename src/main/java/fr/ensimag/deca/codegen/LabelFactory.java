@@ -17,11 +17,12 @@ public class LabelFactory {
     private boolean flagStackError;
     private boolean flagIOError;
     private boolean flagDivByZeroError;
+    private boolean flagNoReturnError;
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
-
+    private static final Label NoReturnErrorLabel = new Label("no_return_error");
     public LabelFactory() {
         this.noCheck = false;
         this.nbNot = 0;
@@ -61,6 +62,12 @@ public class LabelFactory {
         if (flagDivByZeroError){
             compiler.addLabel(DivByZeroErrorLabel);
             compiler.addInstruction(new WSTR("Error: Division by zero"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+        if (flagNoReturnError) {
+            compiler.addLabel(NoReturnErrorLabel);
+            compiler.addInstruction(new WSTR("Error: No return in method"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
@@ -117,5 +124,10 @@ public class LabelFactory {
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
-
+    public void createTestReturn(DecacCompiler compiler){
+        if (noCheck)
+            return;
+        flagNoReturnError = true;
+        compiler.addInstruction(new BRA(NoReturnErrorLabel));
+    }
 }

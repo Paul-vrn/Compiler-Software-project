@@ -123,7 +123,8 @@ inst returns[AbstractInst tree]
             $tree = $e1.tree;
         }
     | SEMI {
-            $tree = null;
+            $tree = new NoOperation();
+            setLocation($tree, $SEMI);
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -465,18 +466,23 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $INT);
         } catch (NumberFormatException e) {
             $tree = null;
+            throw new NumberFormatException("Integer format or value ("+ $INT.text + ") is invalid.\n" + e.getMessage());
         }
     } {$tree != null}?
     | fd=FLOAT {
         try {
+            Float f = Float.parseFloat($fd.text);
+            if (f.isInfinite() || f.isNaN()) {
+                throw new NumberFormatException("Float value ("+ $fd.text + ") is invalid.");
+            }
             $tree = new FloatLiteral(Float.parseFloat($fd.text));
             setLocation($tree, $fd);
         } catch (NumberFormatException e) {
             $tree = null;
+            throw new NumberFormatException("Float format ("+ $fd.text + ") is invalid.\n" + e.getMessage());
         }
         }
     | STRING {
-    // TO DO
         $tree = new StringLiteral($STRING.text.substring(1, $STRING.text.length() - 1));
         setLocation($tree, $STRING);
         }
@@ -599,12 +605,16 @@ decl_method returns[AbstractDeclMethod tree]
 }
     : type ident OPARENT params=list_decl_param CPARENT (block {
         methodBody = new MethodBody($block.decls, $block.insts);
+        setLocation(methodBody, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
+        methodBody = new MethodBodyAsm(new StringLiteral($code.text));
+        methodBody.setLocation($code.location);
         }
       ) {
         assert(methodBody != null);
         $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+        setLocation($tree, $type.start);
         }
     ;
 
@@ -634,5 +644,6 @@ multi_line_string returns[String text, Location location]
 param returns[DeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $type.start);
         }
     ;

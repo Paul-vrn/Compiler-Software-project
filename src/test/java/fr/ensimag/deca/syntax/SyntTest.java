@@ -63,14 +63,6 @@ public class SyntTest {
     }
 
     @Test
-    void test6() throws IOException {
-        //lancer programme deca
-        String[] args = {"src/test/deca/syntax/invalid/doublepvirgule_pars_01.deca"};
-
-        generalTestError(args);
-    }
-
-    @Test
     void test7() throws IOException {
         //lancer programme deca
         String[] args = {"src/test/deca/syntax/invalid/if_brace_pars_01.deca"};

@@ -32,4 +32,10 @@ public abstract class AbstractDeclClass extends Tree {
     protected abstract void verifyClassBody(DecacCompiler compiler)
             throws ContextualError;
 
+
+    public abstract AbstractIdentifier getSuperClass();
+
+    public abstract AbstractIdentifier getName();
+
+
 }

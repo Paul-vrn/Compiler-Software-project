@@ -1,13 +1,16 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.*;
 import org.apache.log4j.Logger;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.ima.pseudocode.NullOperand;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  *
@@ -51,23 +54,41 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        for(AbstractDeclClass current : this.getList()){
+            current.verifyClassBody(compiler);
+        }
     }
 
 
     void codeGenMethodTable(DecacCompiler compiler) {
-        for(AbstractDeclClass AbstractC : getList()) {
-            DeclClass C = (DeclClass) AbstractC;
-            Identifier supperClassID = (Identifier) C.getSuperClass();
-            supperClassID.getClassDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.GB));
-            if(supperClassID != null) {
-                compiler.addInstruction(new LOAD(supperClassID.getClassDefinition().getOperand(), Register.R1));
-                compiler.addInstruction(new PUSH(Register.R1));
+
+        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
+        compiler.addInstruction(new PUSH(Register.getR(1)));
+        compiler.getMemory().increaseTopOfMethodTable();
+        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
+        compiler.addInstruction(new PUSH(Register.getR(1)));
+        compiler.getMemory().increaseTopOfMethodTable();
+
+        Identifier dummyObjectIdentifier = new Identifier(compiler.createSymbol("Object"));
+        ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
+        dummyObjectIdentifier.setDefinition(dummyObjectClass);
+        dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, Register.GB));
+
+        for(AbstractDeclClass c : getList()) {
+            ClassDefinition currentClassDefinition = c.getName().getClassDefinition();
+            Identifier superClass = (Identifier) c.getSuperClass();
+            Identifier currentClass = (Identifier)c.getName();
+            if(superClass.getName().getName().equals("Object")){
+                compiler.addInstruction(new LOAD(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
             }
             else {
-                compiler.addInstruction(new LOAD(new NullOperand(), Register.R1));
-                compiler.addInstruction(new PUSH(Register.R1));
+                compiler.addInstruction(new LOAD(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
+            compiler.addInstruction(new PUSH(Register.getR(1)));
+            compiler.getMemory().increaseTopOfMethodTable();
+            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getTopOfMethodTable(), Register.GB));
+            ArrayList<String> methods = new ArrayList<>();
+            currentClassDefinition.codeGenMethodTable(compiler, methods);
         }
     }
 }

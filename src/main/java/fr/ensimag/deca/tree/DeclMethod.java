@@ -9,7 +9,7 @@ import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.apache.commons.lang.Validate;
-import sun.jvm.hotspot.opto.Block;
+
 
 import java.io.PrintStream;
 
@@ -72,7 +72,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
         this.varName.setType(type1);
         Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
-        this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
+        this.varName.setDefinition(new MethodDefinition(new Label(this.varName.getName().getName()) ,this.type.getType(), getLocation(),
                 sig, 0));
 
         if (superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
@@ -104,6 +104,16 @@ public class DeclMethod extends AbstractDeclMethod {
         }
 
         return envToReturn;
+    }
+
+    @Override
+    protected void verifyDeclMethodPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type returnType = this.type.verifyType(compiler);
+        this.listParams.classEnvExp = envExp;
+        EnvironmentExp envExpParam = this.listParams.verifyListDeclParamPass3(compiler);
+        envExpParam.setParentEnvironment(envExp);
+
+        this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
     }
 
     @Override

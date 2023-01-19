@@ -159,7 +159,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            $tree = $expr.tree;
+            $tree = new Return($expr.tree);
             setLocation($tree, $RETURN);
         }
     ;
@@ -320,7 +320,7 @@ inequality_expr returns[AbstractExpr tree]
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
             assert($type.tree != null);
-            $tree = $e1.tree;
+            $tree = new InstanceOf($type.tree, $e1.tree);
             setLocation($tree, $INSTANCEOF);
         }
     ;
@@ -395,6 +395,7 @@ select_expr returns[AbstractExpr tree]
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
+
             setLocation($tree, $e1.start);
 
 
@@ -495,7 +496,7 @@ literal returns[AbstractExpr tree]
         setLocation($tree, $FALSE);
         }
     | THIS {
-        $tree = $tree;
+        $tree = new This();
         setLocation($tree, $THIS);
         }
     | NULL {

@@ -7,10 +7,19 @@
 // Historique:
 //    cree le 01/01/2023
 
-class A{
-    protected int x;
-    int getX(int y){
-        int y = 4;
-        print("salut");
+class B{
+
+}
+
+class A extends B{
+    protected int y;
+    int getX(){
+        this;
     }
 }
+
+{
+    A a = new A();
+    a instanceof B;
+}
+

@@ -54,7 +54,20 @@ public class DeclParam extends AbstractDeclParam {
         this.varName.setDefinition(new ParamDefinition(type1, getLocation()));
 
         return type1;
+    }
 
+    @Override
+    protected EnvironmentExp verifyDeclParamPass3(DecacCompiler compiler) throws ContextualError {
+        EnvironmentExp envToReturn = new EnvironmentExp(null);
+        this.type.verifyType(compiler);
 
+        ParamDefinition def = new ParamDefinition(this.type.getType(), this.getLocation());
+
+        try {
+            envToReturn.declare(this.varName.getName(), def);
+        } catch (EnvironmentExp.DoubleDefException ignored) {
+        }
+
+        return envToReturn;
     }
 }

@@ -54,6 +54,12 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         return envExpR;
     }
 
+    protected void verifyListDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        for(AbstractDeclField current : this.getList()){
+            current.verifyDeclFieldPass3(compiler, envExp, name);
+        }
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         for ( AbstractDeclField current : this.getList()){

@@ -4,10 +4,12 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 //import jdk.javadoc.internal.doclint.Env;
+import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -22,7 +24,11 @@ public class DeclClass extends AbstractDeclClass {
     private final ListDeclMethod methods;
     private final ListDeclField fieldSets;
 
-    AbstractIdentifier getSuperClass(){
+    public AbstractIdentifier getName() {
+        return name;
+    }
+
+    public AbstractIdentifier getSuperClass(){
         return superClass;
     }
 
@@ -60,6 +66,8 @@ public class DeclClass extends AbstractDeclClass {
             this.superClass = new Identifier(compiler.createSymbol("Object"));
             this.superClass.setLocation(Location.BUILTIN);
             this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(compiler.createSymbol("Object")));
+        }else{
+            this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(this.superClass.getName()));
         }
 
         ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
@@ -78,29 +86,29 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 
-        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-            EnvironmentType envTypeR = new EnvironmentType(compiler);
+        //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
             ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
             newDef.disjointUnion(compiler, envExpF, envExpM);
 
-
-            compiler.environmentType.getEnvTypes().remove(name.getName());
-            ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
-            this.name.setType(classtype);
-            this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
-
-            //compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
-
-        }
+            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()){
+                try {
+                    this.name.getClassDefinition().getMembers().declare(entry.getKey(), entry.getValue());
+                }catch (EnvironmentExp.DoubleDefException ignored){}
+            }
+        //}
 
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+
+        this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
+
+        this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
     }
 
 
@@ -123,5 +131,7 @@ public class DeclClass extends AbstractDeclClass {
         this.fieldSets.iter(f);
         this.methods.iter(f);
     }
+
+
 
 }

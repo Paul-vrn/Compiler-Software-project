@@ -4,9 +4,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.Map;
 
 /**
  *
@@ -87,10 +89,17 @@ public class DeclField extends AbstractDeclField {
 
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
         try{
-            envToReturn.declare(name.getName(), this.fieldName.getFieldDefinition());
+            envToReturn.declare(this.fieldName.getName(), this.fieldName.getFieldDefinition());
         }catch (EnvironmentExp.DoubleDefException ignored){}
 
         return envToReturn;
+    }
+
+    @Override
+    protected void verifyDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+
+        this.initialization.verifyInitialization(compiler, type1, envExp, name.getClassDefinition());
     }
 
     public void codeGen(DecacCompiler compiler) {

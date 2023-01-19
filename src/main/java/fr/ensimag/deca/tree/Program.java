@@ -4,9 +4,14 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.ExpDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
+import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -36,6 +41,7 @@ public class Program extends AbstractProgram {
 
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
+
         /* PASS 1*/
         this.classes.verifyListClass(compiler);
 
@@ -43,7 +49,7 @@ public class Program extends AbstractProgram {
         this.classes.verifyListClassMembers(compiler);
 
         /* PASS 3*/
-        //this.classes.verifyListClassBody(compiler);
+        this.classes.verifyListClassBody(compiler);
         this.main.verifyMain(compiler);
     }
 
@@ -51,8 +57,10 @@ public class Program extends AbstractProgram {
     public void codeGenProgram(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
 
-        compiler.addComment("Main program");
+        compiler.addComment("Method Table Initialization");
         classes.codeGenMethodTable(compiler);
+        compiler.addComment("Class Table Initialization End");
+        compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
         compiler.getLabelFactory().createErrorSection(compiler);

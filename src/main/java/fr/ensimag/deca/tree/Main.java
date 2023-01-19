@@ -56,6 +56,7 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
         compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
+        compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
     }
     
     @Override

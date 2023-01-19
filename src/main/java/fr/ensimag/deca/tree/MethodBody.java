@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 
 import java.io.PrintStream;
 
@@ -54,10 +55,14 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     public void codeGen(DecacCompiler compiler) {
+        int indexTSTO = compiler.getLineIndex();
         listDeclField.codeGenListDeclVar(compiler);
         contextSave(compiler);
         listInst.codeGenListInst(compiler);
         contextRestore(compiler);
         compiler.addInstruction(new RTS());
+
+        compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
+        compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
     }
 }

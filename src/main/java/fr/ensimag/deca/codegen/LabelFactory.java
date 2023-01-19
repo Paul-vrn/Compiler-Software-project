@@ -18,11 +18,13 @@ public class LabelFactory {
     private boolean flagIOError;
     private boolean flagDivByZeroError;
     private boolean flagNoReturnError;
+    private boolean flagDeferencementNullError;
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
     private static final Label NoReturnErrorLabel = new Label("no_return_error");
+    private static final Label DeferencementNullErrorLabel = new Label("deferencement.null");
     public LabelFactory() {
         this.noCheck = false;
         this.nbNot = 0;
@@ -68,6 +70,12 @@ public class LabelFactory {
         if (flagNoReturnError) {
             compiler.addLabel(NoReturnErrorLabel);
             compiler.addInstruction(new WSTR("Error: No return in method"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+        if (flagDeferencementNullError) {
+            compiler.addLabel(DeferencementNullErrorLabel);
+            compiler.addInstruction(new WSTR("Error: Deferencement of null"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
@@ -118,6 +126,13 @@ public class LabelFactory {
         compiler.addInstruction(new BOV(overflowErrorLabel));
     }
 
+    public void createTestStack(DecacCompiler compiler, int i) {
+        if (noCheck)
+            return;
+        flagStackError = true;
+        compiler.addIndex(i+1, new BOV(stackErrorLabel));
+    }
+
     public void createTestIo(DecacCompiler compiler){
         if (noCheck)
             return;
@@ -129,5 +144,11 @@ public class LabelFactory {
             return;
         flagNoReturnError = true;
         compiler.addInstruction(new BRA(NoReturnErrorLabel));
+    }
+    public void createTestDeferencementNull(DecacCompiler compiler, GPRegister r){
+        if (noCheck)
+            return;
+        compiler.addInstruction(new CMP(new NullOperand(), r));
+        compiler.addInstruction(new BEQ(DeferencementNullErrorLabel));
     }
 }

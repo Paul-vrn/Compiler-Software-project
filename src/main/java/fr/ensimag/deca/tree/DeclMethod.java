@@ -22,7 +22,7 @@ import java.io.PrintStream;
 public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier varName;
-    private ListParams listParams;
+    private ListDeclParam listParams;
 
     private AbstractMethodBody methodBody;
 

@@ -36,6 +36,7 @@ public abstract class AbstractMethodBody extends Tree {
     public static void contextSave(DecacCompiler compiler) {
         //on sauvegarde tout les registres sauf R0 qui contiendra le résultat, les registres SP et LB sont handled par les fonctiosn d'appel
         //i<15 peut être à changer en i<RMAX
+        //TODO à modifier -> sauvegarder uniquement les registres nécessaires
         for(int i = 1; i<15; i++) {
             compiler.addInstruction(new PUSH(Register.getR(i)));
         }

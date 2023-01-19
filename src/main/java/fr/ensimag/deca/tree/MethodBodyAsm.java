@@ -5,6 +5,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.InlinePortion;
 
 import java.io.PrintStream;
 
@@ -46,6 +47,8 @@ public class MethodBodyAsm extends AbstractMethodBody {
 
     @Override
     public void codeGen(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not yet supported");
+        //TODO put label
+        compiler.add(new InlinePortion(asm.getValue()));
+        compiler.getLabelFactory().createTestReturn(compiler);
     }
 }

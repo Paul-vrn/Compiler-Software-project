@@ -464,14 +464,20 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $INT);
         } catch (NumberFormatException e) {
             $tree = null;
+            throw new NumberFormatException("Integer format or value ("+ $INT.text + ") is invalid.\n" + e.getMessage());
         }
     } {$tree != null}?
     | fd=FLOAT {
         try {
+            Float f = Float.parseFloat($fd.text);
+            if (f.isInfinite() || f.isNaN()) {
+                throw new NumberFormatException("Float value ("+ $fd.text + ") is invalid.");
+            }
             $tree = new FloatLiteral(Float.parseFloat($fd.text));
             setLocation($tree, $fd);
         } catch (NumberFormatException e) {
             $tree = null;
+            throw new NumberFormatException("Float format ("+ $fd.text + ") is invalid.\n" + e.getMessage());
         }
         }
     | STRING {

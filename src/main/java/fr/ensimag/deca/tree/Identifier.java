@@ -187,7 +187,6 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        System.out.println(currentClass);
         if(localEnv.get(this.getName()) != null){;
             this.setType(localEnv.get(this.getName()).getType());
             this.setDefinition(localEnv.get(this.getName()));
@@ -215,7 +214,14 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
-        return null;
+        if(envExp.getDictionary().containsKey(this.getName())){
+            this.setDefinition(envExp.getDictionary().get(this.getName()));
+        }else{
+            this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
+                    ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(), 0));
+        }
+
+        return this.definition;
     }
 
     public Definition verifyDefinition(DecacCompiler compiler) throws ContextualError{

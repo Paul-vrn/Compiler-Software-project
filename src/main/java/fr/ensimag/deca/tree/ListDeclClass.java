@@ -63,7 +63,6 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     void codeGenMethodTable(DecacCompiler compiler) {
 
-
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
         compiler.addInstruction(new PUSH(Register.getR(1)));
         compiler.getMemory().increaseTopOfMethodTable();
@@ -76,10 +75,6 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         dummyObjectIdentifier.setDefinition(dummyObjectClass);
         dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, Register.GB));
 
-
-
-
-
         for(AbstractDeclClass c : getList()) {
             ClassDefinition currentClassDefinition = c.getName().getClassDefinition();
             Identifier superClass = (Identifier) c.getSuperClass();
@@ -88,19 +83,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
                 compiler.addInstruction(new LOAD(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
             }
             else {
-
-                //TODO simplifier l'accès à l'opérande de la classe avec les modfications de l'équipe B
-                Operand op = null;
-                for (TypeDefinition type : compiler.environmentType.getEnvTypes().values()) {
-                    try {
-                        if(type.getType().getName().getName().equals(superClass.getName().getName())){
-                            op = type.getOperand();
-                            break;
-                        }
-                    } catch (NullPointerException e) {
-                    }
-                }
-                compiler.addInstruction(new LOAD((DAddr) op, Register.getR(1)));
+                compiler.addInstruction(new LOAD(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
             compiler.addInstruction(new PUSH(Register.getR(1)));
             compiler.getMemory().increaseTopOfMethodTable();

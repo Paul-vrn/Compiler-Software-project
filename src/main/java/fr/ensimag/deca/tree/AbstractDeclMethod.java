@@ -21,5 +21,5 @@ public abstract class AbstractDeclMethod extends Tree {
                                                             EnvironmentExp envExp, AbstractIdentifier name)
             throws ContextualError;
 
-    public abstract void codeGenDeclMethod(DecacCompiler compiler);
+    public abstract void codeGenDeclMethod(DecacCompiler compiler, String className);
 }

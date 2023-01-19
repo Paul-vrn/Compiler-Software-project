@@ -50,4 +50,6 @@ public abstract class AbstractMethodBody extends Tree {
         }
     }
 
+    public void codeGenMethodBody(DecacCompiler compiler) {
+    }
 }

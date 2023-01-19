@@ -476,7 +476,6 @@ literal returns[AbstractExpr tree]
         }
         }
     | STRING {
-    // TO DO
         $tree = new StringLiteral($STRING.text.substring(1, $STRING.text.length() - 1));
         setLocation($tree, $STRING);
         }
@@ -602,6 +601,8 @@ decl_method returns[AbstractDeclMethod tree]
         setLocation(methodBody, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
+        methodBody = new MethodBodyAsm(new StringLiteral($code.text));
+        methodBody.setLocation($code.location);
         }
       ) {
         assert(methodBody != null);

@@ -19,6 +19,7 @@ class A extends B{
 }
 
 {
-
+    A a = new A();
+    a instanceof B;
 }
 

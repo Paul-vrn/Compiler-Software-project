@@ -6,6 +6,8 @@ public class Memory {
     private int TSTO;
     private int currentTSTO;
 
+    private int topOfMethodTable = 0;
+
 
     public Memory() {
         this.TSTO = 0;
@@ -45,5 +47,14 @@ public class Memory {
     public void decreaseTSTO() {
         currentTSTO--;
         TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+
+    public void increaseTopOfMethodTable() {
+        topOfMethodTable++;
+    }
+
+    public int getTopOfMethodTable() {
+        return topOfMethodTable;
     }
 }

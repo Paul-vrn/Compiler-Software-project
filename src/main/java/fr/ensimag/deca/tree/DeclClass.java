@@ -91,25 +91,21 @@ public class DeclClass extends AbstractDeclClass {
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 
         //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-        EnvironmentType envTypeR = new EnvironmentType(compiler);
-        ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
-        newDef.disjointUnion(compiler, envExpF, envExpM);
+            ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
+            newDef.disjointUnion(compiler, envExpF, envExpM);
 
-        compiler.environmentType.getEnvTypes().remove(name.getName());
-        ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
-        this.name.setType(classtype);
-        this.name.setDefinition(newDef);
+            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()){
+                try {
+                    this.name.getClassDefinition().getMembers().declare(entry.getKey(), entry.getValue());
+                }catch (EnvironmentExp.DoubleDefException ignored){}
+            }
+        //}
 
-        try{
-            compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
-        }catch (EnvironmentType.DoubleDefException e){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Field and method environments conflict", this.getLocation());
-        }
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
+
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
 
         this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);

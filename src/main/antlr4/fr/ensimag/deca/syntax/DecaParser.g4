@@ -320,7 +320,7 @@ inequality_expr returns[AbstractExpr tree]
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
             assert($type.tree != null);
-            $tree = $e1.tree;
+            $tree = new InstanceOf($type.tree, $e1.tree);
             setLocation($tree, $INSTANCEOF);
         }
     ;
@@ -395,6 +395,7 @@ select_expr returns[AbstractExpr tree]
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
+
             setLocation($tree, $e1.start);
 
 

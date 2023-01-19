@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
 import org.apache.log4j.Logger;
@@ -61,12 +62,12 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     void codeGenMethodTable(DecacCompiler compiler) {
 
-        //solution temporaire pour mettre la classe objet en bas de la table des méthodes
-        System.out.println("----------------------");
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
         compiler.addInstruction(new PUSH(Register.getR(1)));
+        compiler.getMemory().increaseTopOfMethodTable();
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
         compiler.addInstruction(new PUSH(Register.getR(1)));
+        compiler.getMemory().increaseTopOfMethodTable();
 
         Identifier dummyObjectIdentifier = new Identifier(compiler.createSymbol("Object"));
         ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
@@ -77,7 +78,6 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             ClassDefinition currentClassDefinition = c.getName().getClassDefinition();
             Identifier superClass = (Identifier) c.getSuperClass();
             Identifier currentClass = (Identifier)c.getName();
-            System.out.println(currentClass.getName().getName());
             if(superClass.getName().getName().equals("Object")){
                 compiler.addInstruction(new LOAD(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
             }
@@ -85,7 +85,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
                 compiler.addInstruction(new LOAD(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
             compiler.addInstruction(new PUSH(Register.getR(1)));
-            currentClass.getClassDefinition().setOperand(new RegisterOffset(0, Register.SP));
+            compiler.getMemory().increaseTopOfMethodTable();
+            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getTopOfMethodTable(), Register.GB));
             ArrayList<String> methods = new ArrayList<>();
             currentClassDefinition.codeGenMethodTable(compiler, methods);
         }

@@ -1,5 +1,17 @@
-class A{}
+class A{
+	int x(){}
+}
 
-class B extends A{}
+class B extends A{
+	int x(){}
+	int y(){}
+}
+
+class C extends B{
+	int champ;
+	int x(){}
+	int z(){}
+	boolean equals(){}
+}
 
 {}

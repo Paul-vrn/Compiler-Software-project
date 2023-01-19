@@ -12,7 +12,14 @@ public class LValueIdent extends AbstractLValue{
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        return null;
+        Definition def = this.ident.verifyDefinition(compiler, localEnv);
+
+        if(!def.isExpression()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Left value type error", this.getLocation());
+        }
+
+        return def.getType();
     }
 
     @Override

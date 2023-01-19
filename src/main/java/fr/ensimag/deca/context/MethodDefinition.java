@@ -49,8 +49,9 @@ public class MethodDefinition extends ExpDefinition {
      * @param signature List of arguments of the method
      * @param index Index of the method in the class. Starts from 0.
      */
-    public MethodDefinition(Type type, Location location, Signature signature, int index) {
+    public MethodDefinition(Label label, Type type, Location location, Signature signature, int index) {
         super(type, location);
+        this.label = label;
         this.signature = signature;
         this.index = index;
     }

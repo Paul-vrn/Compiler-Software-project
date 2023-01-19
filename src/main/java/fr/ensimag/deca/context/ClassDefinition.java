@@ -108,7 +108,6 @@ public class ClassDefinition extends TypeDefinition {
 
     public void codeGenMethodTable(DecacCompiler compiler, ArrayList<String> methods){
         ClassDefinition superClass = this.getSuperClass();
-        System.out.println("bonjour" + this.getType().getName().getName());
         if(!(this.getType().getName().getName().equals("Object"))) {
             ArrayList<String> miniMethods = new ArrayList<String>();
             for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
@@ -120,21 +119,25 @@ public class ClassDefinition extends TypeDefinition {
                     miniMethods.add(0, MethodName);
                 }
             }
+
             methods.addAll(miniMethods);
             superClass.codeGenMethodTable(compiler, methods);
         }
         else{
-            //ArrayList<String> finalMethods = new ArrayList<String>();
             methods.add("code.Object.equals");
             for(int i = methods.size()-1; i>=0; i--){
                 String methodToAdd = methods.get(i);
-                for(int j = i; j>=0; j--){
-                    if(methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])){
-                        methodToAdd = methods.get(j);
+                if(!(methodToAdd.equals("method.already.class.declared"))) {
+                    for (int j = i; j >= 0; j--) {
+                        if (methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])) {
+                            methodToAdd = methods.get(j);
+                            methods.set(j, "method.already.class.declared");
+                        }
                     }
+                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
+                    compiler.addInstruction(new PUSH(Register.getR(1)));
+                    compiler.getMemory().increaseTopOfMethodTable();
                 }
-                compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
-                compiler.addInstruction(new PUSH(Register.getR(1)));
             }
         }
 

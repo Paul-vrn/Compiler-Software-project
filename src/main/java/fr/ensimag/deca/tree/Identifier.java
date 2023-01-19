@@ -4,8 +4,10 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
+import java.util.Map;
 
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -216,9 +218,20 @@ public class Identifier extends AbstractIdentifier {
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
         if(envExp.getDictionary().containsKey(this.getName())){
             this.setDefinition(envExp.getDictionary().get(this.getName()));
+            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExp.getDictionary().entrySet()){
+                System.out.println(entry.getKey() + " " + entry.getValue());
+            }
+
         }else{
-            this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
-                    ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(), 0));
+            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExp.getDictionary().entrySet()){
+                System.out.println(entry.getKey() + " " + entry.getValue());
+            }
+            this.setDefinition(new FieldDefinition(this.getType(), this.getLocation(), envExp.getDictionary().get(this.getName()).asFieldDefinition("bruh",getLocation()).getVisibility(),
+                    envExp.getDictionary().get(this.getName()).asFieldDefinition("bruh",getLocation()).getContainingClass(), 0));
+
+
+            //this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
+            //        ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(), 0));
         }
 
         return this.definition;

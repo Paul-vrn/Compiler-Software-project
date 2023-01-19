@@ -12,6 +12,7 @@ class B{
 }
 
 class A extends B{
+    int z;
     protected int y;
     int getX(){
         this;
@@ -21,6 +22,6 @@ class A extends B{
 {
     A a = new A();
     a instanceof B;
-    a.getX();
+    a.z;
 }
 

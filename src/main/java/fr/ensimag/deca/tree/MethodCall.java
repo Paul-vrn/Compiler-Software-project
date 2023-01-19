@@ -41,7 +41,6 @@ public class MethodCall extends AbstractExpr{
             }
         }
 
-
         return def.getType();
     }
 

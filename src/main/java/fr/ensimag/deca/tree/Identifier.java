@@ -7,6 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -220,8 +221,8 @@ public class Identifier extends AbstractIdentifier {
             this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
                     ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(),
                     0));
+            this.getDefinition().asMethodDefinition("Definition is not a method", getLocation()).setLabel(new Label(this.getName().getName()));
         }
-
         return this.definition;
     }
 

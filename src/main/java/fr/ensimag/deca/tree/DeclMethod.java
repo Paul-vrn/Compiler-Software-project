@@ -73,6 +73,7 @@ public class DeclMethod extends AbstractDeclMethod {
         this.varName.setType(type1);
         Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
         this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(), sig, 0));
+        this.varName.getMethodDefinition().setLabel(new Label(this.varName.getName().getName()));
 
         if (superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
             if (superClass.getClassDefinition().getMembers().get(name.getName()).isMethod()

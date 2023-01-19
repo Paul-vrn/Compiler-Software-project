@@ -1,58 +1,72 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
-/**
- * Empty main Deca program
- *
- * @author gl21
- * @date 01/01/2023
- */
-public class MethodCall extends AbstractExpr {
+public class MethodCall extends AbstractExpr{
 
-    private AbstractExpr obj;
-    private AbstractIdentifier meth;
-    private ListExpr params;
+    public AbstractExpr expr;
+    public AbstractIdentifier methodId;
+    public ListExpr parameters;
 
-    public MethodCall(AbstractExpr expr, AbstractIdentifier methodName, ListExpr params) {
-        this.obj = expr;
-        this.meth = methodName;
-        this.params = params;
+    public MethodCall(AbstractExpr expr, AbstractIdentifier methodId, ListExpr parameters){
+        super();
+        this.expr = expr;
+        this.methodId = methodId;
+        this.parameters = parameters;
+    }
+
+    @Override
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+        Type type1 = this.expr.verifyExpr(compiler, localEnv, currentClass);
+
+        if(!type1.isClass()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Call method of a non-class identifier", this.getLocation());
+        }
+
+        MethodDefinition def = (MethodDefinition) this.methodId.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
+
+        Signature sig = def.getSignature();
+
+        for(int c = 0; c < this.parameters.size(); c++){
+            if(sig.size() > 0){
+                this.parameters.getList().get(c).verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(0));
+                sig.popHead();
+            }else{
+                break;
+            }
+        }
+
+
+        return def.getType();
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        obj.decompile(s);
+        expr.decompile(s);
         s.print(".");
-        meth.decompile(s);
+        methodId.decompile(s);
         s.print("(");
-        params.decompile(s);
+        parameters.decompile(s);
         s.print(")");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        obj.prettyPrint(s, prefix, true);
-        meth.prettyPrint(s, prefix, true);
-        params.prettyPrint(s, prefix, true);
+        this.expr.prettyPrint(s, prefix, false);
+        this.methodId.prettyPrint(s, prefix, true);
+        this.parameters.prettyPrint(s, prefix, false);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        obj.iter(f);
-        meth.iter(f);
-        params.iter(f);
+        expr.iter(f);
+        methodId.iter(f);
+        parameters.iter(f);
     }
 
     @Override
@@ -61,12 +75,12 @@ public class MethodCall extends AbstractExpr {
     }
 
     protected void codeGen(DecacCompiler compiler) {
-        compiler.addInstruction(new ADDSP(params.getList().size()+1));
-        DAddr addrMethod = meth.getMethodDefinition().getOperand();
+        compiler.addInstruction(new ADDSP(parameters.getList().size()+1));
+        DAddr addrMethod = methodId.getMethodDefinition().getOperand();
         compiler.addInstruction(new LOAD(addrMethod, Register.getR(2)));
         compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP)));
         int n = -1;
-        for (AbstractExpr expr : params.getList()) {
+        for (AbstractExpr expr : parameters.getList()) {
             expr.codeGenExpr(compiler, 2);
             compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(n, Register.SP)));
             n--;
@@ -75,13 +89,5 @@ public class MethodCall extends AbstractExpr {
         compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(2));
 
 
-        //LOAD 0(R2), R2 ; On récupère l'adresse de la table des méthodes
-        //BSR 1(R2) ; Appel de la méthode move (première méthode de la classe)
-
-        compiler.addInstruction(new SUBSP(params.getList().size()+1));
-        // Si le type de retour est void et qu'on a pas de return avant ce if --> erreur
-        if (!meth.getMethodDefinition().getType().isVoid()) {
-            compiler.getLabelFactory().createTestReturn(compiler);
-        }
     }
 }

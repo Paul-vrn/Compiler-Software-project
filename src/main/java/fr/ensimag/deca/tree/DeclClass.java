@@ -97,14 +97,14 @@ public class DeclClass extends AbstractDeclClass {
         EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
 
         //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-            ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
-            newDef.disjointUnion(compiler, envExpF, envExpM);
+        ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
+        newDef.disjointUnion(compiler, envExpF, envExpM);
 
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()){
-                try {
-                    this.name.getClassDefinition().getMembers().declare(entry.getKey(), entry.getValue());
-                }catch (EnvironmentExp.DoubleDefException ignored){}
-            }
+        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()){
+            try {
+                this.name.getClassDefinition().getMembers().declare(entry.getKey(), entry.getValue());
+            }catch (EnvironmentExp.DoubleDefException ignored){}
+        }
         //}
 
     }
@@ -112,7 +112,6 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
-
         this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
     }
 
@@ -145,7 +144,6 @@ public class DeclClass extends AbstractDeclClass {
 
         compiler.addLabel(new Label("init." + this.name.getName().getName()));
         int indexTSTO = compiler.getLineIndex();
-
         if (superClass.getClassDefinition().getNumberOfFields() > 0){
             fieldSets.codeGenDeclFieldNull(compiler);
             compiler.addInstruction(new PUSH(Register.getR(1)));
@@ -161,11 +159,12 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
+        preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();
         // codeGenDeclMethod
-        methods.codeGenDeclMethod(compiler, this.name.getName().getName());
+        methods.codeGenDeclMethod(compiler, this.name.getName().getName(), this.name.getClassDefinition().getMembers());
 
     }
 

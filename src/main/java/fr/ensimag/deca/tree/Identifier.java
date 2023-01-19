@@ -4,12 +4,9 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
-import java.util.Map;
 
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -26,7 +23,10 @@ import org.apache.commons.lang.Validate;
 public class Identifier extends AbstractIdentifier {
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextOffSet(), Register.LB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.LB));
+    }
+    public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
+        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), Register.LB));
     }
 
     @Override

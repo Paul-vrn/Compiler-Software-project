@@ -11,8 +11,6 @@ import fr.ensimag.deca.tools.SymbolTable;
  */
 public abstract class AbstractIdentifier extends LValueIdent {
 
-    public abstract void codeGenDeclVar(DecacCompiler compiler);
-
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
@@ -90,5 +88,7 @@ public abstract class AbstractIdentifier extends LValueIdent {
 
     public abstract Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError;
 
+    public abstract void codeGenDeclVar(DecacCompiler compiler);
 
+    public abstract void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr);
 }

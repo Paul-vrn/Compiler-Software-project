@@ -58,15 +58,8 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    public void codeGen(DecacCompiler compiler) {
-        int indexTSTO = compiler.getLineIndex();
-        listDeclField.codeGenListDeclVar(compiler);
-        contextSave(compiler);
+    public void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp){
+        listDeclField.codeGenListDeclField(compiler, localEnvExp);
         listInst.codeGenListInst(compiler);
-        contextRestore(compiler);
-        compiler.addInstruction(new RTS());
-
-        compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
-        compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
     }
 }

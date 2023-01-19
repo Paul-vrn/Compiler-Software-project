@@ -32,9 +32,5 @@ public abstract class AbstractMethodBody extends Tree {
                                              EnvironmentExp classEnv, EnvironmentExp envExpParam, AbstractIdentifier name, Type returnType)
             throws ContextualError;
 
-    public abstract void codeGen(DecacCompiler compiler);
-
-
-    public void codeGenMethodBody(DecacCompiler compiler) {
-    }
+    public abstract void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp);
 }

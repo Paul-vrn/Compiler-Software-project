@@ -145,9 +145,14 @@ public class DecacCompiler {
     public Memory getMemory() {
         return memory;
     }
-    public int nextOffSet(){
-        int val = memory.getOffset();
-        memory.increaseOffset();
+    public int nextGlobalOffSet(){
+        int val = memory.getGlobalOffset();
+        memory.increaseGlobalOffset();
+        return val;
+    }
+    public int nextLocalOffSet(){
+        int val = memory.getLocalOffset();
+        memory.increaseLocalOffset();
         return val;
     }
 

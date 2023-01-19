@@ -4,6 +4,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
+import java.util.List;
+
 public class LabelFactory {
 
     private boolean noCheck;
@@ -17,7 +19,6 @@ public class LabelFactory {
     private boolean flagStackError;
     private boolean flagIOError;
     private boolean flagDivByZeroError;
-    private boolean flagNoReturnError;
     private boolean flagDeferencementNullError;
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
@@ -64,12 +65,6 @@ public class LabelFactory {
         if (flagDivByZeroError){
             compiler.addLabel(DivByZeroErrorLabel);
             compiler.addInstruction(new WSTR("Error: Division by zero"));
-            compiler.addInstruction(new WNL());
-            compiler.addInstruction(new ERROR());
-        }
-        if (flagNoReturnError) {
-            compiler.addLabel(NoReturnErrorLabel);
-            compiler.addInstruction(new WSTR("Error: No return in method"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
@@ -132,17 +127,19 @@ public class LabelFactory {
         flagStackError = true;
         compiler.addIndex(i+1, new BOV(stackErrorLabel));
     }
-
+    public Label getStackErrorLabel() {
+        return stackErrorLabel;
+    }
     public void createTestIo(DecacCompiler compiler){
         if (noCheck)
             return;
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
-    public void createTestReturn(DecacCompiler compiler){
+    public void createTestReturn(DecacCompiler compiler, String methodName){
         if (noCheck)
             return;
-        flagNoReturnError = true;
+        compiler.addInstruction(new WSTR("Error: Exiting method "+ methodName +" without a return statement"));
         compiler.addInstruction(new BRA(NoReturnErrorLabel));
     }
     public void createTestDeferencementNull(DecacCompiler compiler, GPRegister r){

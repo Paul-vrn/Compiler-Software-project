@@ -49,9 +49,7 @@ public class MethodBodyAsm extends AbstractMethodBody {
     }
 
     @Override
-    public void codeGen(DecacCompiler compiler) {
-        //TODO put label
+    public void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp) {
         compiler.add(new InlinePortion(asm.getValue()));
-        compiler.getLabelFactory().createTestReturn(compiler);
     }
 }

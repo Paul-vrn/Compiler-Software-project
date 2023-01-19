@@ -24,7 +24,6 @@ public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier varName;
     private ListDeclParam listParams;
-
     private AbstractMethodBody methodBody;
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListDeclParam listParams, AbstractMethodBody methodBody) {
@@ -117,14 +116,20 @@ public class DeclMethod extends AbstractDeclMethod {
         this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
     }
 
-    public void codeGenDeclMethod(DecacCompiler compiler, String className) {
-        //todo decl method
+    public void codeGenDeclMethod(DecacCompiler compiler, String className, EnvironmentExp localEnvExp) {
         List<Line> preInit = new ArrayList<>();
         compiler.getMemory().resetLastGRegister();
         int indexTSTO = compiler.getLineIndex();
 
         compiler.addLabel(new Label("code." + className + "." + this.varName.getName().getName()));
-        this.methodBody.codeGenMethodBody(compiler);
+        this.listParams.codeGenListDeclParam(compiler, localEnvExp);
+
+        this.methodBody.codeGenMethodBody(compiler, localEnvExp);
+
+        if (!type.getType().isVoid()) {
+            compiler.getLabelFactory().createTestReturn(compiler, this.varName.getName().getName());
+        }
+
         compiler.addLabel(new Label("fin." + className + "." + this.varName.getName().getName()));
 
         if (compiler.getMemory().getLastGRegister() > 1) {
@@ -135,6 +140,8 @@ public class DeclMethod extends AbstractDeclMethod {
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
+        preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
+        preInit.add(2, new Line(new ADDSP(listParams.getList().size())));
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();

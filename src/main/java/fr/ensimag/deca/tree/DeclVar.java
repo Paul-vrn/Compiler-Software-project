@@ -66,8 +66,13 @@ public class DeclVar extends AbstractDeclVar {
         s.println();
     }
 
-    public void codeGen(DecacCompiler compiler) {
+    public void codeGenVar(DecacCompiler compiler) {
         this.varName.codeGenDeclVar(compiler);
+        this.initialization.codeGenInit(compiler, this.varName);
+    }
+
+    public void codeGenField(DecacCompiler compiler, EnvironmentExp localEnvExpr){
+        this.varName.codeGenDeclField(compiler, localEnvExpr);
         this.initialization.codeGenInit(compiler, this.varName);
     }
 

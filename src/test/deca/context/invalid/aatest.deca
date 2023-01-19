@@ -22,6 +22,8 @@ class A extends B{
 {
     A a = new A();
     a instanceof B;
+    a.getX();
     a.z;
+    a.y;
 }
 

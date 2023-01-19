@@ -218,21 +218,10 @@ public class Identifier extends AbstractIdentifier {
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
         if(envExp.getDictionary().containsKey(this.getName())){
             this.setDefinition(envExp.getDictionary().get(this.getName()));
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExp.getDictionary().entrySet()){
-                System.out.println(entry.getKey() + " " + entry.getValue());
-            }
-
         }else{
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : envExp.getDictionary().entrySet()){
-                System.out.println(entry.getKey() + " " + entry.getValue());
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Undeclared method", this.getLocation());
             }
-            this.setDefinition(new FieldDefinition(this.getType(), this.getLocation(), envExp.getDictionary().get(this.getName()).asFieldDefinition("bruh",getLocation()).getVisibility(),
-                    envExp.getDictionary().get(this.getName()).asFieldDefinition("bruh",getLocation()).getContainingClass(), 0));
-
-
-            //this.setDefinition(new MethodDefinition(this.getType(), this.getLocation(),
-            //        ((MethodDefinition) envExp.getDictionary().get(this.getName())).getSignature(), 0));
-        }
 
         return this.definition;
     }

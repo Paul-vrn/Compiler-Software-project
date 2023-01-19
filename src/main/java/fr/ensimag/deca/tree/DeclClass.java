@@ -97,11 +97,6 @@ public class DeclClass extends AbstractDeclClass {
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.name.getClassDefinition().getMembers().getDictionary().entrySet()){
-            System.out.println("DeclClass, PASS 3 : " + entry.getKey() + ", " + entry.getValue());
-        }
-        System.out.println("neahezbioa");
-
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
 
         this.methods.verifyListDeclMethodPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);

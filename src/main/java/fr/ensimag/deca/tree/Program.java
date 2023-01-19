@@ -48,12 +48,6 @@ public class Program extends AbstractProgram {
         /* PASS 2*/
         this.classes.verifyListClassMembers(compiler);
 
-        System.out.println("-----------------------------------------");
-        for(Map.Entry<SymbolTable.Symbol, TypeDefinition> entry : compiler.environmentType.getEnvTypes().entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        System.out.println("-----------------------------------------");
-
         /* PASS 3*/
         this.classes.verifyListClassBody(compiler);
         this.main.verifyMain(compiler);

@@ -26,12 +26,21 @@ public class Selection extends AbstractLValue{
         }
 
         FieldDefinition fieldDef = (FieldDefinition) this.fieldIdentifier.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
+        if(!fieldDef.isField()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Must be a field", this.getLocation());
+        }
+
 
         this.setType(fieldDef.getType());
 
         if(fieldDef.getVisibility() == Visibility.PUBLIC){
             return this.getType();
         }else if(fieldDef.getVisibility() == Visibility.PROTECTED){
+            if(classdef == null){
+                throw new ContextualError(compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Protected field cannot be accessed", this.getLocation());
+            }
             if(!((type1.asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(classdef.getType()))
                     && (type1.asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(fieldDef.getContainingClass().getType())))){
                 throw new ContextualError(compiler.displaySourceFile() + ":"
@@ -49,6 +58,8 @@ public class Selection extends AbstractLValue{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
+        this.expr.prettyPrint(s, prefix, false);
+        this.fieldIdentifier.prettyPrint(s, prefix, true);
 
     }
 

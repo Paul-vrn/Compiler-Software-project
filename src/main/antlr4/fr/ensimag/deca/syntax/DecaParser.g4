@@ -403,6 +403,7 @@ select_expr returns[AbstractExpr tree]
         }
         | /* epsilon */ {
             // we matched "e.i"
+            System.out.println("HEY HO DecaParser ligne 406");
             $tree = new Selection($e1.tree, $i.tree);
             setLocation($tree, $DOT);
         }

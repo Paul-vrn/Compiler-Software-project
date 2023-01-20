@@ -7,7 +7,18 @@
 // Historique:
 //    cree le 01/01/2023
 
+class A {
+    protected int x;
+}
+
+class B extends A{
+    int getX(){
+        this.x;
+       return 3;
+    }
+}
+
 {
-    float x = 56;
+    B a = new B();
 }
 

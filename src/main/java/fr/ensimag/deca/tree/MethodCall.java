@@ -34,6 +34,8 @@ public class MethodCall extends AbstractExpr{
                     + this.getLocation().errorOutPut() + ": Must be a method", this.getLocation());
         }
 
+        this.setType(def.getType());
+
         Signature sig = def.getSignature();
 
         for(int c = 0; c < this.parameters.size(); c++){

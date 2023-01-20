@@ -216,11 +216,11 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
-        if(envExp.getDictionary().containsKey(this.getName())){
-            this.setDefinition(envExp.getDictionary().get(this.getName()));
+        if(envExp.get(this.getName()) != null){
+            this.setDefinition(envExp.get(this.getName()));
         }else{
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Undeclared method", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Undeclared method or field", this.getLocation());
             }
 
         return this.definition;

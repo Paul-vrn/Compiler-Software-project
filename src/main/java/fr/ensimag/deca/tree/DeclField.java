@@ -66,19 +66,31 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Type void forbidden in class fields", this.getLocation());
         }
+        int index_fin = 0;
+        int if_taken = 0;
 
         this.fieldName.setType(type1);
-        this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
-                                    name.getClassDefinition(), 0));
 
-        if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
-            if(!superClass.getClassDefinition().getMembers().get(name.getName()).isField()){
+        if(superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null){
+            if_taken = 1;
+            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition",getLocation()).getIndex();
+            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
                 throw new ContextualError( compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
             }
-        }
+        }else{
+            name.getClassDefinition().incNumberOfFields();
 
+        }
+        if(if_taken == 0) {
+            this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
+                    name.getClassDefinition(), name.getClassDefinition().getNumberOfFields()));
+        } else {
+            this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
+                    name.getClassDefinition(), index_fin));
+        }
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+
         try{
             envToReturn.declare(this.fieldName.getName(), this.fieldName.getFieldDefinition());
         }catch (EnvironmentExp.DoubleDefException ignored){}

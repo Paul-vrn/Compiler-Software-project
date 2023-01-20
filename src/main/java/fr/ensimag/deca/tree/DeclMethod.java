@@ -3,9 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -66,15 +68,18 @@ public class DeclMethod extends AbstractDeclMethod {
 
         this.varName.setType(type1);
         Signature sig = this.listParams.verifyListDeclParamPass2(compiler);
-        this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
-                sig, 0));
 
-        if (superClass.getClassDefinition().getMembers().get(name.getName()) != null) {
-            if (superClass.getClassDefinition().getMembers().get(name.getName()).isMethod()
-                    && superClass.getClassDefinition().getMembers().get(name.getName()).asMethodDefinition("conversion en MethodeDef impossible", getLocation()).getSignature().equals(sig)) {
+        int index_fin = 0;
+        int if_taken = 0;
+
+        if (superClass.getClassDefinition().getMembers().get(varName.getName()) != null) {
+            if_taken = 1;
+            index_fin = superClass.getClassDefinition().getMembers().get(varName.getName()).asMethodDefinition("bruh",getLocation()).getIndex();
+            if (superClass.getClassDefinition().getMembers().get(varName.getName()).isMethod()
+                    && superClass.getClassDefinition().getMembers().get(varName.getName()).asMethodDefinition("conversion en MethodeDef impossible", getLocation()).getSignature().equals(sig)) {
                 try {
-                    if (superClass.getClassDefinition().getMembers().get(name.getName()).getType().sameType(type1)
-                            || type1.asClassType("bruh", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(name.getName()).getType().asClassType("bruh", getLocation())))
+                    if (superClass.getClassDefinition().getMembers().get(varName.getName()).getType().sameType(type1)
+                            || type1.asClassType("Type not class type", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(varName.getName()).getType().asClassType("bruh", getLocation())))
                     {}
                     else{
                         throw new ContextualError(compiler.displaySourceFile() + ":"
@@ -89,6 +94,16 @@ public class DeclMethod extends AbstractDeclMethod {
                 throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
             }
+        }else{
+            name.getClassDefinition().incNumberOfMethods();
+
+        }
+        if(if_taken == 0) {
+            this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
+                    sig, name.getClassDefinition().getNumberOfMethods()));
+        } else {
+            this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
+                    sig, index_fin));
         }
 
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());

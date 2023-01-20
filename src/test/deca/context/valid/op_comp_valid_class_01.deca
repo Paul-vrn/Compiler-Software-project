@@ -1,0 +1,18 @@
+// Description:
+//   Op_comp for classes
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+
+}
+
+{
+    A a;
+    Object o = new Object();
+    a == o;
+}

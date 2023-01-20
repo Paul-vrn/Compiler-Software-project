@@ -1,15 +1,19 @@
 class A{
-int x = 2;
-int y;
+	int a(){}
+	int b(){}
+}
 
-int addXandY(){
-return x+y;}
+class B extends A{
+	int a(){}
+}
+
+class C extends B{
+	int b(){}
+	boolean equals(){}
 }
 
 
-{
-A a = new A();
-a.y = 2;
-int result = a.addXandY();
-println(result);
-}
+class D extends B{}
+
+
+{}

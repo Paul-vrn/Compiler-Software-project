@@ -10,7 +10,7 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.util.Map;
@@ -139,8 +139,7 @@ public class ClassDefinition extends TypeDefinition {
                         }
                     }
                     compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd.getFullName())), Register.getR(1)));
-                    compiler.addInstruction(new PUSH(Register.getR(1)));
-                    compiler.nextGlobalOffSet();
+                    compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
                     methodToAdd.setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
                 }
             }

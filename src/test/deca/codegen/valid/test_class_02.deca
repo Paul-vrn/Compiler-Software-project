@@ -6,6 +6,13 @@ class A {
   void setX(int x) {
         this.x = x;
    }
+   void printX() {
+        println("x=", x);
+   }
+   void printX2() {
+        println("x=", this.x);
+   }
+
 }
 
 {

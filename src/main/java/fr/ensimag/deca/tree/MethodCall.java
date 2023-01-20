@@ -80,15 +80,17 @@ public class MethodCall extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.addComment("method call at " + methodId.getLocation() + " : " +methodId.getName().getName());
         compiler.addInstruction(new ADDSP(parameters.getList().size()+1));
-        DAddr addrMethod = methodId.getMethodDefinition().getOperand();
-        compiler.addInstruction(new LOAD(addrMethod, Register.getR(2)));
-        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP)));
+        expr.codeGenExpr(compiler, n);
+        compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(2)));
+
+        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP))); // empilement implicite
         int index = -1;
-        for (AbstractExpr expr : parameters.getList()) {
-            expr.codeGenExpr(compiler, 2);
+        for (AbstractExpr param : parameters.getList()) {
+            param.codeGenExpr(compiler, 2);
             compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
-            index--;
+            index--; // empilement des paramètres
         }
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));

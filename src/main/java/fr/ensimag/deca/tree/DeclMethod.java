@@ -113,7 +113,7 @@ public class DeclMethod extends AbstractDeclMethod {
             this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
                     sig, index_fin));
         }
-
+        this.varName.getMethodDefinition().setLabel(new Label(this.varName.getName().getName()));
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
         try {
             envToReturn.declare(this.varName.getName(), this.varName.getMethodDefinition());

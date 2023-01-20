@@ -64,8 +64,11 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new HALT());
         compiler.addComment("end of main instructions");
 
+        compiler.addComment("Class definition");
         classes.codeGenDeclClasses(compiler);
+        compiler.addComment("Errors messages");
         compiler.getLabelFactory().createErrorSection(compiler);
+        compiler.addComment("End of program");
     }
 
     @Override

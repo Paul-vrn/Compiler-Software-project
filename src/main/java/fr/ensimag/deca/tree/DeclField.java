@@ -1,17 +1,21 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
+import java.util.Map;
 
 /**
- * Declaration of a class (<code>class name extends superClass {members}<code>).
+ *
  * 
  * @author gl21
  * @date 01/01/2023
@@ -49,7 +53,7 @@ public class DeclField extends AbstractDeclField {
         s.print(" ");
         fieldName.decompile(s);
         initialization.decompile(s);
-        s.print(";");
+        s.println(";");
     }
 
     @Override
@@ -67,15 +71,66 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyDeclField(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+    protected EnvironmentExp verifyDeclFieldPass2(DecacCompiler compiler, AbstractIdentifier superClass,
+                                        AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
 
+        if(type1.isVoid()){
+            throw new ContextualError( compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Type void forbidden in class fields", this.getLocation());
+        }
+        int index_fin = 0;
+        int if_taken = 0;
+
+        this.fieldName.setType(type1);
+
+        if(superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null){
+            if_taken = 1;
+            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition",getLocation()).getIndex();
+            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
+            }
+        }else{
+            name.getClassDefinition().incNumberOfFields();
+
+        }
+        if(if_taken == 0) {
+            this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
+                    name.getClassDefinition(), name.getClassDefinition().getNumberOfFields()));
+        } else {
+            this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
+                    name.getClassDefinition(), index_fin));
+        }
+        EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+
+        try{
+            envToReturn.declare(this.fieldName.getName(), this.fieldName.getFieldDefinition());
+        }catch (EnvironmentExp.DoubleDefException ignored){}
+
+        return envToReturn;
     }
 
-    public void codeGen(DecacCompiler compiler) {
+    @Override
+    protected void verifyDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
 
+        this.initialization.verifyInitialization(compiler, type1, envExp, name.getClassDefinition());
     }
 
-    public void codeGenFieldInit(DecacCompiler compiler) {
-        initialization.codeGenInit(compiler, fieldName);
+    @Override
+    public void codeGenDeclField(DecacCompiler compiler) {
+        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, Register.LB));
+        initialization.codeGenInitField(compiler, type.getType(), 2);
+        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), Register.getR(1)));
+        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), Register.getR(1))));
+    }
+
+    @Override
+    public void codeGenDeclFieldNull(DecacCompiler compiler) {
+        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, Register.LB));
+        (new NoInitialization()).codeGenInitField(compiler, type.getType(), 2);
+        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), Register.getR(1)));
+        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), Register.getR(1))));
     }
 }

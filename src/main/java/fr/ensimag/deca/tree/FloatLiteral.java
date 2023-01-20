@@ -49,6 +49,7 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.getR(n)));
+        compiler.getMemory().setLastGRegister(n);
     }
 
     @Override

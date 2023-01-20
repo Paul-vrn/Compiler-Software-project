@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.deca.context.Type;
 
 /**
  * Variable declaration
@@ -28,24 +29,8 @@ public abstract class AbstractMethodBody extends Tree {
      * @param currentClass corresponds to the "class" attribute (null in the main bloc).
      */
     protected abstract void verifyMethodBody(DecacCompiler compiler,
-                                          EnvironmentExp localEnv, ClassDefinition currentClass)
+                                             EnvironmentExp classEnv, EnvironmentExp envExpParam, AbstractIdentifier name, Type returnType)
             throws ContextualError;
 
-    public abstract void codeGen(DecacCompiler compiler);
-
-    public static void contextSave(DecacCompiler compiler) {
-        //on sauvegarde tout les registres sauf R0 qui contiendra le résultat, les registres SP et LB sont handled par les fonctiosn d'appel
-        //i<15 peut être à changer en i<RMAX
-        for(int i = 1; i<15; i++) {
-            compiler.addInstruction(new PUSH(Register.getR(i)));
-        }
-    }
-
-    public static void contextRestore(DecacCompiler compiler) {
-        //i<15 peut être à changer en i<RMAX
-        for(int i = 14; i>0; i--) {
-            compiler.addInstruction(new POP(Register.getR(i)));
-        }
-    }
-
+    public abstract void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp);
 }

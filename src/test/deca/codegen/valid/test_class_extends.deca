@@ -1,0 +1,19 @@
+class A{
+	int a(){}
+	int b(){}
+}
+
+class B extends A{
+	int a(){}
+}
+
+class C extends B{
+	int b(){}
+	boolean equals(){}
+}
+
+
+class D extends B{}
+
+
+{}

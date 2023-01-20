@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -109,6 +110,9 @@ public class DecacCompiler {
     public void addIndex(int i, Instruction inst) {
         program.addIndex(i, inst);
     }
+    public void addAllIndex(int i, List<Line> l) {
+        program.addAllIndex(i, l);
+    }
     public int getLineIndex(){
         return program.getLastIndex();
     }
@@ -141,11 +145,17 @@ public class DecacCompiler {
     public Memory getMemory() {
         return memory;
     }
-    public int nextOffSet(){
-        int val = memory.getOffset();
-        memory.increaseOffset();
+    public int nextGlobalOffSet(){
+        int val = memory.getGlobalOffset();
+        memory.increaseGlobalOffset();
         return val;
     }
+    public int nextLocalOffSet(){
+        int val = memory.getLocalOffset();
+        memory.increaseLocalOffset();
+        return val;
+    }
+
 
     private final LabelFactory labelFactory = new LabelFactory();
     public LabelFactory getLabelFactory() {return labelFactory;}

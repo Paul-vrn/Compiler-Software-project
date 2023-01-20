@@ -28,4 +28,6 @@ public abstract class AbstractInitialization extends Tree {
 
 
     protected abstract void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName);
+
+    public abstract void codeGenInitField(DecacCompiler compiler, Type type, int n);
 }

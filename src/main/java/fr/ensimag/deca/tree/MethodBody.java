@@ -4,8 +4,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 
 import java.io.PrintStream;
 
@@ -32,7 +34,7 @@ public class MethodBody extends AbstractMethodBody {
         listDeclField.decompile(s);
         listInst.decompile(s);
         s.unindent();
-        s.print("}");
+        s.println("}");
     }
 
     @Override
@@ -48,16 +50,16 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet supported");
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp classEnv, EnvironmentExp envExpParam,
+                                    AbstractIdentifier name, Type returnType) throws ContextualError {
+        this.listDeclField.verifyListDeclVariable(compiler, envExpParam, name.getClassDefinition());
+
+        this.listInst.verifyListInst(compiler, envExpParam, name.getClassDefinition(), returnType);
     }
 
     @Override
-    public void codeGen(DecacCompiler compiler) {
-        listDeclField.codeGenListDeclVar(compiler);
-        contextSave(compiler);
+    public void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp){
+        listDeclField.codeGenListDeclField(compiler, localEnvExp);
         listInst.codeGenListInst(compiler);
-        contextRestore(compiler);
-        compiler.addInstruction(new RTS());
     }
 }

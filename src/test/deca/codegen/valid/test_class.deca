@@ -1,0 +1,15 @@
+class A {
+    int x = 5;
+    boolean y;
+    void test() {
+        y = x > 0;
+    }
+
+    void test2() {
+        y = x > 0;
+    }
+}
+
+{
+    int x = 123;
+}

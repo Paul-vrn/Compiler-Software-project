@@ -39,6 +39,7 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(new ImmediateInteger(value), Register.getR(n)));
+        compiler.getMemory().setLastGRegister(n);
     }
 
     @Override

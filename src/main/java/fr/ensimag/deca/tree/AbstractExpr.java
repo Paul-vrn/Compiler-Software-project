@@ -165,6 +165,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param n number of the register where the result is stored
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        System.out.println(this.getClass().getName());
         throw new UnsupportedOperationException("not yet implemented");
     }
 

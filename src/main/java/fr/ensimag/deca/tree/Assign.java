@@ -57,9 +57,9 @@ public class Assign extends AbstractBinaryExpr {
                     + this.getLocation().errorOutPut() + ": Missing type declaration", this.getLocation());
         }
 
-        Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+         this.setRightOperand(this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, type1));
 
-        if(!(type1.sameType(type2) || (type1.isFloat() && type2.isInt()))){
+        if(!(type1.sameType(this.getRightOperand().getType()) || (type1.isFloat() && this.getRightOperand().getType().isInt()))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
         }
@@ -69,16 +69,12 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Identifier id = (Identifier) this.getLeftOperand();
         this.getRightOperand().codeGenExpr(compiler, n);
-        compiler.addInstruction(new STORE(Register.getR(n), id.getExpDefinition().getOperand()));
+        this.getLeftOperand().codeGenStore(compiler, n);
     }
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         this.codeGenExpr(compiler, 2);
-        //Identifier id = (Identifier) this.getLeftOperand();
-        //this.getRightOperand().codeGenExpr(compiler, 2);
-        //compiler.addInstruction(new STORE(Register.getR(2), id.getExpDefinition().getOperand()));
     }
 
     @Override

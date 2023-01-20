@@ -44,7 +44,11 @@ public abstract class AbstractPrint extends AbstractInst {
 
         for (AbstractExpr current : this.arguments.getList()){
             type1 = current.verifyExpr(compiler, localEnv, currentClass);
-            if(type1 == null || !(type1.isInt() || type1.isFloat() || type1.isString())){
+            if(type1 == null){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Print undeclared identifier", this.getLocation());
+            }
+            if(!(type1.isInt() || type1.isFloat() || type1.isString())){
                 throw new ContextualError( compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Print argument in a wrong type", this.getLocation());
             }

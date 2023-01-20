@@ -100,5 +100,13 @@ public class MethodCall extends AbstractExpr{
         compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), Register.getR(2))));
         compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
 
+        if (!getType().isVoid()){
+            compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
+        }
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        this.codeGenExpr(compiler, 2);
     }
 }

@@ -6,17 +6,12 @@ class A {
   void setX(int x) {
         this.x = x;
    }
-   void printX() {
-        println("x=", x);
-   }
-   void printX2() {
-        println("x=", this.x);
-   }
-
 }
 
 {
     A a = new A();
+    int y;
     a.setX(1);
     println("a.getX=", a.getX());
+    y = a.getX() + 3;
 }

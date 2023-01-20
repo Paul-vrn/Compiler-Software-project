@@ -13,6 +13,7 @@ import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -111,13 +112,14 @@ public class ClassDefinition extends TypeDefinition {
         ClassDefinition currentSuperClass = this.getSuperClass();
         if(!(this.getType().getName().getName().equals("Object"))) {
             ArrayList<MethodDefinition> miniMethods = new ArrayList<>();
-            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
-                if (entry.getValue().isMethod()) {
-                    MethodDefinition methDef = (MethodDefinition) entry.getValue();
-                    methDef.setFullName("code." + this.getType().getName().getName() + "." + methDef.getLabel().toString());
-                    miniMethods.add(methDef);
-                }
-            }
+            this.members.dictionary.entrySet().stream()
+                    .filter(entry -> entry.getValue().isMethod())
+                    .sorted(Map.Entry.comparingByValue(Comparator.comparingInt(value -> ((MethodDefinition) value).getIndex()).reversed()))
+                    .forEach(entry -> {
+                        MethodDefinition methDef = (MethodDefinition) entry.getValue();
+                        methDef.setFullName("code." + this.getType().getName().getName() + "." + methDef.getLabel().toString());
+                        miniMethods.add(methDef);
+                    });
             methods.addAll(miniMethods);
             currentSuperClass.codeGenMethodTable(compiler, methods);
         }

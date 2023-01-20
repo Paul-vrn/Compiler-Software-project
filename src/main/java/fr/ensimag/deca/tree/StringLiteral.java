@@ -3,11 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ASCIZ;
-import fr.ensimag.ima.pseudocode.arm.instructions.BL;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.ASCIZ;
+import fr.ensimag.pseudocode.arm.instructions.BL;
+import fr.ensimag.pseudocode.arm.instructions.LDR;
+import fr.ensimag.pseudocode.ima.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 

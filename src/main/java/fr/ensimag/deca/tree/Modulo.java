@@ -5,12 +5,17 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.RegisterARM;
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.arm.instructions.*;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.BL;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.arm.instructions.POPARM;
+import fr.ensimag.pseudocode.arm.instructions.PUSHARM;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.POP;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.ima.instructions.REM;
 
 /**
  *

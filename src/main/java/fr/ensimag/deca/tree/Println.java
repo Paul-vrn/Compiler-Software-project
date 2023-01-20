@@ -1,11 +1,11 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ASCIZ;
-import fr.ensimag.ima.pseudocode.arm.instructions.BL;
-import fr.ensimag.ima.pseudocode.arm.instructions.LDR;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.arm.instructions.BL;
+import fr.ensimag.pseudocode.arm.instructions.LDR;
+import fr.ensimag.pseudocode.ima.instructions.WNL;
 
 
 

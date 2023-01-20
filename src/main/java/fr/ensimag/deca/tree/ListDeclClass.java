@@ -3,11 +3,12 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
 import org.apache.log4j.Logger;
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.NullOperand;
 
 /**
  *

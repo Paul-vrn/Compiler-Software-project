@@ -5,10 +5,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.FLOAT;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WFLOATX;
 import org.apache.commons.lang.Validate;
 
 /**

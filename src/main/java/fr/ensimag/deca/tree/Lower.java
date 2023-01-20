@@ -2,15 +2,14 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.RegisterARM;
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.arm.instructions.B;
-import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
-import fr.ensimag.ima.pseudocode.instructions.BGT;
-import fr.ensimag.ima.pseudocode.instructions.BLT;
-import fr.ensimag.ima.pseudocode.instructions.SLT;
+import fr.ensimag.pseudocode.ImmediateInteger;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.B;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.ima.instructions.BLT;
+import fr.ensimag.pseudocode.ima.instructions.SLT;
 
 /**
  *

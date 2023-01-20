@@ -1,9 +1,9 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ASCIZ;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.ASCIZ;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 public class LabelFactory {
 

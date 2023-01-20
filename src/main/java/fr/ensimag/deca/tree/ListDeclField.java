@@ -2,14 +2,14 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.BSR;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.RTS;
+import fr.ensimag.pseudocode.ima.instructions.TSTO;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.ima.instructions.BSR;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 /**
  * List of expressions (eg list of parameters).

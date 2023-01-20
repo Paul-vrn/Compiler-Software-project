@@ -8,12 +8,12 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.RegisterARM;
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.arm.instructions.VSTR;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.VSTR;
+import fr.ensimag.pseudocode.ima.instructions.STORE;
 import org.apache.commons.lang.Validate;
-import fr.ensimag.ima.pseudocode.arm.instructions.STR;
+import fr.ensimag.pseudocode.arm.instructions.STR;
 
 /**
  * @author gl21

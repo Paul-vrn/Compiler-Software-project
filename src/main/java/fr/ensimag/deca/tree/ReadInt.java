@@ -6,10 +6,10 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.*;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RINT;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.RINT;
 
 import java.io.PrintStream;
 
@@ -53,7 +53,7 @@ public class ReadInt extends AbstractReadExpr {
 
     @Override
     public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        compiler.addInstruction(new SUBS(new ImmediateInteger(4),RegisterARM.SP));
+        compiler.addInstruction(new SUBS(new ImmediateInteger(4), RegisterARM.SP));
         compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0))); // LDR R0, =int
         compiler.addInstruction(new MOV(RegisterARM.SP, RegisterARM.getR(1))); // MOV R1, SP
         compiler.addInstruction(new BL(compiler.getLabelFactory().getScanfLabel())); // bl scanf

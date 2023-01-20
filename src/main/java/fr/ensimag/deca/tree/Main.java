@@ -7,12 +7,17 @@ import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.arm.instructions.ADDS;
-import fr.ensimag.ima.pseudocode.arm.instructions.BL;
-import fr.ensimag.ima.pseudocode.arm.instructions.MOV;
-import fr.ensimag.ima.pseudocode.arm.instructions.SUBS;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.ImmediateInteger;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.arm.instructions.ADDS;
+import fr.ensimag.pseudocode.arm.instructions.BL;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.arm.instructions.SUBS;
+import fr.ensimag.pseudocode.ima.instructions.ADDSP;
+import fr.ensimag.pseudocode.ima.instructions.POP;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.ima.instructions.TSTO;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 

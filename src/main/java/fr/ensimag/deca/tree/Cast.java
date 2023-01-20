@@ -8,8 +8,13 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.RegisterIMA;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.VCVTFS;
+import fr.ensimag.pseudocode.arm.instructions.VCVTSF;
+import fr.ensimag.pseudocode.arm.instructions.VMOV;
+import fr.ensimag.pseudocode.ima.instructions.FLOAT;
+import fr.ensimag.pseudocode.ima.instructions.INT;
 
 public class Cast extends AbstractExpr{
     private AbstractIdentifier type;
@@ -55,7 +60,19 @@ public class Cast extends AbstractExpr{
 
     @Override
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getExpr().armCodeGenExpr(compiler, n, m);
+        if (type.getType().isInt() && expr.getType().isFloat()){
+            // int <-- float
+            compiler.addInstruction(new VCVTSF(RegisterARM.getS(m), RegisterARM.getS(m)));
+            compiler.addInstruction(new VMOV(RegisterARM.getS(m), RegisterARM.getR(n)));
+        } else if (type.getType().isFloat() && expr.getType().isInt()){
+            // float <-- int
+            compiler.addInstruction(new VMOV(RegisterARM.getR(n), RegisterARM.getS(m)));
+            compiler.addInstruction(new VCVTFS(RegisterARM.getS(m), RegisterARM.getS(m)));
+        } else {
+            throw new ClassCastException("Cast type is invalid");
+        }
+
         /*getExpr().armCodeGenExpr(compiler, n, m);
         if (getType().isInt()) {
 

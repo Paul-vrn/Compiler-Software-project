@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
@@ -85,8 +86,9 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
                 compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
             compiler.addInstruction(new PUSH(Register.getR(1)));
-            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB));
-            ArrayList<String> methods = new ArrayList<>();
+            compiler.nextGlobalOffSet();
+            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
+            ArrayList<MethodDefinition> methods = new ArrayList<>();
             currentClassDefinition.codeGenMethodTable(compiler, methods);
         }
     }

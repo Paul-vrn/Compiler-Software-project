@@ -41,6 +41,15 @@ public class MethodDefinition extends ExpDefinition {
 
     private final Signature signature;
     private Label label;
+
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
     
     /**
      * 

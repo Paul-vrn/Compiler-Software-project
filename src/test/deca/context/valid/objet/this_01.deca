@@ -1,0 +1,13 @@
+// Description:
+//    Programme minimaliste utilisant this.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+class A{
+    protected A a = this;
+}
+

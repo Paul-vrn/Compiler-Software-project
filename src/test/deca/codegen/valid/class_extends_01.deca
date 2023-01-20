@@ -1,0 +1,27 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- 18
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+}
+	String texte(){
+		return("Ceci est un string");
+}
+}
+
+class B extends A{
+	void vide(){}
+}
+
+{
+	A a = new A();
+	int x = a.entier();
+
+}

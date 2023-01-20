@@ -1,0 +1,15 @@
+// Description:
+//   nested method type
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    int x;
+    A setX(A a) {
+        return a;
+    }
+}

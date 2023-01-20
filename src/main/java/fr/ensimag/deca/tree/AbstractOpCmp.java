@@ -28,7 +28,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         this.setType(compiler.environmentType.BOOLEAN);
-        if(!((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat()))){
+        if(!(((type1.isNull() || type1.isClass()) && (type2.isNull() || type2.isClass())) || (type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat()))){
             if(!(this.getOperatorName().equals("==") || this.getOperatorName().equals("!="))){
                 throw new ContextualError( compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Compare operation type mismatch", this.getLocation());

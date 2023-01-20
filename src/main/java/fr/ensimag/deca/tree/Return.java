@@ -40,7 +40,7 @@ public class Return extends AbstractInst{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        this.rvalue.prettyPrint(s, prefix, true);
     }
 
     @Override

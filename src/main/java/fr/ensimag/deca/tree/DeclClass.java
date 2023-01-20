@@ -8,6 +8,7 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
@@ -136,6 +137,19 @@ public class DeclClass extends AbstractDeclClass {
         this.methods.iter(f);
     }
 
+    public static void codeGenObjectEquals(DecacCompiler compiler){
+        Label labelEnd = new Label("fin.Object.equals");
+        compiler.addLabel(new Label("code.Object.equals"));
+        //On utilise R0 et R1 pas sûr de devoir TSTO
+        //compiler.addInstruction(new TSTO(1));
+        //ajouter l'instruciton BOV une fois que le code pour le message d'erreur de stack overflow existera
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(1)));
+        compiler.addInstruction(new CMP(new RegisterOffset(-3, Register.LB), Register.getR(1)));
+        compiler.addInstruction((new SEQ(Register.getR(0))));
+        compiler.addLabel(labelEnd);
+        compiler.addInstruction(new RTS());
+
+    }
 
     public void codeGenDeclClass(DecacCompiler compiler) {
         // init.X

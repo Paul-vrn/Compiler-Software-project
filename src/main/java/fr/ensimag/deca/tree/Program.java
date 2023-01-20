@@ -60,9 +60,9 @@ public class Program extends AbstractProgram {
         compiler.addComment("Method Table Initialization");
         classes.codeGenMethodTable(compiler);
         compiler.addComment("Method Table Initialization End");
-        compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.addComment("end of main instructions");
 
         classes.codeGenDeclClasses(compiler);
         compiler.getLabelFactory().createErrorSection(compiler);

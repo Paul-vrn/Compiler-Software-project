@@ -92,12 +92,13 @@ public abstract class AbstractExpr extends AbstractInst {
 
         if(type2 == null){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Assign impossible with undefined value", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Right value undefined", this.getLocation());
         }
 
-        if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt()))){
+        if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt())
+                || (type2.isClass() && expectedType.isClass() && type2.asClassType("", this.getLocation()).isSubClassOf(expectedType.asClassType("", this.getLocation()))))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Right value type problem", this.getLocation());
         }
 
         if(expectedType.isFloat() && type2.isInt()){
@@ -165,7 +166,6 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param n number of the register where the result is stored
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        System.out.println(this.getClass().getName());
         throw new UnsupportedOperationException("not yet implemented");
     }
 

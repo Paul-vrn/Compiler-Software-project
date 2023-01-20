@@ -1,0 +1,1 @@
+extends_inexistant_class.deca:10:0: Extends a class that doesn't exist

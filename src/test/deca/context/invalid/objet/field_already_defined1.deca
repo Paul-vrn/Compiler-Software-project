@@ -1,0 +1,15 @@
+// Description:
+//     Declaration de deux fields de même nom.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    protected int x;
+    int x;
+}
+
+

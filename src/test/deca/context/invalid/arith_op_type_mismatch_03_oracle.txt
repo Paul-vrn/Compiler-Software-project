@@ -1,1 +1,0 @@
-arith_op_type_mismatch_03.deca:12:20: Arithmetic operation type mismatch

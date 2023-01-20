@@ -1,0 +1,22 @@
+// Description:
+//   class in field
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    int x;
+    int setX() {
+        return x;
+    }
+}
+
+class B {
+     A a;
+     int n = a.setX();
+}
+
+

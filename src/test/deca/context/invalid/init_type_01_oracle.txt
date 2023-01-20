@@ -1,1 +1,0 @@
-init_type_01.deca:11:11: Initialization type error, boolean into int forbidden

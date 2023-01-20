@@ -76,7 +76,6 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     public void codeGenDeclParam(DecacCompiler compiler, EnvironmentExp env, int index) {
        // varName.getExpDefinition().setOperand(new RegisterOffset(index, Register.LB));
-        System.out.println("declparam: "+varName.getExpDefinition().hashCode());
         env.get(this.varName.getName()).setOperand(new RegisterOffset(index, Register.LB));
     }
 }

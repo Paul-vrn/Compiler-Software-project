@@ -20,10 +20,10 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     protected EnvironmentExp verifyListDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass, AbstractIdentifier name)
             throws ContextualError {
         EnvironmentExp envExpR = new EnvironmentExp(superClass.getClassDefinition().getMembers());
-
+        name.getClassDefinition().setNumberOfMethods(superClass.getClassDefinition().getNumberOfMethods());
         for (AbstractDeclMethod current : this.getList()){
             for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
-                    current.verifyDeclMethodPass2(compiler, superClass, name).getDictionary().entrySet()){
+                    current.verifyDeclMethodPass2(compiler, superClass, name).getDictionary().entrySet()) {
                 try {
                     envExpR.declare(entry.getKey(), entry.getValue());
                 }catch (EnvironmentExp.DoubleDefException e){

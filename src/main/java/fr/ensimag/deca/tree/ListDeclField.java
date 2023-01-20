@@ -38,6 +38,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     protected EnvironmentExp verifyListDeclFieldPass2(DecacCompiler compiler, AbstractIdentifier superClass, AbstractIdentifier name)
             throws ContextualError {
         EnvironmentExp envExpR = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+        name.getClassDefinition().setNumberOfFields(superClass.getClassDefinition().getNumberOfFields());
 
         for (AbstractDeclField current : this.getList()){
             for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :

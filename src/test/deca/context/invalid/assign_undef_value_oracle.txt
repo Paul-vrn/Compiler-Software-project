@@ -1,1 +1,0 @@
-assign_undef_value.deca:12:8: Assign impossible with undefined value

@@ -1,1 +1,0 @@
-print_argument_type.deca:11:3: Print argument in a wrong type

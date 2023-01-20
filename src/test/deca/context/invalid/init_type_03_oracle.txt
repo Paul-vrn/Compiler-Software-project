@@ -1,1 +1,0 @@
-init_type_03.deca:11:11: Initialization type error, float into int forbidden

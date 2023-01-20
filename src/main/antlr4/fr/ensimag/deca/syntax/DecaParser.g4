@@ -418,8 +418,10 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
-
-
+            AbstractExpr thisExpr = new This();
+            $tree = new MethodCall(thisExpr, $m.tree, $args.tree);
+            setLocation(thisExpr, $m.start);
+            setLocation($tree, $OPARENT);
         } // $tree = $args.tree; marche pas car $tree est AbstractExpr et $args.tree est ListExpr
     | OPARENT expr CPARENT {
             assert($expr.tree != null);

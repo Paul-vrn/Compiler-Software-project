@@ -93,8 +93,7 @@ public class MethodCall extends AbstractExpr{
         compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(2));
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
-        compiler.addInstruction(new BSR(new RegisterOffset(0, Register.getR(2))));
-        // todo : offset = numéro de la méthode par rapport à l'adresse de la classe
+        compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), Register.getR(2))));
         compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
 
     }

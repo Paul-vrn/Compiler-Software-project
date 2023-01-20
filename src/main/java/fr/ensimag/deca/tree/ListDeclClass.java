@@ -79,10 +79,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             Identifier superClass = (Identifier) c.getSuperClass();
             Identifier currentClass = (Identifier)c.getName();
             if(superClass.getName().getName().equals("Object")){
-                compiler.addInstruction(new LOAD(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
+                compiler.addInstruction(new LEA(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
             }
             else {
-                compiler.addInstruction(new LOAD(superClass.getClassDefinition().getOperand(), Register.getR(1)));
+                compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
             compiler.addInstruction(new PUSH(Register.getR(1)));
             currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB));

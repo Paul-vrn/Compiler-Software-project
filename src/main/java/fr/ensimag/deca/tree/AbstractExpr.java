@@ -96,7 +96,7 @@ public abstract class AbstractExpr extends AbstractInst {
         }
 
         if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt())
-                || type2.asClassType("", this.getLocation()).isSubClassOf(expectedType.asClassType("", this.getLocation())))){
+                || (type2.isClass() && expectedType.isClass() && type2.asClassType("", this.getLocation()).isSubClassOf(expectedType.asClassType("", this.getLocation()))))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Right value type problem", this.getLocation());
         }

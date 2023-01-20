@@ -28,7 +28,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
                     envExpR.declare(entry.getKey(), entry.getValue());
                 }catch (EnvironmentExp.DoubleDefException e){
                     throw new ContextualError( compiler.displaySourceFile() + ":"
-                            + this.getLocation().errorOutPut() + ": Method already defined", this.getLocation());
+                            + current.getLocation().errorOutPut() + ": Method already defined", current.getLocation());
                 }
             }
         }

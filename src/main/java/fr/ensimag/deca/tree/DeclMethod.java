@@ -100,7 +100,7 @@ public class DeclMethod extends AbstractDeclMethod {
             }
             else{
                 throw new ContextualError(compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
+                        + this.getLocation().errorOutPut() + ": Signature method conflict in super class", this.getLocation());
             }
         } else{
             name.getClassDefinition().incNumberOfMethods();

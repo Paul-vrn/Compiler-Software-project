@@ -74,7 +74,13 @@ public class DeclClass extends AbstractDeclClass {
             this.superClass.setLocation(Location.BUILTIN);
             this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(compiler.createSymbol("Object")));
         }else{
-            this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(this.superClass.getName()));
+            if(compiler.environmentType.getEnvTypes().get(this.superClass.getName()) != null){
+                this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(this.superClass.getName()));
+            }else{
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Extends a class that doesn't exist", this.getLocation());
+            }
+
         }
 
         ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());

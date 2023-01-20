@@ -47,7 +47,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
                     envExpR.declare(entry.getKey(), entry.getValue());
                 }catch (EnvironmentExp.DoubleDefException e){
                     throw new ContextualError( compiler.displaySourceFile() + ":"
-                            + this.getLocation().errorOutPut() + ": Field already defined", this.getLocation());
+                            + current.getLocation().errorOutPut() + ": Field already defined", current.getLocation());
                 }
             }
         }

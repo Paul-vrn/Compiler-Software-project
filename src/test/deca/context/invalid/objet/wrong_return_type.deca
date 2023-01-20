@@ -1,0 +1,15 @@
+// Description:
+//     Mauvais return type.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    int getX(A a){
+        return a;
+    }
+}
+

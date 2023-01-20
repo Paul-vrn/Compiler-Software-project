@@ -41,7 +41,7 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
                     envExpR.declare(entry.getKey(), entry.getValue());
                 }catch (EnvironmentExp.DoubleDefException e){
                     throw new ContextualError( compiler.displaySourceFile() + ":"
-                            + this.getLocation().errorOutPut() + ": Param already defined", this.getLocation());
+                            + current.getLocation().errorOutPut() + ": Parameter already defined", current.getLocation());
                 }
             }
         }

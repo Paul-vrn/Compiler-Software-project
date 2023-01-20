@@ -1,0 +1,20 @@
+// Description:
+//     Return class type incompatible.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+
+}
+
+class A{
+    A getX(B b){
+        return b;
+    }
+}
+
+

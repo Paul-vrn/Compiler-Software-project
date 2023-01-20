@@ -1,0 +1,16 @@
+// Description:
+//     Deux arguments de méthodes de même nom.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    int getX(int x, int x){
+
+    }
+}
+
+

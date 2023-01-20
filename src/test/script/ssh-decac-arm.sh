@@ -4,6 +4,13 @@ _user=pi
 
 echo 'Warning: ssh-key must be added'
 
+ping -c 1 $_remote > /dev/null 2>&1
+
+if [ $? -ne 0 ]; then
+    echo "Skip: $_remote is unreachable, arm tests are skipped"
+    exit 0
+fi
+
 cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:./src/main/bin:"$PATH"

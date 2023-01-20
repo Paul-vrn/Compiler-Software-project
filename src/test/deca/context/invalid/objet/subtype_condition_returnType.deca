@@ -1,0 +1,22 @@
+// Description:
+//     Redefinition d'une méthode mais sans respecter le type.
+//
+// Resultats:
+//    Ligne 12: Arithmetic modulo operation type mismatch
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+    int getX(){
+
+    }
+}
+
+class A extends B{
+    float getX(){
+
+    }
+}
+
+

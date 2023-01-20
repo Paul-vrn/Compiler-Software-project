@@ -1,0 +1,16 @@
+// Description:
+//     Void method argument.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    int getX(void x){
+
+    }
+}
+
+

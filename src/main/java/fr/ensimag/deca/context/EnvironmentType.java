@@ -42,6 +42,13 @@ public class EnvironmentType {
         Symbol objSymbol = compiler.createSymbol("Object");
         OBJECT = new ClassType(objSymbol);
         envTypes.put(objSymbol, new ClassDefinition(OBJECT, Location.BUILTIN, null));
+        Signature sig = new Signature();
+        sig.add(OBJECT);
+        try{
+            ((ClassDefinition) envTypes.get(objSymbol)).getMembers().declare(compiler.createSymbol("equals"),
+                    new MethodDefinition(BOOLEAN, Location.BUILTIN, sig, 1));
+        }catch (EnvironmentExp.DoubleDefException ignored){}
+
     }
 
     private final Map<Symbol, TypeDefinition> envTypes;

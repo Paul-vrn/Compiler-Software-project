@@ -85,6 +85,10 @@ public class DeclField extends AbstractDeclField {
         this.fieldName.setType(type1);
 
         if(superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null){
+            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
+                throw new ContextualError( compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
+            }
             if_taken = 1;
             index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition",getLocation()).getIndex();
             if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){

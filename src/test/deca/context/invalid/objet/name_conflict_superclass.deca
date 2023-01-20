@@ -1,0 +1,20 @@
+// Description:
+//     Declaration d'un field de même nom qu'une méthode de sa superClass.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+    void getx(){
+
+    }
+}
+
+class A extends B{
+    protected int getx;
+}
+
+

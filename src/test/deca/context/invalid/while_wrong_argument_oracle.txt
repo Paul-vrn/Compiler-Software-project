@@ -1,1 +1,0 @@
-while_wrong_argument.deca:11:9: Condition argument of if/elseif should be a boolean

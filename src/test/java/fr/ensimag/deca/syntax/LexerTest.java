@@ -53,10 +53,10 @@ public class LexerTest {
     @Test
     void test4() throws IOException {
         //lancer programme deca
-        String[] args = {"src/test/deca/syntax/invalid/floathex_lex_01.deca"};
+        String[] args = {"src/test/deca/syntax/valid/floathex_lex_01.deca"};
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
 
-        String file = "src/test/deca/syntax/invalid/floathex_lex_01_oracle.txt";
+        String file = "src/test/deca/syntax/valid/floathex_lex_01_oracle.txt";
         String toCompare = new String(Files.readAllBytes(Paths.get(file)));
 
         generalTest(lex, toCompare, "FloatHex1");

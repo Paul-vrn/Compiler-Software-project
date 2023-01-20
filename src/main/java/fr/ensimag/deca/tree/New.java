@@ -32,9 +32,6 @@ public class New extends AbstractExpr {
         s.print("()");
     }
 
-    public void codeGen(DecacCompiler compiler) {
-    }
-
     @Override
     protected
     void iterChildren(TreeFunction f) {
@@ -52,12 +49,12 @@ public class New extends AbstractExpr {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new NEW(className.getClassDefinition().getNumberOfFields()+1, Register.getR(2)));
-        //TODO add erreur tas plein in label factory
-        compiler.addInstruction(new BOV(new Label("tas_plein")));
-        compiler.addInstruction(new LEA(className.getClassDefinition().getOperand(), Register.getR(1)));
-        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(0, Register.getR(2))));
+        compiler.addInstruction(new NEW(className.getClassDefinition().getNumberOfFields()+1, Register.getR(n)));
+        compiler.getLabelFactory().createHeapOverflow(compiler);
+        compiler.addInstruction(new LEA(className.getMethodDefinition().getOperand(), Register.getR(1)));
+        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(0, Register.getR(n))));
+        compiler.addInstruction(new PUSH(Register.getR(n)));
         compiler.addInstruction(new BSR(new Label("init." + className.getName().getName())));
-        compiler.addInstruction(new POP(Register.getR(2)));
+        compiler.addInstruction(new POP(Register.getR(n)));
     }
 }

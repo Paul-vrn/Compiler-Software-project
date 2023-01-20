@@ -20,12 +20,14 @@ public class LabelFactory {
     private boolean flagIOError;
     private boolean flagDivByZeroError;
     private boolean flagDeferencementNullError;
+    private boolean flagHeapOverflowError;
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
     private static final Label NoReturnErrorLabel = new Label("no_return_error");
     private static final Label DeferencementNullErrorLabel = new Label("deferencement.null");
+    private static final Label HeapOverflowErrorLabel = new Label("heap_overflow_error");
 
     private static String suffixCurrentMethod;
     public LabelFactory() {
@@ -73,6 +75,12 @@ public class LabelFactory {
         if (flagDeferencementNullError) {
             compiler.addLabel(DeferencementNullErrorLabel);
             compiler.addInstruction(new WSTR("Error: Deferencement of null"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+        if (flagHeapOverflowError) {
+            compiler.addLabel(HeapOverflowErrorLabel);
+            compiler.addInstruction(new WSTR("Error: Heap Overflow"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
@@ -150,6 +158,12 @@ public class LabelFactory {
             return;
         compiler.addInstruction(new CMP(new NullOperand(), r));
         compiler.addInstruction(new BEQ(DeferencementNullErrorLabel));
+    }
+    public void createHeapOverflow(DecacCompiler compiler) {
+        if (noCheck)
+            return;
+        flagHeapOverflowError = true;
+        compiler.addInstruction(new BOV(HeapOverflowErrorLabel));
     }
 
     public String getSuffixCurrentMethod() {

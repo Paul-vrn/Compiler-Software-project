@@ -176,7 +176,8 @@ public class DecacCompiler {
     public boolean compile() throws DecacFatalError {
         String sourceFile = source.getAbsolutePath();
 
-        String destFile = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
+        String destFile = sourceFile.substring(0, sourceFile.length() - 5) +
+                (compilerOptions.getARMCompilation() ? ".s":".ass");
 
         PrintStream err = System.err;
         PrintStream out = System.out;

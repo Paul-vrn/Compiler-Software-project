@@ -108,13 +108,14 @@ public class DeclMethod extends AbstractDeclMethod {
         }
         if(if_taken == 0) {
             this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
-                    sig, name.getClassDefinition().getNumberOfMethods()));
+                    sig, name.getClassDefinition().getNumberOfMethods() + 1));
         } else {
             this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
                     sig, index_fin));
         }
         this.varName.getMethodDefinition().setLabel(new Label(this.varName.getName().getName()));
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
+
         try {
             envToReturn.declare(this.varName.getName(), this.varName.getMethodDefinition());
         } catch (EnvironmentExp.DoubleDefException ignored) {

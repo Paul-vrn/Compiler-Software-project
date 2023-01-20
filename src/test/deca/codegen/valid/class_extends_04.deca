@@ -1,0 +1,146 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- Tout se passe bien
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+	float reel = 18.0;
+	boolean bool = true;
+
+}
+
+class B extends A{
+	void vide(){}
+}
+
+class C extends B{
+	int entier = 30;
+}
+
+class D extends C{
+	int entier = 45;
+}
+
+class E extends D{
+	int entier = 48;
+}
+
+class F extends E{
+	int entier = 60;
+}
+
+class G extends F{
+	int entier = 75;
+}
+
+class H extends G{
+	int entier = 90;
+}
+
+class I extends H{
+	int entier = 105;
+}
+
+class J extends I{
+	int entier = 120;
+}
+
+class K extends J{
+	int entier = 135;
+}
+
+class L extends K{
+	int entier = 150;
+}
+
+class M extends L{
+	int entier = 165;
+}
+
+class N extends M{
+	int entier = 180;
+}
+
+class O extends N{
+	int entier = 195;
+}
+
+class P extends O{
+	int entier = 210;
+}
+
+class Q extends P{
+	int entier = 225;
+}
+
+class R extends Q{
+	int entier = 240;
+}
+
+class S extends R{
+	int entier = 255;
+}
+
+class T extends S{
+	int entier = 270;
+}
+
+class U extends T{
+	int entier = 285;
+}
+
+class V extends U{
+	int entier = 300;
+}
+
+class W extends V{
+	int entier = 315;
+}
+
+class X extends W{
+	int entier = 330;
+}
+
+class Y extends X{
+	int entier = 345;
+}
+
+class Z extends Y{
+	int entier = 360;
+}
+
+{
+	A a = new A();
+	B b = new B();
+	C c = new C();
+	D d = new D();
+	E e = new E();
+	F f = new F();
+	G g = new G();
+	H h = new H();
+	I i = new I();
+	J j = new J();
+	K k = new K();
+	L l = new L();
+	M m = new M();
+	N n = new N();
+	O o = new O();
+	P p = new P();
+	Q q = new Q();
+	R r = new R();
+	S s = new S();
+	T t = new T();
+	U u = new U();
+	V v = new V();
+	W w = new W();
+	X x = new X();
+	Y y = new Y();
+	Z z = new Z();
+	print("Tout se passe bien");
+}

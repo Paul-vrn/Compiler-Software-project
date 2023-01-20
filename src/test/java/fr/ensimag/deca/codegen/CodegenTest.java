@@ -356,6 +356,62 @@ public class CodegenTest {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test47class_extends_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test48class_extends_02() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_02.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_02_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test49class_extends_03() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_03.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_03_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test50class_extends_04() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_04.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_04_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test51class_extends_05() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_05.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_05_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test52class_extends_06() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_06.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_06_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test53class_extends_07() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_07.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_07_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test54class_extends_08() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_08.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_08_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

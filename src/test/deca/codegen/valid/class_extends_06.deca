@@ -2,7 +2,7 @@
 //    Programme testant la déclaration d'une classe
 //
 // Resultats:
-//		- 18
+//		- Tout se passe bien
 //
 //
 // Historique:
@@ -10,15 +10,14 @@
 
 class A{
 	int entier = 18;
-}
+	float reel = 18.0;
+	boolean bool = true;
 
-class B extends A{
-	void vide(){}
 }
 
 {
-	//A a = new A();
-	//int x = a.entier();
-	//print(x);
-	print(18);
+	A a = new A();
+	println(a.entier);
+	println(a.reel);
+	println(a.bool);
 }

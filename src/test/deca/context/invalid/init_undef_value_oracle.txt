@@ -1,1 +1,0 @@
-init_undef_value.deca:11:12: Initialization impossible with undefined value

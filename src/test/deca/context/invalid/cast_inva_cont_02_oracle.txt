@@ -1,1 +1,0 @@
-cast_inva_cont_02.deca:12:11: Initialization type error, float into int forbidden

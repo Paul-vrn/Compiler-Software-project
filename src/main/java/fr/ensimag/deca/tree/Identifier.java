@@ -9,10 +9,9 @@ import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
+import sun.awt.SubRegionShowable;
 
 /**
  * Deca Identifier
@@ -21,25 +20,6 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
-
-    public void codeGenDeclVar(DecacCompiler compiler) {
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.LB));
-    }
-    public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
-        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), Register.LB));
-    }
-
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
-        if (getType().isInt()) {
-            compiler.addInstruction(new WINT());
-        } else if (getType().isFloat()) {
-            compiler.addInstruction(new WFLOAT());
-        } else {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
 
     @Override
     protected void checkDecoration() {
@@ -141,11 +121,6 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
-
-    public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.getMemory().setLastGRegister(n);
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
-    }
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
@@ -264,6 +239,59 @@ public class Identifier extends AbstractIdentifier {
             s.print("definition: ");
             s.print(d);
             s.println();
+        }
+    }
+
+    @Override
+    public void codeGenStore(DecacCompiler compiler, int n) {
+        // if is field
+        compiler.getMemory().setLastGRegister(n);
+        if (getExpDefinition().isField()) {
+            if (n < Register.RMAX) {
+                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), Register.getR(n+1)));
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(n+1))));
+                compiler.getMemory().setLastGRegister(n+1);
+            } else {
+                compiler.addInstruction(new PUSH(Register.getR(n)));
+                compiler.getMemory().increaseTSTO();
+                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), Register.getR(n)));
+                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+                compiler.addInstruction(new POP(Register.getR(n)));
+                compiler.getMemory().decreaseTSTO();
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(0))));
+            }
+        } else {
+            compiler.addInstruction(new STORE(Register.getR(n), getExpDefinition().getOperand()));
+        }
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.getMemory().setLastGRegister(n);
+        System.out.println("identifier genexpr: "+this.getExpDefinition().hashCode());
+
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
+        if (this.getExpDefinition().isField()) {
+            compiler.addInstruction(new LOAD(new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(n)), Register.getR(n)));
+        }
+    }
+
+    public void codeGenDeclVar(DecacCompiler compiler) {
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB));
+    }
+    public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
+        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), Register.LB));
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
+        if (getType().isInt()) {
+            compiler.addInstruction(new WINT());
+        } else if (getType().isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        } else {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 

@@ -4,4 +4,12 @@ class A {
     void test() {
         y = x > 0;
     }
+
+    void test2() {
+        y = x > 0;
+    }
+}
+
+{
+    int x = 123;
 }

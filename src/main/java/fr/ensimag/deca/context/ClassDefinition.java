@@ -136,22 +136,10 @@ public class ClassDefinition extends TypeDefinition {
                     }
                     compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
                     compiler.addInstruction(new PUSH(Register.getR(1)));
-                    compiler.getMemory().increaseTopOfMethodTable();
+                    compiler.nextGlobalOffSet();
                 }
             }
         }
-
-
-
-//        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()){
-//            if(entry.getValue().isMethod()){
-//                MethodDefinition method = (MethodDefinition) entry.getValue();
-//                Label label = new Label("code."+ superClass.getType().getName().getName() + "." + method.getLabel().toString());
-//                compiler.addInstruction(new LOAD(new LabelOperand(label), Register.getR(1)));
-//                compiler.addInstruction(new PUSH(Register.getR(1)));
-//                compiler.addInstruction(new ADDSP(1));
-//            }
-//        }
     }
     
 }

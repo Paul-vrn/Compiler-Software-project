@@ -3,6 +3,12 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 import java.io.PrintStream;
 
@@ -66,5 +72,33 @@ public class Selection extends AbstractLValue{
     @Override
     protected void iterChildren(TreeFunction f) {
 
+    }
+
+
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        expr.codeGenExpr(compiler, n);
+        if (expr.getType().isClass()) {
+            compiler.addInstruction(new LOAD(new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(), Register.getR(n)), Register.getR(n)));
+        } else {
+            compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n)));
+        }
+    }
+
+    @Override
+    public void codeGenStore(DecacCompiler compiler, int n) {
+        if (n < Register.RMAX) {
+            compiler.getMemory().setLastGRegister(n+1);
+            expr.codeGenExpr(compiler, n + 1);
+            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),Register.getR(n + 1))));
+        } else {
+            compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.getMemory().setLastGRegister(n);
+            expr.codeGenExpr(compiler, n);
+            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+            compiler.addInstruction(new POP(Register.getR(n)));
+            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),Register.getR(0))));
+        }
     }
 }

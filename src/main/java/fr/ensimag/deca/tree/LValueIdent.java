@@ -38,4 +38,8 @@ public class LValueIdent extends AbstractLValue{
     }
 
 
+    @Override
+    public void codeGenStore(DecacCompiler compiler, int n) {
+        throw new UnsupportedOperationException("Error.");
+    }
 }

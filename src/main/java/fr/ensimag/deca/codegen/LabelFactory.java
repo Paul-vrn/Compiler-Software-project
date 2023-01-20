@@ -26,6 +26,8 @@ public class LabelFactory {
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
     private static final Label NoReturnErrorLabel = new Label("no_return_error");
     private static final Label DeferencementNullErrorLabel = new Label("deferencement.null");
+
+    private static String suffixCurrentMethod;
     public LabelFactory() {
         this.noCheck = false;
         this.nbNot = 0;
@@ -136,16 +138,24 @@ public class LabelFactory {
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
-    public void createTestReturn(DecacCompiler compiler, String methodName){
+    public void createTestReturn(DecacCompiler compiler){
         if (noCheck)
             return;
-        compiler.addInstruction(new WSTR("Error: Exiting method "+ methodName +" without a return statement"));
-        compiler.addInstruction(new BRA(NoReturnErrorLabel));
+        compiler.addInstruction(new WSTR("Error: Exiting method "+ suffixCurrentMethod +" without a return statement"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
     }
     public void createTestDeferencementNull(DecacCompiler compiler, GPRegister r){
         if (noCheck)
             return;
         compiler.addInstruction(new CMP(new NullOperand(), r));
         compiler.addInstruction(new BEQ(DeferencementNullErrorLabel));
+    }
+
+    public String getSuffixCurrentMethod() {
+        return suffixCurrentMethod;
+    }
+    public void setSuffixCurrentMethod(String suffixCurrentMethod) {
+        this.suffixCurrentMethod = suffixCurrentMethod;
     }
 }

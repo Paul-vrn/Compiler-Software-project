@@ -50,9 +50,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     }
 
-    public void codeGenDeclMethod(DecacCompiler compiler, String className, EnvironmentExp localEnvExp) {
+    public void codeGenDeclMethod(DecacCompiler compiler, String className) {
         for (AbstractDeclMethod declMethod : getList()) {
-            declMethod.codeGenDeclMethod(compiler, className, localEnvExp);
+            declMethod.codeGenDeclMethod(compiler, className);
         }
     }
 }

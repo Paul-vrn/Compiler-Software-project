@@ -26,6 +26,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private ListDeclParam listParams;
     private AbstractMethodBody methodBody;
 
+    private EnvironmentExp localEnv;
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListDeclParam listParams, AbstractMethodBody methodBody) {
         Validate.notNull(type);
         Validate.notNull(varName);
@@ -110,27 +111,28 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyDeclMethodPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
         Type returnType = this.type.verifyType(compiler);
         this.listParams.classEnvExp = envExp;
-        EnvironmentExp envExpParam = this.listParams.verifyListDeclParamPass3(compiler);
-        envExpParam.setParentEnvironment(envExp);
+        localEnv = this.listParams.verifyListDeclParamPass3(compiler);
+        localEnv.setParentEnvironment(envExp);
 
-        this.methodBody.verifyMethodBody(compiler, envExp, envExpParam, name, returnType);
+        this.methodBody.verifyMethodBody(compiler, envExp, localEnv, name, returnType);
     }
 
-    public void codeGenDeclMethod(DecacCompiler compiler, String className, EnvironmentExp localEnvExp) {
+    @Override
+    public void codeGenDeclMethod(DecacCompiler compiler, String className) {
         List<Line> preInit = new ArrayList<>();
         compiler.getMemory().resetLastGRegister();
+        compiler.getLabelFactory().setSuffixCurrentMethod(className+"."+this.varName.getName().getName());
+        compiler.addLabel(new Label("code." + compiler.getLabelFactory().getSuffixCurrentMethod()));
         int indexTSTO = compiler.getLineIndex();
+        this.listParams.codeGenListDeclParam(compiler, localEnv);
 
-        compiler.addLabel(new Label("code." + className + "." + this.varName.getName().getName()));
-        this.listParams.codeGenListDeclParam(compiler, localEnvExp);
-
-        this.methodBody.codeGenMethodBody(compiler, localEnvExp);
+        this.methodBody.codeGenMethodBody(compiler, localEnv);
 
         if (!type.getType().isVoid()) {
-            compiler.getLabelFactory().createTestReturn(compiler, this.varName.getName().getName());
+            compiler.getLabelFactory().createTestReturn(compiler);
         }
 
-        compiler.addLabel(new Label("fin." + className + "." + this.varName.getName().getName()));
+        compiler.addLabel(new Label("fin." + compiler.getLabelFactory().getSuffixCurrentMethod()));
 
         if (compiler.getMemory().getLastGRegister() > 1) {
             for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {

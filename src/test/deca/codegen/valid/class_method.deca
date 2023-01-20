@@ -1,5 +1,5 @@
 class A{
-	un(){
+	int un(){
 		return 1;
 	}
 }

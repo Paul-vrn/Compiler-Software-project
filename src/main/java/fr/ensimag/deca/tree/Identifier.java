@@ -268,7 +268,6 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.getMemory().setLastGRegister(n);
-        System.out.println("identifier genexpr: "+this.getExpDefinition().hashCode());
 
         compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
         if (this.getExpDefinition().isField()) {

@@ -8,6 +8,7 @@ import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import org.apache.commons.lang.Validate;
@@ -106,40 +107,44 @@ public class ClassDefinition extends TypeDefinition {
         this.superClass = superClass;
     }
 
-    public void codeGenMethodTable(DecacCompiler compiler, ArrayList<String> methods){
-        ClassDefinition superClass = this.getSuperClass();
+    public void codeGenMethodTable(DecacCompiler compiler, ArrayList<MethodDefinition> methods){
+        ClassDefinition currentSuperClass = this.getSuperClass();
         if(!(this.getType().getName().getName().equals("Object"))) {
-            ArrayList<String> miniMethods = new ArrayList<String>();
+            ArrayList<MethodDefinition> miniMethods = new ArrayList<>();
             for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : this.members.dictionary.entrySet()) {
                 if (entry.getValue().isMethod()) {
-                    String MethodName = "code.";
-                    MethodName += this.getType().getName().getName();
-                    MethodDefinition meth = (MethodDefinition) entry.getValue();
-                    MethodName += "." + meth.getLabel().toString();
-                    miniMethods.add(0, MethodName);
+                    MethodDefinition methDef = (MethodDefinition) entry.getValue();
+                    methDef.setFullName("code." + this.getType().getName().getName() + "." + methDef.getLabel().toString());
+                    miniMethods.add(methDef);
                 }
             }
-
             methods.addAll(miniMethods);
-            superClass.codeGenMethodTable(compiler, methods);
+            currentSuperClass.codeGenMethodTable(compiler, methods);
         }
         else{
-            methods.add("code.Object.equals");
+            MethodDefinition dummyObjectEquals = new MethodDefinition(null, null, null, 0);
+            dummyObjectEquals.setFullName("code.Object.equals");
+            methods.add(dummyObjectEquals);
+
+            MethodDefinition dummyMethod = new MethodDefinition(null, null, null, 0);
+            dummyMethod.setFullName("method.already.class.declared");
+
             for(int i = methods.size()-1; i>=0; i--){
-                String methodToAdd = methods.get(i);
-                if(!(methodToAdd.equals("method.already.class.declared"))) {
+                MethodDefinition methodToAdd = methods.get(i);
+                if(!(methodToAdd.getFullName().equals("method.already.class.declared"))) {
                     for (int j = i; j >= 0; j--) {
-                        if (methods.get(j).split("\\.")[2].equals(methodToAdd.split("\\.")[2])) {
+                        if (methods.get(j).getFullName().split("\\.")[2].equals(methodToAdd.getFullName().split("\\.")[2])) {
                             methodToAdd = methods.get(j);
-                            methods.set(j, "method.already.class.declared");
+                            methods.set(j, dummyMethod);
                         }
                     }
-                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd)), Register.getR(1)));
+                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd.getFullName())), Register.getR(1)));
                     compiler.addInstruction(new PUSH(Register.getR(1)));
                     compiler.nextGlobalOffSet();
+                    methodToAdd.setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
                 }
             }
         }
     }
-    
 }
+

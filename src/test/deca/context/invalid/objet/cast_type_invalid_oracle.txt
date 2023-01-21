@@ -1,0 +1,1 @@
+cast_type_invalid.deca:23:5: Cast type is invalid

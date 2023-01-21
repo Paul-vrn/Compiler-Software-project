@@ -1,0 +1,25 @@
+// Description:
+//     Comparaison entre deux instances de classe.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+
+}
+
+class A extends B{
+    protected int x;
+    int getA(){
+
+    }
+}
+
+{
+    B b = new B();
+    A a;
+    a < b;
+}

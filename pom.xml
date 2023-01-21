@@ -14,6 +14,8 @@
         <skip.unit.tests>false</skip.unit.tests>
         <jacoco.skip>false</jacoco.skip>
         <jacoco.report_dir>${project.build.directory}/site</jacoco.report_dir>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
     <dependencies>

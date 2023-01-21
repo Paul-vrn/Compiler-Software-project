@@ -9,7 +9,11 @@
 //    cree le 21/01/2023
 
 class A{
-	void duTexte() asm (" WSTR \"Printed with asm\"  ");
+	void duTexte() asm ("
+	WSTR \"Printed with asm\"
+	WNL
+	WSTR \"oui oui\"
+	");
 	void duTexte2(){
 		println(124);
 	}

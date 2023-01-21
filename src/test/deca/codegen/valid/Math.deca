@@ -1,0 +1,22 @@
+class Math{
+
+    int fib(int n)
+    {
+        if (n <= 1){
+            return n;}
+        return fib(n - 1) + fib(n - 2);
+    }
+ }
+
+ {
+ Math math = new Math();
+ int i = 1;
+ int res;
+ while(i<10){
+    res = math.fib(i);
+    println(res);
+    i = i + 1;
+   }
+  }
+
+

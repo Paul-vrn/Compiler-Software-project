@@ -1,0 +1,1 @@
+compare_type_mismatch.deca:24:6: Compare operation type mismatch

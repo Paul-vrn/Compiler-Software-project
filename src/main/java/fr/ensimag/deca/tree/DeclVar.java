@@ -28,8 +28,8 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     protected void verifyDeclVar(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
-            throws ContextualError {
+            EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+
 
         Type varType = this.type.verifyType(compiler);
 

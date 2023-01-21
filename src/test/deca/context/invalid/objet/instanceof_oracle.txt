@@ -1,0 +1,1 @@
+instanceof.deca:22:17: Unknown type

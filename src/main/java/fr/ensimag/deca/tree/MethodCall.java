@@ -44,8 +44,7 @@ public class MethodCall extends AbstractExpr{
 
         for(int c = 0; c < this.parameters.size(); c++){
             if(sig.size() > 0){
-                this.parameters.getList().get(c).verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(0));
-                sig.popHead();
+                this.parameters.getList().get(c).verifyRValue(compiler, localEnv, currentClass, sig.paramNumber(c));
             }else{
                 break;
             }

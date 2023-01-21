@@ -12,6 +12,7 @@ class A {
     A a = new A();
     int y;
     a.setX(1);
+    a.setX(2);
     println("a.getX=", a.getX());
     y = a.getX() + 3;
 }

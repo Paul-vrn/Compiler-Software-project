@@ -38,7 +38,8 @@ public class Cast extends AbstractExpr{
         Type type1 = this.type.verifyType(compiler);
         Type type2 = this.getExpr().verifyExpr(compiler,localEnv,currentClass);
 
-        if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2))){
+        if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2)
+                || (type2.isClass() && type1.isClass() && type2.asClassType("", this.getLocation()).isSubClassOf(type1.asClassType("", this.getLocation()))))){
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.type.getLocation().errorOutPut() + ": Cast type is invalid", this.type.getLocation());
         }

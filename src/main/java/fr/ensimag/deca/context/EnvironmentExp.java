@@ -51,7 +51,7 @@ public class EnvironmentExp {
     }
 
     public void printEnvironmentContent(){
-        for(Map.Entry m : this.dictionary.entrySet()){
+        for(Map.Entry m : this.dictionary.entrySet()) {
             System.out.println(m.getKey() + " " + m.getValue());
         }
         if(this.parentEnvironment != null) {

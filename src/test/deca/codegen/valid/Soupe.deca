@@ -1,4 +1,4 @@
-    class Legume{
+class Legume{
 	int poids;
 	int fraicheur;
 

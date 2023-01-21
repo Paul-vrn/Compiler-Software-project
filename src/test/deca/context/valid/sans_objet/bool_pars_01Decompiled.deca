@@ -1,0 +1,9 @@
+{
+	boolean bool = true;
+	boolean bool2 = false;
+	if ((bool == bool2)) {
+		}
+	else {
+		println("Hello");
+	}
+}

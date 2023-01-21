@@ -54,15 +54,13 @@ public class MethodBody extends AbstractMethodBody {
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp classEnv, EnvironmentExp envExpParam,
                                     AbstractIdentifier name, Type returnType) throws ContextualError {
         this.listDeclField.verifyListDeclVariable(compiler, envExpParam, name.getClassDefinition());
-
         this.listInst.verifyListInst(compiler, envExpParam, name.getClassDefinition(), returnType);
     }
 
     @Override
-    public void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp){
-        if (!listDeclField.getList().isEmpty())
-            compiler.addInstruction(new ADDSP(listDeclField.getList().size()));
+    public int codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp){
         listDeclField.codeGenListDeclField(compiler, localEnvExp);
         listInst.codeGenListInst(compiler);
+        return listDeclField.size();
     }
 }

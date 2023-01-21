@@ -1,0 +1,31 @@
+// Description:
+//   nested param in class
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    int x = 2;
+    int getX() {
+        return x;
+    }
+    int setX(A a) {
+        return a.getX();
+    }
+}
+
+{
+
+    A a = new A();
+
+    int oui = 4;
+    int non = 2;
+    a.x = oui;
+    print(a.x);
+    a.x = non;
+    print(a.setX(a));
+    print(" oui oui");
+}

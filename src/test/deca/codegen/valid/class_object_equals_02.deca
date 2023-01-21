@@ -1,0 +1,40 @@
+// Description:
+//    Programme testant la déclaration d'une classe et la méthode de base Object
+//
+// Resultats:
+//		- Tout roule
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int x = 3;
+}
+
+class B extends A{
+		boolean equals(Object obj){
+    		return(obj==this);
+    	}
+
+}
+
+{
+	A a = new A();
+	B b = new B();
+	boolean unBool = a.equals(b);
+	//boolean autreBool = b.equals(a);
+	boolean autreBool = true;
+
+
+	if(unBool){
+		print("a == b");
+	}
+	else{
+		print("a!=b");}
+	if(autreBool){
+		print("Selon b.equals, a == b");
+	}
+	else{
+		print("Selon b.equals, a != b");}
+}

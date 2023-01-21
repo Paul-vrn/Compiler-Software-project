@@ -206,7 +206,7 @@ public class Identifier extends AbstractIdentifier {
     public Definition verifyDefinition(DecacCompiler compiler) throws ContextualError{
         return this.definition;
     }
-    
+
     
     private Definition definition;
 

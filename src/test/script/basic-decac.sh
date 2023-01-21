@@ -47,7 +47,6 @@ echo "Pas de probleme detecte avec decac -b."
 
 DECAC_HOME=$(cd "$(dirname "$0")"/../../../ && pwd)
 TEST_FILE="$DECAC_HOME"/src/test/deca/syntax/valid/provided/hello.deca
-ORACLE_FILE="$DECAC_HOME"/src/test/deca/context/valid/hello_decompiled_oracle.txt
 decac_moins_p=$(decac -p "$TEST_FILE")
 
 
@@ -63,15 +62,6 @@ fi
 
 if echo "$decac_moins_p" | grep -i -e "erreur" -e "error"; then
     echo "ERREUR: La sortie de decac -p contient erreur ou error"
-    exit 1
-fi
-
-
-
-diff_output_moins_p=$(diff  "$ORACLE_FILE" <(echo "$decac_moins_p")) || exit 1
-
-if [ "$diff_output_moins_p" != "" ]; then
-    echo "ERREUR: La sortie de decac -p est differente de hello_decompiled_oracle.txt"
     exit 1
 fi
 

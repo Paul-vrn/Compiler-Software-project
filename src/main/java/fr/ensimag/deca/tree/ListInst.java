@@ -39,10 +39,10 @@ public class ListInst extends TreeList<AbstractInst> {
         }
     }
 
-    public void codeGenIf(DecacCompiler compiler,int p){
+    public void codeGenIf(DecacCompiler compiler, int indexIfThenElse, int p){
         for (AbstractInst i : getList()) {
             if(i instanceof IfThenElse){
-                ((IfThenElse)i).codeGenIf(compiler,p);}
+                ((IfThenElse)i).codeGenIf(compiler, indexIfThenElse, p);}
             else{
                 i.codeGenInst(compiler);
             }

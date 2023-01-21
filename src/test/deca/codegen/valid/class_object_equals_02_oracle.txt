@@ -1,1 +1,1 @@
-  IMA -- Fichier class_object_equals_02.ass introuvable
+a!=bSelon b.equals, a == b

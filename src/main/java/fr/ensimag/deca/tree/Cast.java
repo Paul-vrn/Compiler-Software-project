@@ -74,13 +74,6 @@ public class Cast extends AbstractExpr{
         } else {
             throw new ClassCastException("Cast type is invalid");
         }
-
-        /*getExpr().armCodeGenExpr(compiler, n, m);
-        if (getType().isInt()) {
-
-        } else if (getType().isFloat()) {
-
-        }*/
     }
 
 

@@ -4,18 +4,14 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.pseudocode.*;
 import fr.ensimag.pseudocode.RegisterOffset;
 import fr.ensimag.pseudocode.ima.instructions.LOAD;
-import fr.ensimag.pseudocode.ima.instructions.PUSH;
 import org.apache.log4j.Logger;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Comparator;
 import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.NullOperand;
 

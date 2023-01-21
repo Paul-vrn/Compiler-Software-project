@@ -3,12 +3,12 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.pseudocode.Label;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.pseudocode.Register;
+import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.RegisterOffset;
-import fr.ensimag.pseudocode.instructions.LOAD;
-import fr.ensimag.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -124,17 +124,17 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     public void codeGenDeclField(DecacCompiler compiler) {
-        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, Register.LB));
+        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
         initialization.codeGenInitField(compiler, type.getType(), 2);
-        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), Register.getR(1)));
-        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), Register.getR(1))));
+        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(2), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
     }
 
     @Override
     public void codeGenDeclFieldNull(DecacCompiler compiler) {
-        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, Register.LB));
+        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
         (new NoInitialization()).codeGenInitField(compiler, type.getType(), 2);
-        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), Register.getR(1)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), Register.getR(1))));
+        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(0), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
     }
 }

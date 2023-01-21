@@ -3,6 +3,7 @@ package fr.ensimag.pseudocode;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AbstractCodeGenProgram {
 

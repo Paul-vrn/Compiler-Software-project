@@ -253,7 +253,6 @@ public class DecacCompiler {
             return false;
         }
 
-        prog.codeGenProgram(this);
         program = (compilerOptions.getARMCompilation()) ? new ARMProgram() : new IMAProgram();
 
         if (compilerOptions.getARMCompilation()) {

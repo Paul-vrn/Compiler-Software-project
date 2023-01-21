@@ -7,7 +7,7 @@ public class Memory {
     private int TSTO;
     private int currentTSTO;
     private int topOfMethodTable = 0;
-
+    private int armOffset;
 
     /**
      * Constructeur de la classe Memory
@@ -18,6 +18,7 @@ public class Memory {
         this.globalOffset = 1;
         this.localOffset = 0;
         this.lastGRegister = 1;
+        this.armOffset = 0;
     }
 
     public int getLastGRegister() {

@@ -5,8 +5,8 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.pseudocode.Label;
 import fr.ensimag.pseudocode.Line;
-import fr.ensimag.pseudocode.Register;
-import fr.ensimag.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.*;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.tools.SymbolTable;
 
@@ -152,9 +152,9 @@ public class DeclMethod extends AbstractDeclMethod {
 
         if (compiler.getMemory().getLastGRegister() > 1) {
             for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
-                preInit.add(new Line(new PUSH(Register.getR(i))));
+                preInit.add(new Line(new PUSH(RegisterIMA.getR(i))));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister()-(i-2))));
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));

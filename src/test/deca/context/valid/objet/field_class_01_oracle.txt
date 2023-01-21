@@ -26,4 +26,20 @@
    |                definition: field defined at [15, 6], type=A
    |             `> NoInitialization
    |      `> ListDeclMethod [List with 0 elements]
-   `> EmptyMain
+   `> [18, 0] Main
+      +> ListDeclVar [List with 1 elements]
+      |  []> [19, 3] DeclVar
+      |      +> [19, 1] Identifier (A)
+      |      |  definition: type defined at [10, 0], type=A
+      |      +> [19, 3] Identifier (a)
+      |      |  definition: variable defined at [19, 3], type=A
+      |      `> [19, 7] Initialization
+      |         `> [19, 7] New
+      |            type: A
+      |            +> [19, 11] Identifier (A)
+      |            |  definition: type defined at [10, 0], type=A
+      `> ListInst [List with 1 elements]
+         []> [20, 1] Println
+             `> ListExpr [List with 1 elements]
+                []> [20, 9] StringLiteral (a)
+                    type: string

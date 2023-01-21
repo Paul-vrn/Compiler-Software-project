@@ -1,19 +1,12 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentType;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.ADDSP;
+import fr.ensimag.pseudocode.ima.instructions.TSTO;
 
 import java.io.PrintStream;
-import java.util.Map;
-
-
 import fr.ensimag.pseudocode.ima.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;

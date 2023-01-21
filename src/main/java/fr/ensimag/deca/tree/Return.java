@@ -6,10 +6,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.BRA;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -51,7 +51,12 @@ public class Return extends AbstractInst{
     @Override
     protected void codeGenInst(DecacCompiler compiler){
         this.rvalue.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.getR(0)));
+        compiler.addInstruction(new LOAD(RegisterIMA.getR(2), RegisterIMA.getR(0)));
         compiler.addInstruction(new BRA(new Label("fin." + compiler.getLabelFactory().getSuffixCurrentMethod())));
+    }
+
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

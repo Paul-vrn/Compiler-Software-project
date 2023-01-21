@@ -15,4 +15,8 @@ class B {
     A a;
 }
 
+{
+	A a = new A();
+	println("a");
+}
 

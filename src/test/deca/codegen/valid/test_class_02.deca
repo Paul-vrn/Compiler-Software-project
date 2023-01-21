@@ -10,6 +10,8 @@ class A {
 
 {
     A a = new A();
+    int y;
     a.setX(1);
     println("a.getX=", a.getX());
+    y = a.getX() + 3;
 }

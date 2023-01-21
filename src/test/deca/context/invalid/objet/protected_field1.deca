@@ -1,0 +1,19 @@
+// Description:
+//     Protected non atteignable.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    protected int x;
+}
+
+{
+    A a = new A();
+    a.x;
+}
+
+

@@ -12,7 +12,7 @@ public class Memory {
     public Memory() {
         this.TSTO = 0;
         this.currentTSTO = 0;
-        this.globalOffset = 0;
+        this.globalOffset = 1;
         this.localOffset = 0;
         this.lastGRegister = 1;
     }

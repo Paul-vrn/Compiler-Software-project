@@ -28,15 +28,17 @@ public class Selection extends AbstractLValue{
 
         if(!type1.isClass()){
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": No class instance", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Identifier not a class instance", this.getLocation());
         }
 
-        FieldDefinition fieldDef = (FieldDefinition) this.fieldIdentifier.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
-        if(!fieldDef.isField()){
+        Definition fieldDefBefore = this.fieldIdentifier.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
+        FieldDefinition fieldDef;
+        if(!fieldDefBefore.isField()){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Must be a field", this.getLocation());
+        }else{
+            fieldDef = (FieldDefinition) fieldDefBefore;
         }
-
 
         this.setType(fieldDef.getType());
 
@@ -48,9 +50,9 @@ public class Selection extends AbstractLValue{
                         + this.getLocation().errorOutPut() + ": Protected field cannot be accessed", this.getLocation());
             }
             if(!((type1.asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(classdef.getType()))
-                    && (type1.asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(fieldDef.getContainingClass().getType())))){
+                    && (classdef.getType().asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(fieldDef.getContainingClass().getType())))){
                 throw new ContextualError(compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": No class instance", this.getLocation());
+                        + this.getLocation().errorOutPut() + ": Subtype problem", this.getLocation());
             }
         }
 

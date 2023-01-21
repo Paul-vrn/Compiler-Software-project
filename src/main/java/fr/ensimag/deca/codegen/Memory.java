@@ -52,6 +52,7 @@ public class Memory {
     public int TSTO() {
         int i = TSTO;
         TSTO = 0;
+        currentTSTO = 0;
         return i;
     }
 

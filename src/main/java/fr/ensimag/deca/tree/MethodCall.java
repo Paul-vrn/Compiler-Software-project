@@ -87,10 +87,12 @@ public class MethodCall extends AbstractExpr{
         compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(2)));
 
         compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP))); // empilement implicite
+        compiler.getMemory().increaseTSTO();
         int index = -1;
         for (AbstractExpr param : parameters.getList()) {
             param.codeGenExpr(compiler, 2);
             compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
+            compiler.getMemory().increaseTSTO();
             index--; // empilement des paramètres
         }
 

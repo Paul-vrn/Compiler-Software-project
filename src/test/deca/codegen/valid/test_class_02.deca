@@ -9,8 +9,9 @@ class A {
 }
 
 {
-    int x = 12;
     A a = new A();
+    int y;
     a.setX(1);
     println("a.getX=", a.getX());
+    y = a.getX() + 3;
 }

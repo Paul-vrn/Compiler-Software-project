@@ -55,14 +55,17 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
-
+        int indexTSTO = compiler.getLineIndex();
         compiler.addComment("Method Table Initialization");
         classes.codeGenMethodTable(compiler);
         compiler.addComment("Method Table Initialization End");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
         compiler.addComment("end of main instructions");
+
+        compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
+        compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
+        compiler.addIndex(indexTSTO+2, new ADDSP(compiler.getMemory().getGlobalOffset()-1));
 
         compiler.addComment("Class definition");
         classes.codeGenDeclClasses(compiler);

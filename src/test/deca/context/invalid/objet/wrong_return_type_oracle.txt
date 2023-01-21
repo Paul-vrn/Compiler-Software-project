@@ -1,0 +1,1 @@
+wrong_return_type.deca:12:15: Right value type problem

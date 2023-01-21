@@ -1,0 +1,1 @@
+name_conflict_superclass.deca:17:18: Field name conflict in super class

@@ -1,0 +1,1 @@
+return_class.deca:16:15: Right value type problem

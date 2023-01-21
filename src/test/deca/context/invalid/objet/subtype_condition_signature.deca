@@ -1,0 +1,22 @@
+// Description:
+//     Method redefined with a wrong signature.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+    int getX(int x){
+
+    }
+}
+
+class A extends B{
+    int getX(float x){
+
+    }
+}
+
+

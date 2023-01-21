@@ -1,0 +1,1 @@
+method_parameter_void.deca:11:13: Parameter type void forbidden

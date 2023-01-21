@@ -1,0 +1,1 @@
+subtype_problem1.deca:26:9: Subtype problem

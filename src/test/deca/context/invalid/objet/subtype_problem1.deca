@@ -1,0 +1,28 @@
+// Description:
+//     Subtype problem.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    protected int x;
+    int getA(){
+
+    }
+}
+
+class C extends A{
+
+}
+
+class D{
+    C c = new C();
+    int ratio() {
+        c.x;
+    }
+}
+
+

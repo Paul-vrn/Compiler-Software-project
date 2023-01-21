@@ -1,0 +1,21 @@
+// Description:
+//     Selection avec une methode au lieu d'un attribut.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    int getX(){
+
+    }
+}
+
+{
+    A a = new A();
+    a.getX;
+}
+
+

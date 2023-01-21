@@ -1,0 +1,14 @@
+// Description:
+//     Class extend d'une classe inexistante.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A extends B{
+    protected int x;
+}
+
+

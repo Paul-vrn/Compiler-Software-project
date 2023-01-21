@@ -9,6 +9,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.InlinePortion;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 
 /**
  * Empty main Deca program
@@ -48,6 +49,11 @@ public class MethodBodyAsm extends AbstractMethodBody {
 
     @Override
     public void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp) {
-        compiler.add(new InlinePortion(asm.getValue()));
+        System.out.println(asm.getValue());
+        Arrays.stream(asm.getValue()
+                        .substring(1, asm.getValue().length() -1)
+                        .replace("\\\"", "\"")
+                        .split("\n"))
+                .forEach(line -> compiler.add(new InlinePortion(line)));
     }
 }

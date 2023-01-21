@@ -426,6 +426,27 @@ public class CodegenTest {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test57class_object_listnode_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/test_class_listnode.deca"};
+        String file2 = "src/test/deca/codegen/valid/test_class_listnode_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test58class_object_heap_overflow() throws IOException {
+        String[] args = {"src/test/deca/codegen/error/test_class_heap_overflow.deca"};
+        String file2 = "src/test/deca/codegen/error/test_class_heap_overflow_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test59class_object_stack_overflow() throws IOException {
+        String[] args = {"src/test/deca/codegen/error/test_class_stack_overflow.deca"};
+        String file2 = "src/test/deca/codegen/error/test_class_stack_overflow_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

@@ -137,8 +137,11 @@ public class LabelFactory {
         flagStackError = true;
         compiler.addIndex(i+1, new BOV(stackErrorLabel));
     }
-    public Label getStackErrorLabel() {
-        return stackErrorLabel;
+    public void createTestStack(List<Line> l, int i) {
+        if (noCheck)
+            return;
+        flagStackError = true;
+        l.add(i, new Line(new BOV(stackErrorLabel)));
     }
     public void createTestIo(DecacCompiler compiler){
         if (noCheck)

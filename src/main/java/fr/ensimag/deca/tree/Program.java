@@ -56,22 +56,26 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         int indexTSTO = compiler.getLineIndex();
-        compiler.addComment("Method Table Initialization");
+        compiler.addComment("--- Start of Method Table Initialization ---");
         classes.codeGenMethodTable(compiler);
-        compiler.addComment("Method Table Initialization End");
+        compiler.addComment("--- End of Method Table Initialization ---");
+        compiler.addComment("");
+        compiler.addComment("--- Start of main instructions ---");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        compiler.addComment("end of main instructions");
-
+        compiler.addComment("--- End of main instructions ---");
+        compiler.addComment("");
         compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
         compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
         compiler.addIndex(indexTSTO+2, new ADDSP(compiler.getMemory().getGlobalOffset()-1));
 
-        compiler.addComment("Class definition");
+        compiler.addComment("--- Start of class definition ---");
         classes.codeGenDeclClasses(compiler);
-        compiler.addComment("Errors messages");
+        compiler.addComment("--- End of class definition ---");
+        compiler.addComment("");
+        compiler.addComment("--- Start of Error messages section ---");
         compiler.getLabelFactory().createErrorSection(compiler);
-        compiler.addComment("End of program");
+        compiler.addComment("--- End of Error messages section ---");
     }
 
     @Override

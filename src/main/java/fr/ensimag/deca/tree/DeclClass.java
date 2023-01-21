@@ -180,7 +180,7 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
-        preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
+        compiler.getLabelFactory().createTestStack(preInit, 1);
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();

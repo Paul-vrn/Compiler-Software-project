@@ -433,6 +433,27 @@ public class CodegenTest {
             generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test60class_no_operation() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/no_operation.deca"};
+        String file2 = "src/test/deca/codegen/valid/no_operation_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test61classSoupe() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/Soupe.deca"};
+        String file2 = "src/test/deca/codegen/valid/Soupe_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test62Math() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/Math.deca"};
+        String file2 = "src/test/deca/codegen/valid/Math_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

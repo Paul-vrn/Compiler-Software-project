@@ -1,14 +1,20 @@
 #!/bin/bash
 _remote=192.168.192.242
 _user=pi
+_backup_remote=192.168.1.61
 
 echo 'Warning: ssh-key must be added'
 
 ping -c 1 $_remote > /dev/null 2>&1
 
 if [ $? -ne 0 ]; then
-    echo "Skip: $_remote is unreachable, arm tests are skipped"
-    exit 0
+    ping -c 1 $_backup_remote > /dev/null 2>&1
+
+    if [ $? -ne 0 ]; then
+        echo "Skip: $_remote and $_backup_remote are unreachable, arm tests are skipped"
+        exit 0
+    fi
+    _remote=$_backup_remote
 fi
 
 cd "$(dirname "$0")"/../../.. || exit 1
@@ -48,5 +54,8 @@ do
       echo "Résultat inattendu de ima pour $filename"
       echo "$resultat"
   fi
+
+    rm -f "$nom_fichier.s"
+
 done
 

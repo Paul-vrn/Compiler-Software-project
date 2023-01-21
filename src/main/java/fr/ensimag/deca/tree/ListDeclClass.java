@@ -67,9 +67,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
         compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
-
+        compiler.getMemory().increaseTSTO();
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
         compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+        compiler.getMemory().increaseTSTO();
 
         Identifier dummyObjectIdentifier = new Identifier(compiler.createSymbol("Object"));
         ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
@@ -88,6 +89,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             }
             currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
             compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+            compiler.getMemory().increaseTSTO();
             ArrayList<MethodDefinition> methods = new ArrayList<>();
             currentClassDefinition.codeGenMethodTable(compiler, methods);
         }

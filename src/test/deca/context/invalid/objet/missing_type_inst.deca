@@ -1,0 +1,12 @@
+// Description:
+//    Initialisation sans type.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    x = 4;
+}

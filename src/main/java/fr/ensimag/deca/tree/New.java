@@ -57,6 +57,7 @@ public class New extends AbstractExpr{
         compiler.getLabelFactory().createHeapOverflow(compiler);
         compiler.addInstruction(new LEA(typeNew.getClassDefinition().getOperand(), Register.getR(1)));
         compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(0, Register.getR(n))));
+        compiler.getMemory().increaseTSTO();
         compiler.addInstruction(new PUSH(Register.getR(n)));
         compiler.addInstruction(new BSR(new Label("init." + typeNew.getName().getName())));
         compiler.addInstruction(new POP(Register.getR(n)));

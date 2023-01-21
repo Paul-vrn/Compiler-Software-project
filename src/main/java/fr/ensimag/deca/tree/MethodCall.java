@@ -84,21 +84,22 @@ public class MethodCall extends AbstractExpr{
         compiler.addComment("method call at " + methodId.getLocation() + " : " +methodId.getName().getName());
         compiler.addInstruction(new ADDSP(parameters.getList().size()+1));
         expr.codeGenExpr(compiler, n);
-        compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(2)));
 
-        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP))); // empilement implicite
+        compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(0, Register.SP))); // empilement implicite
+        compiler.getMemory().increaseTSTO();
         int index = -1;
         for (AbstractExpr param : parameters.getList()) {
-            param.codeGenExpr(compiler, 2);
-            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
+            param.codeGenExpr(compiler, n);
+            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.SP)));
+            compiler.getMemory().increaseTSTO();
             index--; // empilement des paramètres
         }
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
-        compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(2));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(n)));
+        compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(n));
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
-        compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), Register.getR(2))));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(n)), Register.getR(n)));
+        compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), Register.getR(n))));
         compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
 
         if (!getType().isVoid()){

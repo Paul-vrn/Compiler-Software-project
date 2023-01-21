@@ -47,8 +47,6 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //TODO : understand and modify this function
-
         Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         try {
             this.setType(type1);
@@ -58,11 +56,6 @@ public class Assign extends AbstractBinaryExpr {
         }
 
          this.setRightOperand(this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, type1));
-
-        if(!(type1.sameType(this.getRightOperand().getType()) || (type1.isFloat() && this.getRightOperand().getType().isInt()))){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
-        }
 
         return this.getType();
     }

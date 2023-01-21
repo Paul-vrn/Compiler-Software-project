@@ -17,7 +17,6 @@ public class Plus extends AbstractOpArith {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < Register.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);

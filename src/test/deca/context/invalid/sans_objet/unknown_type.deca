@@ -1,0 +1,12 @@
+// Description:
+//     Declaration avec type non défini;
+//
+// Resultats:
+//    Ligne 11: Unknown type
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+   lala x;
+}

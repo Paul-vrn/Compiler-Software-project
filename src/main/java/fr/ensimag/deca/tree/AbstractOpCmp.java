@@ -28,15 +28,17 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
         this.setType(compiler.environmentType.BOOLEAN);
-        if(!(this.getOperatorName().equals("==") || this.getOperatorName().equals("!="))) {
-            if (!(((type1 == null || type1.isClass()) && (type2 == null || type2.isClass())) || ((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat())))) {
+        if(this.getOperatorName().equals("==") || this.getOperatorName().equals("!=")) {
+            if (!(((type1 == null || type1.isClass()) && (type2 == null || type2.isClass()))
+                || ((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat()))
+                || (type1.isBoolean() && type2.isBoolean()))) {
                 throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Compare operation type mismatch", this.getLocation());
-            } else {
-                if (!((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat()))) {
-                    throw new ContextualError(compiler.displaySourceFile() + ":"
-                            + this.getLocation().errorOutPut() + ": Compare operation type mismatch", this.getLocation());
-                }
+            }
+        }else {
+            if (!((type1.isInt() || type1.isFloat()) && (type2.isInt() || type2.isFloat()))) {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Compare operation type mismatch", this.getLocation());
             }
         }
 

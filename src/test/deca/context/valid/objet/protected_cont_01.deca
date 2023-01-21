@@ -1,5 +1,5 @@
 // Description:
-//   Op_comp for classes
+//    protected
 //
 // Resultats:
 //
@@ -9,9 +9,6 @@
 
 class A {
     protected int x;
-}
-
-class B extends A {
     protected A a = new A();
     int geta() {
         a.x;

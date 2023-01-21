@@ -26,6 +26,8 @@
       |               type: float
       |               +> [12, 18] Identifier (a)
       |               |  definition: variable defined at [11, 9], type=float
-      |               `> [12, 22] Int (3)
-      |                  type: int
+      |               `> ConvFloat
+      |                  type: float
+      |                  `> [12, 22] Int (3)
+      |                     type: int
       `> ListInst [List with 0 elements]

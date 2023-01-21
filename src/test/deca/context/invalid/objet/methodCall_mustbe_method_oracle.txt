@@ -1,1 +1,1 @@
-methodCall_mustbe_method.deca:19:6: Undeclared method or field
+methodCall_mustbe_method.deca:19:7: Must be a method

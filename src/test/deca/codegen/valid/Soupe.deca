@@ -70,6 +70,11 @@ class Soupe{
 {
 	Soupe soupe1 = new Soupe();
 	soupe1.addLegume(new Oignon());
+	soupe1.addLegume(new Carrot());
+	soupe1.addLegume(new Oignon());
+	soupe1.addLegume(new Carrot());
+	soupe1.addLegume(new Oignon());
+	soupe1.Cuire(10);
 	soupe1.affiche();
 }
 

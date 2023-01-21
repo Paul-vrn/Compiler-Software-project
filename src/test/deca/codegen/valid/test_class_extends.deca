@@ -1,15 +1,15 @@
 class A{
-	int a(){}
+	void a(){}
 	int b(){}
 }
 
 class B extends A{
-	int a(){}
+	void a(){}
 }
 
 class C extends B{
 	int b(){}
-	boolean equals(){}
+	boolean equals(Object O){}
 }
 
 

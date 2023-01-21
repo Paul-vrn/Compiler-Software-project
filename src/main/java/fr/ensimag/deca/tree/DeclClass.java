@@ -176,6 +176,7 @@ public class DeclClass extends AbstractDeclClass {
                 preInit.add(new Line(new PUSH(Register.getR(i))));
                 compiler.getMemory().increaseTSTO();
                 compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.getMemory().decreaseTSTO();
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));

@@ -142,6 +142,7 @@ public class ClassDefinition extends TypeDefinition {
                     }
                     compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd.getFullName())), Register.getR(1)));
                     compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+                    compiler.getMemory().increaseTSTO();
                     methodToAdd.setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
                 }
             }

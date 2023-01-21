@@ -1,8 +1,8 @@
 // Description:
-//    Programme minimaliste testant NoOperation
+//    Appel de methode avec un int.
 //
 // Resultats:
-//
+//      Error
 //
 // Historique:
 //    cree le 04/01/2023
@@ -15,6 +15,7 @@ class A{
 
 {
     A a = new A();
-    a instanceof int;
+    int m;
+    m.getX();
 }
 

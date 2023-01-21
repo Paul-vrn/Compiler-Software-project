@@ -734,6 +734,20 @@ public class ContTest {
         generalTestInvalid(args, file2);
     }
 
+    @Test
+    void test111() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/call_metho_nonclass.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/call_metho_nonclass_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test112() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/instanceof_type.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/instanceof_type_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.WARN);

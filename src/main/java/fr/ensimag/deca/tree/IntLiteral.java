@@ -4,10 +4,7 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.pseudocode.*;
-import fr.ensimag.pseudocode.arm.instructions.BL;
-import fr.ensimag.pseudocode.arm.instructions.INT;
-import fr.ensimag.pseudocode.arm.instructions.LDR;
-import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.arm.instructions.*;
 import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -44,7 +41,7 @@ public class IntLiteral extends AbstractExpr {
     }
 
     @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        if (value < 4000) {
+        if (value < 65537) {
             compiler.addInstruction(new MOV(new ImmediateInteger(value), RegisterARM.getR(n)));
         } else {
             // int_0: .int x

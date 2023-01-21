@@ -1,0 +1,129 @@
+`> [11, 0] Program
+   +> ListDeclClass [List with 3 elements]
+   |  []> [11, 0] DeclClass
+   |  ||  +> [11, 6] Identifier (C)
+   |  ||  |  definition: type defined at [11, 0], type=C
+   |  ||  `> [builtin] Identifier (Object)
+   |  ||     definition: type (builtin), type=Object
+   |  ||  `> ListDeclField [List with 1 elements]
+   |  ||     []> [12, 8] DeclField
+   |  ||         +> [12, 4] Identifier (int)
+   |  ||         |  definition: type (builtin), type=int
+   |  ||         `> [12, 8] Identifier (l)
+   |  ||            definition: field defined at [12, 8], type=int
+   |  ||         `> NoInitialization
+   |  ||  `> ListDeclMethod [List with 1 elements]
+   |  ||     []> [13, 4] DeclMethod
+   |  ||         +> [13, 4] Identifier (int)
+   |  ||         |  definition: type (builtin), type=int
+   |  ||         `> [13, 8] Identifier (x)
+   |  ||            definition: method defined at [13, 4], type=int
+   |  ||         `> ListDeclParam [List with 0 elements]
+   |  ||         `> [13, 12] MethodBody
+   |  ||            +> ListDeclVar [List with 0 elements]
+   |  ||            `> ListInst [List with 0 elements]
+   |  []> [15, 0] DeclClass
+   |  ||  +> [15, 6] Identifier (B)
+   |  ||  |  definition: type defined at [15, 0], type=B
+   |  ||  `> [15, 8] Identifier (C)
+   |  ||     definition: type defined at [11, 0], type=C
+   |  ||  `> ListDeclField [List with 2 elements]
+   |  ||     []> [16, 8] DeclField
+   |  ||     ||  +> [16, 4] Identifier (int)
+   |  ||     ||  |  definition: type (builtin), type=int
+   |  ||     ||  `> [16, 8] Identifier (g)
+   |  ||     ||     definition: field defined at [16, 8], type=int
+   |  ||     ||  `> NoInitialization
+   |  ||     []> [17, 8] DeclField
+   |  ||         +> [17, 4] Identifier (int)
+   |  ||         |  definition: type (builtin), type=int
+   |  ||         `> [17, 8] Identifier (l)
+   |  ||            definition: field defined at [17, 8], type=int
+   |  ||         `> NoInitialization
+   |  ||  `> ListDeclMethod [List with 2 elements]
+   |  ||     []> [18, 4] DeclMethod
+   |  ||     ||  +> [18, 4] Identifier (int)
+   |  ||     ||  |  definition: type (builtin), type=int
+   |  ||     ||  `> [18, 8] Identifier (x)
+   |  ||     ||     definition: method defined at [18, 4], type=int
+   |  ||     ||  `> ListDeclParam [List with 0 elements]
+   |  ||     ||  `> [18, 12] MethodBody
+   |  ||     ||     +> ListDeclVar [List with 0 elements]
+   |  ||     ||     `> ListInst [List with 0 elements]
+   |  ||     []> [19, 4] DeclMethod
+   |  ||         +> [19, 4] Identifier (int)
+   |  ||         |  definition: type (builtin), type=int
+   |  ||         `> [19, 8] Identifier (z)
+   |  ||            definition: method defined at [19, 4], type=int
+   |  ||         `> ListDeclParam [List with 0 elements]
+   |  ||         `> [19, 12] MethodBody
+   |  ||            +> ListDeclVar [List with 0 elements]
+   |  ||            `> ListInst [List with 0 elements]
+   |  []> [22, 0] DeclClass
+   |      +> [22, 6] Identifier (A)
+   |      |  definition: type defined at [22, 0], type=A
+   |      `> [22, 8] Identifier (B)
+   |         definition: type defined at [15, 0], type=B
+   |      `> ListDeclField [List with 2 elements]
+   |         []> [23, 8] DeclField
+   |         ||  +> [23, 4] Identifier (int)
+   |         ||  |  definition: type (builtin), type=int
+   |         ||  `> [23, 8] Identifier (r)
+   |         ||     definition: field defined at [23, 8], type=int
+   |         ||  `> NoInitialization
+   |         []> [24, 8] DeclField
+   |             +> [24, 4] Identifier (int)
+   |             |  definition: type (builtin), type=int
+   |             `> [24, 8] Identifier (l)
+   |                definition: field defined at [24, 8], type=int
+   |             `> NoInitialization
+   |      `> ListDeclMethod [List with 4 elements]
+   |         []> [25, 4] DeclMethod
+   |         ||  +> [25, 4] Identifier (int)
+   |         ||  |  definition: type (builtin), type=int
+   |         ||  `> [25, 8] Identifier (o)
+   |         ||     definition: method defined at [25, 4], type=int
+   |         ||  `> ListDeclParam [List with 0 elements]
+   |         ||  `> [25, 12] MethodBody
+   |         ||     +> ListDeclVar [List with 0 elements]
+   |         ||     `> ListInst [List with 0 elements]
+   |         []> [26, 4] DeclMethod
+   |         ||  +> [26, 4] Identifier (int)
+   |         ||  |  definition: type (builtin), type=int
+   |         ||  `> [26, 8] Identifier (z)
+   |         ||     definition: method defined at [26, 4], type=int
+   |         ||  `> ListDeclParam [List with 0 elements]
+   |         ||  `> [26, 12] MethodBody
+   |         ||     +> ListDeclVar [List with 0 elements]
+   |         ||     `> ListInst [List with 0 elements]
+   |         []> [27, 4] DeclMethod
+   |         ||  +> [27, 4] Identifier (int)
+   |         ||  |  definition: type (builtin), type=int
+   |         ||  `> [27, 8] Identifier (x)
+   |         ||     definition: method defined at [27, 4], type=int
+   |         ||  `> ListDeclParam [List with 0 elements]
+   |         ||  `> [27, 12] MethodBody
+   |         ||     +> ListDeclVar [List with 0 elements]
+   |         ||     `> ListInst [List with 0 elements]
+   |         []> [28, 4] DeclMethod
+   |             +> [28, 4] Identifier (int)
+   |             |  definition: type (builtin), type=int
+   |             `> [28, 8] Identifier (m)
+   |                definition: method defined at [28, 4], type=int
+   |             `> ListDeclParam [List with 0 elements]
+   |             `> [28, 12] MethodBody
+   |                +> ListDeclVar [List with 0 elements]
+   |                `> ListInst [List with 0 elements]
+   `> [31, 0] Main
+      +> ListDeclVar [List with 1 elements]
+      |  []> [32, 6] DeclVar
+      |      +> [32, 4] Identifier (A)
+      |      |  definition: type defined at [22, 0], type=A
+      |      +> [32, 6] Identifier (a)
+      |      |  definition: variable defined at [32, 6], type=A
+      |      `> [32, 10] Initialization
+      |         `> [32, 10] New
+      |            type: A
+      |            +> [32, 14] Identifier (A)
+      |            |  definition: type defined at [22, 0], type=A
+      `> ListInst [List with 0 elements]

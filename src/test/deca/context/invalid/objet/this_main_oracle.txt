@@ -1,0 +1,1 @@
+this_main.deca:12:4: This on a null class impossible

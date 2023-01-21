@@ -51,12 +51,8 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         compiler.addComment("Beginning of main instructions:");
-        int indexTSTO = compiler.getLineIndex();
-        compiler.addInstruction(new ADDSP(this.mainEnvironment.size()));
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
-        compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
-        compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
     }
     
     @Override

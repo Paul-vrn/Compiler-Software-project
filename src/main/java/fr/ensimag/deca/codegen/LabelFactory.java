@@ -26,7 +26,7 @@ public class LabelFactory {
     private static final Label ioErrorLabel = new Label("io_error");
     private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
     private static final Label NoReturnErrorLabel = new Label("no_return_error");
-    private static final Label DeferencementNullErrorLabel = new Label("deferencement.null");
+    private static final Label DeferencementNullErrorLabel = new Label("deferencement_null");
     private static final Label HeapOverflowErrorLabel = new Label("heap_overflow_error");
 
     private static String suffixCurrentMethod;
@@ -156,6 +156,7 @@ public class LabelFactory {
     public void createTestDeferencementNull(DecacCompiler compiler, GPRegister r){
         if (noCheck)
             return;
+        flagDeferencementNullError = true;
         compiler.addInstruction(new CMP(new NullOperand(), r));
         compiler.addInstruction(new BEQ(DeferencementNullErrorLabel));
     }

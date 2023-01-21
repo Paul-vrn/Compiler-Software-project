@@ -12,6 +12,7 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
@@ -46,9 +47,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * Pass 2 of [SyntaxeContextuelle]
      */
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
-        for (AbstractDeclClass current : this.getList()){
+        for (AbstractDeclClass current : this.getList()) {
             current.verifyClassMembers(compiler);
         }
+
     }
     
     /**
@@ -64,11 +66,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     void codeGenMethodTable(DecacCompiler compiler) {
 
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
-        compiler.addInstruction(new PUSH(Register.getR(1)));
-        compiler.nextGlobalOffSet();
+        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
-        compiler.addInstruction(new PUSH(Register.getR(1)));
-        compiler.nextGlobalOffSet();
+        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
 
         Identifier dummyObjectIdentifier = new Identifier(compiler.createSymbol("Object"));
         ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
@@ -85,9 +86,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             else {
                 compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), Register.getR(1)));
             }
-            compiler.addInstruction(new PUSH(Register.getR(1)));
-            compiler.nextGlobalOffSet();
             currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
+            compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
             ArrayList<MethodDefinition> methods = new ArrayList<>();
             currentClassDefinition.codeGenMethodTable(compiler, methods);
         }

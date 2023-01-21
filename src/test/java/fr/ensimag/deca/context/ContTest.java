@@ -552,6 +552,126 @@ public class ContTest {
         generalTestInvalid(args, file2);
     }
 
+    @Test
+    void test83() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/field_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/field_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test84() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/field_class_02.deca"};
+        String file2 = "src/test/deca/context/valid/objet/field_class_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test85() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/get_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/get_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test86() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/ident_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/ident_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+    @Test
+    void test87() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/instanceof_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/instanceof_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test88() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/instanceof_cont_02.deca"};
+        String file2 = "src/test/deca/context/valid/objet/instanceof_cont_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test89() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/instanceof_cont_03.deca"};
+        String file2 = "src/test/deca/context/valid/objet/instanceof_cont_03_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test90() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/method_ovrlap_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/method_ovrlap_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test91() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/nested_method_param_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/nested_method_param_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test92() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/nested_select_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/nested_select_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test93() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/new_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/new_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test94() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/object_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/object_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test95() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/op_comp_valid_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/op_comp_valid_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test96() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/param_class_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/param_class_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test97() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/param_class_02.deca"};
+        String file2 = "src/test/deca/context/valid/objet/param_class_02_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test98() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/protected_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/protected_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test99() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/return_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/return_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test100() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/subclass_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/subclass_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+    @Test
+    void test101() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/this_01.deca"};
+        String file2 = "src/test/deca/context/valid/objet/this_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
+
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.WARN);

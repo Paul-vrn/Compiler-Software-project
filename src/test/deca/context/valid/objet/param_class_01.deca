@@ -1,0 +1,21 @@
+// Description:
+//   Multiple parameters test
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    int setX(int a, int b, int c, int d) {}
+}
+
+{
+    A a = new A();
+    int z;
+    int b;
+    int c;
+    int d;
+    a.setX(z,b,c,d);
+}

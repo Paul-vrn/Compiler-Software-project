@@ -93,7 +93,7 @@ if [ "$decac_moins_v" = "" ]; then
     exit 1
 fi
 
-echo "Pas de probleme detecte avec decac -v. pas sûr de l'implémentation par contre"
+echo "Pas de probleme detecte avec decac -v. e"
 
 ARITH_EXPRESS_TEST="$DECAC_HOME"/src/test/deca/codegen/valid/test_expression_arith.deca
 
@@ -105,7 +105,7 @@ if [ "$decac_moins_r_4" != "" ]; then
     exit 1
 fi
 
-echo "Pas de probleme detecte avec decac -r.(besoin de plus de test)"
+echo "Pas de probleme detecte avec decac -r. "
 
 
 decac_moins_P=$(decac "$ARITH_EXPRESS_TEST" "$ARITH_EXPRESS_TEST")

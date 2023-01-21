@@ -1,0 +1,90 @@
+    class Legume{
+	int poids;
+	int fraicheur;
+
+	void setPoids(int poids){
+		this.poids = poids;
+	}
+	int getPoids(){
+		return this.poids;
+	}
+	void setFraicheur(int fraicheur){
+		this.fraicheur = fraicheur;
+	}
+	int getFaicheur(){
+		return this.fraicheur;
+	}
+
+	void affiche(){
+		println("Ceci est un légume");
+	}	
+}
+
+class Oignon extends Legume{
+	int nombreDeCouches;
+}
+
+class Carrot extends Legume{
+	int longueur;
+}
+
+class Soupe{
+
+	int nombreDeLegumes = 0;
+	int tempsDeCuisson = 0;
+
+	void addLegume(Legume legume){
+		nombreDeLegumes = nombreDeLegumes + 1;
+	}
+
+	void Cuire(int n){
+		while(n>=0){
+			tempsDeCuisson = tempsDeCuisson + 1;
+			n = n -1;
+		}
+	}
+	void affiche(){
+		if(nombreDeLegumes < 5){
+			println("Mais elle est dégeu cette soupe!");
+			if(tempsDeCuisson < 10){
+				println("et en plus elle est pas assez cuite");
+			}			
+		}
+		if(nombreDeLegumes >= 5){
+			println("Hmm voila une bonne soupe !");
+			if(tempsDeCuisson >= 10){
+				println("Et en plus elle est bien cuite je vais devenir un gros tas de soupe !!");
+			}
+			else{
+				println("En revanche elle est un peu froide");
+			}
+		}
+	}
+}
+
+
+
+
+
+		
+{
+	Soupe soupe1 = new Soupe();
+	soupe1.addLegume(new Oignon());
+	soupe1.affiche();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

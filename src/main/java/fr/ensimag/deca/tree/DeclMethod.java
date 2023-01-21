@@ -143,7 +143,7 @@ public class DeclMethod extends AbstractDeclMethod {
         int indexTSTO = compiler.getLineIndex();
         this.listParams.codeGenListDeclParam(compiler, localEnv);
 
-        this.methodBody.codeGenMethodBody(compiler, localEnv);
+        int sp = this.methodBody.codeGenMethodBody(compiler, localEnv);
 
         if (!type.getType().isVoid()) {
             compiler.getLabelFactory().createTestReturn(compiler);
@@ -160,6 +160,8 @@ public class DeclMethod extends AbstractDeclMethod {
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
         preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
+        if (sp > 0)
+            preInit.add(2, new Line(new ADDSP(sp)));
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();

@@ -58,23 +58,26 @@ public class IfThenElse extends AbstractInst {
      */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        this.codeGenIf(compiler, 0);
+        this.codeGenIf(compiler, -1, 0);
     }
 
-    protected void codeGenIf(DecacCompiler compiler, int p) {
-        int nbIf = compiler.getLabelFactory().getNbIfThenElse();
-        Label labelElse = new Label("ELSE_" + nbIf + "_" + p);
-        Label labelEnd = new Label("END_IF_" + nbIf);
+    protected void codeGenIf(DecacCompiler compiler, int indexIfThenElse, int p) {
+        if (indexIfThenElse == -1) {
+            indexIfThenElse = compiler.getLabelFactory().getNbIfThenElse();
+            compiler.getLabelFactory().setNbIfThenElse(indexIfThenElse + 1);
+        }
+
+        Label labelElse = new Label("ELSE_" + indexIfThenElse + "_" + p);
+        Label labelEnd = new Label("END_IF_" + indexIfThenElse);
         condition.codeGenExpr(compiler, 2);
         compiler.addInstruction(new CMP(0, Register.getR(2)));
         compiler.addInstruction(new BEQ(labelElse));
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
         compiler.addLabel(labelElse);
-        elseBranch.codeGenIf(compiler, p+1);
+        elseBranch.codeGenIf(compiler, indexIfThenElse, p+1);
         if(p==0){
             compiler.addLabel(labelEnd);
-            compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
 
         }
 

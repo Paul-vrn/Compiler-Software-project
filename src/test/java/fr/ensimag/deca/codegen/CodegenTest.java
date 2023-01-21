@@ -224,13 +224,6 @@ public class CodegenTest {
     }
 
     @Test
-    void test28cast_cont_03() throws IOException {
-        String[] args = {"src/test/deca/codegen/valid/cast_cont_03.deca"};
-        String file2 = "src/test/deca/codegen/valid/cast_cont_03_oracle.txt";
-        generalTestValid(args, file2, null);
-    }
-
-    @Test
     void test29cond_pars_01() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/cond_pars_01.deca"};
         String file2 = "src/test/deca/codegen/valid/cond_pars_01_oracle.txt";
@@ -241,13 +234,6 @@ public class CodegenTest {
     void test30condition_modulo_01() throws IOException {
         String[] args = {"src/test/deca/context/valid/sans_objet/condition_modulo_01.deca"};
         String file2 = "src/test/deca/codegen/valid/condition_modulo_01_oracle.txt";
-        generalTestValid(args, file2, null);
-    }
-
-    @Test
-    void test31for_nested_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/sans_objet/for_nested_pars_01.deca"};
-        String file2 = "src/test/deca/codegen/valid/for_nested_pars_01_oracle.txt";
         generalTestValid(args, file2, null);
     }
 

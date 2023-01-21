@@ -6,9 +6,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.pseudocode.instructions.ADDSP;
+import fr.ensimag.pseudocode.instructions.RTS;
+import fr.ensimag.pseudocode.instructions.TSTO;
+import fr.ensimag.pseudocode.ima.instructions.RTS;
 
 import java.io.PrintStream;
 

@@ -5,9 +5,15 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.ImmediateInteger;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.B;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.ima.instructions.BNE;
+import fr.ensimag.pseudocode.ima.instructions.BRA;
+import fr.ensimag.pseudocode.ima.instructions.CMP;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 /**
  *
@@ -43,12 +49,27 @@ public class Not extends AbstractUnaryExpr {
         Label label = new Label("NOT_" + nbNot);
         Label labelEnd = new Label("NOT_END_" + nbNot);
         getOperand().codeGenExpr(compiler, n);
-        compiler.addInstruction(new CMP(0, Register.getR(n)));
+        compiler.addInstruction(new CMP(0, RegisterIMA.getR(n)));
         compiler.addInstruction(new BNE(label));
-        compiler.addInstruction(new LOAD(1, Register.getR(n)));
+        compiler.addInstruction(new LOAD(1, RegisterIMA.getR(n)));
         compiler.addInstruction(new BRA(labelEnd));
         compiler.addLabel(label);
-        compiler.addInstruction(new LOAD(0, Register.getR(n)));
+        compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
+        compiler.addLabel(labelEnd);
+    }
+
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        int nbNot = compiler.nbNot();
+        Label label = new Label("NOT_" + nbNot);
+        Label labelEnd = new Label("NOT_END_" + nbNot);
+        getOperand().armCodeGenExpr(compiler, n, m);
+        compiler.addInstruction(new CMP(0, RegisterIMA.getR(n)));
+        compiler.addInstruction(new BNE(label));
+        compiler.addInstruction(new MOV(new ImmediateInteger(1), RegisterIMA.getR(n)));
+        compiler.addInstruction(new B(labelEnd));
+        compiler.addLabel(label);
+        compiler.addInstruction(new MOV(new ImmediateInteger(0), RegisterIMA.getR(n)));
         compiler.addLabel(labelEnd);
     }
 }

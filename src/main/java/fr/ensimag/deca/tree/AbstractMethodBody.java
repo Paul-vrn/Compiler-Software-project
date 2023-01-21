@@ -4,9 +4,12 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.POP;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.instructions.POP;
+import fr.ensimag.pseudocode.instructions.PUSH;
+import fr.ensimag.pseudocode.Register;
 import fr.ensimag.deca.context.Type;
 
 /**

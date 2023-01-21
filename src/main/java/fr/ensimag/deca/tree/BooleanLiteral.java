@@ -3,10 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.pseudocode.ImmediateInteger;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 import java.io.PrintStream;
 
@@ -42,7 +43,11 @@ public class BooleanLiteral extends AbstractExpr {
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new LOAD(value ? 1 : 0, Register.getR(n)));
         compiler.getMemory().setLastGRegister(n);
+    }
 
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        compiler.addInstruction(new MOV(new ImmediateInteger(value ? 1 : 0), RegisterARM.getR(n)));
     }
 
     @Override

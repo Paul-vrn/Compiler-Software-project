@@ -1,12 +1,13 @@
 package fr.ensimag.deca;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import fr.ensimag.ima.pseudocode.Register;
+
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -54,7 +55,9 @@ public class CompilerOptions {
 
     public void enableNoCheck(){this.noCheck = true;}
 
-    public void enableARM(){this.optionARM = true;}
+    public boolean getARMCompilation(){return armCompilation;}
+
+    public void enableARM(){this.armCompilation = true;}
 
 
     public List<File> getSourceFiles() {
@@ -68,8 +71,7 @@ public class CompilerOptions {
     private boolean printBanner = false;
     private boolean parallel = false;
     private boolean noCheck = false;
-
-    private boolean optionARM = false;
+    private boolean armCompilation = false;
 
     private List<File> sourceFiles = new ArrayList<File>();
 
@@ -109,7 +111,8 @@ public class CompilerOptions {
                         i++;
                         int newRMAX = Integer.parseInt(argsArrayList.get(i));
                         if(newRMAX >= 4 && newRMAX <= 16){
-                            Register.RMAX = newRMAX - 1;
+                            RegisterIMA.RMAX = newRMAX - 1;
+                            RegisterARM.RMAX = newRMAX - 1;
                         }
                         else{
                             throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");

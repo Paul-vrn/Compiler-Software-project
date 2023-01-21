@@ -1,8 +1,9 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.ASCIZ;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.util.List;
 
@@ -14,7 +15,10 @@ public class LabelFactory {
     private int nbWhile;
     private int nbAnd;
     private int nbOr;
-
+    private int nbOpComp;
+    private int nbString;
+    private int nbInt;
+    private int nbFloat;
     private boolean flagOverflowError;
     private boolean flagStackError;
     private boolean flagIOError;
@@ -28,6 +32,17 @@ public class LabelFactory {
     private static final Label NoReturnErrorLabel = new Label("no_return_error");
     private static final Label DeferencementNullErrorLabel = new Label("deferencement_null");
     private static final Label HeapOverflowErrorLabel = new Label("heap_overflow_error");
+    private static final Label divByZeroErrorLabel = new Label("div_by_zero_error");
+
+    /* ARM labels */
+    private static final Label printfLabel = new Label("printf");
+    private static final Label scanfLabel = new Label("scanf");
+    private boolean flagLabelInt;
+    private static final Label LabelInt = new Label("int");
+    private boolean flagLabelFloat;
+    private static final Label LabelFloat = new Label("float");
+    private boolean flagLabelLn;
+    private static final Label LabelLn = new Label("ln");
 
     private static String suffixCurrentMethod;
     public LabelFactory() {
@@ -67,7 +82,7 @@ public class LabelFactory {
             compiler.addInstruction(new ERROR());
         }
         if (flagDivByZeroError){
-            compiler.addLabel(DivByZeroErrorLabel);
+            compiler.addLabel(divByZeroErrorLabel);
             compiler.addInstruction(new WSTR("Error: Division by zero"));
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
@@ -89,6 +104,11 @@ public class LabelFactory {
     public int nbNot(){
         int i = nbNot;
         nbNot++;
+        return i;
+    }
+    public int NbOpComp() {
+        int i = nbOpComp;
+        nbOpComp++;
         return i;
     }
     public int getNbIfThenElse() {
@@ -113,6 +133,22 @@ public class LabelFactory {
         return i;
     }
 
+    public int nbString(){
+        int i = nbString;
+        nbString++;
+        return i;
+    }
+    public int nbFloat(){
+        int i = nbFloat;
+        nbFloat++;
+        return i;
+    }
+    public int nbInt() {
+        int i = nbInt;
+        nbInt++;
+        return i;
+    }
+
     public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
             return;
@@ -121,7 +157,7 @@ public class LabelFactory {
                 isInt ? new ImmediateInteger(0) : new ImmediateFloat(0.0f),
                 r
         ));
-        compiler.addInstruction(new BEQ(DivByZeroErrorLabel));
+        compiler.addInstruction(new BEQ(divByZeroErrorLabel));
     }
 
     public void createTestOverflow(DecacCompiler compiler) {
@@ -168,6 +204,37 @@ public class LabelFactory {
             return;
         flagHeapOverflowError = true;
         compiler.addInstruction(new BOV(HeapOverflowErrorLabel));
+    }
+    public Label getLabelInt(){
+        flagLabelInt = true;
+        return LabelFactory.LabelInt;
+    }
+
+    public Label getLabelFloat(){
+        flagLabelFloat = true;
+        return LabelFactory.LabelFloat;
+    }
+    public Label getLabelLn(){
+        flagLabelLn = true;
+        return LabelFactory.LabelLn;
+    }
+
+    public Label getPrintfLabel() {
+        return printfLabel;
+    }
+    public Label getScanfLabel() { return scanfLabel; }
+
+
+    public void createPrintLabel(DecacCompiler compiler) {
+        if (flagLabelInt) {
+            compiler.addData(new Line(new Label("int"), new ASCIZ(new ImmediateString("%d"))));
+        }
+        if (flagLabelFloat){
+            compiler.addData(new Line(new Label("float"), new ASCIZ(new ImmediateString("%f"))));
+        }
+        if (flagLabelLn){
+            compiler.addData(new Line(new Label("ln"), new ASCIZ(new ImmediateString("\\n"))));
+        }
     }
 
     public String getSuffixCurrentMethod() {

@@ -10,11 +10,14 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WFLOATX;
+import fr.ensimag.pseudocode.ima.instructions.WINT;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -145,7 +148,7 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        compiler.addInstruction(new LOAD(RegisterIMA.getR(2), RegisterIMA.R1));
         if (getType().isInt()){
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()){
@@ -153,6 +156,20 @@ public abstract class AbstractExpr extends AbstractInst {
         } else {
             throw new UnsupportedOperationException("not implemented implemented");
         }
+    }
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        this.armCodeGenExpr(compiler, 4, 2);
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(4), RegisterARM.getR(1)));
+        } else if (getType().isFloat()){
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+        } else {
+            throw new UnsupportedOperationException("type not printable");
+        }
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 
     @Override
@@ -169,6 +186,22 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    /**
+     *
+     * @param compiler
+     * @param n number of the register R (for integer)
+     * @param m number of the register S (for float)
+     */
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        System.out.println(this.getClass().getName());
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+
+
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);

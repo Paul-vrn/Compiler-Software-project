@@ -8,10 +8,13 @@ import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.instructions.*;
+
 import java.io.PrintStream;
 import java.util.Map;
 
+
+import fr.ensimag.pseudocode.ima.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -76,6 +79,14 @@ public class Program extends AbstractProgram {
         compiler.addComment("--- Start of Error messages section ---");
         compiler.getLabelFactory().createErrorSection(compiler);
         compiler.addComment("--- End of Error messages section ---");
+    }
+
+    @Override
+    public void armCodeGenProgram(DecacCompiler compiler) {
+        compiler.addComment("Main program");
+        main.armCodeGenMain(compiler);
+        //compiler.getLabelFactory().createErrorSection(compiler);
+        compiler.getLabelFactory().createPrintLabel(compiler);
     }
 
     @Override

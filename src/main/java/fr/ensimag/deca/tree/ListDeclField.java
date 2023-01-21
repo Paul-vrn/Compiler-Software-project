@@ -6,18 +6,26 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.TSTO;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.BSR;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.Register;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.instructions.RTS;
+import fr.ensimag.pseudocode.instructions.TSTO;
+import fr.ensimag.pseudocode.instructions.BOV;
+import fr.ensimag.pseudocode.instructions.PUSH;
+import fr.ensimag.pseudocode.instructions.BSR;
+import fr.ensimag.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import java.util.Map;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.RTS;
+import fr.ensimag.pseudocode.ima.instructions.TSTO;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.ima.instructions.BSR;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 /**
  * List of expressions (eg list of parameters).

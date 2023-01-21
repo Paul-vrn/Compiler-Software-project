@@ -4,11 +4,12 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.STR;
+import fr.ensimag.pseudocode.arm.instructions.VSTR;
+import fr.ensimag.pseudocode.ima.instructions.STORE;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -68,6 +69,21 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         this.codeGenExpr(compiler, 2);
+    }
+
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        Identifier id = (Identifier) this.getLeftOperand();
+        this.getRightOperand().armCodeGenExpr(compiler, n, m);
+        if (getType().isFloat()){
+            compiler.addInstruction(new VSTR(RegisterARM.getS(m), id.getExpDefinition().getOperand()));
+        } else {
+            compiler.addInstruction(new STR(RegisterARM.getR(n), id.getExpDefinition().getOperand()));
+        }
+    }
+    @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+        this.armCodeGenExpr(compiler, 4, 2);
     }
 
     @Override

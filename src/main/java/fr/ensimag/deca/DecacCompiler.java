@@ -10,7 +10,6 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
+import fr.ensimag.pseudocode.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -69,14 +69,14 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#add(fr.ensimag.ima.pseudocode.AbstractLine)
+     * AbstractCodeGenProgram#add(AbstractLine)
      */
     public void add(AbstractLine line) {
         program.add(line);
     }
 
     /**
-     * @see fr.ensimag.ima.pseudocode.IMAProgram#addComment(java.lang.String)
+     * @see AbstractCodeGenProgram#addComment(java.lang.String)
      */
     public void addComment(String comment) {
         program.addComment(comment);
@@ -84,7 +84,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addLabel(fr.ensimag.ima.pseudocode.Label)
+     * AbstractCodeGenProgram#addLabel(Label)
      */
     public void addLabel(Label label) {
         program.addLabel(label);
@@ -92,7 +92,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
+     * AbstractCodeGenProgram#addInstruction(Instruction)
      */
     public void addInstruction(Instruction instruction) {
         program.addInstruction(instruction);
@@ -100,7 +100,7 @@ public class DecacCompiler {
 
     /**
      * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction,
+     * AbstractCodeGenProgram#addInstruction(Instruction,
      * java.lang.String)
      */
     public void addInstruction(Instruction instruction, String comment) {
@@ -117,9 +117,13 @@ public class DecacCompiler {
         return program.getLastIndex();
     }
 
+    public void addFirst(Line l){
+        program.addFirst(l);
+    }
+    public void addData(Line l) { program.addData(l);}
     /**
      * @see 
-     * fr.ensimag.ima.pseudocode.IMAProgram#display()
+     * AbstractCodeGenProgram#display()
      */
     public String displayIMAProgram() {
         return program.display();
@@ -130,7 +134,11 @@ public class DecacCompiler {
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
-    private final IMAProgram program = new IMAProgram();
+    private AbstractCodeGenProgram program;
+
+    public AbstractCodeGenProgram getProgram() {
+        return program;
+    }
 
 
     /** The global environment for types (and the symbolTable) */
@@ -149,6 +157,12 @@ public class DecacCompiler {
         int val = memory.getGlobalOffset();
         memory.increaseGlobalOffset();
         return val;
+    }
+    public int getNextArmOffSet(){
+        return memory.getArmOffset();
+    }
+    public void increaseArmOffset(int x){
+        memory.increaseArmOffset(x);
     }
     public int nextLocalOffSet(){
         int val = memory.getLocalOffset();
@@ -172,7 +186,8 @@ public class DecacCompiler {
     public boolean compile() throws DecacFatalError {
         String sourceFile = source.getAbsolutePath();
 
-        String destFile = sourceFile.substring(0, sourceFile.length() - 5) + ".ass";
+        String destFile = sourceFile.substring(0, sourceFile.length() - 5) +
+                (compilerOptions.getARMCompilation() ? ".s":".ass");
 
         PrintStream err = System.err;
         PrintStream out = System.out;
@@ -239,6 +254,13 @@ public class DecacCompiler {
         }
 
         prog.codeGenProgram(this);
+        program = (compilerOptions.getARMCompilation()) ? new ARMProgram() : new IMAProgram();
+
+        if (compilerOptions.getARMCompilation()) {
+            prog.armCodeGenProgram(this);
+        } else {
+            prog.codeGenProgram(this);
+        }
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 

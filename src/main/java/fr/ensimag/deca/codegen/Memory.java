@@ -9,6 +9,9 @@ public class Memory {
     private int topOfMethodTable = 0;
 
 
+    /**
+     * Constructeur de la classe Memory
+     */
     public Memory() {
         this.TSTO = 0;
         this.currentTSTO = 0;
@@ -45,6 +48,30 @@ public class Memory {
     public void increaseLocalOffset() {
         increaseLocalOffset(1);
     }
+
+
+    /**
+     * return the current offset
+     * @return the current offset
+     */
+    public int getArmOffset() {
+        return armOffset;
+    }
+
+    /**
+     * increase the arm offset by 4
+     * @param i : offset to add
+     */
+    public void increaseArmOffset(int i) {
+        armOffset -= i;
+    }
+
+    /**
+     * @return the TSTO
+     */
+    public void increaseArmOffset() {
+        increaseArmOffset(80);
+    }
     /**
      * Return TSTO value and reset it afterwards
      * @return int TSTO
@@ -63,7 +90,9 @@ public class Memory {
         currentTSTO++;
         TSTO = Math.max(currentTSTO, TSTO);
     }
-
+    /**
+     * Decrease TSTO value
+     */
     public void decreaseTSTO() {
         currentTSTO--;
         TSTO = Math.max(currentTSTO, TSTO);

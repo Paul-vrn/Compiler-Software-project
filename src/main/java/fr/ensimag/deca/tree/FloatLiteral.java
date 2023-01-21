@@ -5,10 +5,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WFLOATX;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -42,19 +43,37 @@ public class FloatLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.R1));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(value), RegisterIMA.R1));
         compiler.addInstruction(printHex ? new WFLOATX() : new WFLOAT());
     }
 
     @Override
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+        this.armCodeGenExpr(compiler, 4,2);
+        compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));
+        compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+    }
+
+    @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.getR(n)));
+        compiler.addInstruction(new LOAD(new ImmediateFloat(value), RegisterIMA.getR(n)));
         compiler.getMemory().setLastGRegister(n);
     }
 
     @Override
-    public void decompile(IndentPrintStream s) {
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        Label l = new Label("float_"+compiler.getLabelFactory().nbFloat());
+        // float_X: .float value
+        compiler.addFirst(new Line(l, new FLOAT(new ImmediateFloat(value))));
+        // vldr sM, float_X
+        compiler.addInstruction(new VLDR(l, RegisterARM.getS(m)));
+    }
 
+
+    @Override
+    public void decompile(IndentPrintStream s) {
         s.print(java.lang.Float.toHexString(value));
     }
 

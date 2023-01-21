@@ -7,11 +7,18 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.Register;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WINT;
 import org.apache.commons.lang.Validate;
-//import sun.awt.SubRegionShowable;
 
 /**
  * Deca Identifier
@@ -20,6 +27,22 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
+
+    @Override
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(1)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        } else {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(16)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(16), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        }
+
+    }
 
     @Override
     protected void checkDecoration() {
@@ -122,6 +145,18 @@ public class Identifier extends AbstractIdentifier {
     }
 
 
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        if (getType().isFloat()) {
+            compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(m)));
+        } else {
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
+        }
+    }
+    public void armCodeGenDeclVar(DecacCompiler compiler){
+        compiler.increaseArmOffset(4);
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.getNextArmOffSet(), RegisterARM.FP));
+    }
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
      * 
@@ -166,7 +201,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        if(localEnv.get(this.getName()) != null){;
+        if(localEnv.get(this.getName()) != null){
             this.setType(localEnv.get(this.getName()).getType());
             this.setDefinition(localEnv.get(this.getName()));
         }

@@ -5,17 +5,17 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.Register;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.instructions.LOAD;
+import fr.ensimag.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 import java.util.Map;
 
 /**
- *
+ * Declaration of a class (<code>class name extends superClass {members}<code>).
  * 
  * @author gl21
  * @date 01/01/2023

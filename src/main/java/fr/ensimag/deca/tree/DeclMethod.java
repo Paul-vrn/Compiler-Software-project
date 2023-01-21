@@ -3,10 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.Line;
+import fr.ensimag.pseudocode.Register;
+import fr.ensimag.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.tools.SymbolTable;
 
@@ -67,7 +67,6 @@ public class DeclMethod extends AbstractDeclMethod {
         listParams.iter(f);
         methodBody.iter(f);
     }
-
 
     @Override
     protected EnvironmentExp verifyDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass,

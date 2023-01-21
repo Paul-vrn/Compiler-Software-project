@@ -203,13 +203,7 @@ public class Identifier extends AbstractIdentifier {
         return this.definition;
     }
 
-    public Definition verifyDefinition(DecacCompiler compiler) throws ContextualError{
-        return this.definition;
-    }
-
-    
     private Definition definition;
-
 
     @Override
     protected void iterChildren(TreeFunction f) {

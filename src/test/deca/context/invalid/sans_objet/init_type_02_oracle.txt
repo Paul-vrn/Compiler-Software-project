@@ -1,0 +1,1 @@
+init_type_02.deca:11:13: Right value type problem

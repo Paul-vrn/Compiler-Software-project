@@ -1,0 +1,13 @@
+// Description:
+//    this dans le main.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    int x = 3;
+    this.x;
+}

@@ -1,8 +1,8 @@
 // Description:
-//    Programme minimaliste testant NoOperation
+//    Redefinition de methode sans le bon type.
 //
 // Resultats:
-//
+//      Error
 //
 // Historique:
 //    cree le 04/01/2023

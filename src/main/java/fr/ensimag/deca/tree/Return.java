@@ -27,7 +27,7 @@ public class Return extends AbstractInst{
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
         if(returnType.isVoid()){
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Void return type is forbidden", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": No return possible in void method", this.getLocation());
         }
 
         this.rvalue.verifyRValue(compiler, localEnv, currentClass, returnType);

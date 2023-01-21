@@ -1,0 +1,1 @@
+print_undeclared.deca:11:4: Print undeclared identifier

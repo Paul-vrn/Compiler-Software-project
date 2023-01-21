@@ -19,10 +19,101 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CodegenTim {
 
     @Test
-    void test01class_object_stack_overflow() throws IOException {
-        String[] args = {"src/test/deca/context/valid/objet/field_class_01.deca"};
+    void test01field_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/field_class_01.deca"};
         String file2 = "src/test/deca/codegen/valid/objet/field_class_01_oracle.txt";
-            generalTestValid(args, file2, null);
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test02field_class_02() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/field_class_02.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/field_class_02_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test03get_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/get_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/get_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test04ident_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/ident_class_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/ident_class_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test04method_ovrlap_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/method_ovrlap_class_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/method_ovrlap_class_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test05nested_method_param_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/nested_method_param_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/nested_method_param_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test06nested_select_class01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/nested_select_class_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/nested_select_class_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test07new_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/new_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/new_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test08object_cont_01_oracle() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/object_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/object_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test09op_comp_valid_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/op_comp_valid_class_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/op_comp_valid_class_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test10param_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/param_class_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/param_class_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test11protected_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/protected_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/protected_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test12return_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/return_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/return_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test13subclass_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/subclass_cont_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/objet/subclass_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
     }
 
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {

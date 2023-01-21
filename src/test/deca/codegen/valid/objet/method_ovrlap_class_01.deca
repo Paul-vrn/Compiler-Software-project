@@ -1,0 +1,20 @@
+// Description:
+//   method name overlap with class name test
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    void A() {
+    	print("Ceci est un easterEgg, si vous avez trouvé ce message, vous êtes un vrai fan de la série !");
+    }
+}
+
+{
+	A a = new A();
+	a.A();
+}
+

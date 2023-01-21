@@ -1,0 +1,28 @@
+// Description:
+//   Object
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    Object getX() {
+        return this;
+    }
+}
+
+{
+	A a = new A();
+	Object o = a.getX();
+	if(o.equals(a)) {
+		println("oh mince");
+	}
+	else {
+		println("42 AHAAHAHAHHAHAHHAHA");
+	}
+}
+
+
+

@@ -1,0 +1,34 @@
+class ListNode{
+int val = 0;
+ListNode next;
+
+void setNext(ListNode next){
+	this.next = next;
+}
+void setVal(int val){
+	this.val = val;
+}
+ListNode getNext(){
+	return this.next;
+}
+int getVal(){
+	return this.val;
+}
+}
+
+
+{
+ListNode tail = new ListNode();
+ListNode head = new ListNode();
+int x;
+int y;
+tail.setVal(6);
+head.setNext(tail);
+head.setVal(5);
+
+x = head.getVal();
+y = head.getNext().getVal();
+
+println(x);
+println(y);
+}

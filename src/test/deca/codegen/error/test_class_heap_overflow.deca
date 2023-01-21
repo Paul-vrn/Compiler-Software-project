@@ -1,0 +1,13 @@
+class HeavyClass {
+int x;
+int y;
+int z;
+}
+
+{
+HeavyClass heavy;
+while(true){
+heavy = new HeavyClass();
+}
+
+}

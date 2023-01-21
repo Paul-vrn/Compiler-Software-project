@@ -34,18 +34,16 @@ public class MethodBodyAsm extends AbstractMethodBody {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         //TODO
-        throw new UnsupportedOperationException("Not yet supported");
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+
     }
 
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, EnvironmentExp envExpParam,
                                     AbstractIdentifier name, Type returnType) throws ContextualError {
-        throw new UnsupportedOperationException("Not yet supported");
     }
 
     @Override

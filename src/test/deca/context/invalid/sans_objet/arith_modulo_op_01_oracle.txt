@@ -1,0 +1,1 @@
+arith_modulo_op_01.deca:11:12: Arithmetic modulo operation type mismatch

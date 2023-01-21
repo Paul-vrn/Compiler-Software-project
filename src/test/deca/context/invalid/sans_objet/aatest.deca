@@ -1,0 +1,13 @@
+// Description:
+//    Assignation avec une valeur indéfinie.
+//
+// Resultats:
+//      Ligne 12: Assign impossible with undefined value
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    int x;
+    x = y;
+}

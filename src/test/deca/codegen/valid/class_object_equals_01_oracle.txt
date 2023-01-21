@@ -1,0 +1,2 @@
+a!=b
+Selon b.equals, a == b

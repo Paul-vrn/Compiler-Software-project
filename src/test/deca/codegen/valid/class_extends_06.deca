@@ -19,5 +19,5 @@ class A{
 	A a = new A();
 	println(a.entier);
 	println(a.reel);
-	println(a.bool);
+	//println(a.bool);
 }

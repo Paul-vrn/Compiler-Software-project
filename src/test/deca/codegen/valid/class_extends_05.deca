@@ -16,6 +16,7 @@ class A{
 }
 
 class B extends A{
+	int entier = 24;
 	void vide(){}
 }
 
@@ -142,30 +143,30 @@ class Z extends Y{
 	X x = new X();
 	Y y = new Y();
 	Z z = new Z();
-	print(a.entier);
-	print(b.entier);
-	print(c.entier);
-	print(d.entier);
-	print(e.entier);
-	print(f.entier);
-	print(g.entier);
-	print(h.entier);
-	print(i.entier);
-	print(j.entier);
-	print(k.entier);
-	print(l.entier);
-	print(m.entier);
-	print(n.entier);
-	print(o.entier);
-	print(p.entier);
-	print(q.entier);
-	print(r.entier);
-	print(s.entier);
-	print(t.entier);
-	print(u.entier);
-	print(v.entier);
-	print(w.entier);
-	print(x.entier);
-	print(y.entier);
-	print(z.entier);
+	println(a.entier);
+	println(b.entier);
+	println(c.entier);
+	println(d.entier);
+	println(e.entier);
+	println(f.entier);
+	println(g.entier);
+	println(h.entier);
+	println(i.entier);
+	println(j.entier);
+	println(k.entier);
+	println(l.entier);
+	println(m.entier);
+	println(n.entier);
+	println(o.entier);
+	println(p.entier);
+	println(q.entier);
+	println(r.entier);
+	println(s.entier);
+	println(t.entier);
+	println(u.entier);
+	println(v.entier);
+	println(w.entier);
+	println(x.entier);
+	println(y.entier);
+	println(z.entier);
 }

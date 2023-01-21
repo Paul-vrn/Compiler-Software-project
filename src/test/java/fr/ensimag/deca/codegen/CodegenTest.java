@@ -412,6 +412,20 @@ public class CodegenTest {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test55class_extends_09() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_09.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_09_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test56class_object_equals_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_object_equals_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_object_equals_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

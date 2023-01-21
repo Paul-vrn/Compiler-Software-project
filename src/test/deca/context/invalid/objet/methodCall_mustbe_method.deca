@@ -1,0 +1,22 @@
+// Description:
+//     Apelle d'un attribut comme une méthode.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+    int x;
+    int setX(int y){
+
+    }
+}
+
+{
+    A a = new A();
+    a.x();
+}
+
+

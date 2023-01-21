@@ -1,0 +1,25 @@
+// Description:
+//     Mauvais type pour new.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+
+}
+
+class A extends B{
+    int x;
+    int setX(int y){
+
+    }
+}
+
+{
+    A a = new B();
+}
+
+

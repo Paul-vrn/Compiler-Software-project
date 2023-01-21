@@ -32,15 +32,17 @@ public class MethodCall extends AbstractExpr{
                     + this.getLocation().errorOutPut() + ": Call method of a non-class identifier", this.getLocation());
         }
 
-        MethodDefinition def = (MethodDefinition) this.methodId.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
+        Definition def = this.methodId.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
         if(!def.isMethod()){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Must be a method", this.getLocation());
         }
 
-        this.setType(def.getType());
+        MethodDefinition defMethod = (MethodDefinition) def;
 
-        Signature sig = def.getSignature();
+        this.setType(defMethod.getType());
+
+        Signature sig = defMethod.getSignature();
 
         for(int c = 0; c < this.parameters.size(); c++){
             if(sig.size() > 0){
@@ -50,7 +52,7 @@ public class MethodCall extends AbstractExpr{
             }
         }
 
-        return def.getType();
+        return defMethod.getType();
     }
 
     @Override

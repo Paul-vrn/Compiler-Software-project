@@ -51,7 +51,7 @@ do
   if [ "$resultat" = "$attendu" ]; then
       echo "Tout va bien pour $filename"
   else
-      echo "Résultat inattendu de ima pour $filename"
+      echo "Résultat inattendu de arm pour $filename"
       echo "$resultat"
   fi
 

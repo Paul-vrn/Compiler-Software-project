@@ -53,14 +53,14 @@ public class Divide extends AbstractOpArith {
             if (m < RegisterARM.SMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new VDIV(RegisterARM.getS(m+1), RegisterARM.getS(m)));
+                compiler.addInstruction(new VDIV(RegisterARM.getS(m+1), RegisterARM.getS(m), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new VPUSH(RegisterARM.getS(m)));
                 getRightOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new LDR(RegisterARM.getS(m), RegisterARM.getS(0)));
                 compiler.addInstruction(new VPOP(RegisterARM.getS(m)));
-                compiler.addInstruction(new VDIV(RegisterARM.getS(0), RegisterARM.getS(m)));
+                compiler.addInstruction(new VDIV(RegisterARM.getS(0), RegisterARM.getS(m), RegisterARM.getS(m)));
             }
         } else {
             if (n < RegisterARM.RMAX) {

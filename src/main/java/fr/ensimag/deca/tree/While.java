@@ -10,6 +10,7 @@ import fr.ensimag.pseudocode.Label;
 import java.io.PrintStream;
 
 import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.B;
 import fr.ensimag.pseudocode.ima.instructions.BEQ;
 import fr.ensimag.pseudocode.ima.instructions.BRA;
 import fr.ensimag.pseudocode.ima.instructions.CMP;
@@ -58,7 +59,16 @@ public class While extends AbstractInst {
     }
     @Override
     protected void armCodeGenInst(DecacCompiler compiler){
-        throw new UnsupportedOperationException("Not supported yet.");
+        int nbWhile = compiler.nbWhile();
+        Label labelStart = new Label("WHILE_START_" + nbWhile);
+        Label labelCond = new Label("WHILE_COND_" + nbWhile);
+        compiler.addInstruction(new B(labelCond));
+        compiler.addLabel(labelStart);
+        body.armCodeGenListInst(compiler);
+        compiler.addLabel(labelCond);
+        condition.armCodeGenExpr(compiler, 4, 2);
+        compiler.addInstruction(new CMP(1, RegisterIMA.getR(4)));
+        compiler.addInstruction(new BEQ(labelStart));
     }
 
     @Override

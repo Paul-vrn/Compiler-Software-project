@@ -1,1 +1,1 @@
-field_already_defined2.deca:12:8: Field already defined
+field_already_defined2.deca:12:18: Field already defined

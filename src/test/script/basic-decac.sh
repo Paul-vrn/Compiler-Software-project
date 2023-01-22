@@ -83,7 +83,7 @@ if [ "$decac_moins_v" = "" ]; then
     exit 1
 fi
 
-echo "Pas de probleme detecte avec decac -v. e"
+echo "Pas de probleme detecte avec decac -v. "
 
 ARITH_EXPRESS_TEST="$DECAC_HOME"/src/test/deca/codegen/valid/test_expression_arith.deca
 

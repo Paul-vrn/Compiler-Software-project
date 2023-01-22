@@ -24,7 +24,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        // TODO : optimize this part (switch case ?)
         if (type1 == null || type2 == null) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Arithmetic operation impossible with undefined operand", this.getLocation());

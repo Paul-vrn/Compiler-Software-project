@@ -80,7 +80,6 @@ public class CompilerOptions {
 
 
         ArrayList<String> argsArrayList = new ArrayList<>(Arrays.asList(args));
-        //TODO option specification page 103
         if(argsArrayList.contains("-b")){
             if(argsArrayList.size()==1){
                 enablePrintBanner();

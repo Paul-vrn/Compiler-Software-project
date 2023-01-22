@@ -30,8 +30,6 @@ public class ListInst extends TreeList<AbstractInst> {
         for (AbstractInst i : getList()) {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
         }
-
-        //TODO : not finished ?
     }
 
     public void codeGenListInst(DecacCompiler compiler) {

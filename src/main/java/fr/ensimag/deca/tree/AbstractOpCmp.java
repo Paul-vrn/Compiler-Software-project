@@ -42,8 +42,6 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
-        //TODO : class objects.
-
         Type type1 = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type type2 = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 

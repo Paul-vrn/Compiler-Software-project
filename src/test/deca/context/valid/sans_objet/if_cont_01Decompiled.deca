@@ -1,9 +1,0 @@
-{
-	int a;
-	if (true) {
-		(a = 2);
-		println("Hello");
-		}
-	else {
-	}
-}

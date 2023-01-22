@@ -5,10 +5,9 @@ import org.apache.commons.lang.Validate;
 import java.io.PrintStream;
 
 /**
- * Base class for instructions with 2 operands.
+ * Base class for instructions with 3 operands.
  *
- * @author Ensimag
- * @date 01/01/2023
+ * @author gl21
  */
 public class TernaryInstruction extends Instruction {
     private Operand operand1, operand2, operand3;

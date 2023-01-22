@@ -5,8 +5,8 @@ import fr.ensimag.pseudocode.GPRegister;
 import fr.ensimag.pseudocode.Operand;
 
 /**
- * @author Ensimag
- * @date 01/01/2023
+ * Convert a single-precision floating-point value to a double-precision floating-point value.
+ * @author gl21
  */
 public class VCVTDS extends BinaryInstruction {
 

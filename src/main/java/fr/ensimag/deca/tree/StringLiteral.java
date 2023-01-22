@@ -60,6 +60,10 @@ public class StringLiteral extends AbstractStringLiteral {
         s.print("\"");
     }
 
+    public void decompileTest(IndentPrintStream s) {
+        s.print(getValue());
+    }
+
     @Override
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do

@@ -1,0 +1,19 @@
+// Description:
+//    Programme testant l'overflow sur des entiers.
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 22/01/2023
+
+{
+    int x = -2147483647;
+    int y = x-1;
+    int z = y-1;
+    println(x);
+    println(y);
+    println(z);
+
+}

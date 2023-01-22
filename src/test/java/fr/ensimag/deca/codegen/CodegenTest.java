@@ -456,10 +456,45 @@ public class CodegenTest {
     }
 
     @Test
+    void test63_prog_vide() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/prog_vide.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/prog_vide_oracle.txt";
+        generalTestValid(args, file2,null);
+    }
+
+    @Test
     void test63class_method_asm_01() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/class_method_asm_01.deca"};
         String file2 = "src/test/deca/codegen/valid/class_method_asm_01_oracle.txt";
-            generalTestValid(args, file2, null);
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test64math_int_ov() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_int_ov.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_int_ov_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test65math_int_ov2() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_int_ov2.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_int_ov2_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test67math_float_ov_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/error/math_float_ov_01.deca"};
+        String file2 = "src/test/deca/codegen/error/math_float_ov_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test68math_float_ov_02() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_float_ov_02.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_float_ov_02_oracle.txt";
+        generalTestValid(args, file2, null);
     }
 
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
@@ -474,7 +509,7 @@ public class CodegenTest {
             System.exit(1);
         }
         if(options.getSourceFiles().size() != 1) {
-            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented (yet?)");
+            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented");
             System.exit(1);
         }
         DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), options.getSourceFiles().get(0));

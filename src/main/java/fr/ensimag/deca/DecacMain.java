@@ -50,8 +50,8 @@ public class DecacMain {
                     "-n : No check, removes execution checks\n" +
                     "-r X : limits the number of available registers (4<= X <= 16)\n"+
                     "-d : Debug option, enables debug trace. Repeat the option to get more traces\n" +
-                    "-P : Parallel, if there are multiple source files, compiles concurrently" +
-                    "-ARM : Generates ARM assembly instead of IMA assembly\n");
+                    "-P : Parallel, if there are multiple source files, compiles concurrently\n" +
+                    "-ARM : Generates ARM assembly instead of IMA assembly");
         }
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à

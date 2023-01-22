@@ -6,6 +6,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.DecacFatalError;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ArmCodegenTest {
 
@@ -294,6 +295,30 @@ public class ArmCodegenTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test47no_operation() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/no_operation.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test48_prog_vide() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/prog_vide.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test49_expression_arith() throws IOException {
+        String[] args = {"-r", "10", "src/test/deca/codegen/arm/expression_arith.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test50_expression_arith() throws IOException {
+        String[] args = {"-r", "4", "src/test/deca/codegen/arm/expression_arith_register_limited.deca"};
+        generalTestValid(args, null);
+    }
+
 
 
 
@@ -309,14 +334,14 @@ public class ArmCodegenTest {
             System.exit(1);
         }
         if(options.getSourceFiles().size() != 1) {
-            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented (yet?)");
+            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented");
             System.exit(1);
         }
         options.enableARM();
-        DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), options.getSourceFiles().get(0));
+        DecacCompiler compiler = new DecacCompiler(options, options.getSourceFiles().get(0));
         try{
-            compiler.compile();
-        } catch (DecacFatalError e) {
+            assert(!compiler.compile());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

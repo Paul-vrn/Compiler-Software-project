@@ -112,6 +112,7 @@ public class CompilerOptions {
                         if(newRMAX >= 4 && newRMAX <= 16){
                             RegisterIMA.RMAX = newRMAX - 1;
                             RegisterARM.RMAX = newRMAX - 1;
+                            RegisterARM.SMAX = newRMAX - 1;
                         }
                         else{
                             throw new UnsupportedOperationException("Number of registers must be : 4 <= RMAX <= 16");

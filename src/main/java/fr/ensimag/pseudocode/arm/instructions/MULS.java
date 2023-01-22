@@ -5,6 +5,10 @@ import fr.ensimag.pseudocode.GPRegister;
 import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.TernaryInstruction;
 
+/**
+ * multiplication with sign
+ * @author gl21
+ */
 public class MULS extends TernaryInstruction {
 
         public MULS(Operand op1, Operand op2, Operand op3) {

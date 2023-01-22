@@ -6,8 +6,8 @@ import fr.ensimag.pseudocode.ImmediateInteger;
 import fr.ensimag.pseudocode.Operand;
 
 /**
- * @author Ensimag
- * @date 01/01/2023
+ * Load Register
+ * @author gl21
  */
 public class LDR extends BinaryInstruction {
 

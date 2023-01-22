@@ -5,6 +5,10 @@ import fr.ensimag.pseudocode.GPRegister;
 import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.TernaryInstruction;
 
+/**
+ * vector multiplication
+ * @author gl21
+ */
 public class VMUL extends TernaryInstruction {
 
         public VMUL(Operand op1, Operand op2, Operand op3) {

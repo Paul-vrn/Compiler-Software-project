@@ -10,10 +10,7 @@ import java.io.PrintStream;
 import fr.ensimag.pseudocode.ImmediateInteger;
 import fr.ensimag.pseudocode.Label;
 import fr.ensimag.pseudocode.RegisterARM;
-import fr.ensimag.pseudocode.arm.instructions.ADDS;
-import fr.ensimag.pseudocode.arm.instructions.BL;
-import fr.ensimag.pseudocode.arm.instructions.MOV;
-import fr.ensimag.pseudocode.arm.instructions.SUBS;
+import fr.ensimag.pseudocode.arm.instructions.*;
 import fr.ensimag.pseudocode.ima.instructions.ADDSP;
 import fr.ensimag.pseudocode.ima.instructions.POP;
 import fr.ensimag.pseudocode.ima.instructions.PUSH;
@@ -66,14 +63,14 @@ public class Main extends AbstractMain {
     @Override
     protected void armCodeGenMain(DecacCompiler compiler) {
         compiler.addComment("Beginning of main instructions:");
-        compiler.addInstruction(new PUSH(RegisterARM.FP, RegisterARM.LR)); // PUS {FP, LR}
+        compiler.addInstruction(new PUSHARM(RegisterARM.FP, RegisterARM.LR)); // PUS {FP, LR}
         compiler.addInstruction(new ADDS(new ImmediateInteger(4), RegisterARM.SP, RegisterARM.FP)); // ADDS FP, SP, #4
         compiler.addInstruction(new SUBS(new ImmediateInteger(this.mainEnvironment.size()*4 +(this.mainEnvironment.size()%2==0?0:4)), RegisterARM.SP)); // SUBS SP, SP, nb_var*4
 
         declVariables.armCodeGenListDeclVar(compiler);
         insts.armCodeGenListInst(compiler);
         compiler.addInstruction(new ADDS(new ImmediateInteger(this.mainEnvironment.size()*4+(this.mainEnvironment.size()%2==0?0:4)), RegisterARM.SP));
-        compiler.addInstruction(new POP(RegisterARM.FP, RegisterARM.PC)); // POP {fp, pc}
+        compiler.addInstruction(new POPARM(RegisterARM.FP, RegisterARM.PC)); // POP {fp, pc}
         compiler.addInstruction(new MOV(new ImmediateInteger(0), RegisterARM.getR(0)));
         compiler.addInstruction(new BL(new Label("exit")));
     }

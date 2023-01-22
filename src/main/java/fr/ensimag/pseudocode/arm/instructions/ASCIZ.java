@@ -4,8 +4,8 @@ import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.UnaryInstruction;
 
 /**
- * @author Ensimag
- * @date 01/01/2023
+ * .asciz tag
+ * @author gl21
  */
 public class ASCIZ extends UnaryInstruction {
 

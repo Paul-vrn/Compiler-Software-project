@@ -7,6 +7,9 @@ import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.util.List;
 
+/**
+ * Factory for labels.
+ */
 public class LabelFactory {
 
     private boolean noCheck;
@@ -57,9 +60,19 @@ public class LabelFactory {
         this.flagIOError = false;
         this.flagDivByZeroError = false;
     }
+
+    /**
+     * Setter for noCheck
+     * @param noCheck boolean
+     */
     public void setNoCheck(boolean noCheck) {
         this.noCheck = noCheck;
     }
+
+    /**
+     * Create the error section
+     * @param compiler compiler
+     */
     public void createErrorSection(DecacCompiler compiler){
         if (noCheck)
             return;

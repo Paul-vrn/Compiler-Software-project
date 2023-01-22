@@ -10,12 +10,12 @@ import org.apache.commons.lang.Validate;
 import java.io.PrintStream;
 
 /**
+ * Parameter declaration.
+ *
  * @author gl21
  * @date 01/01/2023
  */
 public class DeclParam extends AbstractDeclParam {
-
-
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
 
@@ -48,7 +48,9 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected Type verifyDeclParamPass2(DecacCompiler compiler) throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
-        if(this.type.getType().isVoid()) {
+
+        /* Verifies if the type is void */
+        if (this.type.getType().isVoid()) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Parameter type void forbidden", this.getLocation());
         }

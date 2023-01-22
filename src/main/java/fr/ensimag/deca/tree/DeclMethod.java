@@ -29,6 +29,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private AbstractMethodBody methodBody;
 
     private EnvironmentExp localEnv;
+
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier varName, ListDeclParam listParams, AbstractMethodBody methodBody) {
         Validate.notNull(type);
         Validate.notNull(varName);
@@ -81,14 +82,15 @@ public class DeclMethod extends AbstractDeclMethod {
 
         if (superClass.getClassDefinition().getMembers().get(varName.getName()) != null) {
             if_taken = 1;
-            index_fin = superClass.getClassDefinition().getMembers().get(varName.getName()).asMethodDefinition("bruh",getLocation()).getIndex();
+            index_fin = superClass.getClassDefinition().getMembers().get(varName.getName()).asMethodDefinition("bruh", getLocation()).getIndex();
+            /* Verifies if it's an Override method and if the Signature fits */
             if (superClass.getClassDefinition().getMembers().get(varName.getName()).isMethod()
                     && superClass.getClassDefinition().getMembers().get(varName.getName()).asMethodDefinition("conversion en MethodeDef impossible", getLocation()).getSignature().equals(sig)) {
                 try {
+                    /*  Verifies if the return type fits */
                     if (superClass.getClassDefinition().getMembers().get(varName.getName()).getType().sameType(type1)
-                            || type1.asClassType("Type not class type", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(varName.getName()).getType().asClassType("bruh", getLocation())))
-                    {}
-                    else{
+                            || type1.asClassType("Type not class type", getLocation()).isSubClassOf(superClass.getClassDefinition().getMembers().get(varName.getName()).getType().asClassType("bruh", getLocation()))) {
+                    } else {
                         throw new ContextualError(compiler.displaySourceFile() + ":"
                                 + this.getLocation().errorOutPut() + ": Method name conflict in super class", this.getLocation());
                     }
@@ -96,16 +98,15 @@ public class DeclMethod extends AbstractDeclMethod {
                     throw new ContextualError(compiler.displaySourceFile() + ":"
                             + this.getLocation().errorOutPut() + ": Subtype condition not respected", this.getLocation());
                 }
-            }
-            else{
+            } else {
                 throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Signature method conflict in super class", this.getLocation());
             }
-        } else{
+        } else {
             name.getClassDefinition().incNumberOfMethods();
 
         }
-        if(if_taken == 0) {
+        if (if_taken == 0) {
             this.varName.setDefinition(new MethodDefinition(this.type.getType(), getLocation(),
                     sig, name.getClassDefinition().getNumberOfMethods() + 1));
         } else {
@@ -137,7 +138,7 @@ public class DeclMethod extends AbstractDeclMethod {
     public void codeGenDeclMethod(DecacCompiler compiler, String className) {
         List<Line> preInit = new ArrayList<>();
         compiler.getMemory().resetLastGRegister();
-        compiler.getLabelFactory().setSuffixCurrentMethod(className+"."+this.varName.getName().getName());
+        compiler.getLabelFactory().setSuffixCurrentMethod(className + "." + this.varName.getName().getName());
         compiler.addLabel(new Label("code." + compiler.getLabelFactory().getSuffixCurrentMethod()));
         compiler.getMemory().saveTSTO();
         int indexTSTO = compiler.getLineIndex();
@@ -152,10 +153,10 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.addLabel(new Label("fin." + compiler.getLabelFactory().getSuffixCurrentMethod()));
 
         if (compiler.getMemory().getLastGRegister() > 1) {
-            for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
+            for (int i = 2; i < compiler.getMemory().getLastGRegister() + 1; i++) {
                 preInit.add(new Line(new PUSH(RegisterIMA.getR(i))));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister() - (i - 2))));
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));

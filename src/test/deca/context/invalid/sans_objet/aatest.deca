@@ -1,13 +1,20 @@
 // Description:
-//    Assignation avec une valeur indéfinie.
+//    Programme minimaliste testant NoOperation
 //
 // Resultats:
-//      Ligne 12: Assign impossible with undefined value
+//
 //
 // Historique:
-//    cree le 01/01/2023
+//    cree le 04/01/2023
+
+class A{
+    int getX(){
+
+    }
+}
 
 {
-    int x;
-    x = y;
+    A a = new A();
+    a instanceof int;
 }
+

@@ -33,7 +33,6 @@ public class MethodBodyAsm extends AbstractMethodBody {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        //TODO
     }
 
     @Override
@@ -49,7 +48,7 @@ public class MethodBodyAsm extends AbstractMethodBody {
     @Override
     public int codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp) {
         Arrays.stream(asm.getValue()
-                        .substring(1, asm.getValue().length() -1)
+                        .substring(1, asm.getValue().length() - 1)
                         .replace("\\\"", "\"")
                         .split("\n"))
                 .forEach(line -> compiler.add(new InlinePortion(line)));

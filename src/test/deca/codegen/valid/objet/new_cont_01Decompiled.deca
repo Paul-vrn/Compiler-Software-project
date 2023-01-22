@@ -1,0 +1,39 @@
+class C {
+	int l;
+	int x(){
+	}
+}
+
+class B extends C {
+	int g;
+	int l;
+	int x(){
+	}
+	int z(){
+	}
+}
+
+class A extends B {
+	int r;
+	int l;
+	int o(){
+	}
+	int z(){
+	}
+	int x(){
+	}
+	int m(){
+	}
+}
+
+{
+	A a = new A();
+	B b = new B();
+	C c = new C();
+	if (a.equals(b)) {
+		println("a == b");
+		}
+	else {
+		println("a != b");
+	}
+}

@@ -16,6 +16,8 @@ import fr.ensimag.pseudocode.ima.instructions.CMP;
 import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 /**
+ * Class for a Not operand
+ * example: !true;
  *
  * @author gl21
  * @date 01/01/2023
@@ -26,12 +28,25 @@ public class Not extends AbstractUnaryExpr {
         super(operand);
     }
 
+    /**
+     * VerifyExpr for the not operand
+     *
+     * @param compiler     (contains the "env_types" attribute)
+     * @param localEnv     Environment in which the expression should be checked
+     *                     (corresponds to the "env_exp" attribute)
+     * @param currentClass Definition of the class containing the expression
+     *                     (corresponds to the "class" attribute)
+     *                     is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         this.setType(getOperand().verifyExpr(compiler, localEnv, currentClass));
-        if(!this.getType().isBoolean()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        //Throws an error if the expression is not boolean
+        if (!this.getType().isBoolean()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Operator Not type mismatch", this.getLocation());
         }
         return this.getType();

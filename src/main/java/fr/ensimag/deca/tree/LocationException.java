@@ -32,8 +32,7 @@ public class LocationException extends Exception {
 
     public LocationException(String message, Location location) {
         super(message);
-        assert(location == null || location.getFilename() != null);
-        // TODO remplacer l'assert par un if... throw error
+        assert (location == null || location.getFilename() != null);
         this.location = location;
     }
 

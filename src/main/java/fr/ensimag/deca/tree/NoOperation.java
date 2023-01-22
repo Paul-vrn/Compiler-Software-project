@@ -10,7 +10,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 /**
- * 
+ * Class for no operation
+ * exemple:    ;
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -18,15 +20,16 @@ public class NoOperation extends AbstractInst {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         // nothing to do
-        }
+    }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         // nothing
     }
+
     @Override
     protected void armCodeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");

@@ -12,6 +12,7 @@ import fr.ensimag.pseudocode.ima.instructions.BNE;
 import fr.ensimag.pseudocode.ima.instructions.SNE;
 
 /**
+ * Class for NotEquals ( != )
  *
  * @author gl21
  * @date 01/01/2023

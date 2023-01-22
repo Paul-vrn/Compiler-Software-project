@@ -11,6 +11,9 @@ import fr.ensimag.pseudocode.ima.instructions.POP;
 import fr.ensimag.pseudocode.ima.instructions.PUSH;
 
 /**
+ * Class for the plus ( + ) operand
+ * example: 2 + 3;
+ *
  * @author gl21
  * @date 01/01/2023
  */

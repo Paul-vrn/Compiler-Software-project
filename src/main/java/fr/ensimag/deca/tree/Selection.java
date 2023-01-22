@@ -9,6 +9,13 @@ import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.io.PrintStream;
 
+/**
+ * Class for the selection lvalue
+ * example: a.x (where x is a field of the class that a is an instance of)
+ *
+ * @author gl21
+ * @date 10/01/2023
+ */
 public class Selection extends AbstractLValue{
 
     public AbstractExpr expr;
@@ -19,10 +26,24 @@ public class Selection extends AbstractLValue{
         this.fieldIdentifier = fieldIdentifier;
     }
 
+    /**
+     * VerifyExpr for Selection
+     * @param compiler  (contains the "env_types" attribute)
+     * @param envExp
+     *            Environment in which the expression should be checked
+     *            (corresponds to the "env_exp" attribute)
+     * @param classdef
+     *            Definition of the class containing the expression
+     *            (corresponds to the "class" attribute)
+     *             is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp envExp, ClassDefinition classdef) throws ContextualError {
         Type type1 = this.expr.verifyExpr(compiler, envExp, classdef);
 
+        // throws an error if the expression is not an instance of a class
         if(!type1.isClass()){
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Identifier not a class instance", this.getLocation());
@@ -30,6 +51,8 @@ public class Selection extends AbstractLValue{
 
         Definition fieldDefBefore = this.fieldIdentifier.verifyDefinition(compiler, ((ClassDefinition) compiler.environmentType.getEnvTypes().get(type1.getName())).getMembers());
         FieldDefinition fieldDef;
+
+        // throws an error if the identifier on the right side of the selection is not the field of a class
         if(!fieldDefBefore.isField()){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Must be a field", this.getLocation());
@@ -39,6 +62,7 @@ public class Selection extends AbstractLValue{
 
         this.setType(fieldDef.getType());
 
+        // checks the visibility of the field, if it is protected, check the three conditions of (3.66)
         if(fieldDef.getVisibility() == Visibility.PUBLIC){
             return this.getType();
         }else if(fieldDef.getVisibility() == Visibility.PROTECTED){

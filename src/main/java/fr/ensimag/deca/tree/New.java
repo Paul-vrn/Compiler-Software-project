@@ -14,6 +14,13 @@ import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
+/**
+ * Class for new
+ * Exemple : A a = new A();
+ *
+ * @author gl21
+ * @date 10/01/2023
+ */
 public class New extends AbstractExpr{
 
     public AbstractIdentifier typeNew;
@@ -23,11 +30,25 @@ public class New extends AbstractExpr{
         this.typeNew = typeNew;
     }
 
+    /**
+     * VerifyExpr for New, throws an error if the type is not one of a class
+     *
+     * @param compiler  (contains the "env_types" attribute)
+     * @param localEnv
+     *            Environment in which the expression should be checked
+     *            (corresponds to the "env_exp" attribute)
+     * @param currentClass
+     *            Definition of the class containing the expression
+     *            (corresponds to the "class" attribute)
+     *             is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type type1 = this.typeNew.verifyType(compiler);
         this.setType(type1);
-
+        // Throws the error "New type must be a class" if the type is not one of a class. Ex: int x = new int();
         if(!type1.isClass()){
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.typeNew.getLocation().errorOutPut() + ": New type must be a class", this.typeNew.getLocation());

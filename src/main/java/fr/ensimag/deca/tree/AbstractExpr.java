@@ -201,7 +201,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     protected void armCodeGenInst(DecacCompiler compiler) {
         this.armCodeGenExpr(compiler, 4,2);
-        throw new UnsupportedOperationException("not yet implemented");
+        this.armCodeGenExpr(compiler, 4, 2);
     }
     @Override
     protected void decompileInst(IndentPrintStream s) {

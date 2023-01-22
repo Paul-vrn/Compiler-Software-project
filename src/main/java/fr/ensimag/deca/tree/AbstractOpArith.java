@@ -53,10 +53,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         return this.getType();
     }
 
-    public boolean checkBothLiteral() {
-        return (getLeftOperand() instanceof IntLiteral && getRightOperand() instanceof IntLiteral)
-                || (getLeftOperand() instanceof FloatLiteral && getRightOperand() instanceof FloatLiteral);
-    }
     public DVal oneLiteral(DecacCompiler compiler, int n) {
          if (getRightOperand() instanceof IntLiteral) {
             getLeftOperand().codeGenExpr(compiler, n);

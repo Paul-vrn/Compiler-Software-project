@@ -31,18 +31,6 @@ public class Cast extends AbstractExpr {
         this.expr = expr;
     }
 
-    public String getOperatorName() {
-        return "";
-    }
-
-    public AbstractIdentifier getType1() {
-        return type;
-    }
-
-    public AbstractExpr getExpr() {
-        return expr;
-    }
-
     /**
      * Throws an error if the type and the castType are incompatible.
      *
@@ -60,7 +48,7 @@ public class Cast extends AbstractExpr {
                            EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
-        Type type2 = this.getExpr().verifyExpr(compiler, localEnv, currentClass);
+        Type type2 = this.expr.verifyExpr(compiler, localEnv, currentClass);
 
         /* Verification of the compatibility between the type and the castType */
         if (!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2)
@@ -74,7 +62,7 @@ public class Cast extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        getExpr().codeGenExpr(compiler, n);
+        expr.codeGenExpr(compiler, n);
         if (getType().isInt()) {
             compiler.addInstruction(new INT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         } else if (getType().isFloat()) {
@@ -84,7 +72,7 @@ public class Cast extends AbstractExpr {
 
     @Override
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        getExpr().armCodeGenExpr(compiler, n, m);
+        expr.armCodeGenExpr(compiler, n, m);
         if (type.getType().isInt() && expr.getType().isFloat()) {
             // int <-- float
             compiler.addInstruction(new VCVTSF(RegisterARM.getS(m), RegisterARM.getS(m)));

@@ -319,7 +319,11 @@ public class ArmCodegenTest {
         generalTestValid(args, null);
     }
 
-
+    @Test
+    void test51_expression_arith() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/print_float.deca"};
+        generalTestValid(args, null);
+    }
 
 
     void generalTestValid(String[] args, String input) throws IOException {

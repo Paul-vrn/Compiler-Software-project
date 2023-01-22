@@ -138,6 +138,7 @@
                                     <directory>src/test/</directory>
                                     <includes>
                                         <include>**/*.ass</include>
+                                        <include>**/*.s</include>
                                         <include>**/*Decompiled.deca</include>
                                     </includes>
                                     <followSymlinks>false</followSymlinks>

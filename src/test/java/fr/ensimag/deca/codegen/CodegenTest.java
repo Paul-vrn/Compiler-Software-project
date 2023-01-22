@@ -12,9 +12,6 @@ import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -494,6 +491,41 @@ public class CodegenTest {
     void test68math_float_ov_02() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/math_float_ov_02.deca"};
         String file2 = "src/test/deca/codegen/valid/math_float_ov_02_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test69_print_float() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/print_float.deca"};
+        String file2 = "src/test/deca/codegen/valid/print_float_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test70_print_float2() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_div_decalage.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_div_decalage_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test71_class_decl_local_field() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_extends_10.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_extends_10_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test72_class_decl_local_field() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_imm_left_int.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_imm_left_int_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test73_class_decl_local_field() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_imm_left_float.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_imm_left_float_oracle.txt";
         generalTestValid(args, file2, null);
     }
 

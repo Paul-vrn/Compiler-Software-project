@@ -276,7 +276,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
-        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), RegisterIMA.LB));
+        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), RegisterIMA.SP));
     }
 
     @Override

@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant que la division par nombre puissance de 2
+//    est remplacé par 1 ou plusieurs shift right.
+//
+// Resultats:
+//      32
+//      16
+//
+// Historique:
+//    cree le 22/01/2023
+
+{
+    int x = 64;
+    println(x/2);
+    print(x/4);
+}

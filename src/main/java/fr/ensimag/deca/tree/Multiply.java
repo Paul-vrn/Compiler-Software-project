@@ -22,7 +22,7 @@ public class Multiply extends AbstractOpArith {
     public void codeGenExpr(DecacCompiler compiler, int n) {
         DVal lit = oneLiteral(compiler, n);
         if (lit != null) {
-            compiler.addInstruction(new ADD(lit, RegisterIMA.getR(n)));
+            compiler.addInstruction(new MUL(lit, RegisterIMA.getR(n)));
             return;
         }
 

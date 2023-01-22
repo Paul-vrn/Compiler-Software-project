@@ -37,18 +37,18 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(value ? 1 : 0, RegisterIMA.getR(n)));
+        compiler.addInstruction(new LOAD(getValue() ? 1 : 0, RegisterIMA.getR(n)));
         compiler.getMemory().setLastGRegister(n);
     }
 
     @Override
     public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        compiler.addInstruction(new MOV(new ImmediateInteger(value ? 1 : 0), RegisterARM.getR(n)));
+        compiler.addInstruction(new MOV(new ImmediateInteger(getValue() ? 1 : 0), RegisterARM.getR(n)));
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(Boolean.toString(value));
+        s.print(Boolean.toString(getValue()));
     }
 
     @Override

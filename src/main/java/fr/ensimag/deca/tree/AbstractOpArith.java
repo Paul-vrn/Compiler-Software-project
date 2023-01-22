@@ -5,6 +5,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.pseudocode.DVal;
+import fr.ensimag.pseudocode.ImmediateFloat;
+import fr.ensimag.pseudocode.ImmediateInteger;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.SUB;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
@@ -47,5 +52,28 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
         return this.getType();
     }
+
+    public boolean checkBothLiteral() {
+        return (getLeftOperand() instanceof IntLiteral && getRightOperand() instanceof IntLiteral)
+                || (getLeftOperand() instanceof FloatLiteral && getRightOperand() instanceof FloatLiteral);
+    }
+    public DVal oneLiteral(DecacCompiler compiler, int n) {
+         if (getRightOperand() instanceof IntLiteral) {
+            getLeftOperand().codeGenExpr(compiler, n);
+            return new ImmediateInteger(((IntLiteral) getRightOperand()).getValue());
+        } else if (getRightOperand() instanceof FloatLiteral) {
+            getLeftOperand().codeGenExpr(compiler, n);
+            return new ImmediateFloat(((FloatLiteral) getRightOperand()).getValue());
+        } else if (getLeftOperand() instanceof IntLiteral) {
+            getRightOperand().codeGenExpr(compiler, n);
+            return new ImmediateInteger(((IntLiteral) getLeftOperand()).getValue());
+        } else if (getLeftOperand() instanceof FloatLiteral) {
+            getRightOperand().codeGenExpr(compiler, n);
+            return new ImmediateFloat(((FloatLiteral) getLeftOperand()).getValue());
+        } else {
+             return null;
+         }
+    }
+
 
 }

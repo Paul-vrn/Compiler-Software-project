@@ -1,10 +1,9 @@
 package fr.ensimag.pseudocode;
 
 /**
- * Operand of an IMA Instruction.
+ * Represent a list of operands.
  *
- * @author Ensimag
- * @date 01/01/2023
+ * @author gl21
  */
 public class ListOperand extends Operand {
 

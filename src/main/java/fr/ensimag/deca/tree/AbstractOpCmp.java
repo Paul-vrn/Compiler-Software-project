@@ -63,6 +63,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         return this.getType();
     }
 
+    /**
+     * Generates assembly code to evaluate the expression and leave the result in the register n
+     * @param compiler compiler where the code will be generated
+     * @param n number of the register where the result is stored
+     */
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         getLeftOperand().codeGenExpr(compiler, n);
@@ -81,6 +86,12 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         }
     }
 
+    /**
+     * Generates assembly code to evaluate the expression and leave the result in the register n
+     * @param compiler compiler where the code will be generated
+     * @param n number of the register R (for integer)
+     * @param m number of the register S (for float)
+     */
     @Override
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         getLeftOperand().armCodeGenExpr(compiler, n, m);

@@ -5,17 +5,12 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.pseudocode.Label;
-import fr.ensimag.pseudocode.RegisterARM;
-import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.*;
 import fr.ensimag.pseudocode.arm.instructions.BL;
 import fr.ensimag.pseudocode.arm.instructions.MOV;
 import fr.ensimag.pseudocode.arm.instructions.POPARM;
 import fr.ensimag.pseudocode.arm.instructions.PUSHARM;
-import fr.ensimag.pseudocode.ima.instructions.LOAD;
-import fr.ensimag.pseudocode.ima.instructions.POP;
-import fr.ensimag.pseudocode.ima.instructions.PUSH;
-import fr.ensimag.pseudocode.ima.instructions.REM;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 /**
  * Modulo Operator.
@@ -46,6 +41,12 @@ public class Modulo extends AbstractOpArith {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
+        DVal lit = oneLiteral(compiler, n);
+        if (lit != null) {
+            compiler.addInstruction(new REM(lit, RegisterIMA.getR(n)));
+            return;
+        }
+
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < RegisterIMA.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);

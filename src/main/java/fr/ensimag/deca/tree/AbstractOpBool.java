@@ -44,4 +44,5 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         }
         return this.getType();
     }
+
 }

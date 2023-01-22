@@ -4,6 +4,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 
 import fr.ensimag.pseudocode.GPRegister;
+import fr.ensimag.pseudocode.ImmediateInteger;
 import fr.ensimag.pseudocode.RegisterARM;
 import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.arm.instructions.*;
@@ -11,7 +12,6 @@ import fr.ensimag.pseudocode.ima.instructions.*;
 
 
 /**
- * Divide Operator.
  *
  * @author gl21
  * @date 01/01/2023
@@ -26,8 +26,12 @@ public class Divide extends AbstractOpArith {
         getLeftOperand().codeGenExpr(compiler, n);
         GPRegister regRight = null;
         if (n < RegisterIMA.RMAX) {
-            getRightOperand().codeGenExpr(compiler, n + 1);
-            regRight = RegisterIMA.getR(n + 1);
+            if (getRightOperand() instanceof IntLiteral && ((IntLiteral) getRightOperand()).getValue() != 0) {
+
+            } else {
+                getRightOperand().codeGenExpr(compiler, n + 1);
+                regRight = RegisterIMA.getR(n + 1);
+            }
         } else {
             compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
             getRightOperand().codeGenExpr(compiler, n);
@@ -36,13 +40,25 @@ public class Divide extends AbstractOpArith {
             regRight = RegisterIMA.R0;
         }
 
-        if (this.getType().isFloat()) {
+        if(this.getType().isFloat()){
             compiler.getLabelFactory().createTestDiv0(compiler, regRight, false);
             compiler.addInstruction(new DIV(regRight, RegisterIMA.getR(n)));
             compiler.getLabelFactory().createTestOverflow(compiler);
-        } else {
-            compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
-            compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
+        }
+        else{
+            if (regRight == null){
+                int value = ((IntLiteral) getRightOperand()).getValue();
+                if (value%2==0){
+                    for (int i = 0; i < Math.log(value)/Math.log(2); i++){
+                        compiler.addInstruction(new SHR(RegisterIMA.getR(n)));
+                    }
+                } else {
+                    compiler.addInstruction(new QUO(new ImmediateInteger(value), RegisterIMA.getR(n)));
+                }
+            } else {
+                compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
+                compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
+            }
         }
     }
 
@@ -52,8 +68,8 @@ public class Divide extends AbstractOpArith {
         if (getType().isFloat()) {
             if (m < RegisterARM.SMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
-                compiler.addInstruction(new VDIV(RegisterARM.getS(m + 1), RegisterARM.getS(m), RegisterARM.getS(m)));
+                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
+                compiler.addInstruction(new VDIV(RegisterARM.getS(m+1), RegisterARM.getS(m), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new VPUSH(RegisterARM.getS(m)));
@@ -65,8 +81,8 @@ public class Divide extends AbstractOpArith {
         } else {
             if (n < RegisterARM.RMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
-                compiler.addInstruction(new SDIV(RegisterARM.getR(n + 1), RegisterARM.getR(n)));
+                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
+                compiler.addInstruction(new SDIV(RegisterARM.getR(n+1), RegisterARM.getR(n)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));

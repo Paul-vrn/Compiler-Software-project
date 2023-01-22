@@ -1,14 +1,8 @@
 package fr.ensimag.deca.tree;
-
-
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.pseudocode.RegisterIMA;
-import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.*;
 import fr.ensimag.pseudocode.arm.instructions.*;
-import fr.ensimag.pseudocode.ima.instructions.ADD;
-import fr.ensimag.pseudocode.ima.instructions.LOAD;
-import fr.ensimag.pseudocode.ima.instructions.POP;
-import fr.ensimag.pseudocode.ima.instructions.PUSH;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 /**
  * Class for the plus ( + ) operand
@@ -25,6 +19,12 @@ public class Plus extends AbstractOpArith {
 
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
+        DVal lit = oneLiteral(compiler, n);
+        if (lit != null) {
+            compiler.addInstruction(new ADD(lit, RegisterIMA.getR(n)));
+            return;
+        }
+
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < RegisterIMA.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);

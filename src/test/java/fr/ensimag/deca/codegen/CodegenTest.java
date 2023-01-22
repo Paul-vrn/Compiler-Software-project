@@ -462,6 +462,13 @@ public class CodegenTest {
         generalTestValid(args, file2,null);
     }
 
+    @Test
+    void test63class_method_asm_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/class_method_asm_01.deca"};
+        String file2 = "src/test/deca/codegen/valid/class_method_asm_01_oracle.txt";
+            generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

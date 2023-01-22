@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.instructions.WNL;
 
 /**
  * @author gl21
@@ -19,6 +18,11 @@ public class Print extends AbstractPrint {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         super.codeGenInst(compiler);
+    }
+
+    @Override
+    public void armCodeGenInst(DecacCompiler compiler) {
+        super.codeGenInstARM(compiler);
     }
 
     @Override

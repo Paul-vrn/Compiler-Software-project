@@ -3,10 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.Line;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.*;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.tools.SymbolTable;
 
@@ -67,7 +67,6 @@ public class DeclMethod extends AbstractDeclMethod {
         listParams.iter(f);
         methodBody.iter(f);
     }
-
 
     @Override
     protected EnvironmentExp verifyDeclMethodPass2(DecacCompiler compiler, AbstractIdentifier superClass,
@@ -143,7 +142,7 @@ public class DeclMethod extends AbstractDeclMethod {
         int indexTSTO = compiler.getLineIndex();
         this.listParams.codeGenListDeclParam(compiler, localEnv);
 
-        this.methodBody.codeGenMethodBody(compiler, localEnv);
+        int sp = this.methodBody.codeGenMethodBody(compiler, localEnv);
 
         if (!type.getType().isVoid()) {
             compiler.getLabelFactory().createTestReturn(compiler);
@@ -153,13 +152,15 @@ public class DeclMethod extends AbstractDeclMethod {
 
         if (compiler.getMemory().getLastGRegister() > 1) {
             for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
-                preInit.add(new Line(new PUSH(Register.getR(i))));
+                preInit.add(new Line(new PUSH(RegisterIMA.getR(i))));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister()-(i-2))));
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
-        preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
+        compiler.getLabelFactory().createTestStack(preInit, 1);
+        if (sp > 0)
+            preInit.add(2, new Line(new ADDSP(sp)));
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();

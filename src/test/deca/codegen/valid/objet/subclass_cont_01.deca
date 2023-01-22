@@ -1,0 +1,20 @@
+// Description:
+//    Programme minimaliste testant la déclaration de sous classes .
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 04/01/2023
+
+class A{
+	int x;
+}
+
+class B extends A {}
+
+{
+    A a = new B();
+    a.x = 42;
+    print(a.x);
+}

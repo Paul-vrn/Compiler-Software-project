@@ -1,0 +1,6 @@
+test bool 1 passe
+test bool 2 passe
+test bool 3 passe
+test bool 4 passe
+test bool 5 passe
+test bool 6 passe

@@ -3,10 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.io.PrintStream;
 
@@ -84,27 +83,26 @@ public class MethodCall extends AbstractExpr{
         compiler.addComment("method call at " + methodId.getLocation() + " : " +methodId.getName().getName());
         compiler.addInstruction(new ADDSP(parameters.getList().size()+1));
         expr.codeGenExpr(compiler, n);
-        compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(2)));
 
-        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP))); // empilement implicite
+        compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(0, RegisterIMA.SP))); // empilement implicite
         compiler.getMemory().increaseTSTO();
         int index = -1;
         for (AbstractExpr param : parameters.getList()) {
-            param.codeGenExpr(compiler, 2);
-            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
+            param.codeGenExpr(compiler, n);
+            compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(index, RegisterIMA.SP)));
             compiler.getMemory().increaseTSTO();
             index--; // empilement des paramètres
         }
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
-        compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(2));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.SP), RegisterIMA.getR(n)));
+        compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n));
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
-        compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), Register.getR(2))));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), RegisterIMA.getR(n))));
         compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
 
         if (!getType().isVoid()){
-            compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
+            compiler.addInstruction(new LOAD(RegisterIMA.R0, RegisterIMA.getR(n)));
         }
     }
 

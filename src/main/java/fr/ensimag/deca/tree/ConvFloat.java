@@ -4,8 +4,11 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.VCVTFS;
+import fr.ensimag.pseudocode.arm.instructions.VMOV;
+import fr.ensimag.pseudocode.ima.instructions.FLOAT;
 
 
 /**
@@ -35,6 +38,19 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         getOperand().codeGenExpr(compiler, n);
-        compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+        compiler.addInstruction(new FLOAT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
+    }
+
+    /**
+     * float <-- int
+     * @param compiler
+     * @param n number of the register R (for integer)
+     * @param m number of the register S (for float)
+     */
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        getOperand().armCodeGenExpr(compiler, n, m);
+        compiler.addInstruction(new VMOV(RegisterARM.getR(n), RegisterARM.getS(m)));
+        compiler.addInstruction(new VCVTFS(RegisterARM.getS(m), RegisterARM.getS(m)));
     }
 }

@@ -1,0 +1,6 @@
+{
+int x = (int)(1.5) + (int)(1.5);
+float y = (float)(x) + x;
+println(x);
+println(y);
+}

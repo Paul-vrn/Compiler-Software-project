@@ -1,12 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.deca.context.Type;
 
 /**
@@ -32,5 +28,5 @@ public abstract class AbstractMethodBody extends Tree {
                                              EnvironmentExp classEnv, EnvironmentExp envExpParam, AbstractIdentifier name, Type returnType)
             throws ContextualError;
 
-    public abstract void codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp);
+    public abstract int codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp);
 }

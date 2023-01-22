@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.Location;
-import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.STORE;
 import org.apache.commons.lang.Validate;
 
 import java.util.Comparator;
@@ -140,10 +140,10 @@ public class ClassDefinition extends TypeDefinition {
                             methods.set(j, dummyMethod);
                         }
                     }
-                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd.getFullName())), Register.getR(1)));
-                    compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+                    compiler.addInstruction(new LOAD(new LabelOperand(new Label(methodToAdd.getFullName())), RegisterIMA.getR(1)));
+                    compiler.addInstruction(new STORE(RegisterIMA.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB)));
                     compiler.getMemory().increaseTSTO();
-                    methodToAdd.setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
+                    methodToAdd.setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), RegisterIMA.GB));
                 }
             }
         }

@@ -1,17 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentType;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.instructions.*;
-import java.io.PrintStream;
-import java.util.Map;
+import fr.ensimag.pseudocode.ima.instructions.ADDSP;
+import fr.ensimag.pseudocode.ima.instructions.TSTO;
 
+import java.io.PrintStream;
+import fr.ensimag.pseudocode.ima.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -56,22 +52,34 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         int indexTSTO = compiler.getLineIndex();
-        compiler.addComment("Method Table Initialization");
+        compiler.addComment("--- Start of Method Table Initialization ---");
         classes.codeGenMethodTable(compiler);
-        compiler.addComment("Method Table Initialization End");
+        compiler.addComment("--- End of Method Table Initialization ---");
+        compiler.addComment("");
+        compiler.addComment("--- Start of main instructions ---");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        compiler.addComment("end of main instructions");
-
+        compiler.addComment("--- End of main instructions ---");
+        compiler.addComment("");
         compiler.addIndex(indexTSTO, new TSTO(compiler.getMemory().TSTO()));
         compiler.getLabelFactory().createTestStack(compiler, indexTSTO);
         compiler.addIndex(indexTSTO+2, new ADDSP(compiler.getMemory().getGlobalOffset()-1));
 
-        compiler.addComment("Class definition");
+        compiler.addComment("--- Start of class definition ---");
         classes.codeGenDeclClasses(compiler);
-        compiler.addComment("Errors messages");
+        compiler.addComment("--- End of class definition ---");
+        compiler.addComment("");
+        compiler.addComment("--- Start of Error messages section ---");
         compiler.getLabelFactory().createErrorSection(compiler);
-        compiler.addComment("End of program");
+        compiler.addComment("--- End of Error messages section ---");
+    }
+
+    @Override
+    public void armCodeGenProgram(DecacCompiler compiler) {
+        compiler.addComment("Main program");
+        main.armCodeGenMain(compiler);
+        //compiler.getLabelFactory().createErrorSection(compiler);
+        compiler.getLabelFactory().createPrintLabel(compiler);
     }
 
     @Override

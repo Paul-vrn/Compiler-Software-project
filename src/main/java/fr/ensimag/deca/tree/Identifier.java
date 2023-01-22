@@ -7,11 +7,16 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.*;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WINT;
 import org.apache.commons.lang.Validate;
-//import sun.awt.SubRegionShowable;
 
 /**
  * Deca Identifier
@@ -20,7 +25,6 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2023
  */
 public class Identifier extends AbstractIdentifier {
-
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -121,7 +125,6 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
-
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
      * 
@@ -166,7 +169,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        if(localEnv.get(this.getName()) != null){;
+        if(localEnv.get(this.getName()) != null){
             this.setType(localEnv.get(this.getName()).getType());
             this.setDefinition(localEnv.get(this.getName()));
         }
@@ -203,13 +206,7 @@ public class Identifier extends AbstractIdentifier {
         return this.definition;
     }
 
-    public Definition verifyDefinition(DecacCompiler compiler) throws ContextualError{
-        return this.definition;
-    }
-
-    
     private Definition definition;
-
 
     @Override
     protected void iterChildren(TreeFunction f) {
@@ -247,21 +244,21 @@ public class Identifier extends AbstractIdentifier {
         // if is field
         compiler.getMemory().setLastGRegister(n);
         if (getExpDefinition().isField()) {
-            if (n < Register.RMAX) {
-                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), Register.getR(n+1)));
-                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(n+1))));
+            if (n < RegisterIMA.RMAX) {
+                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), RegisterIMA.getR(n+1)));
+                compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), RegisterIMA.getR(n+1))));
                 compiler.getMemory().setLastGRegister(n+1);
             } else {
-                compiler.addInstruction(new PUSH(Register.getR(n)));
+                compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), Register.getR(n)));
-                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-                compiler.addInstruction(new POP(Register.getR(n)));
+                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), RegisterIMA.getR(n)));
+                compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.R0));
+                compiler.addInstruction(new POP(RegisterIMA.getR(n)));
                 compiler.getMemory().decreaseTSTO();
-                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(0))));
+                compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), RegisterIMA.getR(0))));
             }
         } else {
-            compiler.addInstruction(new STORE(Register.getR(n), getExpDefinition().getOperand()));
+            compiler.addInstruction(new STORE(RegisterIMA.getR(n), getExpDefinition().getOperand()));
         }
     }
 
@@ -269,22 +266,22 @@ public class Identifier extends AbstractIdentifier {
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.getMemory().setLastGRegister(n);
 
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.getR(n)));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), RegisterIMA.getR(n)));
         if (this.getExpDefinition().isField()) {
-            compiler.addInstruction(new LOAD(new RegisterOffset(getFieldDefinition().getIndex(), Register.getR(n)), Register.getR(n)));
+            compiler.addInstruction(new LOAD(new RegisterOffset(getFieldDefinition().getIndex(), RegisterIMA.getR(n)), RegisterIMA.getR(n)));
         }
     }
 
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB));
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB));
     }
     public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
-        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), Register.LB));
+        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), RegisterIMA.LB));
     }
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
-        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
+        compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), RegisterIMA.R1));
         if (getType().isInt()) {
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()) {
@@ -294,4 +291,30 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+    @Override
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(1)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        } else {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(16)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(16), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+            compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+        }
+    }
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        if (getType().isFloat()) {
+            compiler.addInstruction(new VLDR(this.getExpDefinition().getOperand(), RegisterARM.getS(m)));
+        } else {
+            compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
+        }
+    }
+    public void armCodeGenDeclVar(DecacCompiler compiler){
+        compiler.increaseArmOffset(4);
+        this.getExpDefinition().setOperand(new RegisterOffset(compiler.getNextArmOffSet(), RegisterARM.FP));
+    }
 }

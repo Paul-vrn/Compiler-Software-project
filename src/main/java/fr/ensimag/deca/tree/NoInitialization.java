@@ -6,9 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+
 
 import java.io.PrintStream;
 
@@ -31,17 +31,20 @@ public class  NoInitialization extends AbstractInitialization {
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
             // nothing to do
     }
-
+    @Override
+    protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        // nothing to do
+    }
     @Override
     public void codeGenInitField(DecacCompiler compiler, Type type, int n){
         if (type.isInt()) {
-            compiler.addInstruction(new LOAD(0, Register.getR(n)));
+            compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
         } else if (type.isFloat()) {
-            compiler.addInstruction(new LOAD(new ImmediateFloat(0.0f), Register.getR(n)));
+            compiler.addInstruction(new LOAD(new ImmediateFloat(0.0f), RegisterIMA.getR(n)));
         } else if (type.isBoolean()) {
-            compiler.addInstruction(new LOAD(0, Register.getR(n)));
+            compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
         } else {
-            compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(n)));
+            compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.getR(n)));
         }
     }
 

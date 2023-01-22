@@ -35,7 +35,11 @@ public class InstanceOf extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        s.print("(");
+        expr.decompile(s);
+        s.print(" instanceof ");
+        type.decompile(s);
+        s.print(")");
     }
 
     @Override
@@ -46,6 +50,7 @@ public class InstanceOf extends AbstractExpr{
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        expr.iter(f);
+        type.iter(f);
     }
 }

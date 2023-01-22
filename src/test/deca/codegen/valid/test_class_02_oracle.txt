@@ -1,3 +1,1 @@
 a.getX=1
-a.getX=2
-

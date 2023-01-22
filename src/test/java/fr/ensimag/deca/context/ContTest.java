@@ -671,6 +671,41 @@ public class ContTest {
         generalTestValid(args, file2);
     }
 
+    @Test
+    void test102() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/missing_type_inst.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/missing_type_inst_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test103() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/missing_type_exp.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/missing_type_exp_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test104() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/this_main.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/this_main_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test105() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/undeclared_method_field.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/undeclared_method_field_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test106() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/noOp_cont_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/noOp_cont_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
 
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {

@@ -229,6 +229,12 @@ public class OptionpTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test33_Soupe() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/Soupe.deca"};
+        generalTestValid(args, null);
+    }
+
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
 

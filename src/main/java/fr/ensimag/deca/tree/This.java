@@ -29,7 +29,7 @@ public class This extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        s.print("this");
     }
 
     @Override

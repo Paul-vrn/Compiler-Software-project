@@ -59,7 +59,9 @@ public class Selection extends AbstractLValue{
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        expr.decompile(s);
+        s.print(".");
+        fieldIdentifier.decompile(s);
     }
 
     @Override

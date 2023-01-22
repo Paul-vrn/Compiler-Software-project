@@ -1,0 +1,21 @@
+// Description:
+//    Programme testant l'overflow sur des entiers.
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 22/01/2023
+
+{
+    float x = 2147483647;
+    float y = x*2147483647;
+    float z = y*2147483647;
+    float w = z*2147483647;
+	float v = w*2147483647;
+    println(x);
+    println(y);
+    println(z);
+	println(w);
+}

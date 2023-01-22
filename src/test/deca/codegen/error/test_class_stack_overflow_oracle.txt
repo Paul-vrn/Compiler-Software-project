@@ -1,2 +1,1 @@
-  ** IMA ** ERREUR ** Ligne 62 :
-    BSR : Debordement de la pile
+Error: Stack Overflow

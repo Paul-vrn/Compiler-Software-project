@@ -193,8 +193,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param m number of the register S (for float)
      */
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        System.out.println(this.getClass().getName());
-        throw new UnsupportedOperationException("not yet implemented");
+        throw new UnsupportedOperationException("not implemented");
     }
 
 

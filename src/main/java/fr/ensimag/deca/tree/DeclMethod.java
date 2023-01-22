@@ -139,6 +139,7 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.getMemory().resetLastGRegister();
         compiler.getLabelFactory().setSuffixCurrentMethod(className+"."+this.varName.getName().getName());
         compiler.addLabel(new Label("code." + compiler.getLabelFactory().getSuffixCurrentMethod()));
+        compiler.getMemory().saveTSTO();
         int indexTSTO = compiler.getLineIndex();
         this.listParams.codeGenListDeclParam(compiler, localEnv);
 
@@ -163,6 +164,7 @@ public class DeclMethod extends AbstractDeclMethod {
             preInit.add(2, new Line(new ADDSP(sp)));
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
+        compiler.getMemory().restoreTSTO();
         compiler.getMemory().resetLastGRegister();
 
     }

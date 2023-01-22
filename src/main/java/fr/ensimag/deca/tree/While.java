@@ -17,9 +17,8 @@ import fr.ensimag.pseudocode.ima.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
- *
+ * Syntaxe while (condition) { body }
  * @author gl21
- * @date 01/01/2023
  */
 public class While extends AbstractInst {
     private AbstractExpr condition;

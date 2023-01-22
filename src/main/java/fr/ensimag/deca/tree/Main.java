@@ -55,7 +55,6 @@ public class Main extends AbstractMain {
 
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        compiler.addComment("Beginning of main instructions:");
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
     }

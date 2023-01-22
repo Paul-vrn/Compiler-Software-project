@@ -9,7 +9,8 @@ public class Memory {
     private int lastGRegister;
     private int TSTO;
     private int currentTSTO;
-    private int topOfMethodTable = 0;
+    private int saveTSTO;
+    private int saveCurrentTSTO;
     private int armOffset;
 
     /**
@@ -22,6 +23,8 @@ public class Memory {
         this.localOffset = 0;
         this.lastGRegister = 1;
         this.armOffset = 0;
+        this.saveTSTO = 0;
+        this.saveCurrentTSTO = 0;
     }
 
     /**
@@ -128,11 +131,38 @@ public class Memory {
         currentTSTO++;
         TSTO = Math.max(currentTSTO, TSTO);
     }
+
+    /**
+     * Increase TSTO value by i
+     * @param i : value to add
+     */
+    public void increaseTSTO(int i) {
+        currentTSTO += i;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
     /**
      * Decrease TSTO value
      */
     public void decreaseTSTO() {
         currentTSTO--;
         TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    /**
+     * Decrease TSTO value by i
+     * @param i : value to add
+     */
+    public void decreaseTSTO(int i) {
+        currentTSTO -= i;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    public void saveTSTO() {
+        saveTSTO = TSTO;
+        saveCurrentTSTO = currentTSTO;
+    }
+    public void restoreTSTO() {
+        TSTO = saveTSTO;
+        currentTSTO = saveCurrentTSTO;
     }
 }

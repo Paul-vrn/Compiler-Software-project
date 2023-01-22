@@ -157,10 +157,17 @@ public class Memory {
         TSTO = Math.max(currentTSTO, TSTO);
     }
 
+    /**
+     * Save TSTO value
+     */
     public void saveTSTO() {
         saveTSTO = TSTO;
         saveCurrentTSTO = currentTSTO;
     }
+
+    /**
+     * Restore TSTO value
+     */
     public void restoreTSTO() {
         TSTO = saveTSTO;
         currentTSTO = saveCurrentTSTO;

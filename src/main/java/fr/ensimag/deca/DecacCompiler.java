@@ -107,19 +107,44 @@ public class DecacCompiler {
         program.addInstruction(instruction, comment);
     }
 
+    /**
+     * Add instruction at the index i
+     * @param i int
+     * @param inst Instruction
+     */
     public void addIndex(int i, Instruction inst) {
         program.addIndex(i, inst);
     }
+
+    /**
+     * Add multiple instructions at the index i
+     * @param i int
+     * @param l List<Line>
+     */
     public void addAllIndex(int i, List<Line> l) {
         program.addAllIndex(i, l);
     }
+
+    /**
+     * Getter of the last index
+     * @return int
+     */
     public int getLineIndex(){
         return program.getLastIndex();
     }
 
+    /**
+     * Add a line at the index i
+     * @param l Line
+     */
     public void addFirst(Line l){
         program.addFirst(l);
     }
+
+    /**
+     * Add a line in the data section
+     * @param l Line
+     */
     public void addData(Line l) { program.addData(l);}
     /**
      * @see 
@@ -136,6 +161,10 @@ public class DecacCompiler {
      */
     private AbstractCodeGenProgram program;
 
+    /**
+     * Getter for program
+     * @return
+     */
     public AbstractCodeGenProgram getProgram() {
         return program;
     }
@@ -149,33 +178,85 @@ public class DecacCompiler {
         return this.symbolTable.create(name);
     }
 
+    /**
+     * Memory management
+     */
     private final Memory memory = new Memory();
+
+    /**
+     * Getter for memory
+     * @return memory
+     */
     public Memory getMemory() {
         return memory;
     }
+
+    /**
+     * Get the next global offset
+     * @return int
+     */
     public int nextGlobalOffSet(){
         int val = memory.getGlobalOffset();
         memory.increaseGlobalOffset();
         return val;
     }
+
+    /**
+     * Get the next arm offset
+     * @return int
+     */
     public int getNextArmOffSet(){
         return memory.getArmOffset();
     }
+
+    /**
+     * Increase the arm offset
+     * @param x int
+     */
     public void increaseArmOffset(int x){
         memory.increaseArmOffset(x);
     }
+
+    /**
+     * Get the next local offset
+     * @return int
+     */
     public int nextLocalOffSet(){
         int val = memory.getLocalOffset();
         memory.increaseLocalOffset();
         return val;
     }
 
-
+    /**
+     * Label factory instance
+     */
     private final LabelFactory labelFactory = new LabelFactory();
+
+    /**
+     * Getter for labelFactory
+     * @return labelFactory
+     */
     public LabelFactory getLabelFactory() {return labelFactory;}
+
+    /**
+     * Get the number of while
+     * @return int
+     */
     public int nbWhile(){return labelFactory.nbWhile();}
+    /**
+     * Get the number of not
+     * @return int
+     */
     public int nbNot(){return labelFactory.nbNot();}
+    /**
+     * Get the number of and
+     * @return int
+     */
     public int nbAnd(){return labelFactory.nbAnd();}
+    /**
+     * Get the number of or
+     * @return int
+     */
     public int nbOr(){return labelFactory.nbOr();}
     
     /**

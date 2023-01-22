@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class LabelFactory {
 
+    private static String suffixCurrentMethod;
     private boolean noCheck;
     private int nbNot;
     private int nbIfThenElse;
@@ -19,9 +20,8 @@ public class LabelFactory {
     private int nbAnd;
     private int nbOr;
     private int nbOpComp;
-    private int nbString;
-    private int nbInt;
-    private int nbFloat;
+
+    /* Error labels and flags */
     private boolean flagOverflowError;
     private boolean flagStackError;
     private boolean flagIOError;
@@ -31,23 +31,26 @@ public class LabelFactory {
     private static final Label overflowErrorLabel = new Label("overflow_error");
     private static final Label stackErrorLabel = new Label("stack_error");
     private static final Label ioErrorLabel = new Label("io_error");
-    private static final Label DivByZeroErrorLabel = new Label("div_by_zero_error");
-    private static final Label NoReturnErrorLabel = new Label("no_return_error");
     private static final Label DeferencementNullErrorLabel = new Label("deferencement_null");
     private static final Label HeapOverflowErrorLabel = new Label("heap_overflow_error");
     private static final Label divByZeroErrorLabel = new Label("div_by_zero_error");
 
     /* ARM labels */
+    private int nbString;
+    private int nbInt;
+    private int nbFloat;
+    private boolean flagLabelInt;
+    private boolean flagLabelFloat;
+    private boolean flagLabelLn;
     private static final Label printfLabel = new Label("printf");
     private static final Label scanfLabel = new Label("scanf");
-    private boolean flagLabelInt;
     private static final Label LabelInt = new Label("int");
-    private boolean flagLabelFloat;
     private static final Label LabelFloat = new Label("float");
-    private boolean flagLabelLn;
     private static final Label LabelLn = new Label("ln");
 
-    private static String suffixCurrentMethod;
+    /**
+     * Constructor for LabelFactory
+     */
     public LabelFactory() {
         this.noCheck = false;
         this.nbNot = 0;
@@ -114,54 +117,109 @@ public class LabelFactory {
         }
     }
 
+    /**
+     * Return the number of the Not label and increment it
+     * @return int
+     */
     public int nbNot(){
         int i = nbNot;
         nbNot++;
         return i;
     }
+
+    /**
+     * Return the number of the OpComp label and increment it
+     * @return int
+     */
     public int NbOpComp() {
         int i = nbOpComp;
         nbOpComp++;
         return i;
     }
+
+    /**
+     * Getter for nbIfThenElse
+     * @return int
+     */
     public int getNbIfThenElse() {
         return nbIfThenElse;
     }
+
+    /**
+     * Setter for nbIfThenElse
+     * @param nbIfThenElse int
+     */
     public void setNbIfThenElse(int nbIfThenElse) {
         this.nbIfThenElse = nbIfThenElse;
     }
+
+    /**
+     * Return the number of the while label and increment it
+     * @return int
+     */
     public int nbWhile(){
         int i = nbWhile;
         nbWhile++;
         return i;
     }
+
+    /**
+     * Return the number of the and label and increment it
+     * @return int
+     */
+
     public int nbAnd(){
         int i = nbAnd;
         nbAnd++;
         return i;
     }
+
+    /**
+     * Return the number of the or label and increment it
+     * @return int
+     */
     public int nbOr(){
         int i = nbOr;
         nbOr++;
         return i;
     }
 
+    /**
+     * Return the number of the string label and increment it
+     * @return int
+     */
     public int nbString(){
         int i = nbString;
         nbString++;
         return i;
     }
+
+    /**
+     * Return the number of the float label and increment it
+     * @return int
+     */
     public int nbFloat(){
         int i = nbFloat;
         nbFloat++;
         return i;
     }
+
+    /**
+     * Return the number of the int label and increment it
+     * @return int
+     */
     public int nbInt() {
         int i = nbInt;
         nbInt++;
         return i;
     }
 
+    /**
+     * Create the test deferencement null
+     * @param compiler compiler
+     * @param r register
+     * @param isInt boolean
+     */
     public void createTestDiv0(DecacCompiler compiler, GPRegister r, boolean isInt) {
         if (noCheck)
             return;
@@ -173,6 +231,10 @@ public class LabelFactory {
         compiler.addInstruction(new BEQ(divByZeroErrorLabel));
     }
 
+    /**
+     * Create the test heap overflow
+     * @param compiler compiler
+     */
     public void createTestOverflow(DecacCompiler compiler) {
         if (noCheck)
             return;
@@ -180,24 +242,45 @@ public class LabelFactory {
         compiler.addInstruction(new BOV(overflowErrorLabel));
     }
 
+    /**
+     * Create the test stack error
+     * @param compiler compiler
+     * @param i index
+     */
     public void createTestStack(DecacCompiler compiler, int i) {
         if (noCheck)
             return;
         flagStackError = true;
         compiler.addIndex(i+1, new BOV(stackErrorLabel));
     }
+
+    /**
+     * Create the test stack error
+     * @param l list of line
+     * @param i index
+     */
     public void createTestStack(List<Line> l, int i) {
         if (noCheck)
             return;
         flagStackError = true;
         l.add(i, new Line(new BOV(stackErrorLabel)));
     }
+
+    /**
+     * Create the test IO error
+     * @param compiler compiler
+     */
     public void createTestIo(DecacCompiler compiler){
         if (noCheck)
             return;
         flagIOError = true;
         compiler.addInstruction(new BOV(ioErrorLabel));
     }
+
+    /**
+     * Create the test return error
+     * @param compiler compiler
+     */
     public void createTestReturn(DecacCompiler compiler){
         if (noCheck)
             return;
@@ -205,6 +288,12 @@ public class LabelFactory {
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
     }
+
+    /**
+     * Create the deferencement null error
+     * @param compiler compiler
+     * @param r register
+     */
     public void createTestDeferencementNull(DecacCompiler compiler, GPRegister r){
         if (noCheck)
             return;
@@ -212,32 +301,63 @@ public class LabelFactory {
         compiler.addInstruction(new CMP(new NullOperand(), r));
         compiler.addInstruction(new BEQ(DeferencementNullErrorLabel));
     }
+
+    /**
+     * Create the heap overflow error
+     * @param compiler compiler
+     */
     public void createHeapOverflow(DecacCompiler compiler) {
         if (noCheck)
             return;
         flagHeapOverflowError = true;
         compiler.addInstruction(new BOV(HeapOverflowErrorLabel));
     }
+
+    /**
+     * get the label for int
+     * @return the label for int
+     */
     public Label getLabelInt(){
         flagLabelInt = true;
         return LabelFactory.LabelInt;
     }
 
+    /**
+     * get the label for float
+     * @return the label for float
+     */
     public Label getLabelFloat(){
         flagLabelFloat = true;
         return LabelFactory.LabelFloat;
     }
+
+    /**
+     * get the label for ln
+     * @return the label for ln
+     */
     public Label getLabelLn(){
         flagLabelLn = true;
         return LabelFactory.LabelLn;
     }
 
+    /**
+     * get the label for printf
+     * @return the label for printf
+     */
     public Label getPrintfLabel() {
         return printfLabel;
     }
+
+    /**
+     * get the label for scanf
+     * @return the label for scanf
+     */
     public Label getScanfLabel() { return scanfLabel; }
 
-
+    /**
+     * Create labels for ARM code
+     * @param compiler the compiler
+     */
     public void createPrintLabel(DecacCompiler compiler) {
         if (flagLabelInt) {
             compiler.addData(new Line(new Label("int"), new ASCIZ(new ImmediateString("%d"))));
@@ -250,9 +370,16 @@ public class LabelFactory {
         }
     }
 
+    /**
+     * @return the suffixCurrentMethod
+     */
     public String getSuffixCurrentMethod() {
         return suffixCurrentMethod;
     }
+
+    /**
+     * @param suffixCurrentMethod the suffixCurrentMethod to set
+     */
     public void setSuffixCurrentMethod(String suffixCurrentMethod) {
         this.suffixCurrentMethod = suffixCurrentMethod;
     }

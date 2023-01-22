@@ -1,13 +1,16 @@
 package fr.ensimag.pseudocode;
 
 /**
- * Register operand (including special registers like SP).
+ * Register ARM
  * 
- * @author Ensimag
- * @date 01/01/2023
+ * @author gl21
  */
 public class RegisterARM extends AbstractRegister {
 
+    /**
+     * Constructor for arm registers
+     * @param name name of the register
+     */
     protected RegisterARM(String name) {super(name);}
 
     @Override
@@ -20,21 +23,41 @@ public class RegisterARM extends AbstractRegister {
      * made immutable, use getR(i) to access it.
      */
     private static final GPRegister[] R = initRegisters();
+
     /**
-     * General Purpose Registers
+     * Getter for general purpose registers
+     * @param i index of the register
+     * @return general purpose register R[i]
      */
     public static GPRegister getR(int i) {
         return R[i];
     }
 
+    /**
+     * Float registers
+     */
     private static final GPRegister[] S = initFloatRegisters();
 
+
+    /**
+     * Getter for float registers
+     * @param i index of the register
+     * @return float register S[i]
+     */
     public static GPRegister getS(int i) {
         return S[i];
     }
 
+    /**
+     * Double registers
+     */
     private static final GPRegister[] D = initDoubleRegisters();
 
+    /**
+     * Getter for double registers
+     * @param i index of the register
+     * @return double register D[i]
+     */
     public static GPRegister getD(int i) {
         return D[i];
     }
@@ -44,22 +67,44 @@ public class RegisterARM extends AbstractRegister {
     public static final GPRegister R7 = R[7];
 
     /**
-     * équivalent de LB
+     * Frame pointer register
      */
     public static final GPRegister FP = R[11];
 
+    /**
+     * Intra procedural register
+     */
     public static final GPRegister IP = R[12];
 
+    /**
+     * Stack pointer register
+     */
     public static final GPRegister SP = R[13];
 
+    /**
+     * Link register
+     */
     public static final GPRegister LR = R[14];
 
+    /**
+     * Program counter register
+     */
     public static final GPRegister PC = R[15];
 
+    /**
+     * Maximum number of general purpose registers
+     */
     public static int RMAX = 10;
 
+    /**
+     * Maximum number of float registers
+     */
     public static int SMAX = 31;
 
+    /**
+     * Initializer for general purpose registers
+     * @return array of general purpose registers
+     */
     static private GPRegister[] initRegisters() {
         GPRegister[] res = new GPRegister[16];
         for (int i = 0; i <= 10; i++) {
@@ -73,6 +118,10 @@ public class RegisterARM extends AbstractRegister {
         return res;
     }
 
+    /**
+     * Initializer for float registers
+     * @return array of float registers
+     */
     static private GPRegister[] initFloatRegisters() {
         GPRegister[] res = new GPRegister[32];
         for (int i = 0; i <= 31; i++) {
@@ -81,6 +130,10 @@ public class RegisterARM extends AbstractRegister {
         return res;
     }
 
+    /**
+     * Initializer for double registers
+     * @return array of double registers
+     */
     static private GPRegister[] initDoubleRegisters() {
         GPRegister[] res = new GPRegister[16];
         for (int i = 0; i <= 15; i++) {

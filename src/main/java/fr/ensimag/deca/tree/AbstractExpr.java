@@ -143,8 +143,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
     /**
      * Generate code to print the expression
-     *
-     * @param compiler
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.codeGenExpr(compiler, 2);
@@ -157,6 +157,13 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new UnsupportedOperationException("not implemented implemented");
         }
     }
+
+
+    /**
+     * Generate code to print the expression in ARM assembly
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
+     */
     protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.armCodeGenExpr(compiler, 4, 2);
         if (getType().isInt()) {
@@ -172,6 +179,10 @@ public abstract class AbstractExpr extends AbstractInst {
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 
+    /**
+     * Generate code for the instanciation
+     * @param compiler compiler
+     */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         this.codeGenExpr(compiler, 2);
@@ -187,7 +198,7 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     /**
-     *
+     * Generate code for the expression in ARM assembly
      * @param compiler
      * @param n number of the register R (for integer)
      * @param m number of the register S (for float)
@@ -197,7 +208,10 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
 
-
+    /**
+     * Generate code for the instanciation in ARM assembly
+     * @param compiler
+     */
     protected void armCodeGenInst(DecacCompiler compiler) {
         this.armCodeGenExpr(compiler, 4,2);
         throw new UnsupportedOperationException("not yet implemented");

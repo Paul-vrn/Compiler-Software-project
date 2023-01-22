@@ -16,6 +16,9 @@ import fr.ensimag.pseudocode.arm.instructions.VMOV;
 import fr.ensimag.pseudocode.ima.instructions.FLOAT;
 import fr.ensimag.pseudocode.ima.instructions.INT;
 
+/**
+ * Cast expression.
+ */
 public class Cast extends AbstractExpr{
     private AbstractIdentifier type;
     private AbstractExpr expr;

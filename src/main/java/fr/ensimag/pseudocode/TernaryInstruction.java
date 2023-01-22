@@ -12,16 +12,6 @@ import java.io.PrintStream;
 public class TernaryInstruction extends Instruction {
     private Operand operand1, operand2, operand3;
 
-    public Operand getOperand1() {
-        return operand1;
-    }
-
-    public Operand getOperand2() {
-        return operand2;
-    }
-
-    public Operand getOperand3() { return operand3;}
-
     @Override
     void displayOperands(PrintStream s) {
         throw new IMAInternalError("TernaryInstruction.displayOperands() should not be called in IMA");

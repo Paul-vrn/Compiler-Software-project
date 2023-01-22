@@ -307,6 +307,18 @@ public class ArmCodegenTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test49_expression_arith() throws IOException {
+        String[] args = {"-r", "10", "src/test/deca/codegen/arm/expression_arith.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test50_expression_arith() throws IOException {
+        String[] args = {"-r", "4", "src/test/deca/codegen/arm/expression_arith_register_limited.deca"};
+        generalTestValid(args, null);
+    }
+
 
 
 

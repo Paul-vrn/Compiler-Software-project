@@ -285,7 +285,7 @@ public class OptionpTest {
 
     @Test
     void test43_class_method_asm_01() throws IOException {
-        String[] args = {"src/test/deca/codegen/valid/class_method_asm_01.deca"};
+        String[] args = {"src/test/deca/syntax/optionp/class_method_asm_01.deca"};
         generalTestValid(args, null);
     }
 

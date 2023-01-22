@@ -485,8 +485,8 @@ public class CodegenTest {
 
     @Test
     void test67math_float_ov_01() throws IOException {
-        String[] args = {"src/test/deca/codegen/valid/math_float_ov_01.deca"};
-        String file2 = "src/test/deca/codegen/valid/math_float_ov_01_oracle.txt";
+        String[] args = {"src/test/deca/codegen/error/math_float_ov_01.deca"};
+        String file2 = "src/test/deca/codegen/error/math_float_ov_01_oracle.txt";
         generalTestValid(args, file2, null);
     }
 

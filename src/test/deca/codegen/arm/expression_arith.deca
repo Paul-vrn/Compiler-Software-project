@@ -1,0 +1,16 @@
+{
+    //PLUS
+	int a = 15+10;
+    float b = 15.0+15.0;
+	//MINUS
+	int c = 15-10;
+	float d = 15.0-10.0;
+	//MULTIPLY
+	int e = 15*10;
+	float f = 15.0*10.0;
+	//DIVIDE
+	int g = 15/10;
+	float h = 15.0/10.0;
+	//MODULUS
+	int i = 15%10;
+}

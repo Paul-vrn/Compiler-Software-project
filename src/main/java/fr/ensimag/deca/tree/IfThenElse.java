@@ -8,11 +8,13 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.B;
+import fr.ensimag.pseudocode.ima.instructions.BEQ;
+import fr.ensimag.pseudocode.ima.instructions.BRA;
+import fr.ensimag.pseudocode.ima.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -70,7 +72,7 @@ public class IfThenElse extends AbstractInst {
         Label labelElse = new Label("ELSE_" + indexIfThenElse + "_" + p);
         Label labelEnd = new Label("END_IF_" + indexIfThenElse);
         condition.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new CMP(0, Register.getR(2)));
+        compiler.addInstruction(new CMP(0, RegisterIMA.getR(2)));
         compiler.addInstruction(new BEQ(labelElse));
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
@@ -83,6 +85,27 @@ public class IfThenElse extends AbstractInst {
 
     }
 
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        this.armCodeGenIf(compiler, 0);
+    }
+
+    protected void armCodeGenIf(DecacCompiler compiler, int p) {
+        int nbIf = compiler.getLabelFactory().getNbIfThenElse();
+        Label labelElse = new Label("ELSE_" + nbIf + "_" + p);
+        Label labelEnd = new Label("END_IF_" + nbIf);
+        condition.armCodeGenExpr(compiler, 4, 2);
+        compiler.addInstruction(new CMP(0, RegisterARM.getR(4)));
+        compiler.addInstruction(new BEQ(labelElse));
+        thenBranch.armCodeGenListInst(compiler);
+        compiler.addInstruction(new B(labelEnd));
+        compiler.addLabel(labelElse);
+        elseBranch.armCodeGenIf(compiler, p+1);
+        if(p==0){
+            compiler.addLabel(labelEnd);
+            compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
+        }
+    }
 
     @Override
     public void decompile(IndentPrintStream s){

@@ -6,10 +6,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 import java.io.PrintStream;
 
@@ -44,6 +43,6 @@ public class This extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(n)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, RegisterIMA.LB), RegisterIMA.getR(n)));
     }
 }

@@ -6,9 +6,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
 import org.apache.log4j.Logger;
 
 /**
@@ -298,20 +297,4 @@ public abstract class Tree {
         }
     }
 
-
-    public static void contextSave(DecacCompiler compiler) {
-        //on sauvegarde tout les registres sauf R0 qui contiendra le résultat, les registres SP et LB sont handled par les fonctiosn d'appel
-        //i<15 peut être à changer en i<RMAX
-        //TODO à modifier -> sauvegarder uniquement les registres nécessaires
-        for(int i = 2; i<15; i++) {
-            compiler.addInstruction(new PUSH(Register.getR(i)));
-        }
-    }
-
-    public static void contextRestore(DecacCompiler compiler) {
-        //i<15 peut être à changer en i<RMAX
-        for(int i = 15; i>1; i--) {
-            compiler.addInstruction(new POP(Register.getR(i)));
-        }
-    }
 }

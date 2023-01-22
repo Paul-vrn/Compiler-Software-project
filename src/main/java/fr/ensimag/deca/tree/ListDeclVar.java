@@ -54,4 +54,10 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
             compiler.getMemory().increaseTSTO();
         }
     }
+
+    protected void armCodeGenListDeclVar(DecacCompiler compiler) {
+        for (AbstractDeclVar current : this.getList()){
+            current.armCodeGen(compiler);
+        }
+    }
 }

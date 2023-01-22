@@ -1,0 +1,18 @@
+// Description:
+//    déclaration d'une variable null
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le 01/01/2023
+{
+    boolean x = false;
+    boolean y  = true;
+    if (!!!!(x)){
+        print("if");
+    } else {
+        print("else");
+    }
+}

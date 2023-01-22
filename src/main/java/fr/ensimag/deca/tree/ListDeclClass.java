@@ -4,15 +4,16 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 import org.apache.log4j.Logger;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Comparator;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.NullOperand;
 
 /**
  *
@@ -65,30 +66,30 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     void codeGenMethodTable(DecacCompiler compiler) {
 
-        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(1)));
-        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+        compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB)));
         compiler.getMemory().increaseTSTO();
-        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(1)));
-        compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB)));
         compiler.getMemory().increaseTSTO();
 
         Identifier dummyObjectIdentifier = new Identifier(compiler.createSymbol("Object"));
         ClassDefinition dummyObjectClass = new ClassDefinition(compiler.environmentType.OBJECT, null, null);
         dummyObjectIdentifier.setDefinition(dummyObjectClass);
-        dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, Register.GB));
+        dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, RegisterIMA.GB));
 
         for(AbstractDeclClass c : getList()) {
             ClassDefinition currentClassDefinition = c.getName().getClassDefinition();
             Identifier superClass = (Identifier) c.getSuperClass();
             Identifier currentClass = (Identifier)c.getName();
             if(superClass.getName().getName().equals("Object")){
-                compiler.addInstruction(new LEA(dummyObjectIdentifier.getClassDefinition().getOperand(), Register.getR(1)));
+                compiler.addInstruction(new LEA(dummyObjectIdentifier.getClassDefinition().getOperand(), RegisterIMA.getR(1)));
             }
             else {
-                compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), Register.getR(1)));
+                compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), RegisterIMA.getR(1)));
             }
-            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), Register.GB));
-            compiler.addInstruction(new STORE(Register.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), Register.GB)));
+            currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), RegisterIMA.GB));
+            compiler.addInstruction(new STORE(RegisterIMA.getR(1), new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB)));
             compiler.getMemory().increaseTSTO();
             ArrayList<MethodDefinition> methods = new ArrayList<>();
             currentClassDefinition.codeGenMethodTable(compiler, methods);

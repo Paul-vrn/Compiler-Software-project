@@ -5,8 +5,15 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.MOV;
+import fr.ensimag.pseudocode.arm.instructions.POPARM;
+import fr.ensimag.pseudocode.arm.instructions.PUSHARM;
+import fr.ensimag.pseudocode.ima.instructions.CMP;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.POP;
+import fr.ensimag.pseudocode.ima.instructions.PUSH;
 
 /**
  *
@@ -48,18 +55,33 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         getLeftOperand().codeGenExpr(compiler, n);
-        if (n < Register.RMAX) {
+        if (n < RegisterIMA.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            compiler.addInstruction(new CMP(Register.getR(n+1), Register.getR(n)));
+            compiler.addInstruction(new CMP(RegisterIMA.getR(n+1), RegisterIMA.getR(n)));
 
         } else {
-            compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
             compiler.getMemory().increaseTSTO();
             getRightOperand().codeGenExpr(compiler, n);
-            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-            compiler.addInstruction(new POP(Register.getR(n)));
+            compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.R0));
+            compiler.addInstruction(new POP(RegisterIMA.getR(n)));
             compiler.getMemory().decreaseTSTO();
-            compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
+            compiler.addInstruction(new CMP(RegisterIMA.getR(n), RegisterIMA.R0));
+        }
+    }
+
+    @Override
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+        getLeftOperand().armCodeGenExpr(compiler, n, m);
+        if (n < RegisterARM.RMAX){
+            getRightOperand().armCodeGenExpr(compiler, n+1, m);
+            compiler.addInstruction(new CMP(RegisterARM.getR(n+1), RegisterARM.getR(n)));
+        } else {
+            compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));
+            getRightOperand().armCodeGenExpr(compiler, n, m);
+            compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(12)));
+            compiler.addInstruction(new POPARM(RegisterARM.getR(n)));
+            compiler.addInstruction(new CMP(RegisterARM.getR(12), RegisterARM.getR(n)));
         }
     }
 }

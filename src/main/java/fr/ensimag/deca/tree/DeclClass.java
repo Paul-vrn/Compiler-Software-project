@@ -3,18 +3,15 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-//import jdk.javadoc.internal.doclint.Env;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.Label;
+import fr.ensimag.pseudocode.Line;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.*;
 import org.apache.commons.lang.Validate;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,9 +146,9 @@ public class DeclClass extends AbstractDeclClass {
         //On utilise R0 et R1 pas sûr de devoir TSTO
         //compiler.addInstruction(new TSTO(1));
         //ajouter l'instruciton BOV une fois que le code pour le message d'erreur de stack overflow existera
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(1)));
-        compiler.addInstruction(new CMP(new RegisterOffset(-3, Register.LB), Register.getR(1)));
-        compiler.addInstruction((new SEQ(Register.getR(0))));
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, RegisterIMA.LB), RegisterIMA.getR(1)));
+        compiler.addInstruction(new CMP(new RegisterOffset(-3, RegisterIMA.LB), RegisterIMA.getR(1)));
+        compiler.addInstruction((new SEQ(RegisterIMA.getR(0))));
         compiler.addLabel(labelEnd);
         compiler.addInstruction(new RTS());
 
@@ -166,21 +163,21 @@ public class DeclClass extends AbstractDeclClass {
         int indexTSTO = compiler.getLineIndex();
         if (superClass.getClassDefinition().getNumberOfFields() > 0){
             fieldSets.codeGenDeclFieldNull(compiler);
-            compiler.addInstruction(new PUSH(Register.getR(1)));
+            compiler.addInstruction(new PUSH(RegisterIMA.getR(1)));
             compiler.addInstruction(new BSR(new Label("init." + this.superClass.getName().getName())));
             compiler.addInstruction(new SUBSP(1));
         }
         fieldSets.codeGenDeclField(compiler);
         if (compiler.getMemory().getLastGRegister() > 1) {
             for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
-                preInit.add(new Line(new PUSH(Register.getR(i))));
+                preInit.add(new Line(new PUSH(RegisterIMA.getR(i))));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new POP(Register.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister()-(i-2))));
                 compiler.getMemory().decreaseTSTO();
             }
         }
         preInit.add(0, new Line(new TSTO(compiler.getMemory().TSTO())));
-        preInit.add(1, new Line(new BOV(compiler.getLabelFactory().getStackErrorLabel())));
+        compiler.getLabelFactory().createTestStack(preInit, 1);
         compiler.addAllIndex(indexTSTO, preInit);
         compiler.addInstruction(new RTS());
         compiler.getMemory().resetLastGRegister();

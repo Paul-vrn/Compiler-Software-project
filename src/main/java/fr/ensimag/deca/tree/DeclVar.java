@@ -76,6 +76,11 @@ public class DeclVar extends AbstractDeclVar {
         this.initialization.codeGenInit(compiler, this.varName);
     }
 
+    public void armCodeGen(DecacCompiler compiler) {
+        this.varName.armCodeGenDeclVar(compiler);
+        this.initialization.armCodeGenInit(compiler, this.varName);
+    }
+
     @Override
     protected
     void iterChildren(TreeFunction f) {

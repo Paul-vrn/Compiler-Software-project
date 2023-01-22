@@ -23,6 +23,7 @@
 hs_err_pid*
 
 **/*.ass
+**/*.s
 target/
 .idea/
 gen/

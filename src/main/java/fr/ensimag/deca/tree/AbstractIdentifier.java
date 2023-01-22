@@ -1,5 +1,8 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -10,6 +13,8 @@ import fr.ensimag.deca.tools.SymbolTable;
  * @date 01/01/2023
  */
 public abstract class AbstractIdentifier extends LValueIdent {
+
+    public abstract void armCodeGenDeclVar(DecacCompiler compiler);
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a

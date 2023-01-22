@@ -3,10 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.NullOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.io.PrintStream;
 
@@ -81,29 +80,29 @@ public class Selection extends AbstractLValue{
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         expr.codeGenExpr(compiler, n);
-        compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(n));
+        compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n));
         if (expr.getType().isClass()) {
-            compiler.addInstruction(new LOAD(new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(), Register.getR(n)), Register.getR(n)));
+            compiler.addInstruction(new LOAD(new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(), RegisterIMA.getR(n)), RegisterIMA.getR(n)));
         } else {
-            compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n)));
+            compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         }
     }
 
     @Override
     public void codeGenStore(DecacCompiler compiler, int n) {
-        if (n < Register.RMAX) {
+        if (n < RegisterIMA.RMAX) {
             compiler.getMemory().setLastGRegister(n+1);
             expr.codeGenExpr(compiler, n + 1);
-            compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(n + 1));
-            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),Register.getR(n + 1))));
+            compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n + 1));
+            compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),RegisterIMA.getR(n + 1))));
         } else {
-            compiler.addInstruction(new PUSH(Register.getR(n)));
+            compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
             compiler.getMemory().setLastGRegister(n);
             expr.codeGenExpr(compiler, n);
-            compiler.getLabelFactory().createTestDeferencementNull(compiler, Register.getR(n));
-            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-            compiler.addInstruction(new POP(Register.getR(n)));
-            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),Register.getR(0))));
+            compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n));
+            compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.R0));
+            compiler.addInstruction(new POP(RegisterIMA.getR(n)));
+            compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(),RegisterIMA.getR(0))));
         }
     }
 }

@@ -21,6 +21,11 @@ public class EmptyMain extends AbstractMain {
         // nothing to do
     }
 
+    @Override
+    protected void armCodeGenMain(DecacCompiler compiler) {
+        // nothing to do
+    }
+
     /**
      * Contains no real information => nothing to check.
      */

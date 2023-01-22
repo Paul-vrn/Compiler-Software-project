@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 
 /**
  * 
@@ -31,11 +30,18 @@ public class ListInst extends TreeList<AbstractInst> {
         for (AbstractInst i : getList()) {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
         }
+
+        //TODO : not finished ?
     }
 
     public void codeGenListInst(DecacCompiler compiler) {
         for (AbstractInst i : getList()) {
             i.codeGenInst(compiler);
+        }
+    }
+    public void armCodeGenListInst(DecacCompiler compiler) {
+        for (AbstractInst i : getList()) {
+            i.armCodeGenInst(compiler);
         }
     }
 
@@ -45,6 +51,15 @@ public class ListInst extends TreeList<AbstractInst> {
                 ((IfThenElse)i).codeGenIf(compiler, indexIfThenElse, p);}
             else{
                 i.codeGenInst(compiler);
+            }
+        }
+    }
+    public void armCodeGenIf(DecacCompiler compiler, int p) {
+        for (AbstractInst i : getList()) {
+            if(i instanceof IfThenElse){
+                ((IfThenElse)i).armCodeGenIf(compiler,p);}
+            else{
+                i.armCodeGenInst(compiler);
             }
         }
     }

@@ -1,0 +1,27 @@
+// Description:
+//    protected
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+    protected int x;
+    protected A a = new A();
+    int geta() {
+        a.x;
+    }
+    void seta(int x) {
+		a.x = x;
+	}
+
+}
+
+{
+	A a = new A();
+	a.seta(1);
+	a.geta();
+}
+

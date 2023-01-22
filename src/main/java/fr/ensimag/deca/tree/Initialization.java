@@ -8,10 +8,12 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.VSTR;
+import fr.ensimag.pseudocode.ima.instructions.STORE;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.pseudocode.arm.instructions.STR;
 
 /**
  * @author gl21
@@ -33,7 +35,18 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new STORE(Register.getR(2), varName.getExpDefinition().getOperand()));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(2), varName.getExpDefinition().getOperand()));
+    }
+
+    @Override
+    protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        expression.armCodeGenExpr(compiler, 4, 2);
+        if (expression.getType().isFloat()){
+            compiler.addInstruction(new VSTR(RegisterARM.getS(2), varName.getExpDefinition().getOperand()));
+        } else {
+            // int || bool
+            compiler.addInstruction(new STR(RegisterARM.getR(4), varName.getExpDefinition().getOperand()));
+        }
     }
     @Override
     public void codeGenInitField(DecacCompiler compiler, Type type, int n) {

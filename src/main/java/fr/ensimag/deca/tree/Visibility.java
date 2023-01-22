@@ -31,7 +31,6 @@ public enum Visibility {
     public void decompile(IndentPrintStream s) {
         switch (this) {
             case PUBLIC:
-                s.print("public");
                 break;
             case PROTECTED:
                 s.print("protected");

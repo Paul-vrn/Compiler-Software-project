@@ -36,7 +36,7 @@ public class NotEquals extends AbstractOpExactCmp {
     }
 
     @Override
-    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         super.armCodeGenExpr(compiler, n, m);
         int nbLabel = compiler.getLabelFactory().NbOpComp();
         Label lessThan = new Label("lessThan_" + nbLabel);

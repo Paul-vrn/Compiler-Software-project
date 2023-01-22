@@ -28,11 +28,10 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         this.setType(new IntType(compiler.createSymbol("int")));
         return this.getType();
     }
-
 
 
     @Override
@@ -41,7 +40,8 @@ public class IntLiteral extends AbstractExpr {
         compiler.getMemory().setLastGRegister(n);
     }
 
-    @Override public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         if (value < 65537) {
             compiler.addInstruction(new MOV(new ImmediateInteger(value), RegisterARM.getR(n)));
         } else {

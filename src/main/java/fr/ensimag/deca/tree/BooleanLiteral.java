@@ -12,7 +12,7 @@ import fr.ensimag.pseudocode.ima.instructions.LOAD;
 import java.io.PrintStream;
 
 /**
- *  Boolean literal : true or false.
+ * Boolean literal : true or false.
  *
  * @author gl21
  * @date 01/01/2023
@@ -30,7 +30,7 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         this.setType(new BooleanType(compiler.createSymbol("boolean")));
         return this.getType();
     }
@@ -55,6 +55,7 @@ public class BooleanLiteral extends AbstractExpr {
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
     }
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do

@@ -31,6 +31,7 @@ public abstract class AbstractDeclVar extends Tree {
     public abstract void codeGenVar(DecacCompiler compiler);
 
     public abstract void codeGenField(DecacCompiler compiler, EnvironmentExp localEnvExpr);
+
     public abstract void armCodeGen(DecacCompiler compiler);
 
 }

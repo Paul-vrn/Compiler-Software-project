@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- *  List of parameters declaration.
+ * List of parameters declaration.
  *
  * @author gl21
  * @date 01/01/2023
@@ -35,14 +35,14 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
 
         EnvironmentExp envExpR = new EnvironmentExp(this.classEnvExp);
 
-        for (AbstractDeclParam current : this.getList()){
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
-                    current.verifyDeclParamPass3(compiler).getDictionary().entrySet()){
+        for (AbstractDeclParam current : this.getList()) {
+            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
+                    current.verifyDeclParamPass3(compiler).getDictionary().entrySet()) {
                 /* Verifies if he parameter is already defined */
                 try {
                     envExpR.declare(entry.getKey(), entry.getValue());
-                }catch (EnvironmentExp.DoubleDefException e){
-                    throw new ContextualError( compiler.displaySourceFile() + ":"
+                } catch (EnvironmentExp.DoubleDefException e) {
+                    throw new ContextualError(compiler.displaySourceFile() + ":"
                             + current.getLocation().errorOutPut() + ": Parameter already defined", current.getLocation());
                 }
             }

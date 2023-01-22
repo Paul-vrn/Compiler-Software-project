@@ -8,7 +8,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.SymbolTable;
 
 /**
- *
  * @author gl21
  * @date 01/01/2023
  */
@@ -19,12 +18,11 @@ public abstract class AbstractIdentifier extends AbstractLValue {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
-     *
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
      *
-     * @throws DecacInternalError
-     *             if the definition is not a class definition.
+     * @throws DecacInternalError if the definition is not a class definition.
      */
     public abstract ClassDefinition getClassDefinition();
 
@@ -33,24 +31,22 @@ public abstract class AbstractIdentifier extends AbstractLValue {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.
-     *
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
      *
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     public abstract FieldDefinition getFieldDefinition();
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * MethodDefinition.
-     *
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
      *
-     * @throws DecacInternalError
-     *             if the definition is not a method definition.
+     * @throws DecacInternalError if the definition is not a method definition.
      */
     public abstract MethodDefinition getMethodDefinition();
 
@@ -58,36 +54,34 @@ public abstract class AbstractIdentifier extends AbstractLValue {
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
-     *
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
      *
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     public abstract ExpDefinition getExpDefinition();
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * VariableDefinition.
-     *
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
      *
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     public abstract VariableDefinition getVariableDefinition();
 
     public abstract void setDefinition(Definition definition);
 
 
-
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
+     *
      * @param compiler contains "env_types" attribute
      * @return the type corresponding to this identifier
-     *         (corresponds to the "type" attribute)
+     * (corresponds to the "type" attribute)
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
 

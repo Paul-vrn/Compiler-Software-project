@@ -17,7 +17,6 @@ import fr.ensimag.pseudocode.ima.instructions.CMP;
 public class Or extends AbstractOpBool {
 
 
-
     public Or(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
     }

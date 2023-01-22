@@ -11,7 +11,7 @@ import fr.ensimag.pseudocode.ima.instructions.*;
 
 
 /**
- *  Divide Operator.
+ * Divide Operator.
  *
  * @author gl21
  * @date 01/01/2023
@@ -36,12 +36,11 @@ public class Divide extends AbstractOpArith {
             regRight = RegisterIMA.R0;
         }
 
-        if(this.getType().isFloat()){
+        if (this.getType().isFloat()) {
             compiler.getLabelFactory().createTestDiv0(compiler, regRight, false);
             compiler.addInstruction(new DIV(regRight, RegisterIMA.getR(n)));
             compiler.getLabelFactory().createTestOverflow(compiler);
-        }
-        else{
+        } else {
             compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
             compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
         }
@@ -53,8 +52,8 @@ public class Divide extends AbstractOpArith {
         if (getType().isFloat()) {
             if (m < RegisterARM.SMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new VDIV(RegisterARM.getS(m+1), RegisterARM.getS(m), RegisterARM.getS(m)));
+                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
+                compiler.addInstruction(new VDIV(RegisterARM.getS(m + 1), RegisterARM.getS(m), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new VPUSH(RegisterARM.getS(m)));
@@ -66,8 +65,8 @@ public class Divide extends AbstractOpArith {
         } else {
             if (n < RegisterARM.RMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new SDIV(RegisterARM.getR(n+1), RegisterARM.getR(n)));
+                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
+                compiler.addInstruction(new SDIV(RegisterARM.getR(n + 1), RegisterARM.getR(n)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));

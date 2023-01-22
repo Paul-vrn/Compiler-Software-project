@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -16,7 +18,9 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     public AbstractExpr getOperand() {
         return operand;
     }
+
     private AbstractExpr operand;
+
     public AbstractUnaryExpr(AbstractExpr operand) {
         Validate.notNull(operand);
         this.operand = operand;
@@ -24,7 +28,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
 
 
     protected abstract String getOperatorName();
-  
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(this.getOperatorName());

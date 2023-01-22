@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
 
 import fr.ensimag.pseudocode.Label;
@@ -24,8 +25,8 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2023
  */
 public class IfThenElse extends AbstractInst {
-    
-    private final AbstractExpr condition; 
+
+    private final AbstractExpr condition;
     private final ListInst thenBranch;
     private ListInst elseBranch;
 
@@ -37,10 +38,10 @@ public class IfThenElse extends AbstractInst {
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
     }
-    
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.condition.verifyCondition(compiler, localEnv, currentClass);
 
@@ -77,8 +78,8 @@ public class IfThenElse extends AbstractInst {
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
         compiler.addLabel(labelElse);
-        elseBranch.codeGenIf(compiler, indexIfThenElse, p+1);
-        if(p==0){
+        elseBranch.codeGenIf(compiler, indexIfThenElse, p + 1);
+        if (p == 0) {
             compiler.addLabel(labelEnd);
 
         }
@@ -100,15 +101,15 @@ public class IfThenElse extends AbstractInst {
         thenBranch.armCodeGenListInst(compiler);
         compiler.addInstruction(new B(labelEnd));
         compiler.addLabel(labelElse);
-        elseBranch.armCodeGenIf(compiler, p+1);
-        if(p==0){
+        elseBranch.armCodeGenIf(compiler, p + 1);
+        if (p == 0) {
             compiler.addLabel(labelEnd);
             compiler.getLabelFactory().setNbIfThenElse(nbIf + 1);
         }
     }
 
     @Override
-    public void decompile(IndentPrintStream s){
+    public void decompile(IndentPrintStream s) {
         s.print("if (");
         this.condition.decompile(s);
         s.println(") {");
@@ -124,8 +125,7 @@ public class IfThenElse extends AbstractInst {
     }
 
     @Override
-    protected
-    void iterChildren(TreeFunction f) {
+    protected void iterChildren(TreeFunction f) {
         condition.iter(f);
         thenBranch.iter(f);
         elseBranch.iter(f);

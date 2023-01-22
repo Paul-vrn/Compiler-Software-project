@@ -9,7 +9,7 @@ import fr.ensimag.pseudocode.ima.instructions.BEQ;
 import fr.ensimag.pseudocode.ima.instructions.CMP;
 
 /**
- *  And Operator.
+ * And Operator.
  *
  * @author gl21
  * @date 01/01/2023

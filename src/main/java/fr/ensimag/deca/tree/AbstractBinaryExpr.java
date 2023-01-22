@@ -1,7 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -34,15 +36,13 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     private AbstractExpr rightOperand;
 
     public AbstractBinaryExpr(AbstractExpr leftOperand,
-            AbstractExpr rightOperand) {
+                              AbstractExpr rightOperand) {
         Validate.notNull(leftOperand, "left operand cannot be null");
         Validate.notNull(rightOperand, "right operand cannot be null");
         Validate.isTrue(leftOperand != rightOperand, "Sharing subtrees is forbidden");
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
     }
-
-
 
 
     @Override

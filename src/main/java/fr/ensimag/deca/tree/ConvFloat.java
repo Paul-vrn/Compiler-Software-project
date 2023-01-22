@@ -13,7 +13,7 @@ import fr.ensimag.pseudocode.ima.instructions.FLOAT;
 
 /**
  * Conversion of an int into a float. Used for implicit conversions.
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -24,7 +24,7 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) {
+                           ClassDefinition currentClass) {
         this.setType(compiler.environmentType.FLOAT);
         return this.getType();
     }
@@ -43,9 +43,10 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     /**
      * float <-- int
+     *
      * @param compiler
-     * @param n number of the register R (for integer)
-     * @param m number of the register S (for float)
+     * @param n        number of the register R (for integer)
+     * @param m        number of the register S (for float)
      */
     @Override
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {

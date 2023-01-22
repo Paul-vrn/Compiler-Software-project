@@ -18,25 +18,24 @@ import java.io.PrintStream;
  * @author gl21
  * @date 10/01/2023
  */
-public class This extends AbstractExpr{
+public class This extends AbstractExpr {
 
     /**
      * VerifyExpr for the "this" expression
-     * @param compiler  (contains the "env_types" attribute)
-     * @param localEnv
-     *            Environment in which the expression should be checked
-     *            (corresponds to the "env_exp" attribute)
-     * @param currentClass
-     *            Definition of the class containing the expression
-     *            (corresponds to the "class" attribute)
-     *             is null in the main bloc.
+     *
+     * @param compiler     (contains the "env_types" attribute)
+     * @param localEnv     Environment in which the expression should be checked
+     *                     (corresponds to the "env_exp" attribute)
+     * @param currentClass Definition of the class containing the expression
+     *                     (corresponds to the "class" attribute)
+     *                     is null in the main bloc.
      * @return
      * @throws ContextualError
      */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         //Verifies that the "this" is not applied on a null class
-        if(currentClass == null){
+        if (currentClass == null) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": This on a null class impossible", this.getLocation());
         }
@@ -53,7 +52,7 @@ public class This extends AbstractExpr{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        
+
     }
 
     @Override

@@ -20,15 +20,16 @@ public class NoOperation extends AbstractInst {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         // nothing to do
-        }
+    }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         // nothing
     }
+
     @Override
     protected void armCodeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");

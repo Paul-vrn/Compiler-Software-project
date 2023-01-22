@@ -20,14 +20,13 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     /**
      * VerifyExpr for Boolean operations
-     * @param compiler  (contains the "env_types" attribute)
-     * @param localEnv
-     *            Environment in which the expression should be checked
-     *            (corresponds to the "env_exp" attribute)
-     * @param currentClass
-     *            Definition of the class containing the expression
-     *            (corresponds to the "class" attribute)
-     *             is null in the main bloc.
+     *
+     * @param compiler     (contains the "env_types" attribute)
+     * @param localEnv     Environment in which the expression should be checked
+     *                     (corresponds to the "env_exp" attribute)
+     * @param currentClass Definition of the class containing the expression
+     *                     (corresponds to the "class" attribute)
+     *                     is null in the main bloc.
      * @return
      * @throws ContextualError
      */

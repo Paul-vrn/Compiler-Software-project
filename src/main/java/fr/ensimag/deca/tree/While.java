@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.pseudocode.Label;
+
 import java.io.PrintStream;
 
 import fr.ensimag.pseudocode.RegisterIMA;
@@ -43,6 +44,7 @@ public class While extends AbstractInst {
 
     /**
      * Page 225, 8.2
+     *
      * @param compiler
      */
     @Override
@@ -58,8 +60,9 @@ public class While extends AbstractInst {
         compiler.addInstruction(new CMP(1, RegisterIMA.getR(2)));
         compiler.addInstruction(new BEQ(labelStart));
     }
+
     @Override
-    protected void armCodeGenInst(DecacCompiler compiler){
+    protected void armCodeGenInst(DecacCompiler compiler) {
         int nbWhile = compiler.nbWhile();
         Label labelStart = new Label("WHILE_START_" + nbWhile);
         Label labelCond = new Label("WHILE_COND_" + nbWhile);
@@ -74,7 +77,7 @@ public class While extends AbstractInst {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.condition.verifyCondition(compiler, localEnv, currentClass);
         //Applies verifyInst on all instantiations of its body

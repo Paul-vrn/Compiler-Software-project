@@ -7,10 +7,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.pseudocode.*;
-import fr.ensimag.pseudocode.ima.instructions.BEQ;
-import fr.ensimag.pseudocode.ima.instructions.BRA;
-import fr.ensimag.pseudocode.ima.instructions.CMP;
-import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.io.PrintStream;
 
@@ -27,16 +24,20 @@ public class InstanceOf extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Label labelTrue = new Label("true_instance_of" + n);
-        Label labelFalse = new Label("false_instance_of" + n);
-        Label labelStart = new Label("instance_of" + n);
-        Label labelEnd = new Label("end_instance_of" + n);
+        int nb = compiler.getLabelFactory().nbInstanceOf();
+        Label labelTrue = new Label("true_instance_of_" + nb);
+        Label labelFalse = new Label("false_instance_of" + nb);
+        Label labelStart = new Label("instance_of" + nb);
+        Label labelEnd = new Label("end_instance_of" + nb);
         expr.codeGenExpr(compiler, n);
-        Operand addrType = type.getClassDefinition().getOperand();
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
+        compiler.addInstruction(new LEA(type.getClassDefinition().getOperand(), RegisterIMA.getR(0)));
+
+
         compiler.addLabel(labelStart);
-        compiler.addInstruction(new CMP((DVal) addrType, RegisterIMA.getR(n)));
+        compiler.addInstruction(new CMP(RegisterIMA.getR(0), RegisterIMA.getR(n)));
         compiler.addInstruction(new BEQ(labelTrue));
-        compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.getR(n)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
         compiler.addInstruction(new CMP(new NullOperand(), RegisterIMA.getR(n)));
         compiler.addInstruction(new BEQ(labelFalse));
         compiler.addInstruction(new BRA(labelStart));

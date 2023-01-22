@@ -20,7 +20,7 @@ public class LabelFactory {
     private int nbAnd;
     private int nbOr;
     private int nbOpComp;
-
+    private int nbInstanceOf;
     /* Error labels and flags */
     private boolean flagOverflowError;
     private boolean flagStackError;
@@ -137,6 +137,11 @@ public class LabelFactory {
         return i;
     }
 
+    public int nbInstanceOf() {
+        int i = nbInstanceOf;
+        nbInstanceOf++;
+        return i;
+    }
     /**
      * Getter for nbIfThenElse
      * @return int

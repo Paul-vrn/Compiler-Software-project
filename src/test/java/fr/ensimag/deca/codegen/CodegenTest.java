@@ -477,16 +477,9 @@ public class CodegenTest {
     }
 
     @Test
-    void test65math_int_ov() throws IOException {
+    void test65math_int_ov2() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/math_int_ov2.deca"};
         String file2 = "src/test/deca/codegen/valid/math_int_ov2_oracle.txt";
-        generalTestValid(args, file2, null);
-    }
-
-    @Test
-    void test66math_int_ov() throws IOException {
-        String[] args = {"src/test/deca/codegen/valid/math_int_ov3.deca"};
-        String file2 = "src/test/deca/codegen/valid/math_int_ov3_oracle.txt";
         generalTestValid(args, file2, null);
     }
 

@@ -18,6 +18,7 @@
       `> ListInst [List with 1 elements]
          []> [16, 4] IfThenElse
              +> [16, 9] InstanceOf
+             |  type: boolean
              |  `> [16, 7] Identifier (a)
              |     definition: variable defined at [15, 6], type=A
              |  +> [16, 20] Identifier (A)

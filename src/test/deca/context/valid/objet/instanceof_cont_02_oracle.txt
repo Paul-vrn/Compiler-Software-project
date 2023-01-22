@@ -17,6 +17,7 @@
       |      `> NoInitialization
       `> ListInst [List with 1 elements]
          []> [16, 6] InstanceOf
+             type: boolean
              `> [16, 4] Identifier (a)
                 definition: variable defined at [15, 6], type=A
              +> [16, 17] Identifier (A)

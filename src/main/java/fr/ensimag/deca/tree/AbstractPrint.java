@@ -33,6 +33,16 @@ public abstract class AbstractPrint extends AbstractInst {
         return arguments;
     }
 
+    /**
+     * VerifyInst for a print, checks for the type in the print, if it is not respected, throws an error
+     * @param compiler contains the "env_types" attribute
+     * @param localEnv corresponds to the "env_exp" attribute
+     * @param currentClass
+     *          corresponds to the "class" attribute (null in the main bloc).
+     * @param returnType
+     *          corresponds to the "return" attribute (void in the main bloc).
+     * @throws ContextualError
+     */
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)

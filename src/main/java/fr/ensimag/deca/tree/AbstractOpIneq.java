@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 
 /**
+ * Class for inequality operations ( < , > , <= , >= )
  *
  * @author gl21
  * @date 01/01/2023

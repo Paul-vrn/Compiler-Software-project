@@ -16,6 +16,7 @@ import fr.ensimag.pseudocode.ima.instructions.POP;
 import fr.ensimag.pseudocode.ima.instructions.PUSH;
 
 /**
+ * Class for the comparison operations
  *
  * @author gl21
  * @date 01/01/2023
@@ -26,6 +27,20 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         super(leftOperand, rightOperand);
     }
 
+    /**
+     * VerifyExpr for Comparison operations
+     *
+     * @param compiler  (contains the "env_types" attribute)
+     * @param localEnv
+     *            Environment in which the expression should be checked
+     *            (corresponds to the "env_exp" attribute)
+     * @param currentClass
+     *            Definition of the class containing the expression
+     *            (corresponds to the "class" attribute)
+     *             is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {

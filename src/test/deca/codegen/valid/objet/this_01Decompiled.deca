@@ -1,0 +1,10 @@
+class A {
+	protected A a = this;
+	int x;
+}
+
+{
+	A a = new A();
+	(a.x = 42);
+	println(a.x);
+}

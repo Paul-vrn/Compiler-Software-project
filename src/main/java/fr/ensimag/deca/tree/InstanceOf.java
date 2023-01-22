@@ -6,6 +6,11 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.ima.instructions.BEQ;
+import fr.ensimag.pseudocode.ima.instructions.BRA;
+import fr.ensimag.pseudocode.ima.instructions.CMP;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
 
 import java.io.PrintStream;
 
@@ -19,6 +24,29 @@ public class InstanceOf extends AbstractExpr {
 
     private AbstractExpr expr;
     private AbstractIdentifier type;
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Label labelTrue = new Label("true_instance_of" + n);
+        Label labelFalse = new Label("false_instance_of" + n);
+        Label labelStart = new Label("instance_of" + n);
+        Label labelEnd = new Label("end_instance_of" + n);
+        expr.codeGenExpr(compiler, n);
+        Operand addrType = type.getClassDefinition().getOperand();
+        compiler.addLabel(labelStart);
+        compiler.addInstruction(new CMP((DVal) addrType, RegisterIMA.getR(n)));
+        compiler.addInstruction(new BEQ(labelTrue));
+        compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.getR(n)));
+        compiler.addInstruction(new CMP(new NullOperand(), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BEQ(labelFalse));
+        compiler.addInstruction(new BRA(labelStart));
+        compiler.addLabel(labelTrue);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BRA(labelEnd));
+        compiler.addLabel(labelFalse);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), RegisterIMA.getR(n)));
+        compiler.addLabel(labelEnd);
+    }
 
     public InstanceOf(AbstractIdentifier type, AbstractExpr expr) {
         super();

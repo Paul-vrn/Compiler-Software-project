@@ -65,6 +65,8 @@ public class InstanceOf extends AbstractExpr {
                     + this.type.getLocation().errorOutPut() + ": InstanceOf types invalid", this.type.getLocation());
         }
 
+        this.setType(compiler.environmentType.BOOLEAN);
+
         return compiler.environmentType.BOOLEAN;
     }
 

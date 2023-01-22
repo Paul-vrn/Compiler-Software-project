@@ -10,7 +10,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 /**
- * 
+ * Class for no operation
+ * exemple:    ;
+ *
  * @author gl21
  * @date 01/01/2023
  */

@@ -3,6 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 
 /**
+ * Class for the print inst
+ * exemple: print(2);
+ *
  * @author gl21
  * @date 01/01/2023
  */

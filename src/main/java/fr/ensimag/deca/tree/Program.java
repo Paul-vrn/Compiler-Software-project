@@ -35,6 +35,12 @@ public class Program extends AbstractProgram {
     private ListDeclClass classes;
     private AbstractMain main;
 
+    /**
+     * VerifyProgram, calls the functions associated with the 3 passes of the part B
+     *
+     * @param compiler
+     * @throws ContextualError
+     */
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
 

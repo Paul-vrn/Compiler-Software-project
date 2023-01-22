@@ -17,6 +17,7 @@ import fr.ensimag.pseudocode.ima.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
+ * Class for the while inst
  *
  * @author gl21
  * @date 01/01/2023
@@ -76,7 +77,7 @@ public class While extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.condition.verifyCondition(compiler, localEnv, currentClass);
-
+        //Applies verifyInst on all instantiations of its body
         for (AbstractInst i : this.body.getList()) {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
         }

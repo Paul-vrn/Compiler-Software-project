@@ -10,6 +10,9 @@ import fr.ensimag.pseudocode.ima.instructions.WNL;
 
 
 /**
+ * Class for the println (print line) inst
+ * exemple: println(2);
+ *
  * @author gl21
  * @date 01/01/2023
  */

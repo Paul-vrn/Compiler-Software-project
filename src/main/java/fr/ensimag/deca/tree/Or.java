@@ -8,11 +8,15 @@ import fr.ensimag.pseudocode.ima.instructions.BEQ;
 import fr.ensimag.pseudocode.ima.instructions.CMP;
 
 /**
+ * Class for the or operand
+ * example: true || false;
  *
  * @author gl21
  * @date 01/01/2023
  */
 public class Or extends AbstractOpBool {
+
+
 
     public Or(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);

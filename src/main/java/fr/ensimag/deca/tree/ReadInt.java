@@ -14,6 +14,8 @@ import fr.ensimag.pseudocode.ima.instructions.RINT;
 import java.io.PrintStream;
 
 /**
+ * Class for the ReadFloat expression
+ * example: int x = ReadFloat();
  *
  * @author gl21
  * @date 01/01/2023

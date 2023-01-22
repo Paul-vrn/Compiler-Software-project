@@ -55,7 +55,7 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    public int codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp){
+    public int codeGenMethodBody(DecacCompiler compiler, EnvironmentExp localEnvExp) {
         listDeclField.codeGenListDeclField(compiler, localEnvExp);
         listInst.codeGenListInst(compiler);
         return listDeclField.size();

@@ -12,6 +12,7 @@ import fr.ensimag.pseudocode.ima.instructions.BNE;
 import fr.ensimag.pseudocode.ima.instructions.SNE;
 
 /**
+ * Class for NotEquals ( != )
  *
  * @author gl21
  * @date 01/01/2023
@@ -35,7 +36,7 @@ public class NotEquals extends AbstractOpExactCmp {
     }
 
     @Override
-    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         super.armCodeGenExpr(compiler, n, m);
         int nbLabel = compiler.getLabelFactory().NbOpComp();
         Label lessThan = new Label("lessThan_" + nbLabel);

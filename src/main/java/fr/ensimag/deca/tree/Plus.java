@@ -11,6 +11,9 @@ import fr.ensimag.pseudocode.ima.instructions.POP;
 import fr.ensimag.pseudocode.ima.instructions.PUSH;
 
 /**
+ * Class for the plus ( + ) operand
+ * example: 2 + 3;
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -25,7 +28,7 @@ public class Plus extends AbstractOpArith {
         getLeftOperand().codeGenExpr(compiler, n);
         if (n < RegisterIMA.RMAX) {
             getRightOperand().codeGenExpr(compiler, n + 1);
-            compiler.addInstruction(new ADD(RegisterIMA.getR(n+1), RegisterIMA.getR(n)));
+            compiler.addInstruction(new ADD(RegisterIMA.getR(n + 1), RegisterIMA.getR(n)));
 
         } else {
             compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
@@ -43,8 +46,8 @@ public class Plus extends AbstractOpArith {
         if (getType().isFloat()) {
             if (m < RegisterARM.SMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new VADD(RegisterARM.getS(m+1), RegisterARM.getS(m)));
+                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
+                compiler.addInstruction(new VADD(RegisterARM.getS(m + 1), RegisterARM.getS(m)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new VPUSH(RegisterARM.getS(m)));
@@ -56,8 +59,8 @@ public class Plus extends AbstractOpArith {
         } else {
             if (n < RegisterARM.RMAX) {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
-                getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-                compiler.addInstruction(new ADDS(RegisterARM.getR(n+1), RegisterARM.getR(n)));
+                getRightOperand().armCodeGenExpr(compiler, n + 1, m + 1);
+                compiler.addInstruction(new ADDS(RegisterARM.getR(n + 1), RegisterARM.getR(n)));
             } else {
                 getLeftOperand().armCodeGenExpr(compiler, n, m);
                 compiler.addInstruction(new PUSHARM(RegisterARM.getR(n)));
@@ -68,7 +71,7 @@ public class Plus extends AbstractOpArith {
             }
         }
     }
- 
+
 
     @Override
     protected String getOperatorName() {

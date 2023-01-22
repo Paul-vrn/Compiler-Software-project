@@ -1,0 +1,12 @@
+// Description:
+//    new avec un type qui n'est pas une classe.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+    int a = new int();
+}

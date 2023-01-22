@@ -6,15 +6,16 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
  * Entry point for contextual verifications and code generation from outside the package.
- * 
+ *
  * @author gl21
  * @date 01/01/2023
- *
  */
 public abstract class AbstractProgram extends Tree {
-    public abstract void verifyProgram(DecacCompiler compiler) throws ContextualError;
-    public abstract void codeGenProgram(DecacCompiler compiler) ;
 
-    public abstract void armCodeGenProgram(DecacCompiler compiler) ;
+    public abstract void verifyProgram(DecacCompiler compiler) throws ContextualError;
+
+    public abstract void codeGenProgram(DecacCompiler compiler);
+
+    public abstract void armCodeGenProgram(DecacCompiler compiler);
 
 }

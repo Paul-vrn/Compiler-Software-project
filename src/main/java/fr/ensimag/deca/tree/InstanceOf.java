@@ -9,7 +9,13 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
-public class InstanceOf extends AbstractExpr{
+/**
+ * InstanceOf Operator.
+ *
+ * @author gl21
+ * @date 01/01/2023
+ */
+public class InstanceOf extends AbstractExpr {
 
     private AbstractExpr expr;
     private AbstractIdentifier type;
@@ -25,7 +31,8 @@ public class InstanceOf extends AbstractExpr{
         Type type1 = this.expr.verifyExpr(compiler, localEnv, currentClass);
         Type type2 = this.type.verifyType(compiler);
 
-        if(!((type1 == null || type1.isClass()) && (type2.isClass()))){
+        /* Verifies if the instanceOf fits with the types */
+        if (!((type1 == null || type1.isClass()) && (type2.isClass()))) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.type.getLocation().errorOutPut() + ": InstanceOf types invalid", this.type.getLocation());
         }

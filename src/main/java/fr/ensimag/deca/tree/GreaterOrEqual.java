@@ -13,7 +13,7 @@ import fr.ensimag.pseudocode.ima.instructions.SGE;
 
 /**
  * Operator "x >= y"
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -36,7 +36,7 @@ public class GreaterOrEqual extends AbstractOpIneq {
     }
 
     @Override
-    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         super.armCodeGenExpr(compiler, n, m);
         int nbLabel = compiler.getLabelFactory().NbOpComp();
         Label lessThan = new Label("lessThan_" + nbLabel);

@@ -21,13 +21,14 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
             throws ContextualError {
         EnvironmentExp envExpR = new EnvironmentExp(superClass.getClassDefinition().getMembers());
         name.getClassDefinition().setNumberOfMethods(superClass.getClassDefinition().getNumberOfMethods());
-        for (AbstractDeclMethod current : this.getList()){
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
+        for (AbstractDeclMethod current : this.getList()) {
+            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
                     current.verifyDeclMethodPass2(compiler, superClass, name).getDictionary().entrySet()) {
+                /* Verifies if the method is already defined */
                 try {
                     envExpR.declare(entry.getKey(), entry.getValue());
-                }catch (EnvironmentExp.DoubleDefException e){
-                    throw new ContextualError( compiler.displaySourceFile() + ":"
+                } catch (EnvironmentExp.DoubleDefException e) {
+                    throw new ContextualError(compiler.displaySourceFile() + ":"
                             + current.getLocation().errorOutPut() + ": Method already defined", current.getLocation());
                 }
             }
@@ -38,14 +39,14 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
 
     protected void verifyListDeclMethodPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name)
             throws ContextualError {
-        for(AbstractDeclMethod current : this.getList()){
+        for (AbstractDeclMethod current : this.getList()) {
             current.verifyDeclMethodPass3(compiler, envExp, name);
         }
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        for ( AbstractDeclMethod current : this.getList()){
+        for (AbstractDeclMethod current : this.getList()) {
             current.decompile(s);
         }
     }

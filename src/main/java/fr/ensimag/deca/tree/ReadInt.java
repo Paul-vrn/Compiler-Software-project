@@ -14,6 +14,8 @@ import fr.ensimag.pseudocode.ima.instructions.RINT;
 import java.io.PrintStream;
 
 /**
+ * Class for the ReadFloat expression
+ * example: int x = ReadFloat();
  *
  * @author gl21
  * @date 01/01/2023
@@ -22,7 +24,7 @@ public class ReadInt extends AbstractReadExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         this.setType(compiler.environmentType.INT);
         return this.getType();
     }
@@ -59,7 +61,7 @@ public class ReadInt extends AbstractReadExpr {
         compiler.addInstruction(new MOV(RegisterARM.SP, RegisterARM.getR(1))); // MOV R1, SP
         compiler.addInstruction(new BL(compiler.getLabelFactory().getScanfLabel())); // bl scanf
         compiler.addInstruction(new LDR(new RegisterOffset(0, RegisterARM.SP), RegisterARM.getR(n)));// ldr rn, [sp]
-        compiler.addInstruction(new ADDS(new ImmediateInteger(4),RegisterARM.SP));
+        compiler.addInstruction(new ADDS(new ImmediateInteger(4), RegisterARM.SP));
 
     }
 }

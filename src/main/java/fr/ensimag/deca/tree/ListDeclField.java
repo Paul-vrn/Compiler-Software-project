@@ -19,6 +19,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
     /**
      * Pass 2
+     *
      * @param compiler
      * @param superClass
      * @param name
@@ -30,13 +31,14 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         EnvironmentExp envExpR = new EnvironmentExp(superClass.getClassDefinition().getMembers());
         name.getClassDefinition().setNumberOfFields(superClass.getClassDefinition().getNumberOfFields());
 
-        for (AbstractDeclField current : this.getList()){
-            for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
-                    current.verifyDeclFieldPass2(compiler, superClass, name).getDictionary().entrySet()){
+        for (AbstractDeclField current : this.getList()) {
+            for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
+                    current.verifyDeclFieldPass2(compiler, superClass, name).getDictionary().entrySet()) {
+                /* Verifies if the field is already defined */
                 try {
                     envExpR.declare(entry.getKey(), entry.getValue());
-                }catch (EnvironmentExp.DoubleDefException e){
-                    throw new ContextualError( compiler.displaySourceFile() + ":"
+                } catch (EnvironmentExp.DoubleDefException e) {
+                    throw new ContextualError(compiler.displaySourceFile() + ":"
                             + current.getLocation().errorOutPut() + ": Field already defined", current.getLocation());
                 }
             }
@@ -46,20 +48,20 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     }
 
     protected void verifyListDeclFieldPass3(DecacCompiler compiler, EnvironmentExp envExp, AbstractIdentifier name) throws ContextualError {
-        for(AbstractDeclField current : this.getList()){
+        for (AbstractDeclField current : this.getList()) {
             current.verifyDeclFieldPass3(compiler, envExp, name);
         }
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        for ( AbstractDeclField current : this.getList()){
+        for (AbstractDeclField current : this.getList()) {
             current.decompile(s);
         }
     }
 
-    public void codeGenDeclFieldNull(DecacCompiler compiler){
-        for (AbstractDeclField current : this.getList()){
+    public void codeGenDeclFieldNull(DecacCompiler compiler) {
+        for (AbstractDeclField current : this.getList()) {
             current.codeGenDeclFieldNull(compiler);
         }
     }

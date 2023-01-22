@@ -30,6 +30,17 @@ public class Assign extends AbstractBinaryExpr {
         super(leftOperand, rightOperand);
     }
 
+    /**
+     * Throws an error if there is a missing type declaration.
+     *
+     * @param compiler contains the "env_types" attribute
+     * @param localEnv corresponds to the "env_exp" attribute
+     * @param currentClass
+     *          corresponds to the "class" attribute (null in the main bloc).
+     * @param returnType
+     *          corresponds to the "return" attribute (void in the main bloc).
+     * @throws ContextualError
+     */
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
                               ClassDefinition currentClass, Type returnType)
@@ -45,6 +56,20 @@ public class Assign extends AbstractBinaryExpr {
         this.setRightOperand(this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, type1));
     }
 
+    /**
+     * Throws an error if there is a missing type declaration.
+     *
+     * @param compiler  (contains the "env_types" attribute)
+     * @param localEnv
+     *            Environment in which the expression should be checked
+     *            (corresponds to the "env_exp" attribute)
+     * @param currentClass
+     *            Definition of the class containing the expression
+     *            (corresponds to the "class" attribute)
+     *             is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {

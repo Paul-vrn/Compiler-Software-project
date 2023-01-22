@@ -12,7 +12,6 @@ import fr.ensimag.pseudocode.ima.instructions.BEQ;
 import fr.ensimag.pseudocode.ima.instructions.SEQ;
 
 /**
- *
  * @author gl21
  * @date 01/01/2023
  */
@@ -21,7 +20,6 @@ public class Equals extends AbstractOpExactCmp {
     public Equals(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
     }
-
 
     @Override
     protected String getOperatorName() {
@@ -36,7 +34,7 @@ public class Equals extends AbstractOpExactCmp {
     }
 
     @Override
-    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m){
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         super.armCodeGenExpr(compiler, n, m);
         int nbLabel = compiler.getLabelFactory().NbOpComp();
         Label lessThan = new Label("lessThan_" + nbLabel);

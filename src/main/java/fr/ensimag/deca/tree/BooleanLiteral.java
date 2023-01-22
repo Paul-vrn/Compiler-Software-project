@@ -12,12 +12,12 @@ import fr.ensimag.pseudocode.ima.instructions.LOAD;
 import java.io.PrintStream;
 
 /**
+ *  Boolean literal : true or false.
  *
  * @author gl21
  * @date 01/01/2023
  */
 public class BooleanLiteral extends AbstractExpr {
-
     private boolean value;
 
     public BooleanLiteral(boolean value) {

@@ -11,6 +11,7 @@ import fr.ensimag.pseudocode.ima.instructions.*;
 
 
 /**
+ *  Divide Operator.
  *
  * @author gl21
  * @date 01/01/2023

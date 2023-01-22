@@ -185,10 +185,13 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
+
+        /* Verifies if the type exists */
         if(compiler.environmentType.defOfType(this.getName()) == null){
             throw new ContextualError( compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Unknown type", this.getLocation());
         }
+
         this.setType(compiler.environmentType.defOfType(this.getName()).getType());
         this.setDefinition(compiler.environmentType.defOfType(this.getName()));
         return this.getType();
@@ -196,6 +199,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
+        /* Verifies if the metho or field if declared and exists */
         if(envExp.get(this.getName()) != null){
             this.setDefinition(envExp.get(this.getName()));
         }else{

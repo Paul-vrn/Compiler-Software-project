@@ -10,6 +10,7 @@ import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.RegisterOffset;
 import fr.ensimag.pseudocode.ima.instructions.*;
 import org.apache.commons.lang.Validate;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -32,7 +33,7 @@ public class DeclClass extends AbstractDeclClass {
         return name;
     }
 
-    public AbstractIdentifier getSuperClass(){
+    public AbstractIdentifier getSuperClass() {
         return superClass;
     }
 
@@ -61,58 +62,63 @@ public class DeclClass extends AbstractDeclClass {
         s.println("}");
     }
 
+    /**
+     * @param compiler
+     * @throws ContextualError
+     */
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-
-        //TODO: Comprendre où est envExpr ici et comment y accéder + faire le cas où c'est Object
-
-        if(this.superClass == null){
+        if (this.superClass == null) {
             this.superClass = new Identifier(compiler.createSymbol("Object"));
             this.superClass.setLocation(Location.BUILTIN);
             this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(compiler.createSymbol("Object")));
-        }else{
-            if(compiler.environmentType.getEnvTypes().get(this.superClass.getName()) != null){
+        } else {
+            /* Verifies if the EXTEND class exists */
+            if (compiler.environmentType.getEnvTypes().get(this.superClass.getName()) != null) {
                 this.superClass.setDefinition(compiler.environmentType.getEnvTypes().get(this.superClass.getName()));
-            }else{
-                throw new ContextualError( compiler.displaySourceFile() + ":"
+            } else {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Extends a class that doesn't exist", this.getLocation());
             }
 
         }
 
-        ClassType classtype = new ClassType(name.getName(),getLocation(), superClass.getClassDefinition());
+        ClassType classtype = new ClassType(name.getName(), getLocation(), superClass.getClassDefinition());
         this.name.setType(classtype);
         this.name.setDefinition(new ClassDefinition(classtype, getLocation(), superClass.getClassDefinition()));
 
-        try{
+        /* Try-Catch to check if the class name already exists */
+        try {
             compiler.environmentType.declare(name.getName(), (TypeDefinition) name.getDefinition());
-        }catch(EnvironmentType.DoubleDefException e){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        } catch (EnvironmentType.DoubleDefException e) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Class name already used", this.getLocation());
         }
 
     }
 
+    /**
+     * @param compiler
+     * @throws ContextualError
+     */
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
 
         EnvironmentExp envExpF = this.fieldSets.verifyListDeclFieldPass2(compiler, superClass, name);
-        EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler,superClass,name);
+        EnvironmentExp envExpM = this.methods.verifyListDeclMethodPass2(compiler, superClass, name);
 
-        //if(superClass.getClassDefinition().getMembers().get(name.getName()) != null){
         ClassDefinition newDef = new ClassDefinition(this.name.getClassDefinition().getType(), this.getLocation(), this.superClass.getClassDefinition());
         newDef.disjointUnion(compiler, envExpF, envExpM);
 
-        for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()){
+        for (Map.Entry<SymbolTable.Symbol, ExpDefinition> entry : newDef.getMembers().getDictionary().entrySet()) {
             try {
                 this.name.getClassDefinition().getMembers().declare(entry.getKey(), entry.getValue());
-            }catch (EnvironmentExp.DoubleDefException ignored){}
+            } catch (EnvironmentExp.DoubleDefException ignored) {
+            }
         }
-        //}
-
     }
-    
+
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         this.fieldSets.verifyListDeclFieldPass3(compiler, this.name.getClassDefinition().getMembers(), this.name);
@@ -140,7 +146,7 @@ public class DeclClass extends AbstractDeclClass {
         this.methods.iter(f);
     }
 
-    public static void codeGenObjectEquals(DecacCompiler compiler){
+    public static void codeGenObjectEquals(DecacCompiler compiler) {
         Label labelEnd = new Label("fin.Object.equals");
         compiler.addLabel(new Label("code.Object.equals"));
         //On utilise R0 et R1 pas sûr de devoir TSTO
@@ -161,7 +167,7 @@ public class DeclClass extends AbstractDeclClass {
 
         compiler.addLabel(new Label("init." + this.name.getName().getName()));
         int indexTSTO = compiler.getLineIndex();
-        if (superClass.getClassDefinition().getNumberOfFields() > 0){
+        if (superClass.getClassDefinition().getNumberOfFields() > 0) {
             fieldSets.codeGenDeclFieldNull(compiler);
             compiler.addInstruction(new PUSH(RegisterIMA.getR(1)));
             compiler.addInstruction(new BSR(new Label("init." + this.superClass.getName().getName())));
@@ -169,10 +175,10 @@ public class DeclClass extends AbstractDeclClass {
         }
         fieldSets.codeGenDeclField(compiler);
         if (compiler.getMemory().getLastGRegister() > 1) {
-            for (int i = 2; i < compiler.getMemory().getLastGRegister()+1; i++) {
+            for (int i = 2; i < compiler.getMemory().getLastGRegister() + 1; i++) {
                 preInit.add(new Line(new PUSH(RegisterIMA.getR(i))));
                 compiler.getMemory().increaseTSTO();
-                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister()-(i-2))));
+                compiler.addInstruction(new POP(RegisterIMA.getR(compiler.getMemory().getLastGRegister() - (i - 2))));
                 compiler.getMemory().decreaseTSTO();
             }
         }

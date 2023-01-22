@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
 
 import fr.ensimag.pseudocode.RegisterARM;
@@ -41,13 +42,14 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         expression.armCodeGenExpr(compiler, 4, 2);
-        if (expression.getType().isFloat()){
+        if (expression.getType().isFloat()) {
             compiler.addInstruction(new VSTR(RegisterARM.getS(2), varName.getExpDefinition().getOperand()));
         } else {
             // int || bool
             compiler.addInstruction(new STR(RegisterARM.getR(4), varName.getExpDefinition().getOperand()));
         }
     }
+
     @Override
     public void codeGenInitField(DecacCompiler compiler, Type type, int n) {
         expression.codeGenExpr(compiler, 2);
@@ -60,7 +62,7 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+                                        EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         this.setExpression(this.getExpression().verifyRValue(compiler, localEnv, currentClass, t));
     }
@@ -73,8 +75,7 @@ public class Initialization extends AbstractInitialization {
     }
 
     @Override
-    protected
-    void iterChildren(TreeFunction f) {
+    protected void iterChildren(TreeFunction f) {
         expression.iter(f);
     }
 

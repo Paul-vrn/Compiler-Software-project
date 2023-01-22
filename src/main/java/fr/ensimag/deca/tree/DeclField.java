@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -72,11 +72,12 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected EnvironmentExp verifyDeclFieldPass2(DecacCompiler compiler, AbstractIdentifier superClass,
-                                        AbstractIdentifier name) throws ContextualError {
+                                                  AbstractIdentifier name) throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
 
-        if(type1.isVoid()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        /* Verifies if the type is void */
+        if (type1.isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Type void forbidden in class fields", this.getLocation());
         }
         int index_fin = 0;
@@ -84,18 +85,19 @@ public class DeclField extends AbstractDeclField {
 
         this.fieldName.setType(type1);
 
-        if(superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null){
-            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
-                throw new ContextualError( compiler.displaySourceFile() + ":"
+        if (superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null) {
+            /* Verifies if the superClass has a method with the same name */
+            if (!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()) {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
             }
             if_taken = 1;
-            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition",getLocation()).getIndex();
-        }else{
+            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition", getLocation()).getIndex();
+        } else {
             name.getClassDefinition().incNumberOfFields();
 
         }
-        if(if_taken == 0) {
+        if (if_taken == 0) {
             this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
                     name.getClassDefinition(), name.getClassDefinition().getNumberOfFields()));
         } else {
@@ -104,9 +106,10 @@ public class DeclField extends AbstractDeclField {
         }
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
 
-        try{
+        try {
             envToReturn.declare(this.fieldName.getName(), this.fieldName.getFieldDefinition());
-        }catch (EnvironmentExp.DoubleDefException ignored){}
+        } catch (EnvironmentExp.DoubleDefException ignored) {
+        }
 
         return envToReturn;
     }

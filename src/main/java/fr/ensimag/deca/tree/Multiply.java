@@ -11,6 +11,8 @@ import fr.ensimag.pseudocode.ima.instructions.POP;
 import fr.ensimag.pseudocode.ima.instructions.PUSH;
 
 /**
+ * Multiply Operator.
+ *
  * @author gl21
  * @date 01/01/2023
  */

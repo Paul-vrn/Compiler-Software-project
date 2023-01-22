@@ -11,6 +11,8 @@ import fr.ensimag.pseudocode.ima.instructions.PUSH;
 import fr.ensimag.pseudocode.ima.instructions.SUB;
 
 /**
+ * Minus Operator.
+ *
  * @author gl21
  * @date 01/01/2023
  */

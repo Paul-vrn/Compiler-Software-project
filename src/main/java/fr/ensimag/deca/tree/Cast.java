@@ -16,6 +16,10 @@ import fr.ensimag.pseudocode.arm.instructions.VMOV;
 import fr.ensimag.pseudocode.ima.instructions.FLOAT;
 import fr.ensimag.pseudocode.ima.instructions.INT;
 
+/**
+ * Cast Operator : (type) (expr)
+ * Example : (int) (x)
+ */
 public class Cast extends AbstractExpr{
     private AbstractIdentifier type;
     private AbstractExpr expr;
@@ -34,13 +38,28 @@ public class Cast extends AbstractExpr{
         return expr;
     }
 
+    /**
+     * Throws an error if the type and the castType are incompatible.
+     *
+     * @param compiler  (contains the "env_types" attribute)
+     * @param localEnv
+     *            Environment in which the expression should be checked
+     *            (corresponds to the "env_exp" attribute)
+     * @param currentClass
+     *            Definition of the class containing the expression
+     *            (corresponds to the "class" attribute)
+     *             is null in the main bloc.
+     * @return
+     * @throws ContextualError
+     */
+    @Override
     public Type verifyExpr(DecacCompiler compiler,
                                     EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError{
-        //TODO: Problem verifyExpr or verifyType ?
         Type type1 = this.type.verifyType(compiler);
         Type type2 = this.getExpr().verifyExpr(compiler,localEnv,currentClass);
 
+        /* Verification of the compatibility between the type and the castType */
         if(!((type1.isInt() && type2.isFloat()) || (type2.isInt() && type1.isFloat()) || type1.sameType(type2)
                 || (type2.isClass() && type1.isClass() && type2.asClassType("", this.getLocation()).isSubClassOf(type1.asClassType("", this.getLocation()))))){
             throw new ContextualError(compiler.displaySourceFile() + ":"

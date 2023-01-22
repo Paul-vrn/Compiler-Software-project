@@ -24,6 +24,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         for (AbstractDeclMethod current : this.getList()){
             for(Map.Entry<SymbolTable.Symbol, ExpDefinition> entry :
                     current.verifyDeclMethodPass2(compiler, superClass, name).getDictionary().entrySet()) {
+                /* Verifies if the method is already defined */
                 try {
                     envExpR.declare(entry.getKey(), entry.getValue());
                 }catch (EnvironmentExp.DoubleDefException e){

@@ -8,7 +8,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
- * 
+ * List of instance.
+ *
  * @author gl21
  * @date 01/01/2023
  */

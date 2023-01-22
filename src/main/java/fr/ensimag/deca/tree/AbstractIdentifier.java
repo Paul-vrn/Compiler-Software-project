@@ -12,7 +12,7 @@ import fr.ensimag.deca.tools.SymbolTable;
  * @author gl21
  * @date 01/01/2023
  */
-public abstract class AbstractIdentifier extends LValueIdent {
+public abstract class AbstractIdentifier extends AbstractLValue {
 
     public abstract void armCodeGenDeclVar(DecacCompiler compiler);
 

@@ -66,21 +66,19 @@ public class Modulo extends AbstractOpArith {
         if (n < RegisterARM.RMAX) {
             getLeftOperand().armCodeGenExpr(compiler, n, m);
             getRightOperand().armCodeGenExpr(compiler, n+1, m+1);
-            compiler.addInstruction(new PUSHARM(RegisterARM.getR(0), RegisterARM.getR(1)));
             compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(0)));
             compiler.addInstruction(new MOV(RegisterARM.getR(n+1), RegisterARM.getR(1)));
             compiler.addInstruction(new BL(new Label("__aeabi_idivmod", true)));
             compiler.addInstruction(new MOV(RegisterARM.getR(1), RegisterARM.getR(n)));
-            compiler.addInstruction(new POPARM(RegisterARM.getR(0), RegisterARM.getR(1)));
         } else {
             getLeftOperand().armCodeGenExpr(compiler, n, m);
-            compiler.addInstruction(new PUSHARM(RegisterARM.getR(0), RegisterARM.getR(1)));
             compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(0)));
+            compiler.addInstruction(new PUSHARM(RegisterARM.getR(0)));
             getRightOperand().armCodeGenExpr(compiler, n, m);
+            compiler.addInstruction(new POPARM(RegisterARM.getR(0)));
             compiler.addInstruction(new MOV(RegisterARM.getR(n), RegisterARM.getR(1)));
             compiler.addInstruction(new BL(new Label("__aeabi_idivmod", true)));
             compiler.addInstruction(new MOV(RegisterARM.getR(1), RegisterARM.getR(n)));
-            compiler.addInstruction(new POPARM(RegisterARM.getR(0), RegisterARM.getR(1)));
         }
     }
 

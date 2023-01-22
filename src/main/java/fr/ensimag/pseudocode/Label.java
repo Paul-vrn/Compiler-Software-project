@@ -11,13 +11,27 @@ import org.apache.commons.lang.Validate;
  */
 public class Label extends Operand {
 
+    /**
+     * Name of the label.
+     * @return name of the label
+     */
     @Override
     public String toString() {
         return name;
     }
+
+    /**
+     * Name of the label for arm
+     * @return name of the label
+     */
     public String toArmString() {
         return name;
     }
+
+    /**
+     * Constructor for IMA label
+     * @param name name of the label
+     */
     public Label(String name) {
         super();
         Validate.isTrue(name.length() <= 1024, "Label name too long, not supported by IMA");
@@ -25,10 +39,13 @@ public class Label extends Operand {
         this.name = name;
     }
 
+    /**
+     * Constructor for arm label
+     * @param name name of the label
+     * @param arm true if the label is for arm
+     */
     public Label(String name, boolean arm) {
         super();
-//        Validate.isTrue(name.length() <= 1024, "Label name too long, not supported by IMA");
-//        Validate.isTrue(name.matches("^[a-zA-Z][a-zA-Z0-9_.]*$"), "Invalid label name " + name);
         this.name = name;
     }
     private String name;

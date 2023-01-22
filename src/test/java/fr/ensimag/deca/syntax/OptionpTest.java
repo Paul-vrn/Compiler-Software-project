@@ -283,11 +283,23 @@ public class OptionpTest {
         generalTestValid(args, null);
     }
 
-    /*@Test
+    @Test
     void test43_class_method_asm_01() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/class_method_asm_01.deca"};
         generalTestValid(args, null);
-    }*/
+    }
+
+    @Test
+    void test44_noOp() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/noOp.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test45_simple_asm() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/simple_asm.deca"};
+        generalTestValid(args, null);
+    }
 
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);

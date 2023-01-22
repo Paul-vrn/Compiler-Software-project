@@ -1,13 +1,3 @@
-// Description:
-//    Programme testant la déclaration d'une classe et la méthode avec instertion asm de assembly
-//
-// Resultats:
-//		- upa
-//
-//
-// Historique:
-//    cree le 21/01/2023
-
 class A{
 	void duTexte() asm ("
 	WSTR \"Printed with asm\"

@@ -48,7 +48,7 @@ public class DeclField extends AbstractDeclField {
     @Override
     public void decompile(IndentPrintStream s) {
         visibility.decompile(s);
-        s.print(" ");
+
         type.decompile(s);
         s.print(" ");
         fieldName.decompile(s);

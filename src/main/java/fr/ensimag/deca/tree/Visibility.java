@@ -32,7 +32,7 @@ public enum Visibility {
             case PUBLIC:
                 break;
             case PROTECTED:
-                s.print("protected");
+                s.print("protected ");
                 break;
         }
     }

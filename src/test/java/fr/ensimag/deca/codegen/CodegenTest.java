@@ -455,6 +455,13 @@ public class CodegenTest {
             generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test63_prog_vide() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/prog_vide.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/prog_vide_oracle.txt";
+        generalTestValid(args, file2,null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option
@@ -467,7 +474,7 @@ public class CodegenTest {
             System.exit(1);
         }
         if(options.getSourceFiles().size() != 1) {
-            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented (yet?)");
+            System.err.println("Error: in test file CodegenTest, more than 1 source files are not implemented");
             System.exit(1);
         }
         DecacCompiler compiler = new DecacCompiler(new CompilerOptions(), options.getSourceFiles().get(0));

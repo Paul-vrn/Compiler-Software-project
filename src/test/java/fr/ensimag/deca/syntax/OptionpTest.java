@@ -235,6 +235,13 @@ public class OptionpTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test34_no_operation() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/no_operation.deca"};
+        generalTestValid(args, null);
+    }
+
+
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
 

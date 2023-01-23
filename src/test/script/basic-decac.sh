@@ -107,5 +107,11 @@ fi
 
 echo "Pas de probleme detecte avec decac -P."
 
+decac_moins_n=$(decac -n "$ARITH_EXPRESS_TEST")
 
+if [ "$decac_moins_n" != "" ]; then
+    echo "ERREUR: decac -n a produit une sortie à partir d'un programme correct"
+    exit 1
+fi
 
+echo "Pas de probleme detecte avec decac -P."

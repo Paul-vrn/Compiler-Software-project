@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CodegenTim {
+public class CodegenTimTest {
 
     @Test
     void test01field_class_01() throws IOException {

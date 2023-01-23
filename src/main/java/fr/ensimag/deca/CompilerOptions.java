@@ -59,6 +59,13 @@ public class CompilerOptions {
 
     public void enableARM(){this.armCompilation = true;}
 
+    public void enableSansObjet() {
+        this.sansObjet = true;
+    }
+    public boolean getSansObjet() {
+        return sansObjet;
+    }
+
 
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -72,7 +79,7 @@ public class CompilerOptions {
     private boolean parallel = false;
     private boolean noCheck = false;
     private boolean armCompilation = false;
-
+    private boolean sansObjet = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     public void parseArgs(String[] args) throws CLIException {
@@ -133,6 +140,9 @@ public class CompilerOptions {
                     case "-P":
                         enableParallel();
                         break;
+                    case "-so":
+                        enableSansObjet();
+                        break;
                     default:
                         if (argsArrayList.get(i).matches("-d{4,}")) {
                             debug = 4;}
@@ -188,7 +198,6 @@ public class CompilerOptions {
             }
         }
     }
-
     protected void displayUsage() {
         throw new UnsupportedOperationException("not yet implemented");
     }

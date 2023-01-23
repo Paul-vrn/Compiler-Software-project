@@ -325,6 +325,11 @@ public class ArmCodegenTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test52_big_int() throws IOException {
+        String[] args = {"src/test/deca/codegen/arm/big_int.deca"};
+        generalTestValid(args, null);
+    }
 
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);

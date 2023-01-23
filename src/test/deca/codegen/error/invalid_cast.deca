@@ -1,0 +1,15 @@
+// Description:
+//    Programme testant que le cast est invalide (car non implémenté hors int<-float, float<-int).
+//
+// Resultats:
+//      Cast type is invalid
+//
+//
+// Historique:
+//    cree le 23/01/2023
+class A {}
+
+{
+    float y = 2.0;
+    int x = (A) (y);
+}

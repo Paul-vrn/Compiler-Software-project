@@ -64,6 +64,9 @@ public class LabelFactory {
         this.flagDivByZeroError = false;
     }
 
+    public boolean getNoCheck() {
+        return noCheck;
+    }
     /**
      * Setter for noCheck
      * @param noCheck boolean
@@ -79,6 +82,7 @@ public class LabelFactory {
     public void createErrorSection(DecacCompiler compiler){
         if (noCheck)
             return;
+        compiler.addComment("--- Start of Error messages section ---");
         if (flagOverflowError){
             compiler.addLabel(overflowErrorLabel);
             compiler.addInstruction(new WSTR("Error: Overflow during arithmetic operation"));
@@ -115,6 +119,7 @@ public class LabelFactory {
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
+        compiler.addComment("--- End of Error messages section ---");
     }
 
     /**

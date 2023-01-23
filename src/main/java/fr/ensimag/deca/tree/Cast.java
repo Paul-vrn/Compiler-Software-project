@@ -67,6 +67,8 @@ public class Cast extends AbstractExpr {
             compiler.addInstruction(new INT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         } else if (getType().isFloat()) {
             compiler.addInstruction(new FLOAT(RegisterIMA.getR(n), RegisterIMA.getR(n)));
+        } else {
+            throw new ClassCastException("Cast type is invalid");
         }
     }
 

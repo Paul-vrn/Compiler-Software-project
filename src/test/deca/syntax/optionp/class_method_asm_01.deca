@@ -1,12 +1,11 @@
 // Description:
-//    Programme testant la déclaration d'une classe et la méthode avec instertion asm de assembly
+//    Programme pour vérifier la décompilation de method asm
 //
 // Resultats:
-//		- upa
 //
 //
 // Historique:
-//    cree le 21/01/2023
+//    cree le 01/01/2023
 
 class A{
 	void duTexte() asm ("

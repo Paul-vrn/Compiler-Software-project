@@ -114,4 +114,4 @@ if [ "$decac_moins_n" != "" ]; then
     exit 1
 fi
 
-echo "Pas de probleme detecte avec decac -P."
+echo "Pas de probleme detecte avec decac -n."

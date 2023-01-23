@@ -137,7 +137,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
         if(!type.isBoolean()){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Condition argument of if/elseif should be a boolean", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Condition argument of if/elseif or while should be a boolean", this.getLocation());
         }
     }
 

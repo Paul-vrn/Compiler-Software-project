@@ -4,24 +4,30 @@ import java.io.PrintStream;
 import java.util.LinkedList;
 
 /**
- * Abstract representation of an IMA program, i.e. set of Lines.
+ * Program for ARM architecture.
  *
- * @author Ensimag
- * @date 01/01/2023
+ * @author gl21
  */
 public class ARMProgram extends AbstractCodeGenProgram {
 
+    /**
+     * Data section
+     */
     protected final LinkedList<AbstractLine> linesData = new LinkedList<AbstractLine>();
 
+    /**
+     * add line to the data section
+     * @param line
+     */
     @Override
     public void addData(AbstractLine line) {
         linesData.add(line);
     }
 
-    @Override
     /**
      * Display the program in a textual form readable by IMA to stream s.
      */
+    @Override
     public void display(PrintStream s) {
         s.println(".data");
         for (AbstractLine l: linesData) {

@@ -6,13 +6,48 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.io.PrintStream;
 
-public class InstanceOf extends AbstractExpr{
+/**
+ * InstanceOf Operator.
+ *
+ * @author gl21
+ * @date 01/01/2023
+ */
+public class InstanceOf extends AbstractExpr {
 
     private AbstractExpr expr;
     private AbstractIdentifier type;
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int nb = compiler.getLabelFactory().nbInstanceOf();
+        Label labelTrue = new Label("true_instance_of_" + nb);
+        Label labelFalse = new Label("false_instance_of" + nb);
+        Label labelStart = new Label("instance_of" + nb);
+        Label labelEnd = new Label("end_instance_of" + nb);
+        expr.codeGenExpr(compiler, n);
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
+        compiler.addInstruction(new LEA(type.getClassDefinition().getOperand(), RegisterIMA.getR(0)));
+
+
+        compiler.addLabel(labelStart);
+        compiler.addInstruction(new CMP(RegisterIMA.getR(0), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BEQ(labelTrue));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
+        compiler.addInstruction(new CMP(new NullOperand(), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BEQ(labelFalse));
+        compiler.addInstruction(new BRA(labelStart));
+        compiler.addLabel(labelTrue);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), RegisterIMA.getR(n)));
+        compiler.addInstruction(new BRA(labelEnd));
+        compiler.addLabel(labelFalse);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), RegisterIMA.getR(n)));
+        compiler.addLabel(labelEnd);
+    }
 
     public InstanceOf(AbstractIdentifier type, AbstractExpr expr) {
         super();
@@ -25,10 +60,13 @@ public class InstanceOf extends AbstractExpr{
         Type type1 = this.expr.verifyExpr(compiler, localEnv, currentClass);
         Type type2 = this.type.verifyType(compiler);
 
-        if(!((type1 == null || type1.isClass()) && (type2.isClass()))){
+        /* Verifies if the instanceOf fits with the types */
+        if (!((type1 == null || type1.isClass()) && (type2.isClass()))) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.type.getLocation().errorOutPut() + ": InstanceOf types invalid", this.type.getLocation());
         }
+
+        this.setType(compiler.environmentType.BOOLEAN);
 
         return compiler.environmentType.BOOLEAN;
     }

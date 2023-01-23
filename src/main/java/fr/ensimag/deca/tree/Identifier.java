@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import java.io.PrintStream;
 
 import fr.ensimag.pseudocode.RegisterIMA;
@@ -40,12 +41,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a class definition.
+     *
+     * @throws DecacInternalError if the definition is not a class definition.
      */
     @Override
     public ClassDefinition getClassDefinition() {
@@ -62,12 +62,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * MethodDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a method definition.
+     *
+     * @throws DecacInternalError if the definition is not a method definition.
      */
     @Override
     public MethodDefinition getMethodDefinition() {
@@ -84,12 +83,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public FieldDefinition getFieldDefinition() {
@@ -106,12 +104,11 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * VariableDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public VariableDefinition getVariableDefinition() {
@@ -127,12 +124,11 @@ public class Identifier extends AbstractIdentifier {
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
-     * 
+     * <p>
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
-     * @throws DecacInternalError
-     *             if the definition is not a field definition.
+     *
+     * @throws DecacInternalError if the definition is not a field definition.
      */
     @Override
     public ExpDefinition getExpDefinition() {
@@ -165,15 +161,13 @@ public class Identifier extends AbstractIdentifier {
     }
 
 
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
-        if(localEnv.get(this.getName()) != null){
+                           ClassDefinition currentClass) throws ContextualError {
+        if (localEnv.get(this.getName()) != null) {
             this.setType(localEnv.get(this.getName()).getType());
             this.setDefinition(localEnv.get(this.getName()));
-        }
-        else{
+        } else {
             this.setDefinition(new VariableDefinition(this.getType(), this.getLocation()));
         }
         return this.getType();
@@ -181,14 +175,18 @@ public class Identifier extends AbstractIdentifier {
 
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
+     *
      * @param compiler contains "env_types" attribute
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        if(compiler.environmentType.defOfType(this.getName()) == null){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+
+        /* Verifies if the type exists */
+        if (compiler.environmentType.defOfType(this.getName()) == null) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Unknown type", this.getLocation());
         }
+
         this.setType(compiler.environmentType.defOfType(this.getName()).getType());
         this.setDefinition(compiler.environmentType.defOfType(this.getName()));
         return this.getType();
@@ -196,12 +194,13 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
-        if(envExp.get(this.getName()) != null){
+        /* Verifies if the metho or field if declared and exists */
+        if (envExp.get(this.getName()) != null) {
             this.setDefinition(envExp.get(this.getName()));
-        }else{
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        } else {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Undeclared method or field", this.getLocation());
-            }
+        }
 
         return this.definition;
     }
@@ -245,9 +244,9 @@ public class Identifier extends AbstractIdentifier {
         compiler.getMemory().setLastGRegister(n);
         if (getExpDefinition().isField()) {
             if (n < RegisterIMA.RMAX) {
-                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), RegisterIMA.getR(n+1)));
-                compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), RegisterIMA.getR(n+1))));
-                compiler.getMemory().setLastGRegister(n+1);
+                compiler.addInstruction(new LOAD(getExpDefinition().getOperand(), RegisterIMA.getR(n + 1)));
+                compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(getFieldDefinition().getIndex(), RegisterIMA.getR(n + 1))));
+                compiler.getMemory().setLastGRegister(n + 1);
             } else {
                 compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
                 compiler.getMemory().increaseTSTO();
@@ -275,8 +274,9 @@ public class Identifier extends AbstractIdentifier {
     public void codeGenDeclVar(DecacCompiler compiler) {
         this.getExpDefinition().setOperand(new RegisterOffset(compiler.nextGlobalOffSet(), RegisterIMA.GB));
     }
+
     public void codeGenDeclField(DecacCompiler compiler, EnvironmentExp localEnvExpr) {
-        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), RegisterIMA.LB));
+        localEnvExpr.get(this.getName()).setOperand(new RegisterOffset(compiler.nextLocalOffSet(), RegisterIMA.SP));
     }
 
     @Override
@@ -305,6 +305,7 @@ public class Identifier extends AbstractIdentifier {
             compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
         }
     }
+
     @Override
     public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
         if (getType().isFloat()) {
@@ -313,7 +314,8 @@ public class Identifier extends AbstractIdentifier {
             compiler.addInstruction(new LDR(this.getExpDefinition().getOperand(), RegisterARM.getR(n)));
         }
     }
-    public void armCodeGenDeclVar(DecacCompiler compiler){
+
+    public void armCodeGenDeclVar(DecacCompiler compiler) {
         compiler.increaseArmOffset(4);
         this.getExpDefinition().setOperand(new RegisterOffset(compiler.getNextArmOffSet(), RegisterARM.FP));
     }

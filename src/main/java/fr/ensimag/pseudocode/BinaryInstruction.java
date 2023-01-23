@@ -12,14 +12,6 @@ import org.apache.commons.lang.Validate;
 public class BinaryInstruction extends Instruction {
     private Operand operand1, operand2;
 
-    public Operand getOperand1() {
-        return operand1;
-    }
-
-    public Operand getOperand2() {
-        return operand2;
-    }
-
     @Override
     void displayOperands(PrintStream s) {
         s.print(" ");

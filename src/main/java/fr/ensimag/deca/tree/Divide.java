@@ -4,6 +4,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 
 import fr.ensimag.pseudocode.GPRegister;
+import fr.ensimag.pseudocode.ImmediateInteger;
 import fr.ensimag.pseudocode.RegisterARM;
 import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.arm.instructions.*;
@@ -25,8 +26,12 @@ public class Divide extends AbstractOpArith {
         getLeftOperand().codeGenExpr(compiler, n);
         GPRegister regRight = null;
         if (n < RegisterIMA.RMAX) {
-            getRightOperand().codeGenExpr(compiler, n + 1);
-            regRight = RegisterIMA.getR(n + 1);
+            if (getRightOperand() instanceof IntLiteral && ((IntLiteral) getRightOperand()).getValue() != 0) {
+
+            } else {
+                getRightOperand().codeGenExpr(compiler, n + 1);
+                regRight = RegisterIMA.getR(n + 1);
+            }
         } else {
             compiler.addInstruction(new PUSH(RegisterIMA.getR(n)));
             getRightOperand().codeGenExpr(compiler, n);
@@ -41,8 +46,19 @@ public class Divide extends AbstractOpArith {
             compiler.getLabelFactory().createTestOverflow(compiler);
         }
         else{
-            compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
-            compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
+            if (regRight == null){
+                int value = ((IntLiteral) getRightOperand()).getValue();
+                if (value%2==0){
+                    for (int i = 0; i < Math.log(value)/Math.log(2); i++){
+                        compiler.addInstruction(new SHR(RegisterIMA.getR(n)));
+                    }
+                } else {
+                    compiler.addInstruction(new QUO(new ImmediateInteger(value), RegisterIMA.getR(n)));
+                }
+            } else {
+                compiler.getLabelFactory().createTestDiv0(compiler, regRight, true);
+                compiler.addInstruction(new QUO(regRight, RegisterIMA.getR(n)));
+            }
         }
     }
 

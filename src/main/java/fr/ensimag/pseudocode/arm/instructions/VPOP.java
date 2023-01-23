@@ -5,10 +5,10 @@ import fr.ensimag.pseudocode.ListOperand;
 import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.UnaryInstruction;
 
+
 /**
- *
- * @author Ensimag
- * @date 01/01/2023
+ * vector pop
+ * @author gl21
  */
 public class VPOP extends UnaryInstruction {
 

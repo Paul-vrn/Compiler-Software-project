@@ -57,8 +57,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
     /**
      * Verify the expression for contextual error.
-     * 
-     * implements non-terminals "expr" and "lvalue" 
+     *
+     * implements non-terminals "expr" and "lvalue"
      *    of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  (contains the "env_types" attribute)
@@ -77,18 +77,18 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError;
 
     /**
-     * Verify the expression in right hand-side of (implicit) assignments 
-     * 
+     * Verify the expression in right hand-side of (implicit) assignments
+     *
      * implements non-terminal "rvalue" of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  contains the "env_types" attribute
      * @param localEnv corresponds to the "env_exp" attribute
      * @param currentClass corresponds to the "class" attribute
-     * @param expectedType corresponds to the "type1" attribute            
+     * @param expectedType corresponds to the "type1" attribute
      * @return this with an additional ConvFloat if needed...
      */
     public AbstractExpr verifyRValue(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass, 
+            EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
         Type type2 = this.verifyExpr(compiler, localEnv, currentClass);
@@ -112,8 +112,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
         return this;
     }
-    
-    
+
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
@@ -143,8 +143,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
     /**
      * Generate code to print the expression
-     *
-     * @param compiler
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.codeGenExpr(compiler, 2);
@@ -157,6 +157,13 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new UnsupportedOperationException("not implemented implemented");
         }
     }
+
+
+    /**
+     * Generate code to print the expression in ARM assembly
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
+     */
     protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.armCodeGenExpr(compiler, 4, 2);
         if (getType().isInt()) {
@@ -172,6 +179,10 @@ public abstract class AbstractExpr extends AbstractInst {
         compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
     }
 
+    /**
+     * Generate code for the instanciation
+     * @param compiler compiler
+     */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         this.codeGenExpr(compiler, 2);
@@ -187,21 +198,22 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     /**
-     *
+     * Generate code for the expression in ARM assembly
      * @param compiler
      * @param n number of the register R (for integer)
      * @param m number of the register S (for float)
      */
     protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
-        System.out.println(this.getClass().getName());
-        throw new UnsupportedOperationException("not yet implemented");
+        throw new UnsupportedOperationException("not implemented");
     }
 
 
-
+    /**
+     * Generate code for the instanciation in ARM assembly
+     * @param compiler
+     */
     protected void armCodeGenInst(DecacCompiler compiler) {
         this.armCodeGenExpr(compiler, 4,2);
-        throw new UnsupportedOperationException("not yet implemented");
     }
     @Override
     protected void decompileInst(IndentPrintStream s) {

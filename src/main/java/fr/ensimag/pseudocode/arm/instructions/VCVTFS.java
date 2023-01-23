@@ -4,9 +4,8 @@ import fr.ensimag.pseudocode.BinaryInstruction;
 import fr.ensimag.pseudocode.GPRegister;
 
 /**
- * float <-- int32
- * @author Paul Vernin
- * @date 01/01/2023
+ * Convert a signed integer to a float
+ * @author gl21
  */
 public class VCVTFS extends BinaryInstruction {
 

@@ -1,0 +1,1 @@
+subtype_method_return.deca:25:4: Subtype condition not respected

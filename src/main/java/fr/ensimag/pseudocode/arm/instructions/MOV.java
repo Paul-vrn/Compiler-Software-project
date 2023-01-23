@@ -5,8 +5,8 @@ import fr.ensimag.pseudocode.DVal;
 import fr.ensimag.pseudocode.GPRegister;
 
 /**
- * @author Ensimag
- * @date 01/01/2023
+ * move instruction
+ * @author gl21
  */
 public class MOV extends BinaryInstructionDValToReg {
 

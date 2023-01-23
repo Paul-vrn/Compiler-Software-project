@@ -4,9 +4,8 @@ import fr.ensimag.pseudocode.BranchInstruction;
 import fr.ensimag.pseudocode.Label;
 
 /**
- *
- * @author Ensimag
- * @date 01/01/2023
+ * Branch with link instruction
+ * @author gl21
  */
 public class BL extends BranchInstruction {
 

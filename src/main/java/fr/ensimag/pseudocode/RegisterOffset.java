@@ -25,6 +25,10 @@ public class RegisterOffset extends DAddr {
         return offset + "(" + register + ")";
     }
 
+    /**
+     * Return the ARM string representation of a register with offset
+     * @return string
+     */
     @Override
     public String toArmString() {
         return "[" + register + ", #" + offset + "]";

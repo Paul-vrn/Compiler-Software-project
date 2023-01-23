@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -48,7 +48,7 @@ public class DeclField extends AbstractDeclField {
     @Override
     public void decompile(IndentPrintStream s) {
         visibility.decompile(s);
-        s.print(" ");
+
         type.decompile(s);
         s.print(" ");
         fieldName.decompile(s);
@@ -72,11 +72,12 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected EnvironmentExp verifyDeclFieldPass2(DecacCompiler compiler, AbstractIdentifier superClass,
-                                        AbstractIdentifier name) throws ContextualError {
+                                                  AbstractIdentifier name) throws ContextualError {
         Type type1 = this.type.verifyType(compiler);
 
-        if(type1.isVoid()){
-            throw new ContextualError( compiler.displaySourceFile() + ":"
+        /* Verifies if the type is void */
+        if (type1.isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
                     + this.getLocation().errorOutPut() + ": Type void forbidden in class fields", this.getLocation());
         }
         int index_fin = 0;
@@ -84,22 +85,19 @@ public class DeclField extends AbstractDeclField {
 
         this.fieldName.setType(type1);
 
-        if(superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null){
-            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
-                throw new ContextualError( compiler.displaySourceFile() + ":"
+        if (superClass.getClassDefinition().getMembers().get(fieldName.getName()) != null) {
+            /* Verifies if the superClass has a method with the same name */
+            if (!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()) {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
             }
             if_taken = 1;
-            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition",getLocation()).getIndex();
-            if(!superClass.getClassDefinition().getMembers().get(fieldName.getName()).isField()){
-                throw new ContextualError( compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": Field name conflict in super class", this.getLocation());
-            }
-        }else{
+            index_fin = superClass.getClassDefinition().getMembers().get(fieldName.getName()).asFieldDefinition("Must be field definition", getLocation()).getIndex();
+        } else {
             name.getClassDefinition().incNumberOfFields();
 
         }
-        if(if_taken == 0) {
+        if (if_taken == 0) {
             this.fieldName.setDefinition(new FieldDefinition(this.type.getType(), getLocation(), this.visibility,
                     name.getClassDefinition(), name.getClassDefinition().getNumberOfFields()));
         } else {
@@ -108,9 +106,10 @@ public class DeclField extends AbstractDeclField {
         }
         EnvironmentExp envToReturn = new EnvironmentExp(superClass.getClassDefinition().getMembers());
 
-        try{
+        try {
             envToReturn.declare(this.fieldName.getName(), this.fieldName.getFieldDefinition());
-        }catch (EnvironmentExp.DoubleDefException ignored){}
+        } catch (EnvironmentExp.DoubleDefException ignored) {
+        }
 
         return envToReturn;
     }
@@ -124,17 +123,17 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     public void codeGenDeclField(DecacCompiler compiler) {
-        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
-        initialization.codeGenInitField(compiler, type.getType(), 2);
-        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
-        compiler.addInstruction(new STORE(RegisterIMA.getR(2), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
+        getFieldName().getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
+        getInitialization().codeGenInitField(compiler, type.getType(), 2);
+        compiler.addInstruction(new LOAD(getFieldName().getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(2), new RegisterOffset(getFieldName().getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
     }
 
     @Override
     public void codeGenDeclFieldNull(DecacCompiler compiler) {
-        fieldName.getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
+        getFieldName().getFieldDefinition().setOperand(new RegisterOffset(-2, RegisterIMA.LB));
         (new NoInitialization()).codeGenInitField(compiler, type.getType(), 2);
-        compiler.addInstruction(new LOAD(fieldName.getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
-        compiler.addInstruction(new STORE(RegisterIMA.getR(0), new RegisterOffset(fieldName.getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
+        compiler.addInstruction(new LOAD(getFieldName().getFieldDefinition().getOperand(), RegisterIMA.getR(1)));
+        compiler.addInstruction(new STORE(RegisterIMA.getR(0), new RegisterOffset(getFieldName().getFieldDefinition().getIndex(), RegisterIMA.getR(1))));
     }
 }

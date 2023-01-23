@@ -19,24 +19,26 @@ import java.io.PrintStream;
  * @author gl21
  * @date 01/01/2023
  */
-public class  NoInitialization extends AbstractInitialization {
+public class NoInitialization extends AbstractInitialization {
 
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+                                        EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
     }
 
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-            // nothing to do
+        // nothing to do
     }
+
     @Override
     protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         // nothing to do
     }
+
     @Override
-    public void codeGenInitField(DecacCompiler compiler, Type type, int n){
+    public void codeGenInitField(DecacCompiler compiler, Type type, int n) {
         if (type.isInt()) {
             compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
         } else if (type.isFloat()) {

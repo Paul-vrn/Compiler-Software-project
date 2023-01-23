@@ -1,0 +1,15 @@
+// Description:
+//    Return un int dans une methode void.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 04/01/2023
+
+class A{
+
+    void getX(){
+        return 4;
+    }
+}

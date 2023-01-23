@@ -6,9 +6,8 @@ import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.UnaryInstruction;
 
 /**
- *
- * @author Ensimag
- * @date 01/01/2023
+ * POP instruction (for one or more registers)
+ * @author gl21
  */
 public class POPARM extends UnaryInstruction {
 

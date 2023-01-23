@@ -706,6 +706,47 @@ public class ContTest {
         generalTestValid(args, file2);
     }
 
+    @Test
+    void test107() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/return_void.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/return_void_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test108() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/new_type.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/new_type_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test109() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/print_undeclared.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/print_undeclared_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test110() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/subtype_method_return.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/subtype_method_return_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test111() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/call_metho_nonclass.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/call_metho_nonclass_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
+
+    @Test
+    void test112() throws IOException {
+        String[] args = {"src/test/deca/context/invalid/objet/instanceof_type.deca"};
+        String file2 = "src/test/deca/context/invalid/objet/instanceof_type_oracle.txt";
+        generalTestInvalid(args, file2);
+    }
 
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {

@@ -4,10 +4,10 @@ import fr.ensimag.pseudocode.DVal;
 import fr.ensimag.pseudocode.GPRegister;
 import fr.ensimag.pseudocode.TernaryInstruction;
 
+
 /**
- *
- * @author Ensimag
- * @date 01/01/2023
+ * reverse subtract
+ * @author gl21
  */
 public class RSB extends TernaryInstruction {
 

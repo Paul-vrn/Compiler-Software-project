@@ -229,6 +229,85 @@ public class OptionpTest {
         generalTestValid(args, null);
     }
 
+    @Test
+    void test33_Soupe() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/Soupe.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test34_field_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/field_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test35_get_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/get_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test36_method_ovrlap_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/method_ovrlap_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test37_new_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/new_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test39_param_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/param_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test40_return_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/return_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test41_this_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/this_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test42_instanceof_cont_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/instanceof_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test43_class_method_asm_01() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/class_method_asm_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test44_noOp() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/noOp.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test45_simple_asm() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/simple_asm.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test34_no_operation() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/no_operation.deca"};
+        generalTestValid(args, null);
+    }
+
+
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
 

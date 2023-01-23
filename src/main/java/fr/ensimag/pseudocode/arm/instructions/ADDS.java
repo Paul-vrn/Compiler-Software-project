@@ -5,6 +5,10 @@ import fr.ensimag.pseudocode.GPRegister;
 import fr.ensimag.pseudocode.Operand;
 import fr.ensimag.pseudocode.TernaryInstruction;
 
+/**
+ * add with carry
+ * @author gl21
+ */
 public class ADDS extends TernaryInstruction {
 
         public ADDS(Operand op1, Operand op2, Operand op3) {

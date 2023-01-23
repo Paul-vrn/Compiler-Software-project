@@ -8,7 +8,9 @@ import fr.ensimag.pseudocode.arm.instructions.ASCIZ;
 import fr.ensimag.pseudocode.arm.instructions.BL;
 import fr.ensimag.pseudocode.arm.instructions.LDR;
 import fr.ensimag.pseudocode.ima.instructions.WSTR;
+
 import java.io.PrintStream;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -33,7 +35,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
         this.setType(compiler.environmentType.STRING);
         return this.getType();
     }
@@ -58,6 +60,10 @@ public class StringLiteral extends AbstractStringLiteral {
         s.print("\"");
     }
 
+    public void decompileTest(IndentPrintStream s) {
+        s.print(getValue());
+    }
+
     @Override
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
@@ -67,8 +73,10 @@ public class StringLiteral extends AbstractStringLiteral {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
     }
-    
+
     @Override
-    String prettyPrintNode() {return "StringLiteral (" + value + ")";}
+    String prettyPrintNode() {
+        return "StringLiteral (" + value + ")";
+    }
 
 }

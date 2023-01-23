@@ -14,7 +14,14 @@ import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
-public class Return extends AbstractInst{
+/**
+ * Class for the Return statement
+ * example (in a method): return 1;
+ *
+ * @author gl21
+ * @date 01/01/2023
+ */
+public class Return extends AbstractInst {
 
     private final AbstractExpr rvalue;
 
@@ -23,19 +30,31 @@ public class Return extends AbstractInst{
         this.rvalue = rvalue;
     }
 
+    /**
+     * VerifyInst for return
+     *
+     * @param compiler     contains the "env_types" attribute
+     * @param localEnv     corresponds to the "env_exp" attribute
+     * @param currentClass corresponds to the "class" attribute (null in the main bloc).
+     * @param returnType   corresponds to the "return" attribute (void in the main bloc).
+     * @throws ContextualError
+     */
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
-        if(returnType.isVoid()){
+        //verifies that the type is not void
+        if (returnType.isVoid()) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Void return type is forbidden", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": No return possible in void method", this.getLocation());
         }
-
+        //calls the RValue function
         this.rvalue.verifyRValue(compiler, localEnv, currentClass, returnType);
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        s.print("return ");
+        rvalue.decompile(s);
+        s.print(";");
     }
 
     @Override
@@ -49,7 +68,7 @@ public class Return extends AbstractInst{
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler){
+    protected void codeGenInst(DecacCompiler compiler) {
         this.rvalue.codeGenExpr(compiler, 2);
         compiler.addInstruction(new LOAD(RegisterIMA.getR(2), RegisterIMA.getR(0)));
         compiler.addInstruction(new BRA(new Label("fin." + compiler.getLabelFactory().getSuffixCurrentMethod())));
@@ -57,6 +76,6 @@ public class Return extends AbstractInst{
 
     @Override
     protected void armCodeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Return statement is not supported in ARM mode.");
     }
 }

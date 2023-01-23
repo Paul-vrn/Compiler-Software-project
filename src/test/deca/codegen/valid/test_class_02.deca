@@ -1,6 +1,7 @@
 class A {
-   protected int x;
+   protected int x = 12;
   int getX() {
+    int a = 12;
           return x;
   }
   void setX(int x) {

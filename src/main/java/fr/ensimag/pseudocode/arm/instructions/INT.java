@@ -6,8 +6,8 @@ import fr.ensimag.pseudocode.UnaryInstruction;
 import java.io.PrintStream;
 
 /**
- * @author Ensimag
- * @date 01/01/2023
+ * .int tag
+ * @author gl21
  */
 public class INT extends UnaryInstruction {
 

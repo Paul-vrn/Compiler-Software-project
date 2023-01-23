@@ -12,17 +12,19 @@ import org.apache.log4j.Logger;
 import fr.ensimag.pseudocode.ima.instructions.*;
 
 import java.util.ArrayList;
+
 import fr.ensimag.pseudocode.RegisterIMA;
 import fr.ensimag.pseudocode.NullOperand;
 
 /**
+ * List of all the class declared.
  *
  * @author gl21
  * @date 01/01/2023
  */
 public class ListDeclClass extends TreeList<AbstractDeclClass> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
-    
+
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclClass c : getList()) {
@@ -36,11 +38,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      */
     void verifyListClass(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify listClass: start");
-        for (AbstractDeclClass current : this.getList()){
+        for (AbstractDeclClass current : this.getList()) {
             current.verifyClass(compiler);
         }
 
-        //TODO : env_typesr = env_types ? page 80
         LOG.debug("verify listClass: end");
     }
 
@@ -53,12 +54,12 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         }
 
     }
-    
+
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
-        for(AbstractDeclClass current : this.getList()){
+        for (AbstractDeclClass current : this.getList()) {
             current.verifyClassBody(compiler);
         }
     }
@@ -78,14 +79,13 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         dummyObjectIdentifier.setDefinition(dummyObjectClass);
         dummyObjectIdentifier.getClassDefinition().setOperand(new RegisterOffset(1, RegisterIMA.GB));
 
-        for(AbstractDeclClass c : getList()) {
+        for (AbstractDeclClass c : getList()) {
             ClassDefinition currentClassDefinition = c.getName().getClassDefinition();
             Identifier superClass = (Identifier) c.getSuperClass();
-            Identifier currentClass = (Identifier)c.getName();
-            if(superClass.getName().getName().equals("Object")){
+            Identifier currentClass = (Identifier) c.getName();
+            if (superClass.getName().getName().equals("Object")) {
                 compiler.addInstruction(new LEA(dummyObjectIdentifier.getClassDefinition().getOperand(), RegisterIMA.getR(1)));
-            }
-            else {
+            } else {
                 compiler.addInstruction(new LEA(superClass.getClassDefinition().getOperand(), RegisterIMA.getR(1)));
             }
             currentClass.getClassDefinition().setOperand(new RegisterOffset(compiler.getMemory().getGlobalOffset(), RegisterIMA.GB));
@@ -98,7 +98,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     public void codeGenDeclClasses(DecacCompiler compiler) {
         DeclClass.codeGenObjectEquals(compiler);
-        for(AbstractDeclClass c : getList()) {
+        for (AbstractDeclClass c : getList()) {
             c.codeGenDeclClass(compiler);
         }
     }

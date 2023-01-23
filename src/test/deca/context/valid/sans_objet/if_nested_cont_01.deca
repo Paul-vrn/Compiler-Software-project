@@ -1,0 +1,22 @@
+// Description:
+//   nested if context
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+
+{
+
+    int x = 2;
+    if (x == 2) {
+        if (x < 3) {
+            if (x > 1) {
+                print("c'est bon");
+            }
+        }
+    }
+
+}

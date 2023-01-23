@@ -1,0 +1,23 @@
+// Description:
+//    Programme testant l'mbriquement de whiles
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 23/01/2023
+
+{
+    int x = 0;
+    int y = 0;
+    while(x < 5){
+    	while(y < 5){
+			y = y + 1;
+		}
+		x = x + 1;
+    }
+    println("On est sorti des whiles");
+}
+
+

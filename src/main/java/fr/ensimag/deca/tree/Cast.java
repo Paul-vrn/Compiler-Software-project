@@ -108,9 +108,4 @@ public class Cast extends AbstractExpr {
         type.iter(f);
         expr.iter(f);
     }
-
-    protected void prettyPrintChildren(PrintStream s, String prefix, boolean isLastChild) {
-        type.prettyPrint(s, prefix, false);
-        expr.prettyPrint(s, prefix, true);
-    }
 }

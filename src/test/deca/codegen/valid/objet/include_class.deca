@@ -1,0 +1,16 @@
+// Description:
+//   on test l'inclusion d'une classe
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 23/01/2023
+
+#include "include_class_to_include.deca"
+
+{
+	A a = new A();
+	print(a.x);
+}
+

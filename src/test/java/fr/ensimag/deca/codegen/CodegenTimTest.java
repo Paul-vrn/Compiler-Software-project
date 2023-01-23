@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CodegenTim {
+public class CodegenTimTest {
 
     @Test
     void test01field_class_01() throws IOException {
@@ -113,6 +113,20 @@ public class CodegenTim {
     void test13subclass_cont_01() throws IOException {
         String[] args = {"src/test/deca/codegen/valid/objet/subclass_cont_01.deca"};
         String file2 = "src/test/deca/codegen/valid/objet/subclass_cont_01_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test14for_nested_pars_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/for_nested_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/for_nested_pars_01_oracle2.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test15if_else_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/if_else_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/if_else_01_oracle2.txt";
         generalTestValid(args, file2, null);
     }
 

@@ -748,6 +748,13 @@ public class ContTest {
         generalTestInvalid(args, file2);
     }
 
+    @Test
+    void test113() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/if_else_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/if_else_01_oracle.txt";
+        generalTestValid(args, file2);
+    }
+
 
     void generalTestValid(String[] args, String fileOracle) throws IOException {
         Logger.getRootLogger().setLevel(Level.WARN);

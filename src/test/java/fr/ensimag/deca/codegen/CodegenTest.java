@@ -550,6 +550,13 @@ public class CodegenTest {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test76_while_while() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/math_mul_shift.deca"};
+        String file2 = "src/test/deca/codegen/valid/math_mul_shift_oracle.txt";
+        generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

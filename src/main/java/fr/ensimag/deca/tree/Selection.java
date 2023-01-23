@@ -101,7 +101,6 @@ public class Selection extends AbstractLValue {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        System.out.println(expr.getType());
         expr.codeGenExpr(compiler, n);
         compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n));
         if (expr.getType().isClass()) {

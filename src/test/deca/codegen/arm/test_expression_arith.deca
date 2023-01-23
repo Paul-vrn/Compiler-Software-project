@@ -1,3 +1,25 @@
+// Description:
+//    test d'expressions arithmetiques
+//
+// Resultats:
+//    7
+//    12
+//    14
+//    -13
+//    -64
+//    94
+//    15.931818
+//    28.619947
+//    26.738487
+//    442.091522
+//    15.901877
+//    535.783630
+//
+//
+//
+// Historique:
+//    cree le 12/01/2023
+
 {
 int a = 1;
 int b = 2;

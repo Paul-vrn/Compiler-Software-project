@@ -72,7 +72,7 @@ public class Selection extends AbstractLValue {
             if (!((type1.asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(classdef.getType()))
                     && (classdef.getType().asClassType("Hopefully a class type", this.getLocation()).isSubClassOf(fieldDef.getContainingClass().getType())))) {
                 throw new ContextualError(compiler.displaySourceFile() + ":"
-                        + this.getLocation().errorOutPut() + ": Subtype problem", this.getLocation());
+                        + this.getLocation().errorOutPut() + ": Protected access, subtype problem", this.getLocation());
             }
         }
 

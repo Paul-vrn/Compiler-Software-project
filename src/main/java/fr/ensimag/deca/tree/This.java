@@ -37,7 +37,7 @@ public class This extends AbstractExpr {
         //Verifies that the "this" is not applied on a null class
         if (currentClass == null) {
             throw new ContextualError(compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": This on a null class impossible", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": This in main is impossible", this.getLocation());
         }
 
         this.setType(currentClass.getType());

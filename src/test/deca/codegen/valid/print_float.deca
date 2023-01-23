@@ -13,4 +13,5 @@
     print(5.31431);
     println();
     println(12.321);
+    printlnx(12.5);
 }

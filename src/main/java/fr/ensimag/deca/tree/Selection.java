@@ -105,8 +105,6 @@ public class Selection extends AbstractLValue {
         compiler.getLabelFactory().createTestDeferencementNull(compiler, RegisterIMA.getR(n));
         if (expr.getType().isClass()) {
             compiler.addInstruction(new LOAD(new RegisterOffset(fieldIdentifier.getFieldDefinition().getIndex(), RegisterIMA.getR(n)), RegisterIMA.getR(n)));
-        } else {
-            compiler.addInstruction(new LOAD(RegisterIMA.getR(n), RegisterIMA.getR(n)));
         }
     }
 

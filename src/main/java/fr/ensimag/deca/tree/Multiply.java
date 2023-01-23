@@ -24,13 +24,17 @@ public class Multiply extends AbstractOpArith {
             int val = 0;
             if (getLeftOperand() instanceof IntLiteral && (val=((IntLiteral) getLeftOperand()).getValue())%2 == 0) {
                 getRightOperand().codeGenExpr(compiler, n);
+                for (int i = 0; i < Math.log(val)/Math.log(2); i++) {
+                    compiler.addInstruction(new SHL(RegisterIMA.getR(n)));
+                }
+                return;
             } else if (getRightOperand() instanceof IntLiteral && (val=((IntLiteral) getRightOperand()).getValue())%2 == 0) {
                 getLeftOperand().codeGenExpr(compiler, n);
+                for (int i = 0; i < Math.log(val)/Math.log(2); i++) {
+                    compiler.addInstruction(new SHL(RegisterIMA.getR(n)));
+                }
+                return;
             }
-            for (int i = 0; i < Math.log(val)/Math.log(2); i++) {
-                compiler.addInstruction(new SHL(RegisterIMA.getR(n)));
-            }
-            return;
         }
         DVal lit = oneLiteral(compiler, n);
         if (lit != null) {

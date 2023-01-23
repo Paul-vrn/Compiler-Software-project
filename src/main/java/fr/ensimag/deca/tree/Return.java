@@ -76,6 +76,6 @@ public class Return extends AbstractInst {
 
     @Override
     protected void armCodeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Return statement is not supported in ARM mode.");
+        // nothing to do -> not implemented
     }
 }

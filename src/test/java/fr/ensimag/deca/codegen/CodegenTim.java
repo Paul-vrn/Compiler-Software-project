@@ -116,6 +116,20 @@ public class CodegenTim {
         generalTestValid(args, file2, null);
     }
 
+    @Test
+    void test14for_nested_pars_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/for_nested_pars_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/for_nested_pars_01_oracle2.txt";
+        generalTestValid(args, file2, null);
+    }
+
+    @Test
+    void test15if_else_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/if_else_01.deca"};
+        String file2 = "src/test/deca/context/valid/sans_objet/if_else_01_oracle2.txt";
+        generalTestValid(args, file2, null);
+    }
+
     void generalTestValid(String[] args, String fileOracle, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);
         //if to add option

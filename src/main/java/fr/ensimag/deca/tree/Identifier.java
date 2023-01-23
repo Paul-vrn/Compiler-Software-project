@@ -194,7 +194,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public Definition verifyDefinition(DecacCompiler compiler, EnvironmentExp envExp) throws ContextualError {
-        /* Verifies if the metho or field if declared and exists */
+        /* Verifies if the method or field is declared and exists */
         if (envExp.get(this.getName()) != null) {
             this.setDefinition(envExp.get(this.getName()));
         } else {

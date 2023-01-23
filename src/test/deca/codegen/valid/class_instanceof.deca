@@ -1,0 +1,75 @@
+// Description:
+//    Programme testant l'expression instanceof
+//
+// Resultats:
+//		ok
+//      ok
+//      ok
+//      ok
+//      ok
+//      ok
+//      ok
+//      ok
+//
+//
+// Historique:
+//    cree le 23/01/2023
+
+class A{}
+class B extends A{}
+class C extends B{}
+class D {}
+class E extends D{}
+{
+    A a = new A();
+    B b = new B();
+    C c = new C();
+    D d = new D();
+    E e = new E();
+
+    if (a instanceof A) {
+        println("ok");
+    } else {
+        println("nok");
+    }
+    if (a instanceof D) {
+        println("nok");
+    } else {
+        println("ok");
+    }
+    if (b instanceof A) {
+        println("ok");
+    } else {
+        println("nok");
+    }
+
+    if (c instanceof A) {
+        println("ok");
+    } else {
+        println("nok");
+    }
+
+
+    if (d instanceof D) {
+        println("ok");
+    } else {
+        println("nok");
+    }
+
+    if (d instanceof C) {
+        println("nok");
+    } else {
+        println("ok");
+    }
+    if (e instanceof D) {
+        println("ok");
+    } else {
+        println("nok");
+    }
+
+    if (e instanceof A) {
+        println("nok");
+    } else {
+        println("ok");
+    }
+}

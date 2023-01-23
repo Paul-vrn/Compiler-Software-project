@@ -1,0 +1,19 @@
+// Description:
+//    déclaration de boolean puis test de if else
+//
+// Resultats:
+//    else
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+{
+    boolean x = false;
+    boolean y  = true;
+    if (!!!!(x)){
+        print("if");
+    } else {
+        print("else");
+    }
+}

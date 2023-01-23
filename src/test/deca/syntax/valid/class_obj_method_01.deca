@@ -1,0 +1,36 @@
+// Description:
+//    Programme testant la déclaration d'une classe avec attribut puis extends attributs; puis instanciation d'un objet de cette classe.
+//
+// Resultats:
+//		2
+//		7
+//
+//
+// Historique:
+//    cree le 16/01/2023
+
+class A {
+	int a;
+	int add(int b) {
+		return a + b;
+	}
+}
+
+class B extends A {
+	int a;
+	int b;
+	int add(int c) {
+		return a + b + c;
+	}
+}
+{
+	A a = new A();
+	B b = new B();
+	a.a = 1;
+	b.a = 2;
+	b.b = 3;
+	int c = a.add(1);
+	int d = b.add(2);
+	print(c);
+	print(d);
+}

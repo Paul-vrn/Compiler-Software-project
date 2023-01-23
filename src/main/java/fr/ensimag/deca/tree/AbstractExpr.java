@@ -10,11 +10,14 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.pseudocode.LabelOperand;
+import fr.ensimag.pseudocode.RegisterARM;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.WFLOAT;
+import fr.ensimag.pseudocode.ima.instructions.WFLOATX;
+import fr.ensimag.pseudocode.ima.instructions.WINT;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -54,8 +57,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
     /**
      * Verify the expression for contextual error.
-     * 
-     * implements non-terminals "expr" and "lvalue" 
+     *
+     * implements non-terminals "expr" and "lvalue"
      *    of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  (contains the "env_types" attribute)
@@ -74,30 +77,31 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError;
 
     /**
-     * Verify the expression in right hand-side of (implicit) assignments 
-     * 
+     * Verify the expression in right hand-side of (implicit) assignments
+     *
      * implements non-terminal "rvalue" of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  contains the "env_types" attribute
      * @param localEnv corresponds to the "env_exp" attribute
      * @param currentClass corresponds to the "class" attribute
-     * @param expectedType corresponds to the "type1" attribute            
+     * @param expectedType corresponds to the "type1" attribute
      * @return this with an additional ConvFloat if needed...
      */
     public AbstractExpr verifyRValue(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass, 
+            EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
         Type type2 = this.verifyExpr(compiler, localEnv, currentClass);
 
         if(type2 == null){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Assign impossible with undefined value", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Right value undefined", this.getLocation());
         }
 
-        if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt()))){
+        if(!(type2.sameType(expectedType) || (expectedType.isFloat() && type2.isInt())
+                || (type2.isClass() && expectedType.isClass() && type2.asClassType("", this.getLocation()).isSubClassOf(expectedType.asClassType("", this.getLocation()))))){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Assign Type problem", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Right value type problem", this.getLocation());
         }
 
         if(expectedType.isFloat() && type2.isInt()){
@@ -108,8 +112,8 @@ public abstract class AbstractExpr extends AbstractInst {
 
         return this;
     }
-    
-    
+
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
@@ -133,18 +137,18 @@ public abstract class AbstractExpr extends AbstractInst {
 
         if(!type.isBoolean()){
             throw new ContextualError( compiler.displaySourceFile() + ":"
-                    + this.getLocation().errorOutPut() + ": Condition argument of if/elseif should be a boolean", this.getLocation());
+                    + this.getLocation().errorOutPut() + ": Condition argument of if/elseif or while should be a boolean", this.getLocation());
         }
     }
 
     /**
      * Generate code to print the expression
-     *
-     * @param compiler
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         this.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        compiler.addInstruction(new LOAD(RegisterIMA.getR(2), RegisterIMA.R1));
         if (getType().isInt()){
             compiler.addInstruction(new WINT());
         } else if (getType().isFloat()){
@@ -154,9 +158,34 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
+
+    /**
+     * Generate code to print the expression in ARM assembly
+     * @param compiler compiler
+     * @param printHex <true/> if we want to print in hexadecimal, <false/> otherwise
+     */
+    protected void armCodeGenPrint(DecacCompiler compiler, boolean printHex) {
+        this.armCodeGenExpr(compiler, 4, 2);
+        if (getType().isInt()) {
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelInt()), RegisterARM.getR(0)));
+            compiler.addInstruction(new MOV(RegisterARM.getR(4), RegisterARM.getR(1)));
+        } else if (getType().isFloat()){
+            compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0)));
+            compiler.addInstruction(new VCVTDS(RegisterARM.getS(2), RegisterARM.getD(0)));
+            compiler.addInstruction(new VMOV(RegisterARM.getD(0), RegisterARM.getR(3), RegisterARM.getR(2)));
+        } else {
+            throw new UnsupportedOperationException("type not printable");
+        }
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getPrintfLabel()));
+    }
+
+    /**
+     * Generate code for the instanciation
+     * @param compiler compiler
+     */
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.codeGenExpr(compiler, 2);
     }
 
     /**
@@ -168,6 +197,24 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    /**
+     * Generate code for the expression in ARM assembly
+     * @param compiler
+     * @param n number of the register R (for integer)
+     * @param m number of the register S (for float)
+     */
+    protected void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+
+    /**
+     * Generate code for the instanciation in ARM assembly
+     * @param compiler
+     */
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        this.armCodeGenExpr(compiler, 4,2);
+    }
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);

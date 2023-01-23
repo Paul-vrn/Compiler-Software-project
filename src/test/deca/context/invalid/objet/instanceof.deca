@@ -1,0 +1,25 @@
+// Description:
+//     instanceof avec un mauvais type.
+//
+// Resultats:
+//    Error
+//
+// Historique:
+//    cree le 01/01/2023
+
+class B{
+
+}
+
+class A extends B{
+
+}
+
+{
+    A a = new A();
+    B b = new B();
+    int x;
+    a instanceof x;
+}
+
+

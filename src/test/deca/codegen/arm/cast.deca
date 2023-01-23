@@ -1,0 +1,16 @@
+// Description:
+//    Programme testant le cast
+//
+// Resultats:
+//		2
+//      4.000000
+//
+// Historique:
+//    cree le 20/01/2023
+
+{
+int x = (int)(1.5) + (int)(1.5);
+float y = (float)(x) + x;
+println(x);
+println(y);
+}

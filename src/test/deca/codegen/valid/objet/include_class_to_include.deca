@@ -1,0 +1,14 @@
+// Description:
+//   on test l'inclusion d'une classe
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 23/01/2023
+
+
+class A {
+	int x = 89;
+}
+

@@ -1,0 +1,20 @@
+// Description:
+//    instanceof avec un int.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 04/01/2023
+
+class A{
+    int getX(){
+
+    }
+}
+
+{
+    A a = new A();
+    a instanceof int;
+}
+

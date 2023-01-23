@@ -72,11 +72,7 @@ PERCENT : '%';
 
 //LITTERAUX ENTIERS
 fragment POSITIVE_DIGIT : '1'..'9';
-INT : '0' | POSITIVE_DIGIT DIGIT* {
-    if (Integer.parseInt(getText()) > 2e31-1) {
-        throw new IllegalArgumentException("Integer overflow");
-    }
-};
+INT : '0' | POSITIVE_DIGIT DIGIT* ;
 //erreur de compilation levée si littéral entier pas codable comme un entier signé positif sur 32 bits
 
 //LITTERAUX FLOTTANTS
@@ -112,7 +108,8 @@ DOINCLUDE: '#include' (' ')* '"' FILENAME '"' {doInclude(getText());};
 // COMMENTAIRES
 fragment COMMENT_OPENING : '/*';
 fragment COMMENT_CLOSING : '*/';
-COMMENT : '//' (~('\n')*) {skip();};
+WS : (' ' | '\t' | '\r' | '\n') {skip();};
+COMMENT : '//' (~('\n')*)('\n') {skip();};
 BLOCK_COMMENT : COMMENT_OPENING .*? COMMENT_CLOSING {skip();};
 
 // ESPACES

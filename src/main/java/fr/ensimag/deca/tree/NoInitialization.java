@@ -6,12 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.NullOperand;
-import fr.ensimag.ima.pseudocode.Operand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+
 
 import java.io.PrintStream;
 
@@ -26,15 +23,33 @@ public class NoInitialization extends AbstractInitialization {
 
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+                                        EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
     }
 
     @Override
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
-        compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), varName.getExpDefinition().getOperand()));
+        // nothing to do
     }
+
+    @Override
+    protected void armCodeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
+        // nothing to do
+    }
+
+    @Override
+    public void codeGenInitField(DecacCompiler compiler, Type type, int n) {
+        if (type.isInt()) {
+            compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
+        } else if (type.isFloat()) {
+            compiler.addInstruction(new LOAD(new ImmediateFloat(0.0f), RegisterIMA.getR(n)));
+        } else if (type.isBoolean()) {
+            compiler.addInstruction(new LOAD(0, RegisterIMA.getR(n)));
+        } else {
+            compiler.addInstruction(new LOAD(new NullOperand(), RegisterIMA.getR(n)));
+        }
+    }
+
 
     /**
      * Node contains no real information, nothing to check.

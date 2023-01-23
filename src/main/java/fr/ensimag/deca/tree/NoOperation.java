@@ -6,11 +6,13 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 
 /**
- * 
+ * Class for no operation
+ * exemple:    ;
+ *
  * @author gl21
  * @date 01/01/2023
  */
@@ -18,14 +20,19 @@ public class NoOperation extends AbstractInst {
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        // nothing to do
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // nothing
+    }
+
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        // nothing
     }
 
     @Override

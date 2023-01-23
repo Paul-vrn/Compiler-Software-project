@@ -1,0 +1,63 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- Tout roule
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+	float reel = 18.0;
+	boolean bool = true;
+
+	void uneMeth(){}
+	int un(){
+		return(1);
+	}
+}
+
+class B extends A{
+	int entier = 19;
+	float reel = 189.0;
+	boolean bool = false;
+
+	void uneMeth(){}
+	void deuxMeth(){}
+	int deux(){
+		return(2);
+	}
+
+}
+
+class C extends B{
+	int entier = 20;
+	float reel = 20.0;
+	boolean bool = true;
+
+	void uneMeth(){}
+	void deuxMeth(){}
+	void troisMeth(){}
+}
+
+class D extends C{
+	int entier = 21;
+	float reel = 21.0;
+	boolean bool = false;
+
+	void uneMeth(){}
+	void deuxMeth(){}
+	void troisMeth(){}
+	void quatreMeth(){}
+}
+
+{
+	A a = new A();
+	B b = new B();
+	C c = new C();
+	D d = new D();
+	int chiffreUn = a.un();
+	print(chiffreUn);
+}

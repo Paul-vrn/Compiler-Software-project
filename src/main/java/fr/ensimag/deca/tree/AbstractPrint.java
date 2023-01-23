@@ -1,15 +1,14 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.FloatType;
-import fr.ensimag.deca.context.IntType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -22,7 +21,7 @@ public abstract class AbstractPrint extends AbstractInst {
 
     private boolean printHex;
     private ListExpr arguments = new ListExpr();
-    
+
     abstract String getSuffix();
 
     public AbstractPrint(boolean printHex, ListExpr arguments) {
@@ -35,17 +34,30 @@ public abstract class AbstractPrint extends AbstractInst {
         return arguments;
     }
 
+    /**
+     * VerifyInst for a print, checks for the type in the print, if it is not respected, throws an error
+     *
+     * @param compiler     contains the "env_types" attribute
+     * @param localEnv     corresponds to the "env_exp" attribute
+     * @param currentClass corresponds to the "class" attribute (null in the main bloc).
+     * @param returnType   corresponds to the "return" attribute (void in the main bloc).
+     * @throws ContextualError
+     */
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
 
         Type type1;
 
-        for (AbstractExpr current : this.arguments.getList()){
+        for (AbstractExpr current : this.arguments.getList()) {
             type1 = current.verifyExpr(compiler, localEnv, currentClass);
-            if(type1 == null || !(type1.isInt() || type1.isFloat() || type1.isString())){
-                throw new ContextualError( compiler.displaySourceFile() + ":"
+            if (type1 == null) {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
+                        + this.getLocation().errorOutPut() + ": Print undeclared identifier", this.getLocation());
+            }
+            if (!(type1.isInt() || type1.isFloat() || type1.isString())) {
+                throw new ContextualError(compiler.displaySourceFile() + ":"
                         + this.getLocation().errorOutPut() + ": Print argument in a wrong type", this.getLocation());
             }
         }
@@ -54,7 +66,13 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         for (AbstractExpr a : getArguments().getList()) {
-            a.codeGenPrint(compiler, printHex);
+            a.codeGenPrint(compiler, getPrintHex());
+        }
+    }
+
+    protected void codeGenInstARM(DecacCompiler compiler) {
+        for (AbstractExpr a : getArguments().getList()) {
+            a.armCodeGenPrint(compiler, getPrintHex());
         }
     }
 

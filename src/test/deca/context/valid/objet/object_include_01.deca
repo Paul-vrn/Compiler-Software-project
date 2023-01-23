@@ -1,0 +1,17 @@
+// Description:
+//   Object
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+#include "object_cont_01.deca"
+
+{
+
+    A a = new A();
+    a.getX();
+
+}

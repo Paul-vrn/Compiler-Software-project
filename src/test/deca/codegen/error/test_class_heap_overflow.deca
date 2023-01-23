@@ -1,0 +1,23 @@
+// Description:
+//    Programme testant l'overflow du tas
+//
+// Resultats:
+//		EError: Heap Overflow
+//
+//
+// Historique:
+//    cree le 22/01/2023
+
+class HeavyClass {
+int x;
+int y;
+int z;
+}
+
+{
+HeavyClass heavy;
+while(true){
+heavy = new HeavyClass();
+}
+
+}

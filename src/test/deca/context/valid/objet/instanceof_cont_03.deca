@@ -1,0 +1,19 @@
+// Description:
+//   Instanceof condition
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+
+}
+
+{
+    A a;
+    if(a instanceof A) {
+
+    }
+}

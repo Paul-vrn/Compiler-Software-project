@@ -1,0 +1,1 @@
+new_problem.deca:22:10: Right value type problem

@@ -1,22 +1,24 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.pseudocode.Label;
+
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.arm.instructions.B;
+import fr.ensimag.pseudocode.ima.instructions.BEQ;
+import fr.ensimag.pseudocode.ima.instructions.BRA;
+import fr.ensimag.pseudocode.ima.instructions.CMP;
 import org.apache.commons.lang.Validate;
 
 /**
+ * Class for the while inst
  *
  * @author gl21
  * @date 01/01/2023
@@ -42,6 +44,7 @@ public class While extends AbstractInst {
 
     /**
      * Page 225, 8.2
+     *
      * @param compiler
      */
     @Override
@@ -54,16 +57,30 @@ public class While extends AbstractInst {
         body.codeGenListInst(compiler);
         compiler.addLabel(labelCond);
         condition.codeGenExpr(compiler, 2);
-        compiler.addInstruction(new CMP(1, Register.getR(2)));
+        compiler.addInstruction(new CMP(1, RegisterIMA.getR(2)));
+        compiler.addInstruction(new BEQ(labelStart));
+    }
+
+    @Override
+    protected void armCodeGenInst(DecacCompiler compiler) {
+        int nbWhile = compiler.nbWhile();
+        Label labelStart = new Label("WHILE_START_" + nbWhile);
+        Label labelCond = new Label("WHILE_COND_" + nbWhile);
+        compiler.addInstruction(new B(labelCond));
+        compiler.addLabel(labelStart);
+        body.armCodeGenListInst(compiler);
+        compiler.addLabel(labelCond);
+        condition.armCodeGenExpr(compiler, 4, 2);
+        compiler.addInstruction(new CMP(1, RegisterIMA.getR(4)));
         compiler.addInstruction(new BEQ(labelStart));
     }
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.condition.verifyCondition(compiler, localEnv, currentClass);
-
+        //Applies verifyInst on all instantiations of its body
         for (AbstractInst i : this.body.getList()) {
             i.verifyInst(compiler, localEnv, currentClass, returnType);
         }

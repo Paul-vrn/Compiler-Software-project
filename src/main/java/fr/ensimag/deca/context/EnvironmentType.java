@@ -42,12 +42,36 @@ public class EnvironmentType {
         Symbol objSymbol = compiler.createSymbol("Object");
         OBJECT = new ClassType(objSymbol);
         envTypes.put(objSymbol, new ClassDefinition(OBJECT, Location.BUILTIN, null));
+        Signature sig = new Signature();
+        sig.add(OBJECT);
+        try{
+            ((ClassDefinition) envTypes.get(objSymbol)).getMembers().declare(compiler.createSymbol("equals"),
+                    new MethodDefinition(BOOLEAN, Location.BUILTIN, sig, 1));
+        }catch (EnvironmentExp.DoubleDefException ignored){}
+
     }
 
     private final Map<Symbol, TypeDefinition> envTypes;
 
+    public Map<Symbol, TypeDefinition> getEnvTypes() {
+        return envTypes;
+    }
+
     public TypeDefinition defOfType(Symbol s) {
         return envTypes.get(s);
+    }
+    public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = -2733379901827316441L;
+    }
+
+    public void declare(Symbol name, TypeDefinition def) throws EnvironmentType.DoubleDefException {
+        if(this.envTypes.containsKey(name))
+        {
+            throw new EnvironmentType.DoubleDefException();
+        }
+        else{
+            this.envTypes.put(name, def);
+        }
     }
 
     public final VoidType    VOID;

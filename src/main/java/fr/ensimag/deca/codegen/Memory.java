@@ -1,27 +1,116 @@
 package fr.ensimag.deca.codegen;
 
+/**
+ * Memory class
+ */
 public class Memory {
-    private int offset;
+    private int globalOffset;
+    private int localOffset;
     private int lastGRegister;
     private int TSTO;
     private int currentTSTO;
+    private int saveTSTO;
+    private int saveCurrentTSTO;
+    private int armOffset;
 
-
+    /**
+     * Constructeur de la classe Memory
+     */
     public Memory() {
         this.TSTO = 0;
         this.currentTSTO = 0;
-        this.offset = 1;
-        this.lastGRegister = 2;
+        this.globalOffset = 1;
+        this.localOffset = 0;
+        this.lastGRegister = 1;
+        this.armOffset = 0;
+        this.saveTSTO = 0;
+        this.saveCurrentTSTO = 0;
     }
 
-    public int getOffset() {
-        return offset;
+    /**
+     * Return the number of the last GRegister
+     * @return the number of the last GRegister
+     */
+    public int getLastGRegister() {
+        return lastGRegister;
     }
-    public void increaseOffset(int i) {
-        offset += i;
+
+    /**
+     * Set the last GRegister
+     * @param i : the last GRegister
+     */
+    public void setLastGRegister(int i) {
+        this.lastGRegister = Math.max(i, lastGRegister);
     }
-    public void increaseOffset() {
-        increaseOffset(1);
+
+    /**
+     * Reset the number of the last GRegister
+     */
+    public void resetLastGRegister() {
+        this.lastGRegister = 1;
+    }
+
+    /**
+     * Return the global offset
+     * @return the global offset
+     */
+    public int getGlobalOffset() {
+        return globalOffset;
+    }
+
+    /**
+     * Increase global offset by i
+     * @param i : offset to add
+     */
+    public void increaseGlobalOffset(int i) {
+        globalOffset += i;
+    }
+
+    /**
+     * Increase global offset by 1
+     */
+    public void increaseGlobalOffset() {
+        increaseGlobalOffset(1);
+    }
+
+    /**
+     * Return the current offset
+     * @return the current offset
+     */
+    public int getLocalOffset() {
+        return localOffset;
+    }
+
+    /**
+     * Increase local offset by i
+     * @param i : offset to add
+     */
+    public void increaseLocalOffset(int i) {
+        localOffset += i;
+    }
+
+    /**
+     * Increase local offset by 1
+     */
+    public void increaseLocalOffset() {
+        increaseLocalOffset(1);
+    }
+
+
+    /**
+     * return the current offset
+     * @return the current offset
+     */
+    public int getArmOffset() {
+        return armOffset;
+    }
+
+    /**
+     * increase the arm offset by 4
+     * @param i : offset to add
+     */
+    public void increaseArmOffset(int i) {
+        armOffset -= i;
     }
 
     /**
@@ -31,6 +120,7 @@ public class Memory {
     public int TSTO() {
         int i = TSTO;
         TSTO = 0;
+        currentTSTO = 0;
         return i;
     }
 
@@ -42,8 +132,27 @@ public class Memory {
         TSTO = Math.max(currentTSTO, TSTO);
     }
 
+    /**
+     * Decrease TSTO value by i
+     */
     public void decreaseTSTO() {
         currentTSTO--;
         TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    /**
+     * Save TSTO value
+     */
+    public void saveTSTO() {
+        saveTSTO = TSTO;
+        saveCurrentTSTO = currentTSTO;
+    }
+
+    /**
+     * Restore TSTO value
+     */
+    public void restoreTSTO() {
+        TSTO = saveTSTO;
+        currentTSTO = saveCurrentTSTO;
     }
 }

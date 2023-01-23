@@ -1,0 +1,1 @@
+instanceof_type.deca:18:17: InstanceOf types invalid

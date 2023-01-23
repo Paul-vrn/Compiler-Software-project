@@ -1,0 +1,16 @@
+class A {
+   protected int x = 12;
+  int getX() {
+    int a = 12;
+          return x;
+  }
+  void setX(int x) {
+        this.x = x;
+   }
+}
+
+{
+    A a = new A();
+    a.setX(1);
+    println("a.getX=", a.getX());
+}

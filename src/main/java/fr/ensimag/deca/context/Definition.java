@@ -1,7 +1,7 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
-import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.pseudocode.DAddr;
 
 /**
  * Definition of an identifier.
@@ -77,7 +77,7 @@ public abstract class Definition {
      */
     public MethodDefinition asMethodDefinition(String errorMessage, Location l)
             throws ContextualError {
-        if (this instanceof MethodDefinition) // TODO potentially measure the performance compared to a comparison with getNature()
+        if (this instanceof MethodDefinition)
             return (MethodDefinition) this;
         throw new ContextualError(errorMessage, l);
     }

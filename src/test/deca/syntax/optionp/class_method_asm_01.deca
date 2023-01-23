@@ -1,0 +1,25 @@
+// Description:
+//    Programme pour vérifier la décompilation de method asm
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A{
+	void duTexte() asm ("
+	WSTR \"Printed with asm\"
+	WNL
+	WSTR \"oui oui\"
+	");
+	void duTexte2(){
+		println(124);
+	}
+
+}
+{
+	A a = new A();
+	a.duTexte2();
+	a.duTexte();
+}

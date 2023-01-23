@@ -1,17 +1,21 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.pseudocode.RegisterIMA;
+import fr.ensimag.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
 
 /**
+ * Parameter declaration.
+ *
  * @author gl21
  * @date 01/01/2023
  */
-public class DeclParam extends Tree {
-
-
+public class DeclParam extends AbstractDeclParam {
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
 
@@ -39,5 +43,40 @@ public class DeclParam extends Tree {
     protected void iterChildren(TreeFunction f) {
         type.iter(f);
         varName.iter(f);
+    }
+
+    @Override
+    protected Type verifyDeclParamPass2(DecacCompiler compiler) throws ContextualError {
+        Type type1 = this.type.verifyType(compiler);
+
+        /* Verifies if the type is void */
+        if (this.type.getType().isVoid()) {
+            throw new ContextualError(compiler.displaySourceFile() + ":"
+                    + this.getLocation().errorOutPut() + ": Parameter type void forbidden", this.getLocation());
+        }
+        this.varName.setType(type1);
+        this.varName.setDefinition(new ParamDefinition(type1, getLocation()));
+
+        return type1;
+    }
+
+    @Override
+    protected EnvironmentExp verifyDeclParamPass3(DecacCompiler compiler) throws ContextualError {
+        EnvironmentExp envToReturn = new EnvironmentExp(null);
+        this.type.verifyType(compiler);
+
+        ParamDefinition def = new ParamDefinition(this.type.getType(), this.getLocation());
+
+        try {
+            envToReturn.declare(this.varName.getName(), def);
+        } catch (EnvironmentExp.DoubleDefException ignored) {
+        }
+
+        return envToReturn;
+    }
+
+    @Override
+    public void codeGenDeclParam(DecacCompiler compiler, EnvironmentExp env, int index) {
+        env.get(this.varName.getName()).setOperand(new RegisterOffset(index, RegisterIMA.LB));
     }
 }

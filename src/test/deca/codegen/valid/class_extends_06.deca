@@ -1,0 +1,23 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- Tout se passe bien
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+	float reel = 18.0;
+	boolean bool = true;
+
+}
+
+{
+	A a = new A();
+	println(a.entier);
+	println(a.reel);
+	//println(a.bool);
+}

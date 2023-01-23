@@ -1,0 +1,1 @@
+call_metho_nonclass.deca:19:10: Call method of a non-class identifier

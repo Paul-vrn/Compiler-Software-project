@@ -1,0 +1,21 @@
+// Description:
+//   Op_comp for classes
+//
+// Resultats:
+//		42042
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+	int x = 42042;
+}
+
+{
+    A a;
+    A b = new A();
+    a = b;
+
+
+    print(a.x);
+}

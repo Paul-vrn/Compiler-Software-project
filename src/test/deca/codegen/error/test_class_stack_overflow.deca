@@ -1,0 +1,21 @@
+// Description:
+//    Programme testant l'overflow du tas
+//
+// Resultats:
+//		  ** IMA ** ERREUR ** Ligne 61 :
+//          BSR : Debordement de la pile
+//
+// Historique:
+//    cree le 22/01/2023
+
+class Recursive {
+	void deepDive(){
+		deepDive();
+	}
+}
+
+{
+
+Recursive rec = new Recursive();
+rec.deepDive();
+}

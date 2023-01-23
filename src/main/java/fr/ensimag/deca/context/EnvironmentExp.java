@@ -29,7 +29,18 @@ public class EnvironmentExp {
 
     HashMap<Symbol, ExpDefinition> dictionary = new HashMap<>();
 
+    public HashMap<Symbol, ExpDefinition> getDictionary(){
+        return this.dictionary;
+    }
+
     EnvironmentExp parentEnvironment;
+
+    public EnvironmentExp getParentEnvironment(){
+        return this.parentEnvironment;
+    }
+    public void setParentEnvironment(EnvironmentExp e){
+        this.parentEnvironment = e;
+    }
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
@@ -40,7 +51,7 @@ public class EnvironmentExp {
     }
 
     public void printEnvironmentContent(){
-        for(Map.Entry m : this.dictionary.entrySet()){
+        for(Map.Entry m : this.dictionary.entrySet()) {
             System.out.println(m.getKey() + " " + m.getValue());
         }
         if(this.parentEnvironment != null) {

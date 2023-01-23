@@ -8,9 +8,11 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
  * Left-hand side value of an assignment.
- * 
+ *
  * @author gl21
  * @date 01/01/2023
  */
 public abstract class AbstractLValue extends AbstractExpr {
+
+    public abstract void codeGenStore(DecacCompiler compiler, int n);
 }

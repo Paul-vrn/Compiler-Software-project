@@ -1,0 +1,21 @@
+// Description:
+//   return for subclasses
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+
+class B {
+
+}
+
+class A extends B {
+    int x;
+    A a;
+    B setX() {
+        return a;
+    }
+}

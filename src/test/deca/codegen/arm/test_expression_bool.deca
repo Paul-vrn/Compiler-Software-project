@@ -1,0 +1,68 @@
+// Description:
+//    test d'expressions arithmetiques
+//
+// Resultats:
+//    test bool 1 passe
+//    test bool 2 passe
+//    test bool 3 passe
+//    test bool 4 passe
+//    test bool 5 passe
+//    test bool 6 passe
+//
+//
+//
+// Historique:
+//    cree le 12/01/2023
+
+{
+boolean a = true;
+boolean b = false;
+boolean c = true;
+boolean d = false;
+boolean e = true;
+boolean f = false;
+
+a = a && b || c && d && e || !f;
+b = !a && b || !c && d && e || !f;
+c = a || !b && c || d && !e || f;
+d = !a || b && !c || !d && e || !f;
+e = a && !b || c && d || !e && f;
+f = !(!a && b || c && !d || e && !f);
+
+if(a){
+    println("test bool 1 passe");
+}
+else{
+    println("Erreur sur test bool 1");
+}
+if(b){
+    println("test bool 2 passe");
+}
+else{
+    println("Erreur sur test bool 2");
+}
+if(c){
+    println("test bool 3 passe");
+}
+else{
+    println("Erreur sur test bool 3");
+}
+if(d){
+    println("test bool 4 passe");
+}
+else{
+    println("Erreur sur test bool 4");
+}
+if(e){
+    println("test bool 5 passe");
+}
+else{
+    println("Erreur sur test bool 5");
+}
+if(!f){
+    println("test bool 6 passe");
+}
+else{
+    println("Erreur sur test bool 6");
+}
+}

@@ -1,0 +1,17 @@
+// Description:
+//   Instanceof
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+class A {
+
+}
+
+{
+    A a = new A();
+    a instanceof A;
+}

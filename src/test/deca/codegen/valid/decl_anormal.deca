@@ -1,0 +1,13 @@
+// Description:
+//    declaration étrange spécifique au langage Deca.
+//
+// Resultats:
+//
+
+// Historique:
+//    cree le 17/01/2023
+
+{
+    4;
+    print("Program compiled successfully");
+}

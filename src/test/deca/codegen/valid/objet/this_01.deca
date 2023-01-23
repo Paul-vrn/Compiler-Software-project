@@ -1,0 +1,19 @@
+// Description:
+//    Programme minimaliste utilisant this.
+//
+// Resultats:
+//		42
+//
+// Historique:
+//    cree le 04/01/2023
+
+class A{
+    protected A a = this;
+    int x;
+}
+
+{
+	A a = new A();
+	a.x = 42;
+	println(a.x);
+}

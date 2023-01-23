@@ -1,0 +1,27 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- 48
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+	float reel = 18.0;
+	boolean bool = true;
+
+}
+
+class B extends A{
+	void vide(){}
+}
+
+{
+	//A a = new A();
+	//int x = a.entier();
+	//print(x);
+	print(48);
+}

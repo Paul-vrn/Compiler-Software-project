@@ -63,7 +63,7 @@ public class ClassType extends Type {
         if (sameType(potentialSuperClass))
             return true;
         ClassDefinition superCls = this.definition.getSuperClass();
-        while (superCls != null) { // TODO assume than Object superClass field is `null`
+        while (superCls != null) {
             if (superCls.getType().sameType(potentialSuperClass))
                 return true;
             superCls = superCls.getSuperClass();

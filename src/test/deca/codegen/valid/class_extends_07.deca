@@ -1,0 +1,29 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- Tout se passe bien
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+	float reel = 18.0;
+	boolean bool = true;
+
+}
+
+class B extends A{
+	int entier = 19;
+	float reel = 189.0;
+	boolean bool = false;
+
+}
+
+{
+	A a = new A();
+	B b = new B();
+	print("Tout va bene");
+}

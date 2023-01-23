@@ -1,0 +1,17 @@
+// Description:
+//    Programme le print et println diret de float.
+//
+// Resultats:
+//      5.314310
+//      12.321000
+//
+//
+// Historique:
+//    cree le 22/01/2023
+
+{
+    print(5.31431);
+    println();
+    println(12.321);
+    printlnx(12.5);
+}

@@ -1,0 +1,15 @@
+// Description:
+//    Programme testant des prints plutôt spéciaux
+//
+// Resultats:
+//           faire decac pour voir le resultat
+//
+//
+// Historique:
+//    cree le 18/01/2023
+
+{
+	println("\\ \\ \\ \\ \\ \\");
+	println("\\n");
+	println("\n");
+}

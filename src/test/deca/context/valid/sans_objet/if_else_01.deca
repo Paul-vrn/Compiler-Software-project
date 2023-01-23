@@ -1,0 +1,20 @@
+// Description:
+//   if in an else statement
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
+
+{
+
+    int x = 2;
+    if (x == 3) {
+    } else {
+        if (x < 4) {
+            print(x);
+        }
+    }
+}

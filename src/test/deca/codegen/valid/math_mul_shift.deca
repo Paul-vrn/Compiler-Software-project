@@ -1,0 +1,14 @@
+// Description:
+//    Programme testant l'utilisation de shift left pour une multiplication avec un entier%2.
+//
+// Resultats:
+//
+//
+//
+// Historique:
+//    cree le 22/01/2023
+
+{
+    println(5*64);
+    println(32*3);
+}

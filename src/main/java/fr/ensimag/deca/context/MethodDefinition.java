@@ -1,7 +1,7 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -41,6 +41,15 @@ public class MethodDefinition extends ExpDefinition {
 
     private final Signature signature;
     private Label label;
+
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
     
     /**
      * 

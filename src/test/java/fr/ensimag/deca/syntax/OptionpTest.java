@@ -69,157 +69,157 @@ public class OptionpTest {
 
     @Test
     void test06_assign_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/assign_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/assign_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test07_assign_mult_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/assign_mult_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/assign_mult_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test08_bool_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/bool_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/bool_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test09_cond_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/cond_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/cond_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test10_condition_modulo_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/condition_modulo_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/condition_modulo_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test11_exemple_sans_objet() throws IOException {
-        String[] args = {"src/test/deca/context/valid/exemple_sans_objet.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/exemple_sans_objet.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test12_expr_alone_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/expr_alone_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/expr_alone_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test13for_nested_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/for_nested_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/for_nested_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test14_hw_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/hw_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/hw_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test15_if_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/if_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/if_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test16_if_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/if_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/if_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test17_init_cont_val_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/init_cont_val_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/init_cont_val_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test18_init_cont_val_02() throws IOException {
-        String[] args = {"src/test/deca/context/valid/init_cont_val_02.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/init_cont_val_02.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test19_intint_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/intint_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/intint_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test20_minmin_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/minmin_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/minmin_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test21_mod_cont_val_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/mod_cont_val_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/mod_cont_val_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test22_name_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/name_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/name_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test23_negative_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/negative_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/negative_pars_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test24_negative_pars_02() throws IOException {
-        String[] args = {"src/test/deca/context/valid/negative_pars_02.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/negative_pars_02.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test25_not_cont_val_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/not_cont_val_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/not_cont_val_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test26_op_arith_cont_val_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/op_arith_cont_val_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/op_arith_cont_val_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test27_op_comp_valid_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/op_comp_valid_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/op_comp_valid_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test28_print_assign_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/print_assign_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/print_assign_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test29_print_nest_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/print_nest_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/print_nest_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test30_read_cont_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/read_cont_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/read_cont_01.deca"};
         generalTestValid(args, null);
     }
 
     @Test
     void test31_while_pars_01() throws IOException {
-        String[] args = {"src/test/deca/context/valid/while_pars_01.deca"};
+        String[] args = {"src/test/deca/context/valid/sans_objet/while_pars_01.deca"};
         generalTestValid(args, null);
     }
 
@@ -228,6 +228,85 @@ public class OptionpTest {
         String[] args = {"src/test/deca/syntax/optionp/cast_int.deca"};
         generalTestValid(args, null);
     }
+
+    @Test
+    void test33_Soupe() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/Soupe.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test34_field_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/field_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test35_get_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/get_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test36_method_ovrlap_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/method_ovrlap_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test37_new_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/new_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test39_param_class_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/param_class_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test40_return_cont_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/return_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test41_this_01() throws IOException {
+        String[] args = {"src/test/deca/codegen/valid/objet/this_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test42_instanceof_cont_01() throws IOException {
+        String[] args = {"src/test/deca/context/valid/objet/instanceof_cont_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test43_class_method_asm_01() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/class_method_asm_01.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test44_noOp() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/noOp.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test45_simple_asm() throws IOException {
+        String[] args = {"src/test/deca/syntax/optionp/simple_asm.deca"};
+        generalTestValid(args, null);
+    }
+
+    @Test
+    void test34_no_operation() throws IOException {
+        String[] args = {"src/test/deca/context/valid/sans_objet/no_operation.deca"};
+        generalTestValid(args, null);
+    }
+
 
     void generalTestValid(String[] args, String input) throws IOException {
         Logger.getRootLogger().setLevel(Level.OFF);

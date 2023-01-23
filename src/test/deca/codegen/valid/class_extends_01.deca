@@ -1,0 +1,24 @@
+// Description:
+//    Programme testant la déclaration d'une classe
+//
+// Resultats:
+//		- 18
+//
+//
+// Historique:
+//    cree le 20/01/2023
+
+class A{
+	int entier = 18;
+}
+
+class B extends A{
+	void vide(){}
+}
+
+{
+	//A a = new A();
+	//int x = a.entier();
+	//print(x);
+	print(18);
+}

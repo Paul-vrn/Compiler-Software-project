@@ -1,0 +1,33 @@
+// Description:
+//   Op_comp for classes
+//
+// Resultats:
+//      method and field index test
+//
+// Historique:
+//    cree le 01/01/2023
+
+
+class C {
+    int l;
+    int x() {}
+}
+class B extends C {
+    int g;
+    int l;
+    int x() {}
+    int z() {}
+
+}
+class A extends B {
+    int r;
+    int l;
+    int o() {}
+    int z() {}
+    int x() {}
+    int m() {}
+}
+
+{
+    A a = new A();
+}

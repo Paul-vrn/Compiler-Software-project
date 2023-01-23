@@ -1,0 +1,29 @@
+// Description:
+//    Redefinition de methode sans le bon type.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 04/01/2023
+
+class C{
+
+}
+
+class D extends C{
+
+}
+
+class A{
+    D x(){
+
+    }
+}
+
+class B extends A{
+    C x(){
+
+    }
+}
+

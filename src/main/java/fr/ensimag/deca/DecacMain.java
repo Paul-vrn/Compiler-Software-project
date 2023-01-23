@@ -46,11 +46,12 @@ public class DecacMain {
                     + "Options : " +
                     "\n-p : After the lexing and parsing operations, decompiles the code and prints it in the terminal\n"+
                     "-v : Stops the program after the verification process (no output in the absence of problems)\n"+
-                    "(note that option -p and -v are incompatible\n"+
+                    "(note that option -p and -v are incompatible)\n"+
                     "-n : No check, removes execution checks\n" +
                     "-r X : limits the number of available registers (4<= X <= 16)\n"+
                     "-d : Debug option, enables debug trace. Repeat the option to get more traces\n" +
-                    "-P : Parallel, if there are multiple source files, compiles concurrently");
+                    "-P : Parallel, if there are multiple source files, compiles concurrently\n" +
+                    "-ARM : Generates ARM assembly instead of IMA assembly");
         }
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à

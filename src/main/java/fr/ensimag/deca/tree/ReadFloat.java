@@ -1,20 +1,21 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.LabelFactory;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
+import fr.ensimag.pseudocode.*;
+import fr.ensimag.pseudocode.arm.instructions.*;
+import fr.ensimag.pseudocode.ima.instructions.LOAD;
+import fr.ensimag.pseudocode.ima.instructions.RFLOAT;
 
 import java.io.PrintStream;
 
 /**
+ * Class for the ReadFloat expression
+ * example: int x = ReadFloat();
  *
  * @author gl21
  * @date 01/01/2023
@@ -23,7 +24,8 @@ public class ReadFloat extends AbstractReadExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) throws ContextualError {
+                           ClassDefinition currentClass) throws ContextualError {
+        //Sets type of the input to Float (can implicitely cast Int)
         this.setType(compiler.environmentType.FLOAT);
         return this.getType();
     }
@@ -47,7 +49,19 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     public void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.addInstruction(new RFLOAT());
-        compiler.addInstruction(new LOAD(Register.R1, Register.getR(n)));
+        compiler.addInstruction(new LOAD(RegisterIMA.R1, RegisterIMA.getR(n)));
         compiler.getLabelFactory().createTestIo(compiler);
+        compiler.getMemory().setLastGRegister(n);
+    }
+
+    @Override
+    public void armCodeGenExpr(DecacCompiler compiler, int n, int m) {
+        compiler.addInstruction(new SUBS(new ImmediateInteger(4), RegisterARM.SP));
+        compiler.addInstruction(new LDR(new LabelOperand(compiler.getLabelFactory().getLabelFloat()), RegisterARM.getR(0))); // LDR R0, =float
+        compiler.addInstruction(new MOV(RegisterARM.SP, RegisterARM.getR(1))); // MOV R1, SP
+        compiler.addInstruction(new BL(compiler.getLabelFactory().getScanfLabel())); // bl scanf
+        compiler.addInstruction(new VLDR(new RegisterOffset(0, RegisterARM.SP), RegisterARM.getS(m)));// ldr sn, [sp]
+        compiler.addInstruction(new ADDS(new ImmediateInteger(4), RegisterARM.SP));
+
     }
 }

@@ -1,0 +1,1 @@
+this_main.deca:12:4: This in main is impossible

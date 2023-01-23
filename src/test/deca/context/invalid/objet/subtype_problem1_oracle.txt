@@ -1,0 +1,1 @@
+subtype_problem1.deca:24:9: Protected access, subtype problem

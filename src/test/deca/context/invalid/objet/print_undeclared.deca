@@ -1,0 +1,12 @@
+// Description:
+//    Print d'un identifier non initialisé.
+//
+// Resultats:
+//      Error
+//
+// Historique:
+//    cree le 04/01/2023
+
+{
+    print(x);
+}

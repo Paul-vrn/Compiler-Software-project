@@ -12,8 +12,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compileSource>1.8</compileSource>
         <skip.unit.tests>false</skip.unit.tests>
-        <jacoco.skip>true</jacoco.skip>
+        <jacoco.skip>false</jacoco.skip>
         <jacoco.report_dir>${project.build.directory}/site</jacoco.report_dir>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -136,6 +138,7 @@
                                     <directory>src/test/</directory>
                                     <includes>
                                         <include>**/*.ass</include>
+                                        <include>**/*.s</include>
                                         <include>**/*Decompiled.deca</include>
                                     </includes>
                                     <followSymlinks>false</followSymlinks>

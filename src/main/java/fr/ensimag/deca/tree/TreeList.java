@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.lang.Validate;
 
 /**
- *
  * @author gl21
  * @date 01/01/2023
  */
@@ -29,7 +29,7 @@ public abstract class TreeList<TreeType extends Tree> extends Tree {
 
     /**
      * @return the list contained in the class, read-only. Use getModifiableList()
-     *         if you need to change elements of the list.
+     * if you need to change elements of the list.
      */
     public List<TreeType> getList() {
         return Collections.unmodifiableList(list);
@@ -53,7 +53,7 @@ public abstract class TreeList<TreeType extends Tree> extends Tree {
 
     /**
      * Do not check anything about the location.
-     * 
+     * <p>
      * It is possible to use setLocation() on a list, but it is also OK not to
      * set it.
      */

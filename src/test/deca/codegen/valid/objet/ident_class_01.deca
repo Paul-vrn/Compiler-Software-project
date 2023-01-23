@@ -1,0 +1,20 @@
+// Description:
+//   Ident class decl
+//
+// Resultats:
+//		2212429391
+//
+// Historique:
+//    cree le 01/01/2023
+
+
+class _class {
+	int x = 221242;
+	int y = 9391;
+}
+
+{
+	_class bob = new _class();
+	print(bob.x);
+	print(bob.y);
+}

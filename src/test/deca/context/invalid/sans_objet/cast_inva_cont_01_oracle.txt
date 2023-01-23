@@ -1,0 +1,1 @@
+cast_inva_cont_01.deca:12:16: Cast type is invalid

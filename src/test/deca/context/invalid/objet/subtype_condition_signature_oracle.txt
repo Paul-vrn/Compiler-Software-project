@@ -1,0 +1,1 @@
+subtype_condition_signature.deca:17:4: Signature method conflict in super class

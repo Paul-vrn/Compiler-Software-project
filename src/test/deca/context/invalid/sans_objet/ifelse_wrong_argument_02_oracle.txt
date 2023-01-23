@@ -1,0 +1,1 @@
+ifelse_wrong_argument_02.deca:12:11: Condition argument of if/elseif or while should be a boolean

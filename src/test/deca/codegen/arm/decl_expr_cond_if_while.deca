@@ -1,3 +1,13 @@
+// Description:
+//    test d'un while et de concidtions
+//
+// Resultats:
+//    ok\nok\nok\nok\nok\nok
+//
+//
+// Historique:
+//    cree le 01/01/2023
+
 {
 int x = 5;
 int y = 10;

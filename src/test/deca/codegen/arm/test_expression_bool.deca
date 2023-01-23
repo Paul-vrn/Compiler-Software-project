@@ -1,3 +1,19 @@
+// Description:
+//    test d'expressions arithmetiques
+//
+// Resultats:
+//    test bool 1 passe
+//    test bool 2 passe
+//    test bool 3 passe
+//    test bool 4 passe
+//    test bool 5 passe
+//    test bool 6 passe
+//
+//
+//
+// Historique:
+//    cree le 12/01/2023
+
 {
 boolean a = true;
 boolean b = false;

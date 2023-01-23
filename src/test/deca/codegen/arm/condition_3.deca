@@ -1,12 +1,13 @@
 // Description:
-//    déclaration d'une variable null
+//    déclaration de boolean puis test de if else
 //
 // Resultats:
-//    ok
-//    ok
+//    else
+//
 //
 // Historique:
 //    cree le 01/01/2023
+
 {
     boolean x = false;
     boolean y  = true;

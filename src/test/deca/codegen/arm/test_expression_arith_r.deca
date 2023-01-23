@@ -1,3 +1,22 @@
+// Description:
+//    test d'expressions arithmetiques
+//
+// Resultats:
+//    32
+//    0
+//    0
+//    1
+//    0
+//    32.000000
+//    0.000000
+//    0.000000
+//     1.000000
+//
+//
+//
+// Historique:
+//    cree le 12/01/2023
+
 {
 int a = 1;
 int b = 2;

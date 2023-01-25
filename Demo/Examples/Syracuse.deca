@@ -1,0 +1,8 @@
+class Syracuse{
+
+     void printSequence(int n){
+
+
+
+     }
+}

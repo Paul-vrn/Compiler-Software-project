@@ -10,6 +10,7 @@ class Fonction {
 {
 	Fonction f = new Fonction();
 	float x;
+	float y;
 	f.borneGauche = 0.0;
 	f.borneDroite = 10.0;
 	x = (f.borneGauche + f.borneDroite) / 2.0;
@@ -34,4 +35,7 @@ class Fonction {
 	println(x-1.4142);
 
 	println("Voici la racine de 2 avec 8 décimales : 1.41421356");
+
+	y = 5;
+	print(y);
 }

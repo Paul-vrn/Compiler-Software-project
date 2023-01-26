@@ -1,0 +1,6 @@
+{
+ int x = 12;
+ boolean y = true;
+ int z = 0;
+ z = 12 + true;
+}

@@ -1,0 +1,35 @@
+class Syracuse{
+     void printSequence(int u){
+         int v = 0;
+         int limit = 200;
+         int i = 0;
+         while (!(u==1)) {
+         i=0;
+         limit = 200;
+     	if (u%2 == 0) {
+     	    u = u/2;
+     	} else {
+     	    u = 2*u +u + 1;
+     	}
+     	v = v + 1;
+     	print(u);
+     	print(" ");
+     	if(u<limit){
+     	    limit = u;
+         }
+         while(i<limit){
+             print("-");
+             i = i + 1;
+         }
+         println(" ");
+         }
+         println("Le nombre d'étape jusqu'à 1 est :");
+         println(v);
+     }
+}
+{
+    int u;
+    println("Entrez un nombre entier positif :");
+    u = readInt();
+    new Syracuse().printSequence(u);
+}

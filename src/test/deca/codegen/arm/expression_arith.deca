@@ -23,4 +23,14 @@
 	float h = 15.0/10.0;
 	//MODULUS
 	int i = 15%10;
+
+	println("a = ", a);
+	println("b = ", b);
+	println("c = ", c);
+	println("d = ", d);
+	println("e = ", e);
+	println("f = ", f);
+	println("g = ", g);
+	println("h = ", h);
+	println("i = ", i);
 }

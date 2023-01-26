@@ -1,0 +1,12 @@
+class Recursive {
+	void deepDive(){
+		deepDive();
+	}
+}
+
+
+//Main
+{
+Recursive rec = new Recursive();
+rec.deepDive();
+}

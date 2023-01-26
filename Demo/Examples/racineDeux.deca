@@ -10,6 +10,7 @@ class Fonction {
 {
 	Fonction f = new Fonction();
 	float x;
+	float y;
 	f.borneGauche = 0.0;
 	f.borneDroite = 10.0;
 	x = (f.borneGauche + f.borneDroite) / 2.0;

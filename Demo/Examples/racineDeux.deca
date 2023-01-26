@@ -33,5 +33,5 @@ class Fonction {
 	print("x-1.4142 = ");
 	println(x-1.4142);
 
-	println("Voici la racine de 2 avec 8 décimales : 1.41421356");
+	println("Voici la racine de 2 théorique avec 8 décimales : 1.41421356");
 }

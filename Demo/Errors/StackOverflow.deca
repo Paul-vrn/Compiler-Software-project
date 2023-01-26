@@ -4,8 +4,9 @@ class Recursive {
 	}
 }
 
-{
 
+//Main
+{
 Recursive rec = new Recursive();
 rec.deepDive();
 }

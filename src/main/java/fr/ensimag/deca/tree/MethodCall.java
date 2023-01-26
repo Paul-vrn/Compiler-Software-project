@@ -90,17 +90,17 @@ public class MethodCall extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addComment("method call at " + methodId.getLocation() + " : " + methodId.getName().getName());
-        compiler.addInstruction(new ADDSP(parameters.getList().size() + 1));
+        compiler.addComment("method call at " + methodId.getLocation() + " : " +methodId.getName().getName());
+        compiler.addInstruction(new ADDSP(parameters.getList().size()+1));
+        compiler.getMemory().increaseTSTO(parameters.getList().size()+3); // +1 for this + 2 for BSR
+
         expr.codeGenExpr(compiler, n);
 
         compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(0, RegisterIMA.SP))); // empilement implicite
-        compiler.getMemory().increaseTSTO();
         int index = -1;
         for (AbstractExpr param : parameters.getList()) {
             param.codeGenExpr(compiler, n);
             compiler.addInstruction(new STORE(RegisterIMA.getR(n), new RegisterOffset(index, RegisterIMA.SP)));
-            compiler.getMemory().increaseTSTO();
             index--; // empilement des paramètres
         }
 
@@ -109,9 +109,10 @@ public class MethodCall extends AbstractExpr {
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, RegisterIMA.getR(n)), RegisterIMA.getR(n)));
         compiler.addInstruction(new BSR(new RegisterOffset(methodId.getMethodDefinition().getIndex(), RegisterIMA.getR(n))));
-        compiler.addInstruction(new SUBSP(parameters.getList().size() + 1));
+        compiler.addInstruction(new SUBSP(parameters.getList().size()+1));
+        compiler.getMemory().decreaseTSTO(parameters.getList().size()+3); // +1 for this + 2 for BSR
 
-        if (!getType().isVoid()) {
+        if (!getType().isVoid()){
             compiler.addInstruction(new LOAD(RegisterIMA.R0, RegisterIMA.getR(n)));
         }
     }

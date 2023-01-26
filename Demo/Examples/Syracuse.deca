@@ -25,11 +25,8 @@ class Syracuse{
          }
          println("Le nombre d'étape jusqu'à 1 est :");
          println(v);
-
-
      }
 }
-
 {
     int u;
     println("Entrez un nombre entier positif :");

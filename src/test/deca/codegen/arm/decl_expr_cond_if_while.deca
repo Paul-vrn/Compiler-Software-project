@@ -19,7 +19,6 @@ println("ok");
 while(z > 10)
 {
 println("ok");
-println(3.0);
 z = z -1;
 }
 }

@@ -133,10 +133,27 @@ public class Memory {
     }
 
     /**
-     * Decrease TSTO value by i
+     * Increase TSTO value by i
+     * @param i : value to add
+     */
+    public void increaseTSTO(int i) {
+        currentTSTO += i;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
+    /**
+     * Decrease TSTO value
      */
     public void decreaseTSTO() {
         currentTSTO--;
+        TSTO = Math.max(currentTSTO, TSTO);
+    }
+
+    /**
+     * Decrease TSTO value by i
+     * @param i : value to add
+     */
+    public void decreaseTSTO(int i) {
+        currentTSTO -= i;
         TSTO = Math.max(currentTSTO, TSTO);
     }
 

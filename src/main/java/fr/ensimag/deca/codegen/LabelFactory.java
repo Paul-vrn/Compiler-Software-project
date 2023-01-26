@@ -122,6 +122,26 @@ public class LabelFactory {
         compiler.addComment("--- End of Error messages section ---");
     }
 
+    public void createArmErrorSection(DecacCompiler compiler) {
+        if (noCheck)
+            return;
+        compiler.addComment("--- Start of Error messages section ---");
+        if (flagIOError){
+            compiler.addLabel(ioErrorLabel);
+            compiler.addInstruction(new WSTR("Error: Input/Output error"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+        if (flagDivByZeroError){
+            compiler.addLabel(divByZeroErrorLabel);
+            compiler.addInstruction(new WSTR("Error: Division by zero"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+        compiler.addComment("--- End of Error messages section ---");
+
+    }
+
     /**
      * Return the number of the Not label and increment it
      * @return int
@@ -393,4 +413,6 @@ public class LabelFactory {
     public void setSuffixCurrentMethod(String suffixCurrentMethod) {
         this.suffixCurrentMethod = suffixCurrentMethod;
     }
+
+
 }

@@ -88,6 +88,8 @@ public class Program extends AbstractProgram {
         compiler.addComment("Main program");
         main.armCodeGenMain(compiler);
         //compiler.getLabelFactory().createErrorSection(compiler);
+
+        compiler.getLabelFactory().createArmErrorSection(compiler);
         compiler.getLabelFactory().createPrintLabel(compiler);
     }
 

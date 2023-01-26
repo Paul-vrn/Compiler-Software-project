@@ -1,13 +1,12 @@
 class HeavyClass {
-int x;
-int y;
-int z;
+    int x;
+    int y;
+    int z;
 }
-
+//Main Program
 {
-HeavyClass heavy;
-while(true){
-heavy = new HeavyClass();
-}
-
+    HeavyClass heavy;
+    while(true){
+    heavy = new HeavyClass();
+    }
 }
